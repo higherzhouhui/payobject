@@ -1,0 +1,258 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: PingFang SC;
+    font-weight: 400;
+    // color: #303133;
+
+}
+
+.mb24 {
+    margin-bottom: 24px;
+}
+
+.mt40 {
+    margin-top: 40px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+.mt24 {
+    margin-top: 24px;
+}
+.mt16{
+    margin-top: 16px;
+}
+
+$baseColor: #3476FF;
+$contentColor: #F4F4F4;
+
+.flex {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex_nowrap {
+    flex-wrap: nowrap;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.flex_align_center {
+    align-items: center;
+}
+
+.flex_jc_sb {
+    justify-content: space-between;
+}
+.flex_jc_sb_center{
+    justify-content: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.el-button--primary {
+    border-color: $baseColor;
+    background-color: $baseColor;
+}
+
+.baseColor {
+    color: $baseColor !important;
+}
+
+.contentBg {
+    background: $contentColor;
+}
+
+.el-menu-item {
+    // font-size: 18px;
+    color: #909399;
+    // background: #F2F6FF;
+
+    &.is-active {
+        background: $baseColor;
+        color: #fff;
+
+        .icon {
+            filter: grayscale(100%) brightness(200%)
+        }
+    }
+}
+
+.is-active {
+    .el-submenu__title {
+        overflow: hidden;
+        color: $baseColor;
+
+        .icon {
+            transform: translateY(-100px);
+            filter: drop-shadow(0 100px $baseColor);
+        }
+    }
+
+    .el-icon-arrow-down {
+        &::before {
+
+            color: $baseColor;
+        }
+    }
+
+}
+
+.el-icon-arrow-down {
+    &::before {
+        font-weight: 800;
+        color: #606266;
+    }
+}
+
+.is-opened {}
+
+.el-submenu__title {
+    color: #909399;
+}
+
+.el-table .el-table__header-wrapper,
+.el-table__fixed-right {
+    background-color: #F4F4F4 !important;
+
+    thead {
+        background-color: #F4F4F4 !important;
+
+        tr {
+            background-color: #F4F4F4 !important;
+
+            th {
+                background-color: #F4F4F4 !important;
+
+            }
+        }
+    }
+}
+
+.tables {
+
+    .el-table--fit,
+    .el-table__cell,
+    tr {
+        // background-color: #F4F4F4 !important;
+
+        .cell {
+            font-size: 14px;
+            color: #303133;
+            font-weight: 400;
+        }
+
+        .el-table__row {
+            .cell {
+                font-size: 14px;
+                color: #303133;
+            }
+        }
+    }
+
+}
+
+.el-dialog {
+    padding: 0 24px;
+
+    .el-dialog__footer {
+        .el-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+    }
+
+    .el-dialog__header,
+    .el-dialog__body {
+        border-bottom: 1px solid var(--unnamed, #DCDFE6);
+
+    }
+
+    .el-dialog__header,
+    .el-dialog__footer {
+        padding: 20px 0;
+    }
+}
+
+.s_title {
+    font-size: 24px;
+    color: #303133;
+}
+
+.el-tabs__item.is-active {
+    color: $baseColor;
+}
+
+.el-tabs__item {
+    color: #606266;
+    font-size: 16px;
+}
+
+.el-button.primary {
+    padding: 11px 20px;
+    font-weight: 400;
+
+    i {
+        margin-right: 4px;
+    }
+    img{
+        margin-right: 2px;
+        height: 24px;
+        width: 24px;
+        vertical-align: middle;
+    }
+    &.hui{
+        background-color: #F4F4F4;
+    }
+}
+
+.el-form-item {
+    margin-bottom: 20px;
+}
+.content_shadow {
+    box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
+    border: 1px solid var(--unnamed, #DCDFE6);
+    border-radius: 4px;
+}
+input{
+    // height: 48px!important;
+    // line-height: 48px!important;
+}
+.loading {
+    position: relative;
+    opacity: .4!important;
+
+    &::after {
+        position: absolute;
+
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #555;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        margin-left: -10px;
+        margin-top: -10px;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        animation: spin 1s linear infinite;
+        transform-origin: center;
+        content: ''
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

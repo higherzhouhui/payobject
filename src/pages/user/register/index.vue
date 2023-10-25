@@ -1,7 +1,7 @@
 <template>
   <div class="login_box">
     <div class="top">
-      <img src="@/assets/images/index/logo.png" alt="" />
+      <img src="@/assets/images/index/logo.png" alt="logo" @click="routerToIndex" style="cursor: pointer"/>
       <div class="flex tabs">
         <div
           class="item"
@@ -35,13 +35,13 @@
                 :placeholder="$t('qsr')"
               >
                 <el-option
-                  style="width: 100px; padding: 0 20px"
+                  style="padding: 0 10px"
                   v-for="item in aereList"
-                  :key="item.areaCode"
+                  :key="item.id"
                   :label="item.areaCode"
                   :value="item.areaCode"
                 >
-                  {{ item.name }}
+                  {{ languge == 'zh' ? item.name : item.enName}}
                 </el-option>
               </el-select>
             </template>
@@ -114,7 +114,7 @@
             v-model="checked"
             style="margin-right: 5px"
           ></el-checkbox>
-          {{ $t("tybzs") }}
+          <span @click="checked = !checked" style="cursor: pointer">{{ $t("tybzs") }}</span>
           <span class="baseColor pointer">《{{ $t("wlptfwxy") }}》</span
           >{{ $t("he")
           }}<span class="baseColor pointer">《{{ $t("yszc") }}》</span>
@@ -189,6 +189,9 @@ export default {
     this.getAreaCode();
   },
   methods: {
+    routerToIndex() {
+      this.$router.push('/index');
+    },
     async getAreaCode() {
       try {
         let list = Locol("aereList");
@@ -297,14 +300,7 @@ export default {
           message: this.$t(msg),
         });
       }
-      this.timer--;
-      this.tt = setInterval(() => {
-        this.timer--;
-        if (this.timer <= 0) {
-          clearInterval(this.tt);
-          this.timer = 60;
-        }
-      }, 1000);
+      
       try {
         let param = {
           areaCode,
@@ -314,11 +310,23 @@ export default {
         } else {
           param.email = phone;
         }
-        await sendCheckCode(param);
-        Message({
+        const result = await sendCheckCode(param);
+        if (result.code === 200) {
+          this.timer--;
+          this.tt = setInterval(() => {
+            this.timer--;
+            if (this.timer <= 0) {
+              clearInterval(this.tt);
+              this.timer = 60;
+            }
+          }, 1000);
+          Message({
           type: "success",
           message: this.$t("fscg"),
         });
+        // eslint-disable-next-line no-empty
+        } else {
+        }
       } catch (error) {}
     },
   },

@@ -13,7 +13,8 @@ const serviceAxios = axios.create({
     timeout: 10 * 1000, // 请求超时设置
     withCredentials: false, // 跨域请求是否需要携带 cookie
     headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8',
+        'Accept-Language': Locol('lang')
     },
     validateStatus() {
         // 使用async-await，处理reject情况较为繁琐，所以全部返回resolve，在业务代码中处理异常

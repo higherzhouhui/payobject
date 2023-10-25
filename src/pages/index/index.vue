@@ -12,8 +12,8 @@
                             <div class="btn active" @click="to('/user/register')">{{ $t('register') }}</div>
                         </div>
                         <div class="language flex flex_align_center hidden-sm-and-down" @click="open">
-                            <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="">
-                            <img class="icon" v-else src="@/assets/images/index/en.png" alt="">
+                            <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
+                            <img class="icon" v-else src="@/assets/images/index/en.png" alt="en">
                             <span class="txt">{{ $t('languageChange') }}</span>
                             <img src="@/assets/images/index/down.png" alt="">
                         </div>
@@ -337,7 +337,7 @@ export default {
         transition: all .5s;
 
         &.headerShow {
-            background: rgba(202, 210, 255, .2);
+            background: rgba(202, 210, 255, .6);
             backdrop-filter: blur(20px);
             box-shadow: 0 2px 10px rgba($color: #000000, $alpha: .1);
         }

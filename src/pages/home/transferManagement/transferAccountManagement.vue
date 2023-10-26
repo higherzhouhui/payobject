@@ -13,12 +13,14 @@
           <el-input
             :placeholder="$t('bankname')"
             v-model="form.bankName"
+            clearable
           ></el-input>
         </el-form-item>
         <el-form-item>
           <el-input
             :placeholder="$t('yhzhh')"
             v-model="form.bankAccount"
+            clearable
           ></el-input>
         </el-form-item>
         <!-- <el-form-item>
@@ -28,7 +30,7 @@
                     </el-select>
                 </el-form-item> -->
         <el-form-item>
-          <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
+          <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')" clearable>
             <el-option
               style="padding: 0 20px"
               v-for="item in options"
@@ -48,17 +50,19 @@
           </el-button> -->
         </el-form-item>
       </el-form>
-      <el-table class="tables" :data="tableData" style="width: 100%">
+      <el-table class="tables" :data="tableData" style="width: 100%" stripe>
         <el-table-column prop="accountName" :label="$t('zhmc')" width="180" />
         <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" />
         <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" />
         <el-table-column prop="country" :label="$t('ssgj')" width="180" />
         <el-table-column prop="bankStatus" :label="$t('kzt')" width="180">
           <template slot-scope="scope">
-            {{ status[scope.row.bankStatus] }}
+            <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
+              {{ status[scope.row.bankStatus] }}
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('cjrq')" width="180" />
+        <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" />
         <el-table-column
           prop="name"
           :label="$t('cz')"
@@ -73,7 +77,7 @@
               >查看详情</span
             >
             <span
-              class="baseColor cursor"
+              class="deleteColor cursor"
               style="cursor: pointer; margin-left: 10px;"
               @click="delBank(scope.row.id)"
             >
@@ -93,13 +97,14 @@
       :title="bankForm.id ? '查看详情' : $t('zjzzzh')"
       :visible.sync="dialogVisible"
       width="636px"
+      top="3%"
       :before-close="
         () => {
           dialogVisible = false;
         }
       "
     >
-      <el-form label-width="160px" ref="formss" :model="bankForm">
+      <el-form label-width="160px" ref="formss" :model="bankForm" class="formStyle">
         <el-form-item :label="$t('zhmc')" class="mb24">
           <el-input
             v-model="bankForm.accountName"
@@ -107,15 +112,31 @@
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')" class="mb24">
-          <el-input
+          <!-- <el-input
             v-model="bankForm.country"
             :disabled="!!bankForm.id"
-          ></el-input>
+          ></el-input> -->
+          <el-select
+            style="width: 100%"
+            v-model="bankForm.country"
+            :disabled="!!bankForm.id"
+          >
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in aereList"
+              :key="item.id"
+              :label="languge == 'zh' ? item.name : item.enName"
+              :value="languge == 'zh' ? item.name : item.enName"
+            >
+              {{ languge == 'zh' ? item.name : item.enName }}
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')" class="mb24">
           <el-input
             v-model="bankForm.accountAdd"
             :disabled="!!bankForm.id"
+            type="textarea"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')" class="mb24">
@@ -143,15 +164,32 @@
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')" class="mb24">
-          <el-input
+          <!-- <el-input
             v-model="bankForm.bankCountry"
             :disabled="!!bankForm.id"
-          ></el-input>
+          ></el-input> -->
+          <el-select
+            style="width: 100%"
+            v-model="bankForm.bankCountry"
+            :disabled="!!bankForm.id"
+          >
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in aereList"
+              :key="item.id"
+              :label="languge == 'zh' ? item.name : item.enName"
+              :value="languge == 'zh' ? item.name : item.enName"
+            >
+              {{ languge == 'zh' ? item.name : item.enName }}
+            </el-option>
+          </el-select>
+
         </el-form-item>
         <el-form-item :label="$t('khdz')" class="mb24">
           <el-input
             v-model="bankForm.bankAdd"
             :disabled="!!bankForm.id"
+            type="textarea"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
@@ -185,7 +223,7 @@
             size="small"
             type="primary"
             class="btn"
-            ><a :href="'/file/downLoad?url=' + bankForm.accountCer">点击下载</a></el-button
+            ><a :href="'/api/file/downLoad?url=' + bankForm.accountCer">点击下载</a></el-button
           >
         </el-form-item>
       </el-form>
@@ -208,19 +246,21 @@ import { getBankList, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
 import { upload, downLoad } from "@/api/file";
-
+import { Locol } from "@/utils/index"
 export default {
   name: "transferAccountMangement",
   components: { LinkPath },
   data() {
     return {
+      languge: Locol("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
       tableData: [],
-      status: ["未审核", "已通过", "驳回"],
+      status: ["审核中", "已通过", "驳回"],
+      typeOption: ["warning", "success", "danger"],
       options: [
         {
-          label: "未审核",
+          label: "审核中",
           value: 0,
         },
         {
@@ -265,13 +305,25 @@ export default {
         bankAdd: "",
         accountCer: null,
       },
+      aereList: [],
     };
   },
   created() {
     this.getlist();
-    countries();
+    this.getAreaCode()
   },
   methods: {
+    async getAreaCode() {
+      try {
+        let list = Locol("aereList");
+        if (list && list.length) {
+          return (this.aereList = list);
+        }
+        let res = await countries();
+        this.aereList = res.data;
+        Locol("aereList", res.data);
+      } catch (error) {}
+    },
     toDetail(data) {
       this.dialogVisible = true;
       this.$set(this, "bankForm", data);
@@ -349,5 +401,9 @@ export default {
       margin-top: 40px;
     }
   }
+}
+
+.deleteColor {
+  color: red
 }
 </style>

@@ -25,6 +25,7 @@
           <el-input
             class="input yzm"
             :placeholder="$t('qsrtxm')"
+            @keyup.enter.native="toLogin"
             v-model="form.code"
           />
           <div class="ecode pointer" :class="imgLoading && 'loading'">
@@ -167,8 +168,8 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
   width: 30%;
-  max-width: 448px;
-  min-width: 250px;
+  max-width: 548px;
+  min-width: 380px;
 
   .top {
     text-align: center;

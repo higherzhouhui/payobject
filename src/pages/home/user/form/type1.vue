@@ -13,21 +13,27 @@
           <el-col :span="12">
             <div class="flex flex_align_center flex_nowrap">
               <span class="nowrap">{{ $t("qymc") }}：</span>
-              <el-input size="small" v-model="form.companyName"></el-input>
+              <el-input size="small" v-model="form.companyName" :placeholder="$t('qsrqymc')"></el-input>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="flex flex_align_center flex_nowrap">
-              <span class="nowrap">{{ $t("qyywmc") }}：</span>
-              <el-input size="small" v-model="form.companyEnName"></el-input>
+              <span class="nowrap">{{ $t("qygw") }}({{ $t("fbt")}})：</span>
+              <el-input size="small" v-model="form.webSite" :placeholder="$t('qsrqygw')"></el-input>
             </div>
           </el-col>
+          <!-- <el-col :span="12">
+            <div class="flex flex_align_center flex_nowrap">
+              <span class="nowrap">{{ $t("qyywmc") }}：</span>
+              <el-input size="small" v-model="form.companyEnName" :placeholder="$t('qsrqyywmc')"></el-input>
+            </div>
+          </el-col> -->
         </el-row>
         <el-row :gutter="42" class="mt16">
           <el-col :span="12">
             <div class="flex flex_align_center flex_nowrap">
               <span class="nowrap">{{ $t("qyjydz") }}：</span>
-              <el-input size="small" v-model="form.businessAdd"></el-input>
+              <el-input size="small" v-model="form.businessAdd" :placeholder="$t('qsrqyjydz')"></el-input>
             </div>
           </el-col>
           <el-col :span="12">
@@ -54,8 +60,26 @@
         <el-row :gutter="42" class="mt16">
           <el-col :span="12">
             <div class="flex flex_align_center flex_nowrap">
-              <span class="nowrap">{{ $t("qyzcszgj") }}：</span>
-              <el-input size="small" v-model="form.country"></el-input>
+              <span class="nowrap">{{ $t("qyzcszd") }}：</span>
+              <!-- <el-input size="small" v-model="form.country"></el-input> -->
+
+              <el-select
+                v-model="form.country"
+                size="small"
+                style="width: 100%"
+                :placeholder="$t('qxzqyzcszd')"
+              >
+                <el-option
+                  style="padding: 0 10px"
+                  v-for="item in aereList"
+                  :key="item.id"
+                  :label="languge == 'zh' ? item.name : item.enName"
+                  :value="item.code"
+                >
+                  {{ languge == 'zh' ? item.name : item.enName }}
+                </el-option>
+              </el-select>
+
             </div>
           </el-col>
           <el-col :span="12">
@@ -93,6 +117,7 @@
               <el-input
                 size="small"
                 v-model="form.monthlyRemittance"
+                :placeholder="$t('qsrygyhkje')"
               ></el-input>
             </div>
           </el-col>
@@ -105,28 +130,23 @@
               <el-input
                 size="small"
                 v-model="form.transactionsMonth"
+                :placeholder="$t('qsrygyjybs')"
               ></el-input>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="flex flex_align_center flex_nowrap">
               <span class="nowrap">{{ $t("dbjyed") }}：</span>
-              <el-input size="small" v-model="form.transactionLimit"></el-input>
+              <el-input size="small" v-model="form.transactionLimit" :placeholder="$t('qsrdbjyed')"></el-input>
             </div>
           </el-col>
         </el-row>
 
         <el-row :gutter="42" class="mt16">
-          <el-col :span="12">
+          <el-col :span="24">
             <div class="flex flex_align_center flex_nowrap">
               <span class="nowrap">{{ $t("ywcjsm") }}：</span>
-              <el-input size="small" v-model="form.businessScenario"></el-input>
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <div class="flex flex_align_center flex_nowrap">
-              <span class="nowrap">{{ $t("qygw") }}：</span>
-              <el-input size="small" v-model="form.webSite"></el-input>
+              <el-input size="small" v-model="form.businessScenario" :placeholder="$t('qsrywcjsm')"></el-input>
             </div>
           </el-col>
         </el-row>
@@ -205,16 +225,17 @@
 </template>
 <script>
 import { upload } from "@/api/file";
-import { SubKyc, getAccountKyc } from "@/api/user";
+import { SubKyc } from "@/api/user";
 import { Message } from "element-ui";
+import { Locol } from "@/utils/index";
 import { countries } from "@/api/login";
-
 export default {
   name: "verifiedOne",
   props: ["type"],
   data() {
     return {
       loading: false,
+      languge: Locol("lang") || "zh",
       form: {
         busType: 1,
         shareholder: "",
@@ -235,10 +256,12 @@ export default {
           value: 3,
         },
       ],
+      aereList: []
     };
   },
   created() {
     this.form.busType = this.type;
+    this.getAreaCode();
     // getAccountKyc()
   },
   methods: {
@@ -258,20 +281,41 @@ export default {
       }
     },
     async handlesuccess(e, type) {
+      const size = e.size
+      if (size > 20 * 1024 * 1024) {
+        Message({
+          type: "error",
+          message: this.$t('sizeOver'),
+        });
+        return
+      }
       const formData = new FormData();
       formData.append("file", e);
       try {
-        let req = await upload(formData);
-        this.form[type] = req.data[0];
-        Message({
-          type: "success",
-          message: this.$t('sccg'),
-        });
+        const req = await upload(formData);
+        if (req.code === 200) {
+          this.form[type] = req.data[0];
+          Message({
+            type: "success",
+            message: this.$t('sccg'),
+          });
+        }
       } catch (error) {}
       return false;
     },
     to() {
       this.$emit("to", 1);
+    },
+    async getAreaCode() {
+      try {
+        const list = Locol("aereList");
+        if (list && list.length) {
+          return (this.aereList = list);
+        }
+        const res = await countries();
+        this.aereList = res.data;
+        Locol("aereList", res.data);
+      } catch (error) {}
     },
   },
 };

@@ -23,7 +23,8 @@ export default {
     },
     created() {
         getAccountKyc().then(rt=>{
-            if(rt.data && rt.data.kyc && rt.data.kyc.id) {
+            Locol('accountKyc', rt.data)
+            if(rt.data && rt.data.kyc && rt.data.kyc.kycStatus) {
                 Locol('isSMZ',  true)
             }
         })

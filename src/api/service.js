@@ -80,6 +80,10 @@ async function request(options) {
         if (status < 200 || status >= 500) {
             return Promise.reject(data.msg);
         } else if (data.code == 401) {
+            Message({
+                type: 'error',
+                message: data.msg
+            })
             return router.push('/user/login')
         } else if (data.code != 200 && data.code != 0) {
             Message({

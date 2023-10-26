@@ -41,7 +41,7 @@
           <img
             class="avatar pointer"
             src="@/assets/images/home/user.png"
-            alt=""
+            alt="header"
           />
           <span>{{
             userInfo.nickName || userInfo.phone || userInfo.email

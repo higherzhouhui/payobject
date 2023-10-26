@@ -62,7 +62,15 @@ $contentColor: #F4F4F4;
 .baseColor {
     color: $baseColor !important;
 }
-
+.elTag {
+    min-width: 80px;
+    text-align: center;
+}
+.formStyle {
+    height: 550px;
+    overflow: auto;
+    padding-right: 10px;
+}
 .contentBg {
     background: $contentColor;
 }

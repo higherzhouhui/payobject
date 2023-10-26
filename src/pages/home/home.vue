@@ -5,14 +5,16 @@
             <section class="box box_1 flex flex_jc_sb flex_align_center">
                 <div class="left contentBg">
                     <el-progress :width="240" class="process" text-color="#3476FF" :stroke-width="10" type="circle"
-                        :percentage="50"></el-progress>
+                        :percentage="getPercentage"></el-progress>
                     <div class="txt">当前任务进度</div>
                 </div>
                 <div class="right ">
                     <div class="item contentBg">
-                        <div class="txt smrz">实名认证未完成，请提交完整信息</div>
+                        <div class="txt smrz">实名认证</div>
                         <el-button  @click="to('/home/verified')" type="primary" class="btn"><img class="icon" src="@/assets/images/home/smrz.png"
-                                alt="">继续认证</el-button>
+                                alt="id">
+                                {{ accountKyc.kyc ? accountKyc.kyc.kycStatus ? '已认证' : '审核中' : '开始认证'}}
+                            </el-button>
                     </div>
                     <div class="item contentBg">
                         <div class="txt span">开通收款账户，从电商平台/支付网关等开始收款</div>
@@ -119,12 +121,94 @@
                 </div>
             </section>
         </div>
+
+        <el-dialog :title="`查看详情`" :visible.sync="dialogVisible" width="636px" :before-close="() => {
+            dialogVisible = false;
+          }
+            ">
+            <el-form label-width="160px" ref="formss" :model="accountKyc.kyc" class="formStyle">
+              <el-form-item :label="$t('qymc')" class="mb24">
+                <el-input v-model="accountKyc.kyc.companyName" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('qyjydz')" class="mb24">
+                <el-input type="textarea" v-model="accountKyc.kyc.businessAdd" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('qylx')" class="mb24">
+                <el-select v-model="accountKyc.kyc.busType" :disabled="true">
+                  <el-option style="padding: 0 10px" v-for="item in options3" :key="item.value" :label="$t(item.label)"
+                    :value="item.value" />
+                </el-select>
+              </el-form-item>
+              <el-form-item :label="$t('qyzcszgj')" class="mb24">
+                <el-input v-model="accountKyc.kyc.country" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('zcrq')" class="mb24">
+                <el-date-picker style="width: 100%" size="small" :disabled="true" value-format="timestamp"
+                  v-model="accountKyc.kyc.regDate" type="date" :placeholder="$t('xzsj')" />
+              </el-form-item>
+              <el-form-item :label="$t('qyyxq')" class="mb24">
+                <el-date-picker :disabled="true" style="width: 100%" value-format="timestamp" size="small"
+                  v-model="accountKyc.kyc.period" type="date" :placeholder="$t('xzsj')" />
+              </el-form-item>
+              <el-form-item :label="$t('ygyhkje')" class="mb24">
+                <el-input v-model="accountKyc.kyc.monthlyRemittance" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('ygyjybs')" class="mb24">
+                <el-input v-model="accountKyc.kyc.transactionsMonth" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('dbjyed')" class="mb24">
+                <el-input v-model="accountKyc.kyc.transactionLimit" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('ywcjsm')" class="mb24">
+                <el-input type="textarea" v-model="accountKyc.kyc.businessScenario" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('qygw')" class="mb24">
+                <el-input v-model="accountKyc.kyc.webSite" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('scwj')" class="mb24">
+                <label style="font-size: 12px">
+                  {{ $t("t1") }}
+                </label>
+                <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
+                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.regCer">点击下载</a></el-button>
+              </el-form-item>
+              <el-form-item :label="$t('scwj')" class="mb24">
+                <label style="font-size: 12px">
+                  {{ $t("t2") }}
+                </label>
+                <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
+                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.legal">点击下载</a></el-button>
+              </el-form-item>
+              <el-form-item :label="$t('scwj')" class="mb24" v-if="accountKyc.kyc.busType != 1">
+                <label style="font-size: 12px">
+                  {{ $t("t3") }}
+                </label>
+                <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
+                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.shareholder">点击下载</a></el-button>
+              </el-form-item>
+            </el-form>
+          </el-dialog>
+
     </div>
 </template>
 <script>
+import { Locol } from "@/utils/index";
 
 export default {
     name: 'homeHide',
+    computed: {
+        getPercentage() {
+            let percentage = 0;
+            const accountKyc = Locol('accountKyc') || {};
+            if (accountKyc.authBanks) {
+                percentage += 50
+            }
+            if (accountKyc.kyc && accountKyc.kyc.kycStatus) {
+                percentage += 50
+            }
+            return percentage
+        } 
+    },
     data() {
         return {
             tableData: [{
@@ -143,12 +227,33 @@ export default {
                 date: '2016-05-03',
                 name: '王小虎',
                 address: '上海市普陀区金沙江路 1516 弄'
-            }]
+            }],
+            accountKyc: Locol('accountKyc') || {},
+            dialogVisible: false,
+            options3: [
+                {
+                label: "gth",
+                value: 1,
+                },
+                {
+                label: "qy",
+                value: 2,
+                },
+                {
+                label: "hwgs",
+                value: 3,
+                },
+            ],
         }
     },
     methods: {
         to(path) {
-            this.$router.push(path)
+            // 通过KYC
+            if (this.accountKyc.kyc && this.accountKyc.kyc.id) {
+                this.dialogVisible = true
+            } else {
+                this.$router.push(path)
+            }
         }
     }
 }

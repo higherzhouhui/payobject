@@ -150,13 +150,14 @@
       :title="!bankForm.id ? '增加收款账户' : '查看详情'"
       :visible.sync="dialogVisible"
       width="636px"
+      top="3%"
       :before-close="
         () => {
           dialogVisible = false;
         }
       "
     >
-      <el-form label-width="160px" ref="formss" :model="bankForm">
+      <el-form label-width="160px" ref="formss" :model="bankForm" class="formStyle">
         <el-form-item :label="$t('zhmc')" class="mb24">
           <el-input
             v-model="bankForm.accountName"
@@ -340,7 +341,7 @@ export default {
       aereList: [],
       options: [
         {
-          label: "未审核",
+          label: "审核中",
           value: 0,
         },
         {
@@ -352,7 +353,7 @@ export default {
           value: 2,
         },
       ],
-      status: ["未审核", "已通过", "驳回"],
+      status: ["审核中", "已通过", "驳回"],
 
       form: {
         // bankStatus: "",

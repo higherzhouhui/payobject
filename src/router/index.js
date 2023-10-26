@@ -33,6 +33,8 @@ const router = new VueRouter({
                 { path: 'index', component: () => import('../pages/manage/home.vue') },
                 { path: 'kfc', component: () => import('../pages/manage/kfc/index.vue') },
                 { path: 'exchange', component: () => import('../pages/manage/exchange/index.vue') },
+                { path: 'transactionDetails', component: () => import('../pages/home/transactionInquiry/transactionDetails.vue') },
+                { path: 'fundingDetails', component: () => import('../pages/home/transactionInquiry/fundingDetails.vue') },
             ]
         },
         {

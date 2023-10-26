@@ -91,6 +91,7 @@
           <el-input
             class="input yzm"
             :placeholder="$t('qsrtxm')"
+            @keyup.enter.native="regester"
             v-model="form.code"
           />
           <div class="ecode pointer" :class="imgLoading && 'loading'">
@@ -124,7 +125,7 @@
           type="primary"
           :class="loading && 'loading'"
           @click="regester"
-          >{{ $t("login") }}</el-button
+          >{{ $t("register") }}</el-button
         >
 
         <div class="txt flex flex_nowrap flex_align_center flex_jc_sb">
@@ -169,14 +170,14 @@ export default {
       loading: false,
       timer: 60,
       type: 1,
-      checked: false,
+      checked: true,
       aereList: [],
       form: {
         phone: "",
         password: "",
         areaCode: "+86",
         repassWord: "",
-        inviteCode: "",
+        inviteCode: "SUPER-PAY",
         checkCode: "",
         code: "",
       },
@@ -275,13 +276,17 @@ export default {
       if (!params) return;
       try {
         this.loading = true;
-        await reg(params);
+        const res = await reg(params);
         Message({
           type: "success",
           message: this.$t("zccg"),
         });
-        this.$router.push("/user/login");
+        Locol("userInfo", res.data);
         this.loading = false;
+        if (!res.data.admin) {
+          return this.$router.push("/home");
+        }
+        this.$router.push("/manage");
       } catch (error) {
         this.randomT();
         this.loading = false;
@@ -343,8 +348,8 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
   width: 30%;
-  max-width: 448px;
-  min-width: 250px;
+  max-width: 548px;
+  min-width: 380px;
   .tabs {
     .item {
       cursor: pointer;

@@ -81,15 +81,15 @@
   </div>
 </template>
 <script>
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 import { logout } from "@/api/login";
 export default {
   name: "headerIndex",
   data() {
     return {
-      languge: Locol("lang") || "zh",
+      languge: Local("lang") || "zh",
       dialogTableVisible: false,
-      userInfo: Locol("userInfo") || {},
+      userInfo: Local("userInfo") || {},
     };
   },
   methods: {
@@ -101,12 +101,12 @@ export default {
     },
     quit() {
       this.$router.push("/index");
-      Locol("userInfo", "");
+      Local("userInfo", "");
       logout()
     },
     checkLang(lang) {
       this.languge = lang;
-      Locol("lang", lang);
+      Local("lang", lang);
       this.$i18n.locale = lang;
       this.dialogTableVisible = false;
       location.reload();

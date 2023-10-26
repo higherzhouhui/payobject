@@ -155,7 +155,7 @@
   </div>
 </template>
 <script>
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 import { sendCheckCode, reg, countries } from "@/api/login";
 import { Message } from "element-ui";
 
@@ -164,7 +164,7 @@ export default {
   data() {
     return {
       input3: "",
-      languge: Locol("lang") || "zh",
+      languge: Local("lang") || "zh",
       t: Math.random(),
       imgLoading: true,
       loading: false,
@@ -195,13 +195,13 @@ export default {
     },
     async getAreaCode() {
       try {
-        let list = Locol("aereList");
+        let list = Local("aereList");
         if (list && list.length) {
           return (this.aereList = list);
         }
         let res = await countries();
         this.aereList = res.data;
-        Locol("aereList", res.data);
+        Local("aereList", res.data);
       } catch (error) {}
     },
     to(path) {
@@ -209,7 +209,7 @@ export default {
     },
     checkLang(lang) {
       this.languge = lang;
-      Locol("lang", lang);
+      Local("lang", lang);
       this.$i18n.locale = lang;
     },
     randomT() {
@@ -281,7 +281,7 @@ export default {
           type: "success",
           message: this.$t("zccg"),
         });
-        Locol("userInfo", res.data);
+        Local("userInfo", res.data);
         this.loading = false;
         if (!res.data.admin) {
           return this.$router.push("/home");

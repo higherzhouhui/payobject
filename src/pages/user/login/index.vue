@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 import { login } from "@/api/login";
 import { Message } from "element-ui";
 
@@ -96,7 +96,7 @@ export default {
       loading: false,
       imgLoading: true,
       t: Math.random(),
-      languge: Locol("lang") || "zh",
+      languge: Local("lang") || "zh",
       form: {
         username: "",
         password: "",
@@ -129,7 +129,7 @@ export default {
           type: "success",
           message: this.$t("dlcg"),
         });
-        Locol("userInfo", res.data);
+        Local("userInfo", res.data);
         this.loading = false;
 
         if (!res.data.admin) {
@@ -151,7 +151,7 @@ export default {
     },
     checkLang(lang) {
       this.languge = lang;
-      Locol("lang", lang);
+      Local("lang", lang);
       this.$i18n.locale = lang;
     },
   },

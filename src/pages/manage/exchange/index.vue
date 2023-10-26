@@ -55,6 +55,7 @@
           class="tables"
           :data="tableData"
           style="width: 100%; margin-top: 20px"
+          stripe
         >
           <el-table-column prop="accountName" :label="$t('zhmc')" width="180" />
           <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" />
@@ -77,10 +78,10 @@
                 @click="toDetail(scope.row)"
                 class="baseColor cursor"
                 style="cursor: pointer"
-                >查看详情</span
+                >详情</span
               >
               <span
-                class="baseColor cursor"
+                class="cursor"
                 style="cursor: pointer; margin-left: 10px"
                 @click="del1(scope.row.id)"
               >
@@ -102,16 +103,16 @@
         <el-button type="primary" @click="showAdd" class="primary"
           ><i class="el-icon-plus"></i>增加汇率</el-button
         >
-
         <el-table
           class="tables"
           :data="tableData2"
-          style="width: 100%; margin-top: 20px"
+          stripe
+          style="width: 100%; margin-top: 16px"
         >
           <el-table-column prop="exFrom" label="被兑换币种" width="180" />
           <el-table-column prop="exTarget" label="兑换币种" width="200" />
           <el-table-column prop="exRate" label="汇率" width="180" />
-          <el-table-column prop="createTime" :label="$t('cjrq')" width="180" />
+          <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" />
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
@@ -124,11 +125,11 @@
                   @click="toDetail2(scope.row)"
                   class="baseColor cursor"
                   style="cursor: pointer"
-                  >查看详情</span
+                  >修改</span
                 >
                 <span
-                  class="baseColor cursor"
-                  style="cursor: pointer; margin-left: 10px"
+                  class="cursor"
+                  style="cursor: pointer; margin-left: 10px; color: red"
                   @click="del2(scope.row.id)"
                 >
                   删除
@@ -147,7 +148,7 @@
     </template>
 
     <el-dialog
-      :title="!bankForm.id ? '增加收款账户' : '查看详情'"
+      :title="bankForm.id ? '修改' : '新增'"
       :visible.sync="dialogVisible"
       width="636px"
       top="3%"
@@ -161,58 +162,69 @@
         <el-form-item :label="$t('zhmc')" class="mb24">
           <el-input
             v-model="bankForm.accountName"
-            :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')" class="mb24">
-          <el-input
+          <!-- <el-input
             v-model="bankForm.country"
-            :disabled="!!bankForm.id"
-          ></el-input>
+          ></el-input> -->
+          <el-select v-model="bankForm.country" class="elSelect">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in aereList"
+              :key="item.value"
+              :label="language === 'zh' ? item.name : item.enName"
+              :value="item.coinCode"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')" class="mb24">
           <el-input
             v-model="bankForm.accountAdd"
-            :disabled="!!bankForm.id"
+            type="textarea"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')" class="mb24">
           <el-input
             v-model="bankForm.bankName"
-            :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('swift')" class="mb24">
           <el-input
             v-model="bankForm.swiftCode"
-            :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcode')" class="mb24">
           <el-input
             v-model="bankForm.bankCode"
-            :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcount')" class="mb24">
           <el-input
             v-model="bankForm.bankAccount"
-            :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')" class="mb24">
-          <el-input
+          <!-- <el-input
             v-model="bankForm.bankCountry"
-            :disabled="!!bankForm.id"
-          ></el-input>
+          ></el-input> -->
+          <el-select v-model="bankForm.country" class="elSelect">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in aereList"
+              :key="item.value"
+              :label="language === 'zh' ? item.name : item.enName"
+              :value="item.coinCode"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')" class="mb24">
           <el-input
             v-model="bankForm.bankAdd"
-            :disabled="!!bankForm.id"
+            type="textarea"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24">
+        <!-- <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("zzd") }}
           </label>
@@ -245,9 +257,9 @@
               >点击下载</a
             ></el-button
           >
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
-      <span slot="footer" class="dialog-footer" v-if="!bankForm.id">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
         <el-button
           type="primary"
@@ -258,7 +270,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="!bankForm2.id ? '增加汇率设置' : '查看详情'"
+      :title="!bankForm2.id ? '新增汇率' : '修改'"
       :visible.sync="dialogVisible2"
       width="636px"
       :before-close="
@@ -269,38 +281,37 @@
     >
       <el-form label-width="160px" ref="formss" :model="bankForm2">
         <el-form-item label="法币" class="mb24">
-          <el-select v-model="bankForm2.exFrom" :disabled="!!bankForm2.id">
+          <el-select v-model="bankForm2.exFrom" class="elSelect">
             <el-option
               style="padding: 0 10px"
               v-for="item in aereList"
               :key="item.value"
-              :label="item.name"
+              :label="language === 'zh' ? item.name : item.enName"
               :value="item.coinCode"
             />
           </el-select>
         </el-form-item>
-        <el-form-item class="mb24"> 兑换 </el-form-item>
-
+        <el-form-item class="mb24 duihuan">兑换</el-form-item>
         <el-form-item label="虚拟货币" class="mb24">
-          <el-select v-model="bankForm2.exTarget" :disabled="!!bankForm2.id">
+          <el-select v-model="bankForm2.exTarget"  class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in szList"
-              :key="item.coinCode"
-              :label="item.enName"
-              :value="item.coinCode"
+              v-for="item in (szList.length ? szList : ['USDT', 'BTN', 'BNB'])"
+              :key="item"
+              :label="item"
+              :value="item"
             />
           </el-select>
         </el-form-item>
-
         <el-form-item label="兑换汇率" class="mb24">
           <el-input
             v-model="bankForm2.exRate"
-            :disabled="!!bankForm2.id"
           ></el-input>
         </el-form-item>
+
+
       </el-form>
-      <span slot="footer" class="dialog-footer" v-if="!bankForm2.id">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible2 = false">{{
           $t("cancel")
         }}</el-button>
@@ -325,12 +336,14 @@ import {
 } from "@/api/exchange";
 import { Message } from "element-ui";
 import { upload } from "@/api/file";
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 import { countries, cryptocurrencies } from "@/api/login";
 export default {
   data() {
     return {
       dialogVisible2: false,
+      language: Local('lang') || 'zh',
+      bankloading: false,
       bankForm2: {},
       options2: ["", "gth", "qy", "hwgs"],
       type: "first",
@@ -416,28 +429,29 @@ export default {
     },
     async getFbList() {
       try {
-        let list = Locol("aereList");
+        let list = Local("aereList");
         if (list && list.length) {
           return (this.aereList = list);
         }
         let res = await countries();
         this.aereList = res.data;
-        Locol("aereList", res.data);
+        Local("aereList", res.data);
       } catch (error) {}
     },
     async getSzList() {
       try {
-        let list = Locol("szList");
+        let list = Local("szList");
         if (list && list.length) {
           return (this.szList = list);
         }
         let res = await cryptocurrencies();
         this.szList = res.data;
-        Locol("szList", res.data);
+        Local("szList", res.data);
       } catch (error) {}
     },
     showAdd() {
       this.dialogVisible2 = true;
+      this.bankForm2 = {}
     },
     showAdd1() {
       this.dialogVisible = true;
@@ -458,13 +472,15 @@ export default {
     },
     async sh2() {
       try {
-        await setExchange({ ...this.bankForm2, exTarget: "USDT" });
-        Message({
-          type: "success",
-          message: "添加成功",
-        });
-        this.getlist2();
+        const res = await setExchange({ ...this.bankForm2 });
         this.dialogVisible2 = false;
+        if (res.code === 200) {
+          Message({
+            type: "success",
+            message: "操作成功！",
+          });
+          this.getlist2();
+        }
       } catch (error) {}
     },
     async sh() {
@@ -509,15 +525,22 @@ export default {
 <style scoped lang="scss">
 .user_transferAccountMangement_contianer {
   .content {
-    margin-top: 40px;
-    padding: 24px;
+    padding: 16px;
     border-radius: 4px;
     border: 1px solid var(--unnamed, #dcdfe6);
     background: #fff;
-
     .form {
       margin-top: 40px;
     }
   }
+}
+.duihuan {
+  text-align: center;
+  font-weight: bold;
+  color: #000;
+  font-size: 15px;
+}
+.elSelect {
+  width: 100%;
 }
 </style>

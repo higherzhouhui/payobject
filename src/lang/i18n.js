@@ -1,6 +1,6 @@
 import zh from './zh.json'
 import en from './en.json'
-import { Locol } from '@/utils/index'
+import { Local } from '@/utils/index'
 
 import VueI18n from 'vue-i18n'
 import Vue from "vue";
@@ -10,7 +10,7 @@ const i18n = new VueI18n({
       zh,
       en,
   },
-  locale: Locol('lang') || 'zh',
+  locale: Local('lang') || 'zh',
 })
 
 //i18n

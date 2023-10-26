@@ -7,14 +7,14 @@ import store from '@/store/index'
 import './style/scssFile.scss'
 import router from './router/index.js'
 import i18n from "./lang/i18n";
-import { Locol } from '@/utils/index'
+import { Local } from '@/utils/index'
 import locale from 'element-ui/lib/locale'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 
 Vue.use(ElementUI, {
   i18n: function () {
-      if(Locol('lang') == 'en') {
+      if(Local('lang') == 'en') {
         locale.use(enLocale)
       }else{
         locale.use(zhLocale)

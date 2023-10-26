@@ -220,7 +220,7 @@
     </div>
 </template>
 <script>
-import { Locol } from '@/utils/index'
+import { Local } from '@/utils/index'
 import CountTo from 'vue-count-to'
 
 export default {
@@ -230,7 +230,7 @@ export default {
         return {
             headerShow: false,
             type: 0,
-            languge: Locol('lang') || 'zh',
+            languge: Local('lang') || 'zh',
             dialogTableVisible: false,
             noteice: '这里是提示',
             serviceLeftData: [
@@ -284,7 +284,7 @@ export default {
         },
         checkLang(lang) {
             this.languge = lang
-            Locol('lang', lang)
+            Local('lang', lang)
             this.$i18n.locale = lang;
             this.dialogTableVisible = false
         }

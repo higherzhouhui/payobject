@@ -227,7 +227,7 @@
 import { upload } from "@/api/file";
 import { SubKyc } from "@/api/user";
 import { Message } from "element-ui";
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 import { countries } from "@/api/login";
 export default {
   name: "verifiedOne",
@@ -235,7 +235,7 @@ export default {
   data() {
     return {
       loading: false,
-      languge: Locol("lang") || "zh",
+      languge: Local("lang") || "zh",
       form: {
         busType: 1,
         shareholder: "",
@@ -308,13 +308,13 @@ export default {
     },
     async getAreaCode() {
       try {
-        const list = Locol("aereList");
+        const list = Local("aereList");
         if (list && list.length) {
           return (this.aereList = list);
         }
         const res = await countries();
         this.aereList = res.data;
-        Locol("aereList", res.data);
+        Local("aereList", res.data);
       } catch (error) {}
     },
   },

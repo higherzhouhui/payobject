@@ -80,14 +80,14 @@
   </div>
 </template>
 <script>
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 import { logout } from "@/api/login";
 
 export default {
   name: "headerIndexManage",
   data() {
     return {
-      languge: Locol("lang") || "zh",
+      languge: Local("lang") || "zh",
       dialogTableVisible: false,
     };
   },
@@ -97,14 +97,14 @@ export default {
     },
     checkLang(lang) {
       this.languge = lang;
-      Locol("lang", lang);
+      Local("lang", lang);
       this.$i18n.locale = lang;
       this.dialogTableVisible = false;
       location.reload();
     },
     quit() {
       this.$router.push("/index");
-      Locol("userInfo", "");
+      Local("userInfo", "");
       logout();
     },
     open() {

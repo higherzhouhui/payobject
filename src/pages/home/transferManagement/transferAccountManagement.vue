@@ -246,13 +246,13 @@ import { getBankList, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
 import { upload, downLoad } from "@/api/file";
-import { Locol } from "@/utils/index"
+import { Local } from "@/utils/index"
 export default {
   name: "transferAccountMangement",
   components: { LinkPath },
   data() {
     return {
-      languge: Locol("lang") || "zh",
+      languge: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
       tableData: [],
@@ -315,13 +315,13 @@ export default {
   methods: {
     async getAreaCode() {
       try {
-        let list = Locol("aereList");
+        let list = Local("aereList");
         if (list && list.length) {
           return (this.aereList = list);
         }
         let res = await countries();
         this.aereList = res.data;
-        Locol("aereList", res.data);
+        Local("aereList", res.data);
       } catch (error) {}
     },
     toDetail(data) {

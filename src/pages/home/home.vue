@@ -192,14 +192,14 @@
     </div>
 </template>
 <script>
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 
 export default {
     name: 'homeHide',
     computed: {
         getPercentage() {
             let percentage = 0;
-            const accountKyc = Locol('accountKyc') || {};
+            const accountKyc = Local('accountKyc') || {};
             if (accountKyc.authBanks) {
                 percentage += 50
             }
@@ -228,7 +228,7 @@ export default {
                 name: '王小虎',
                 address: '上海市普陀区金沙江路 1516 弄'
             }],
-            accountKyc: Locol('accountKyc') || {},
+            accountKyc: Local('accountKyc') || {},
             dialogVisible: false,
             options3: [
                 {

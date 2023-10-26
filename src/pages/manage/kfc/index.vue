@@ -249,7 +249,7 @@ import { setCryAcc } from "@/api/exchange";
 
 import { Message } from "element-ui";
 import { cryptocurrencies } from "@/api/login";
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 
 export default {
   name: "KYCPage",
@@ -324,13 +324,13 @@ export default {
     },
     async getSzList() {
       try {
-        let list = Locol("szList");
+        let list = Local("szList");
         if (list && list.length) {
           return (this.szList = list);
         }
         let res = await cryptocurrencies();
         this.szList = res.data;
-        Locol("szList", res.data);
+        Local("szList", res.data);
       } catch (error) { }
     },
     sh2(id, type) {

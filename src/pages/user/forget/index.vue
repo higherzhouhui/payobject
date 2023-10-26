@@ -53,7 +53,7 @@
     </div>
 </template>
 <script>
-import { Locol } from '@/utils/index'
+import { Local } from '@/utils/index'
 import Ecode from '@/components/common/ecode.vue'
 export default {
     name: 'userRegister',
@@ -61,7 +61,7 @@ export default {
     data() {
         return {
             input3: '',
-            languge: Locol('lang') || 'zh',
+            languge: Local('lang') || 'zh',
             identifyCodes: "123456789abcdwerwshdjeJKDHRJHKPLMKQ",//绘制的随机数
             identifyCode: '',
             rules: {
@@ -106,7 +106,7 @@ export default {
         },
         checkLang(lang) {
             this.languge = lang
-            Locol('lang', lang)
+            Local('lang', lang)
             this.$i18n.locale = lang;
         }
     }

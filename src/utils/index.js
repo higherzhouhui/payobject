@@ -1,4 +1,4 @@
-export const Locol = function (key, value) {
+export const Local = function (key, value) {
     if (value === null) {
         localStorage.removeItem(key);
     } else if (value) {

@@ -35,7 +35,7 @@
 <script>
 import LinkPath from "@/components/common/linkPath.vue";
 import Trans from "./trans.vue";
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 
 export default {
   name: "userTransfers",
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     toTX() {
-      if (Locol("isSMZ")) {
+      if (Local("isSMZ")) {
         this.visible = true;
       } else {
         this.$confirm("当前交易需要完成实名认证，请先完成认证！", "提示", {

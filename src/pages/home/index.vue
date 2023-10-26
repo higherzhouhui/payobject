@@ -13,7 +13,7 @@
 import LeftBar from '@/layer/leftBars.vue'
 import HeaderBar from '@/layer/headerBar.vue'
 import {getAccountKyc} from '@/api/user'
-import { Locol } from "@/utils/index";
+import { Local } from "@/utils/index";
 
 export default {
     name: 'homeIndex',
@@ -23,9 +23,9 @@ export default {
     },
     created() {
         getAccountKyc().then(rt=>{
-            Locol('accountKyc', rt.data)
+            Local('accountKyc', rt.data)
             if(rt.data && rt.data.kyc && rt.data.kyc.kycStatus) {
-                Locol('isSMZ',  true)
+                Local('isSMZ',  true)
             }
         })
     },

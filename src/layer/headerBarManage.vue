@@ -138,7 +138,7 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  height: 224px;
+  height: 184px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
   border-bottom: 1px solid #dcdfe6;
   background: url("@/assets/images/manage/bg.png");

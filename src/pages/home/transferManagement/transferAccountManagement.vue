@@ -51,18 +51,18 @@
         </el-form-item>
       </el-form>
       <el-table class="tables" :data="tableData" style="width: 100%" stripe>
-        <el-table-column prop="accountName" :label="$t('zhmc')" width="180" />
-        <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" />
-        <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" />
-        <el-table-column prop="country" :label="$t('ssgj')" width="180" />
-        <el-table-column prop="bankStatus" :label="$t('kzt')" width="180">
+        <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip	/>
+        <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
+        <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip	/>
+        <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
+        <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
               {{ status[scope.row.bankStatus] }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" />
+        <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" show-overflow-tooltip/>
         <el-table-column
           prop="name"
           :label="$t('cz')"
@@ -94,7 +94,7 @@
       </el-table>
     </div>
     <el-dialog
-      :title="bankForm.id ? '查看详情' : $t('zjzzzh')"
+      :title="bankForm.id ? `${$t('查看详情')}` : $t('zjzzzh')"
       :visible.sync="dialogVisible"
       width="636px"
       top="3%"
@@ -126,9 +126,8 @@
               v-for="item in aereList"
               :key="item.id"
               :label="languge == 'zh' ? item.name : item.enName"
-              :value="languge == 'zh' ? item.name : item.enName"
+              :value="item.code"
             >
-              {{ languge == 'zh' ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
@@ -178,9 +177,8 @@
               v-for="item in aereList"
               :key="item.id"
               :label="languge == 'zh' ? item.name : item.enName"
-              :value="languge == 'zh' ? item.name : item.enName"
+              :value="item.code"
             >
-              {{ languge == 'zh' ? item.name : item.enName }}
             </el-option>
           </el-select>
 
@@ -188,6 +186,13 @@
         <el-form-item :label="$t('khdz')" class="mb24">
           <el-input
             v-model="bankForm.bankAdd"
+            :disabled="!!bankForm.id"
+            type="textarea"
+          ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('驳回理由')" class="mb24" v-if="bankForm.bankStatus == 2">
+          <el-input
+            v-model="bankForm.reason"
             :disabled="!!bankForm.id"
             type="textarea"
           ></el-input>

@@ -7,7 +7,7 @@
     </el-tabs>
     <template v-if="type == 'first'">
       <div class="content">
-        <el-form ref="form2" :inline="true" class="mt40">
+        <el-form ref="form2" :inline="true">
           <el-form-item>
             <el-input
               :placeholder="$t('bankname')"
@@ -54,19 +54,19 @@
         <el-table
           class="tables"
           :data="tableData"
-          style="width: 100%; margin-top: 20px"
+          style="width: 100%; margin-top: 16px"
           stripe
         >
-          <el-table-column prop="accountName" :label="$t('zhmc')" width="180" />
-          <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" />
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" />
-          <el-table-column prop="country" :label="$t('ssgj')" width="180" />
-          <el-table-column prop="bankStatus" :label="$t('kzt')" width="180">
+          <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
+          <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
+          <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
               {{ status[scope.row.bankStatus] }}
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjrq')" width="180" />
+          <el-table-column prop="createTime" :label="$t('cjrq')" width="180" show-overflow-tooltip/>
           <el-table-column
             prop="name"
             :label="$t('cz')"
@@ -174,7 +174,7 @@
               v-for="item in aereList"
               :key="item.value"
               :label="language === 'zh' ? item.name : item.enName"
-              :value="item.coinCode"
+              :value="item.code"
             />
           </el-select>
         </el-form-item>
@@ -208,13 +208,13 @@
           <!-- <el-input
             v-model="bankForm.bankCountry"
           ></el-input> -->
-          <el-select v-model="bankForm.country" class="elSelect">
+          <el-select v-model="bankForm.bankCountry" class="elSelect">
             <el-option
               style="padding: 0 10px"
               v-for="item in aereList"
               :key="item.value"
               :label="language === 'zh' ? item.name : item.enName"
-              :value="item.coinCode"
+              :value="item.code"
             />
           </el-select>
         </el-form-item>
@@ -224,7 +224,7 @@
             type="textarea"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item :label="$t('scwj')" class="mb24">
+        <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("zzd") }}
           </label>
@@ -257,7 +257,7 @@
               >点击下载</a
             ></el-button
           >
-        </el-form-item> -->
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
@@ -455,6 +455,7 @@ export default {
     },
     showAdd1() {
       this.dialogVisible = true;
+      this.bankForm = {}
     },
     async handlesuccess(e) {
       //   this.$refs["form"].resetFields();
@@ -529,9 +530,6 @@ export default {
     border-radius: 4px;
     border: 1px solid var(--unnamed, #dcdfe6);
     background: #fff;
-    .form {
-      margin-top: 40px;
-    }
   }
 }
 .duihuan {

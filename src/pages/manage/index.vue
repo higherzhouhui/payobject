@@ -26,9 +26,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .container {
-    padding: 224px 0;
+    padding: 184px 0;
     display: flex;
-    min-height: calc(100vh - 224px);
+    min-height: calc(100vh - 184px);
     box-sizing: border-box;
     width: 100%;
 
@@ -39,7 +39,7 @@ export default {
     .index_content {
         margin: 0 0 0 280px;
         box-sizing: border-box;
-        padding: 40px;
+        padding: 22px;
         background: #fff;
         width: 100%;
 

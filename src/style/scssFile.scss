@@ -264,3 +264,30 @@ input{
         transform: rotate(360deg);
     }
 }
+
+html::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+}
+
+html::-webkit-scrollbar {
+    width: 6px;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #6592d1;
+    border-radius: 20px;
+}
+
+div::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+}
+
+div::-webkit-scrollbar {
+    width: 6px;
+    height: 12px;
+}
+
+div::-webkit-scrollbar-thumb {
+    background: #6592d1;
+    border-radius: 20px;
+}

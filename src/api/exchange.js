@@ -35,13 +35,13 @@ export const delExchange = (data) => service({
     data,
     method: 'get'
 })
-// 添加红包地址
+// 添加钱包
 export const setCryAcc = (data) => service({
     url: '/setCryAcc',
     data,
     method: 'post'
 })
-// 添加红包地址
+// 添加钱包
 export const getCryAdd = (data) => service({
     url: '/getCryAdd',
     data,

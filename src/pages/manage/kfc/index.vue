@@ -340,8 +340,9 @@ export default {
         this.addressForm = {
           userId: list.userId,
           accountName: list.accountName,
-          cryAdd: res.cryAdd,
-          id: res.id
+          cryCode: res.data.cryCode,
+          cryAdd: res.data.cryAdd,
+          id: res.data.id
         }
       }
     },

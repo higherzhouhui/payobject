@@ -13,8 +13,8 @@
                         <div class="txt smrz">实名认证</div>
                         <el-button  @click="to('/home/verified')" type="primary" class="btn"><img class="icon" src="@/assets/images/home/smrz.png"
                                 alt="id">
-                                {{ getCurrentStatus }}
-                            </el-button>
+                            {{ getCurrentStatus }}
+                        </el-button>
                     </div>
                     <div class="item contentBg">
                         <div class="txt span">开通收款账户，从电商平台/支付网关等开始收款</div>
@@ -128,42 +128,42 @@
             ">
             <el-form label-width="160px" ref="formss" :model="accountKyc.kyc" class="formStyle">
               <el-form-item :label="$t('qymc')" class="mb24">
-                <el-input v-model="accountKyc.kyc.companyName" :disabled="true"></el-input>
+                <el-input v-model="accountKyc.kyc.companyName" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qyjydz')" class="mb24">
-                <el-input type="textarea" v-model="accountKyc.kyc.businessAdd" :disabled="true"></el-input>
+                <el-input type="textarea" v-model="accountKyc.kyc.businessAdd" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qylx')" class="mb24">
-                <el-select v-model="accountKyc.kyc.busType" :disabled="true">
+                <el-select v-model="accountKyc.kyc.busType" :readOnly="true">
                   <el-option style="padding: 0 10px" v-for="item in options3" :key="item.value" :label="$t(item.label)"
                     :value="item.value" />
                 </el-select>
               </el-form-item>
               <el-form-item :label="$t('qyzcszgj')" class="mb24">
-                <el-input v-model="accountKyc.kyc.country" :disabled="true"></el-input>
+                <el-input v-model="accountKyc.kyc.country" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('zcrq')" class="mb24">
-                <el-date-picker style="width: 100%" size="small" :disabled="true" value-format="timestamp"
+                <el-date-picker style="width: 100%" size="small" :readOnly="true" value-format="timestamp"
                   v-model="accountKyc.kyc.regDate" type="date" :placeholder="$t('xzsj')" />
               </el-form-item>
               <el-form-item :label="$t('qyyxq')" class="mb24">
-                <el-date-picker :disabled="true" style="width: 100%" value-format="timestamp" size="small"
+                <el-date-picker :readOnly="true" style="width: 100%" value-format="timestamp" size="small"
                   v-model="accountKyc.kyc.period" type="date" :placeholder="$t('xzsj')" />
               </el-form-item>
               <el-form-item :label="$t('ygyhkje')" class="mb24">
-                <el-input v-model="accountKyc.kyc.monthlyRemittance" :disabled="true"></el-input>
+                <el-input v-model="accountKyc.kyc.monthlyRemittance" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('ygyjybs')" class="mb24">
-                <el-input v-model="accountKyc.kyc.transactionsMonth" :disabled="true"></el-input>
+                <el-input v-model="accountKyc.kyc.transactionsMonth" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('dbjyed')" class="mb24">
-                <el-input v-model="accountKyc.kyc.transactionLimit" :disabled="true"></el-input>
+                <el-input v-model="accountKyc.kyc.transactionLimit" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('ywcjsm')" class="mb24">
-                <el-input type="textarea" v-model="accountKyc.kyc.businessScenario" :disabled="true"></el-input>
+                <el-input type="textarea" v-model="accountKyc.kyc.businessScenario" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qygw')" class="mb24">
-                <el-input v-model="accountKyc.kyc.webSite" :disabled="true"></el-input>
+                <el-input v-model="accountKyc.kyc.webSite" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24">
                 <label style="font-size: 12px">
@@ -188,7 +188,6 @@
               </el-form-item>
             </el-form>
           </el-dialog>
-
     </div>
 </template>
 <script>

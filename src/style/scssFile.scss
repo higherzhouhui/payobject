@@ -11,6 +11,10 @@
     margin-bottom: 24px;
 }
 
+.mb12 {
+    margin-bottom: 12px!important;
+}
+
 .mt40 {
     margin-top: 40px;
 }
@@ -70,6 +74,10 @@ $contentColor: #F4F4F4;
     height: 550px;
     overflow: auto;
     padding-right: 10px;
+}
+.moreDetail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 .contentBg {
     background: $contentColor;
@@ -303,4 +311,9 @@ div::-webkit-scrollbar {
 div::-webkit-scrollbar-thumb {
     background: #6592d1;
     border-radius: 20px;
+}
+.elPagination {
+    display: flex;
+    margin-top: 12px;
+    justify-content: flex-end;
 }

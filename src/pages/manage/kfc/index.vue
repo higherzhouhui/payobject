@@ -7,7 +7,7 @@
     </el-tabs>
     <template v-if="type == 'first'">
       <div class="content">
-        <el-form ref="form2" :inline="true" class="mt40">
+        <el-form ref="form2" :inline="true">
           <el-form-item>
             <el-input :placeholder="$t('bankname')" v-model="form.bankName" clearable></el-input>
           </el-form-item>
@@ -36,23 +36,24 @@
             </el-button> -->
           </el-form-item>
         </el-form>
-        <el-table class="tables" :data="tableData" style="width: 100%" :loading="loading" stripe>
-          <el-table-column prop="accountName" :label="$t('zhmc')" width="180" />
-          <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" />
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" />
-          <el-table-column prop="country" :label="$t('ssgj')" width="180" />
-          <el-table-column prop="bankStatus" :label="$t('kzt')" width="180">
+        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" stripe>
+          <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
+          <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
-              {{ status[scope.row.bankStatus] }}
+              <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
+                {{ status[scope.row.bankStatus] }}
+              </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjrq')" width="180" />
+          <el-table-column prop="createTime" :label="$t('cjrq')" minWidth="180" show-overflow-tooltip/>
           <el-table-column :label="$t('cz')" width="210" fixed="right">
             <template slot-scope="scope">
               <span @click="toDetail(scope.row)" class="baseColor cursor" style="cursor: pointer">查看详情</span>
-              <span v-if="scope.row.bankStatus == 1" class="cursor" style="cursor: pointer; margin-left: 10px; color: #111"
-                @click="dialogVisible3 = true">
-                添加数字货币地址
+              <span v-if="scope.row.bankStatus == 1" class="cursor" style="cursor: pointer; margin-left: 10px; color: red"
+                @click="showUsdtForm(scope.row)">
+                数字货币地址
               </span>
               <span v-if="scope.row.bankStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: green"
                 @click="sh(scope.row.id, true)">
@@ -72,23 +73,20 @@
     </template>
     <template v-else>
       <div class="content">
-        <el-table class="tables" :data="tableData2" style="width: 100%" :loading="loading" stripe>
-          <el-table-column prop="companyName" :label="$t('qymc')" width="180" />
-          <el-table-column prop="companyEnName" :label="$t('qyywmc')" width="200" />
-          <el-table-column prop="businessAdd" :label="$t('qyjydz')" width="180" />
-          <el-table-column prop="busType" :label="$t('qylx')" width="180">
+        <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading" stripe>
+          <el-table-column prop="companyName" :label="$t('qymc')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="businessAdd" :label="$t('qyjydz')" width="200" show-overflow-tooltip/>
+          <el-table-column prop="businessScenario" :label="$t('ywcjsm')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="kycStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
-              {{ status[scope.row.busType] }}
+              <el-tag :type="typeOption[scope.row.kycStatus]" class="elTag">
+                {{ status[scope.row.kycStatus] }}
+              </el-tag>
             </template>
           </el-table-column>
+          <el-table-column prop="createTime" :label="$t('cjrq')" minWidth="180" show-overflow-tooltip/>
 
-          <el-table-column prop="kycStatus" :label="$t('kzt')" width="180">
-            <template slot-scope="scope">
-              {{ status[scope.row.kycStatus] }}
-            </template>
-          </el-table-column>
 
-          <el-table-column prop="createTime" :label="$t('cjrq')" width="180" />
           <el-table-column :label="$t('cz')" width="210" fixed="right">
             <template slot-scope="scope">
               <div>
@@ -148,7 +146,7 @@
             {{ $t("zzd") }}
           </label>
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm.accountCer">点击下载</a></el-button>
+              :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -160,14 +158,11 @@
         <el-form-item :label="$t('qymc')" class="mb24">
           <el-input v-model="bankForm2.companyName" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('qyywmc')" class="mb24">
-          <el-input v-model="bankForm2.companyEnName" :disabled="true"></el-input>
-        </el-form-item>
         <el-form-item :label="$t('qyjydz')" class="mb24">
           <el-input type="textarea" v-model="bankForm2.businessAdd" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('qylx')" class="mb24">
-          <el-select v-model="bankForm2.busType" :disabled="true">
+          <el-select v-model="bankForm2.busType" :disabled="true" class="elSelect">
             <el-option style="padding: 0 10px" v-for="item in options3" :key="item.value" :label="$t(item.label)"
               :value="item.value" />
           </el-select>
@@ -203,32 +198,32 @@
             {{ $t("t1") }}
           </label>
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm2.regCer">点击下载</a></el-button>
+              :href="'/api/file/downLoad?url=' + bankForm2.regCer" target="_blank">点击下载</a></el-button>
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("t2") }}
           </label>
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm2.legal">点击下载</a></el-button>
+              :href="'/api/file/downLoad?url=' + bankForm2.legal" target="_blank">点击下载</a></el-button>
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24" v-if="bankForm2.busType != 1">
           <label style="font-size: 12px">
             {{ $t("t3") }}
           </label>
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm2.shareholder">点击下载</a></el-button>
+              :href="'/api/file/downLoad?url=' + bankForm2.shareholder" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="'添加地址'" :visible.sync="dialogVisible3" width="636px" :before-close="() => {
+    <el-dialog :title="'数字货币地址'" :visible.sync="dialogVisible3" width="636px" :before-close="() => {
       dialogVisible2 = false;
     }
       ">
       <el-form label-width="160px">
         <el-form-item label="币种" class="mb24">
-          <el-select v-model="addressForm.cryCode">
-            <el-option style="padding: 0 10px" v-for="item in szList" :key="item" :label="item" :value="item" />
+          <el-select v-model="addressForm.cryCode" class="elSelect">
+            <el-option style="padding: 0 10px" v-for="item in szList" :key="item.id" :label="item.name" :value="item.coinCode" />
           </el-select>
         </el-form-item>
         <el-form-item label="地址" class="mb24">
@@ -245,7 +240,7 @@
 </template>
 <script>
 import { getBankList, perBank, kycList, perKyc } from "@/api/bank";
-import { setCryAcc } from "@/api/exchange";
+import { setCryAcc, getCryAdd } from "@/api/exchange";
 
 import { Message } from "element-ui";
 import { cryptocurrencies } from "@/api/login";
@@ -255,6 +250,7 @@ export default {
   name: "KYCPage",
   data() {
     return {
+      typeOption: ["warning", "success", "danger"],
       szList: [],
       dialogVisible3: false,
       dialogVisible2: false,
@@ -301,6 +297,7 @@ export default {
           value: 3,
         },
       ],
+      dialogVisible3Loading: false,
     };
   },
   watch: {
@@ -315,12 +312,38 @@ export default {
   methods: {
     async addAddress() {
       try {
-        await setCryAcc(this.addressForm)
-        this.dialogVisible3 = false
+        this.dialogVisible3Loading = true
+        const res = await setCryAcc(this.addressForm)
+        this.dialogVisible3Loading = false
+        if (res.code === 200) {
+          Message({
+            type: "success",
+            message: "操作成功",
+          });
+          this.dialogVisible3 = false
+        }
       } catch (error) {
 
       }
 
+    },
+    async showUsdtForm(list) {
+      this.addressForm = {
+          userId: list.userId,
+          accountName: list.accountName,
+        }
+      this.dialogVisible3 = true
+      this.dialogVisible3Loading = true
+      const res = await getCryAdd({cryCode: 'USDT',  userId: list.userId})
+      this.dialogVisible3Loading = false
+      if (res.code === 200) {
+        this.addressForm = {
+          userId: list.userId,
+          accountName: list.accountName,
+          cryAdd: res.cryAdd,
+          id: res.id
+        }
+      }
     },
     async getSzList() {
       try {
@@ -395,19 +418,17 @@ export default {
 <style scoped lang="scss">
 .user_transferAccountMangement_contianer {
   .content {
-    margin-top: 40px;
     padding: 24px;
     border-radius: 4px;
     border: 1px solid var(--unnamed, #dcdfe6);
     background: #fff;
-
-    .form {
-      margin-top: 40px;
-    }
   }
 }
 
 .btn a{
   color: #fff;
+}
+.elSelect {
+  width: 100%;
 }
 </style>

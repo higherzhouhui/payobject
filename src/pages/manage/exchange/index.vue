@@ -56,16 +56,13 @@
           :data="tableData"
           style="width: 100%; margin-top: 16px"
           stripe
+          v-loading="loading"
         >
           <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
           <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
           <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
-          <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
-            <template slot-scope="scope">
-              {{ status[scope.row.bankStatus] }}
-            </template>
-          </el-table-column>
+          <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
           <el-table-column prop="createTime" :label="$t('cjrq')" width="180" show-overflow-tooltip/>
           <el-table-column
             prop="name"
@@ -78,7 +75,7 @@
                 @click="toDetail(scope.row)"
                 class="baseColor cursor"
                 style="cursor: pointer"
-                >详情</span
+                >修改</span
               >
               <span
                 class="cursor"
@@ -98,7 +95,7 @@
         </el-table>
       </div>
     </template>
-    <template v-else>
+    <template v-if="type == 'second'">
       <div class="content">
         <el-button type="primary" @click="showAdd" class="primary"
           ><i class="el-icon-plus"></i>增加汇率</el-button
@@ -108,6 +105,7 @@
           :data="tableData2"
           stripe
           style="width: 100%; margin-top: 16px"
+          v-loading="loading"
         >
           <el-table-column prop="exFrom" label="被兑换币种" width="180" />
           <el-table-column prop="exTarget" label="兑换币种" width="200" />
@@ -159,6 +157,18 @@
       "
     >
       <el-form label-width="160px" ref="formss" :model="bankForm" class="formStyle">
+        <el-form-item :label="$t('币种')" class="mb24">
+          <el-select v-model="bankForm.coinCode" class="elSelect">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in getNewaereList(aereList)"
+              :key="item.value"
+              :label="item.coinCode"
+              :value="item.coinCode"
+            />
+          </el-select>
+        </el-form-item>
+
         <el-form-item :label="$t('zhmc')" class="mb24">
           <el-input
             v-model="bankForm.accountName"
@@ -174,7 +184,7 @@
               v-for="item in aereList"
               :key="item.value"
               :label="language === 'zh' ? item.name : item.enName"
-              :value="item.code"
+              :value="item.areaCode"
             />
           </el-select>
         </el-form-item>
@@ -214,7 +224,7 @@
               v-for="item in aereList"
               :key="item.value"
               :label="language === 'zh' ? item.name : item.enName"
-              :value="item.code"
+              :value="item.areaCode"
             />
           </el-select>
         </el-form-item>
@@ -253,7 +263,7 @@
             size="small"
             type="primary"
             class="btn"
-            ><a :href="'/file/downLoad?url=' + bankForm.accountCer"
+            ><a :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank"
               >点击下载</a
             ></el-button
           >
@@ -296,10 +306,10 @@
           <el-select v-model="bankForm2.exTarget"  class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in (szList.length ? szList : ['USDT', 'BTN', 'BNB'])"
-              :key="item"
-              :label="item"
-              :value="item"
+              v-for="item in szList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.coinCode"
             />
           </el-select>
         </el-form-item>
@@ -367,7 +377,7 @@ export default {
         },
       ],
       status: ["审核中", "已通过", "驳回"],
-
+      loading: true,
       form: {
         // bankStatus: "",
       },
@@ -427,6 +437,15 @@ export default {
         })
         .catch((_) => {});
     },
+    getNewaereList(list) {
+      if (list.length) {
+        const arr = list.filter((obj, index, self) => {  
+          return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
+        })
+        return arr
+      }
+      return []
+    },
     async getFbList() {
       try {
         let list = Local("aereList");
@@ -463,11 +482,13 @@ export default {
       formData.append("file", e);
       try {
         let req = await upload(formData);
-        this.bankForm.accountCer = req.data[0];
-        Message({
-          type: "success",
-          message: this.$t("sccg"),
-        });
+        if (req.code == 200) {
+          this.bankForm.accountCer = req.data[0];
+          Message({
+            type: "success",
+            message: this.$t("sccg"),
+          });
+        }
       } catch (error) {}
       return false;
     },
@@ -505,13 +526,24 @@ export default {
     },
     async getlist() {
       try {
+        this.loading = true
         let req = await getDeposits(this.form);
+        this.loading = false
+        req.data.forEach(item => {
+          Object.keys(item.bank).forEach(key => {
+            if (key !== 'coinCode') {
+              item[key] = item.bank[key]
+            }
+          })
+        })
         this.tableData = req.data;
       } catch (error) {}
     },
     async getlist2() {
       try {
+        this.loading = true
         let req = await getExchanges();
+        this.loading = false
         this.tableData2 = req.data;
       } catch (error) {}
     },

@@ -126,7 +126,7 @@
               v-for="item in aereList"
               :key="item.id"
               :label="languge == 'zh' ? item.name : item.enName"
-              :value="item.code"
+              :value="item.areaCode"
             >
             </el-option>
           </el-select>
@@ -177,7 +177,7 @@
               v-for="item in aereList"
               :key="item.id"
               :label="languge == 'zh' ? item.name : item.enName"
-              :value="item.code"
+              :value="item.areaCode"
             >
             </el-option>
           </el-select>
@@ -228,7 +228,7 @@
             size="small"
             type="primary"
             class="btn"
-            ><a :href="'/api/file/downLoad?url=' + bankForm.accountCer">点击下载</a></el-button
+            ><a :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank">点击下载</a></el-button
           >
         </el-form-item>
       </el-form>

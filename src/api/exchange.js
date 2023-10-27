@@ -41,3 +41,9 @@ export const setCryAcc = (data) => service({
     data,
     method: 'post'
 })
+// 添加红包地址
+export const getCryAdd = (data) => service({
+    url: '/getCryAdd',
+    data,
+    method: 'get'
+})

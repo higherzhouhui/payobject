@@ -13,7 +13,7 @@
                         <div class="txt smrz">实名认证</div>
                         <el-button  @click="to('/home/verified')" type="primary" class="btn"><img class="icon" src="@/assets/images/home/smrz.png"
                                 alt="id">
-                                {{ accountKyc.kyc ? accountKyc.kyc.kycStatus ? '已认证' : '审核中' : '开始认证'}}
+                                {{ getCurrentStatus }}
                             </el-button>
                     </div>
                     <div class="item contentBg">
@@ -170,21 +170,21 @@
                   {{ $t("t1") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.regCer">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.regCer" target="_blank">点击下载</a></el-button>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24">
                 <label style="font-size: 12px">
                   {{ $t("t2") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.legal">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.legal" target="_blank">点击下载</a></el-button>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24" v-if="accountKyc.kyc.busType != 1">
                 <label style="font-size: 12px">
                   {{ $t("t3") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.shareholder">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.shareholder" target="_blank">点击下载</a></el-button>
               </el-form-item>
             </el-form>
           </el-dialog>
@@ -203,10 +203,24 @@ export default {
             if (accountKyc.authBanks) {
                 percentage += 50
             }
-            if (accountKyc.kyc && accountKyc.kyc.kycStatus) {
+            if (accountKyc.kyc && accountKyc.kyc.kycStatus == 1) {
                 percentage += 50
             }
             return percentage
+        },
+        getCurrentStatus() {
+            let status = '去认证'
+            const accountKyc = Local('accountKyc') || {};
+            if (accountKyc.kyc) {
+                status = '审核中'
+                if (accountKyc.kyc.kycStatus == 1) {
+                    status = '已认证'
+                }
+                if (accountKyc.kyc.kycStatus === 2) {
+                    status = `重新认证${accountKyc.kyc.reason}`
+                }
+            }
+            return status
         } 
     },
     data() {

@@ -74,9 +74,8 @@
                   v-for="item in aereList"
                   :key="item.id"
                   :label="languge == 'zh' ? item.name : item.enName"
-                  :value="item.code"
+                  :value="item.areaCode"
                 >
-                  {{ languge == 'zh' ? item.name : item.enName }}
                 </el-option>
               </el-select>
 

@@ -278,6 +278,19 @@ html::-webkit-scrollbar-thumb {
     border-radius: 20px;
 }
 
+form::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+}
+
+form::-webkit-scrollbar {
+    width: 6px;
+    height: 12px;
+}
+
+form::-webkit-scrollbar-thumb {
+    background: #6592d1;
+    border-radius: 20px;
+}
 div::-webkit-scrollbar-track-piece {
     background: #d3dce6;
 }

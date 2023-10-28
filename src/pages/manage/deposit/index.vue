@@ -70,7 +70,7 @@
         <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
-              {{ status[scope.row.reqStatus] }}
+              {{ usdtstatus[scope.row.reqStatus] }}
             </el-tag>
           </template>
         </el-table-column>
@@ -85,12 +85,12 @@
             <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
               {{ $t("详情") }}
             </el-button>
-            <el-button  type="success" class="btn" size="small" @click="passDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
+            <el-button  type="success" class="btn" size="small" @click="passDeposit(scope.row)" v-if="scope.row.reqStatus == 1">
               {{ $t("通过") }}
             </el-button>
-            <el-button  type="danger" class="btn" size="small" @click="rejectDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
+            <!-- <el-button  type="danger" class="btn" size="small" @click="rejectDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
               {{ $t("驳回") }}
-            </el-button>
+            </el-button> -->
           </template>
         </el-table-column>
         <div slot="empty">
@@ -263,6 +263,7 @@ export default {
       },
       loading: true,
       status: ['全部', '提交申请', '确认汇款', '财务审核', '完成', '驳回'],
+      usdtstatus: ['全部', '提交申请', '完成'],
       typeOption: ['', 'info','warning','','success','danger'],
       dialogVisible: false,
       currentSelectRow: {},

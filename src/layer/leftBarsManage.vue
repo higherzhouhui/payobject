@@ -17,6 +17,10 @@
                 <img class="icon" src="@/assets/images/manage/shgl.png" alt="">
                 <span slot="title">{{ $t('shgl') }}</span>
             </el-menu-item>
+            <el-menu-item index="/manage/deposit">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('入金列表') }}</span>
+            </el-menu-item>
             <el-menu-item index="/manage/transactionDetails">
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('ddgl') }}</span>

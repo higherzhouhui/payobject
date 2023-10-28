@@ -1,6 +1,5 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
-    <LinkPath :linkList="linkList" />
     <el-tabs v-model="moneyType">
       <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
       <el-tab-pane label="虚拟货币" name="usdt"></el-tab-pane>
@@ -41,25 +40,18 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="175"
+          width="190"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-upload
-                class="upload-demo"
-                action="null"
-                list-type="text"
-                accept=".pdf, .zip, .rar, image/*"
-                :before-upload="(e) => handlesuccess(e, scope.row)"
-                multiple
-                v-if="scope.row.reqStatus == 1"
-              >
-                <el-button size="small" type="primary" class="btn">
-                  {{ $t("上传汇款凭证") }}
-                </el-button>
-            </el-upload>
             <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
               {{ $t("详情") }}
+            </el-button>
+            <el-button  type="success" class="btn" size="small" @click="passDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
+              {{ $t("通过") }}
+            </el-button>
+            <el-button  type="danger" class="btn" size="small" @click="rejectDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
+              {{ $t("驳回") }}
             </el-button>
           </template>
         </el-table-column>
@@ -86,25 +78,18 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="175"
+          width="180"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-upload
-                class="upload-demo"
-                action="null"
-                list-type="text"
-                accept=".pdf, .zip, .rar, image/*"
-                :before-upload="(e) => handlesuccess(e, scope.row)"
-                multiple
-                v-if="scope.row.reqStatus == 1"
-              >
-                <el-button size="small" type="primary" class="btn">
-                  {{ $t("上传汇款凭证") }}
-                </el-button>
-            </el-upload>
             <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
               {{ $t("详情") }}
+            </el-button>
+            <el-button  type="success" class="btn" size="small" @click="passDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
+              {{ $t("通过") }}
+            </el-button>
+            <el-button  type="danger" class="btn" size="small" @click="rejectDeposit(scope.row)" v-if="scope.row.reqStatus == 2">
+              {{ $t("驳回") }}
             </el-button>
           </template>
         </el-table-column>
@@ -245,17 +230,27 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <el-dialog :title="`驳回`" :visible.sync="rejectdialogVisible" width="650" :before-close="() => { rejectdialogVisible = false; }">
+      <el-form label-width="90px" ref="formss">
+        <el-form-item :label="$t('驳回')" class="mb12">
+          <el-input type="textarea" v-model="reson"></el-input>
+        </el-form-item>
+        <div class="operationBtn">
+          <el-button type="info" size="large" class="btn" @click="rejectdialogVisible = false">取消</el-button>
+          <el-button type="primary" size="large" class="btn" @click="rejectConfirm">确认</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
-import LinkPath from "@/components/common/linkPath.vue";
-import { depositList, cryptDepositList, putDeposit, depCoins, withdrawAccounts, putCryptDeposit } from "@/api/out.js"
+import { depositList, cryptDepositList, putDeposit, putCryptDeposit, perDeposit, perCryptDeposit } from "@/api/out.js"
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
+import { getBankList } from "@/api/bank";
 
 export default {
   name: "userMoneyManagementTransfer",
-  components: { LinkPath },
   data() {
     return {
       tableData: [],
@@ -271,19 +266,19 @@ export default {
       typeOption: ['', 'info','warning','','success','danger'],
       dialogVisible: false,
       currentSelectRow: {},
-      inCoinList: [],
-      outCoinList: [],
+      bankList: [],
       current: 1,
       size: 10,
       total: 0,
       searchForm: {},
       moneyType: 'fabi',
+      rejectdialogVisible: false,
+      reson: ''
     };
   },
   created() {
     this.getInitData()
-    this.getRJBZ()
-    this.getCJZH()
+    this.getRequestBankList()
   },
   watch: {
     moneyType() {
@@ -291,6 +286,63 @@ export default {
     },
   },
   methods: {
+    async getRequestBankList() {
+      const res = await getBankList()
+      this.bankList = res.data
+    },
+    async rejectConfirm() {
+      let res;
+      const param = {
+        id: this.currentSelectRow.id,
+        pass: false,
+        depValue: this.currentSelectRow.reqValue,
+        memo: this.reson
+      }
+      if (this.moneyType == 'fabi') {
+        res = await perDeposit(param);
+      } else {
+        res = await perCryptDeposit(param)
+      }
+      if (res.code == 200) {
+        Message({
+          type: "success",
+          message: "操作成功",
+        });
+        this.getInitData()
+        this.rejectdialogVisible = false
+      }
+    },
+    rejectDeposit(row) {
+      this.currentSelectRow = row
+      this.reson = ''
+      this.rejectdialogVisible = true
+    },
+    passDeposit(row) {
+      this.$confirm("确认通过？")
+        .then(async (_) => {
+          try {
+            let res;
+            const param = {
+              id: row.id,
+              pass: true,
+              depValue: row.reqValue
+            }
+            if (this.moneyType == 'fabi') {
+              res = await perDeposit(param);
+            } else {
+              res = await perCryptDeposit(param)
+            }
+            if (res.code == 200) {
+              Message({
+                type: "success",
+                message: "操作成功",
+              });
+              this.getInitData()
+            }
+          } catch (error) { }
+        })
+        .catch((_) => { });
+    },
     handleSizeChange(val) {
       this.size = val
       this.getInitData()
@@ -302,32 +354,19 @@ export default {
     handleChangeSearch() {
       this.getInitData()
     },
-    async getRJBZ() {
-      try {
-        let res = await depCoins();
-        this.inCoinList = res.data;
-      } catch (error) {}
-    },
-    async getCJZH() {
-      try {
-        let res = await withdrawAccounts();
-        this.outCoinList = res.data;
-      } catch (error) {}
-    },
-    handleClick() {},
     handleShowDetail(row) {
       this.currentSelectRow = row
       if (this.moneyType == 'fabi') {
-        const inlist = this.inCoinList.filter(item => {return item.coinCode == row.coinCode})
-        const outlist = this.outCoinList.filter(item => {return item.id == row.sendBank})
+        const inlist = this.bankList.filter(item => {return item.id == row.bankId})
+        const outlist = this.bankList.filter(item => {return item.id == row.sendBank})
         if (inlist.length && outlist.length) {
           this.currentSelectRow = {
             ...this.currentSelectRow,
-            inbankAccount: inlist[0].bank.bankAccount,
-            inbankCode: inlist[0].bank.bankCode,
-            inbankCountry: inlist[0].bank.bankCountry,
-            inbankAdd: inlist[0].bank.bankAdd,
-            inswiftCode: inlist[0].bank.swiftCode,
+            inbankAccount: inlist[0].bankAccount,
+            inbankCode: inlist[0].bankCode,
+            inbankCountry: inlist[0].bankCountry,
+            inbankAdd: inlist[0].bankAdd,
+            inswiftCode: inlist[0].swiftCode,
             outbankAccount: outlist[0].bankAccount,
             outbankCode: outlist[0].bankCode,
             outbankCountry: outlist[0].bankCountry,
@@ -423,5 +462,9 @@ export default {
 .upload-demo {
   display: inline-block;
   margin-right: 12px;
+}
+.operationBtn {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

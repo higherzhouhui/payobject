@@ -233,7 +233,7 @@
         </div>
       </div>
     </div>
-    <el-dialog :title="`详情`" :visible.sync="dialogVisible" width="1000px" :before-close="() => {
+    <el-dialog :title="`详情`" :visible.sync="dialogVisible" :width="moneyType === 'fabi' ? '1000px' : '600px'" :before-close="() => {
       dialogVisible = false;
     }
       ">
@@ -421,6 +421,7 @@ export default {
     async getUsdtAddress() {
       const res = await getCryAdd({cryCode: this.usdtForm.coinCode})
       this.usdtForm.cryptAdd = res.data.cryAdd
+      this.usdtForm.userId = res.data.userId
     },
     async handlesuccess(e) {
       const size = e.size
@@ -448,7 +449,7 @@ export default {
             res = await putDeposit(this.currentSelectRow)
           }
           if (this.moneyType == 'usdt') {
-            res = await putDeposit(this.currentSelectRow)
+            res = await putCryptDeposit(this.currentSelectRow)
           }
           if (res.code === 200) {
             Message({
@@ -480,7 +481,8 @@ export default {
           message: "发起充值成功，请尽快完成转账，并上传转账凭证",
         });
         this.currentSelectRow = {
-          ...this.form,
+          id: res.data.id,
+          ...this.usdtForm,
         }
         this.dialogVisible = true
       }
@@ -511,6 +513,7 @@ export default {
         if (inlist.length && outlist.length) {
           this.currentSelectRow = {
             ...this.form,
+            id: res.data.id,
             accountName: inlist[0].bank.bankName,
             inbankAccount: inlist[0].bank.bankAccount,
             inbankCode: inlist[0].bank.bankCode,

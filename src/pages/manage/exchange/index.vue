@@ -302,7 +302,7 @@
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan">兑换</el-form-item>
-        <el-form-item label="虚拟货币" class="mb24">
+        <el-form-item label="数字货币" class="mb24">
           <el-select v-model="bankForm2.exTarget"  class="elSelect">
             <el-option
               style="padding: 0 10px"

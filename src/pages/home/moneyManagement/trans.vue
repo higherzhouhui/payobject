@@ -45,7 +45,7 @@
         <!-- <div class="title">2、{{ $t("txddxx3") }}</div> -->
         <el-tabs v-model="moneyType">
           <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
-          <el-tab-pane label="虚拟货币" name="usdt"></el-tab-pane>
+          <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
         </el-tabs>
         <div class="content_shadow">
           <el-form :model="form" label-width="120px" v-if="moneyType == 'fabi'">

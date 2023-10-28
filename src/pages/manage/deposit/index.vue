@@ -2,7 +2,7 @@
   <div class="user_moneymanagement_transfer_contianer">
     <el-tabs v-model="moneyType">
       <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
-      <el-tab-pane label="虚拟货币" name="usdt"></el-tab-pane>
+      <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
     </el-tabs>
     <div class="content">
       <el-form ref="form2" :inline="true" class="mt12">
@@ -161,7 +161,7 @@
           <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
-          <el-input v-model="currentSelectRow.sendAccount" :readOnly="true"></el-input>
+          <el-input v-model="currentSelectRow.momo" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('创建时间')" class="mb12">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
@@ -203,7 +203,7 @@
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
-          <el-input v-model="currentSelectRow.sendAccount" :readOnly="true"></el-input>
+          <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('创建时间')" class="mb12">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
@@ -282,6 +282,7 @@ export default {
   },
   watch: {
     moneyType() {
+      this.current = 1
       this.getInitData()
     },
   },

@@ -78,7 +78,7 @@
         <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
-              {{ status[scope.row.reqStatus] }}
+              {{ usdtstatus[scope.row.reqStatus] }}
             </el-tag>
           </template>
         </el-table-column>
@@ -267,6 +267,7 @@ export default {
         name: "",
       },
       loading: true,
+      usdtstatus: ['全部', '提交申请', '完成'],
       status: ['全部', '提交申请', '确认汇款', '财务审核', '完成', '驳回'],
       typeOption: ['', 'info','warning','','success','danger'],
       dialogVisible: false,

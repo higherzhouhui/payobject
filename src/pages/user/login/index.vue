@@ -138,6 +138,7 @@ export default {
         this.$router.push("/manage");
       } catch (error) {
         this.loading = false;
+        this.form.code = ''
         this.randomT();
       }
     },

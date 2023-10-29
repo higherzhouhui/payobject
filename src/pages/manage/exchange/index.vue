@@ -294,9 +294,9 @@
           <el-select v-model="bankForm2.exFrom" class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in aereList"
+              v-for="item in getNewaereList(aereList)"
               :key="item.value"
-              :label="language === 'zh' ? item.name : item.enName"
+              :label="item.coinCode"
               :value="item.coinCode"
             />
           </el-select>

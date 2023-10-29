@@ -32,9 +32,18 @@ export const balanceList = (data) => service({
 export const putWithdraw = (data) => service({
     url: '/putWithdraw',
     data,
-    method: 'get'
+    method: 'post'
 })
 
+// 出金申请usdt
+// coinCode 出金币种代码
+// reqValue 申请出金金额
+// bankId 接款账户
+export const putCryptWithdraw = (data) => service({
+    url: '/putCryptWithdraw',
+    data,
+    method: 'post'
+})
 
 // 兑换金额
 // exFrom 出金来源货币
@@ -74,6 +83,14 @@ export const depositList = (data) => service({
     data,
     method: 'post'
 })
+
+// 出金列表
+export const withdrawList = (data) => service({
+    url: '/withdrawList',
+    data,
+    method: 'post'
+})
+
 // 入金申请
 export const putDeposit = (data) => service({
     url: '/putDeposit',
@@ -81,7 +98,12 @@ export const putDeposit = (data) => service({
     method: 'post'
 })
 
-
+// 出金列表（数字货币—）
+export const cryptWithdrawList = (data) => service({
+    url: '/cryptWithdrawList',
+    data,
+    method: 'post'
+})
 
 // 加密货币入金申请详情
 export const cryptDepositGet = (data) => service({
@@ -127,6 +149,20 @@ export const perDeposit = (data) => service({
 // admin 入金审核
 export const perCryptDeposit = (data) => service({
     url: '/perCryptDeposit',
+    data,
+    method: 'post'
+})
+
+// 出金审核提交转账记录
+export const perWithdraw = (data) => service({
+    url: '/perWithdraw',
+    data,
+    method: 'post'
+})
+
+// admin 出金审核数字货币
+export const perCryptWithdraw = (data) => service({
+    url: '/perCryptWithdraw',
     data,
     method: 'post'
 })

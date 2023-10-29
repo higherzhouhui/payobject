@@ -65,7 +65,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="$t('余额：')" v-if="form.coinCode">
+            <el-form-item :label="$t('余额')" v-if="form.coinCode">
               <el-input
                 class="form-item-1"
                 :value="getBalanceNumber(form.coinCode)"
@@ -88,13 +88,13 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item :label="$t('账号：')" v-if="form.sendBank">
+            <el-form-item :label="$t('账号')" v-if="form.sendBank">
               <el-input
                 class="form-item-1"
                 :value="getBankInfo(form.sendBank, 'bankCode')"
               />
             </el-form-item>
-            <el-form-item :label="$t('注册地址：')" v-if="form.sendBank">
+            <el-form-item :label="$t('注册地址')" v-if="form.sendBank">
               <el-input
                 class="form-item-1"
                 :value="getBankInfo(form.sendBank, 'accountAdd')"
@@ -194,7 +194,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="$t('余额：')" v-if="usdtForm.coinCode">
+            <el-form-item :label="$t('余额')" v-if="usdtForm.coinCode">
               <el-input
                 class="form-item-1"
                 :value="getBalanceNumber(usdtForm.coinCode)"

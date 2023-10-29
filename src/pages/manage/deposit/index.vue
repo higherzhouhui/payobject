@@ -174,7 +174,7 @@
               class="upload-demo"
               action="null"
               list-type="text"
-              accept=".pdf, .zip, .rar, *image"
+              accept=".pdf, .zip, .rar, image/*"
               :before-upload="(e) => handlesuccess(e, currentSelectRow)"
               multiple
               v-if="currentSelectRow.reqStatus == 1"
@@ -216,7 +216,7 @@
               class="upload-demo"
               action="null"
               list-type="text"
-              accept=".pdf, .zip, .rar, *image"
+              accept=".pdf, .zip, .rar, image/*"
               :before-upload="(e) => handlesuccess(e, currentSelectRow)"
               multiple
               v-if="currentSelectRow.reqStatus == 1"
@@ -236,8 +236,8 @@
           <el-input type="textarea" v-model="reson"></el-input>
         </el-form-item>
         <div class="operationBtn">
-          <el-button type="info" size="large" class="btn" @click="rejectdialogVisible = false">取消</el-button>
-          <el-button type="primary" size="large" class="btn" @click="rejectConfirm">确认</el-button>
+          <el-button type="info" size="large" class="mbtn" @click="rejectdialogVisible = false">取消</el-button>
+          <el-button type="primary" size="large" class="mbtn" @click="rejectConfirm">确认</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -468,5 +468,9 @@ export default {
 .operationBtn {
   display: flex;
   justify-content: flex-end;
+  .mbtn {
+    padding: 8px 14px;
+    font-size: 15px;
+  }
 }
 </style>

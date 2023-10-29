@@ -3,7 +3,7 @@
         <div class="top_info flex flex_align_center">
             <img class="avatar pointer" src="@/assets/images/home/user.png" alt="">
             <div>
-                <div class="name">小龙人</div>
+                <div class="name">{{Local('userInfo').username}}</div>
                 <div class="des">管理员</div>
             </div>
 
@@ -21,6 +21,10 @@
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('入金列表') }}</span>
             </el-menu-item>
+            <el-menu-item index="/manage/withdraw">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('出金列表') }}</span>
+            </el-menu-item>
             <el-menu-item index="/manage/transactionDetails">
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('ddgl') }}</span>
@@ -33,8 +37,14 @@
     </div>
 </template>
 <script>
+import { Local } from "@/utils/index"
 export default {
     name: "leftBarManage",
+    data() {
+        return {
+            Local: Local
+        }
+    },
     computed: {
         path() {
             return this.$store.state.user.path

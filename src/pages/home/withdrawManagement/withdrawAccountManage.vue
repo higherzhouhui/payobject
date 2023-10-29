@@ -1,93 +1,364 @@
 <template>
-    <div class="user_withdrawManage_withdrawAccountManage_contianer">
-        <LinkPath :linkList="linkList" />
-        <div class="content">
-            <div class="s_title flex flex_align_center flex_jc_sb">
-                <div>{{ $t('txzhgl') }}</div> <el-button type="primary" class="primary"><i class="el-icon-plus"></i>{{ $t('tjtxzh') }}</el-button></div>
-            <el-form ref="form" :inline="true" class="mt40">
-                <el-form-item>
-                    <el-date-picker v-model="value1" type="datetimerange" :range-separator="$t('to')"
-                        :start-placeholder="$t('startTime')" :end-placeholder="$t('endTime')">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item>
-                    <el-input :placeholder="$t('zhbm')" v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-input :placeholder="$t('zhbh')" v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-select v-model="value" :placeholder="$t('ddjd')">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-select v-model="value" :placeholder="$t('qxzzhlx')">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" class="primary">
-                        <i class="el-icon-search"></i>{{ $t('search') }}
-                    </el-button>
-                    <el-button class="primary">
-                        <i class="el-icon-refresh"></i>{{ $t('reset') }}
-                    </el-button>
-                </el-form-item>
-            </el-form>
-            <el-table class="tables" :data="tableData" style="width: 100%">
-                <el-table-column prop="name" :label="$t('zhbmm')" width="180" />
-                <el-table-column prop="name" :label="$t('yhzh')" width="200" />
-                <el-table-column prop="name" :label="$t('zhssd')" width="180" />
-                <el-table-column prop="name" :label="$t('zhyt')" width="180" />
-                <el-table-column prop="name" :label="$t('kzt')" width="180" />
-                <el-table-column prop="name" :label="$t('cjrq')" width="180" />
-                <el-table-column prop="name" :label="$t('cz')" width="180" fixed="right" />
-                <div slot="empty">
-                    <el-empty :description="$t('nodata')" style="padding: 50px;"></el-empty>
-                </div>
-            </el-table>
-        </div>
+    <div class="user_moneymanagement_transfer_contianer">
+      <LinkPath :linkList="linkList" />
+      <el-tabs v-model="moneyType">
+        <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
+        <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
+      </el-tabs>
+      <div class="content">
+        <el-form ref="form2" :inline="true" class="mt12">
+          <el-form-item>
+            <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
+              <el-option
+                style="padding: 0 20px"
+                v-for="(item, index) in status"
+                :key="item"
+                :label="item"
+                :value="index"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleChangeSearch" class="primary">
+              <i class="el-icon-search"></i>{{ $t("search") }}
+            </el-button>
+          </el-form-item>
+        </el-form>
+        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
+          <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
+          <el-table-column prop="reqValue" :label="$t('出款金额')" width="100" />
+          <el-table-column prop="targetCode" :label="$t('目标币种')" width="100" />
+          <el-table-column prop="changeValue" :label="$t('预计到账金额')" width="130" />
+          <el-table-column prop="reqStatus" :label="$t('状态')" width="120">
+            <template slot-scope="scope">
+              <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
+                {{ status[scope.row.reqStatus] }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" />
+          <el-table-column
+            prop="name"
+            :label="$t('cz')"
+            width="100"
+            fixed="right"
+          >
+            <template slot-scope="scope">
+              <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
+                {{ $t("详情") }}
+              </el-button>
+            </template>
+          </el-table-column>
+          <div slot="empty">
+            <el-empty
+              :description="$t('nodata')"
+              style="padding: 50px"
+            ></el-empty>
+          </div>
+        </el-table>
+        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
+          <el-table-column prop="srcCode" :label="$t('币种')" width="200" />
+          <el-table-column prop="cryptAdd" :label="$t('收款钱包地址')" width="180" />
+          <el-table-column prop="coinCode" :label="$t('目标币种')" width="200" />
+          <el-table-column prop="reqValue" :label="$t('出款金额')" width="180" />
+          <el-table-column prop="witValue" :label="$t('预计到账金额')" width="180" />
+          <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
+          <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
+            <template slot-scope="scope">
+              <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
+                {{ usdtstatus[scope.row.reqStatus] }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" />
+          <el-table-column
+            prop="name"
+            :label="$t('cz')"
+            width="100"
+            fixed="right"
+          >
+            <template slot-scope="scope">
+              <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
+                {{ $t("详情") }}
+              </el-button>
+            </template>
+          </el-table-column>
+          <div slot="empty">
+            <el-empty
+              :description="$t('nodata')"
+              style="padding: 50px"
+            ></el-empty>
+          </div>
+        </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          class="elPagination"
+          >
+        </el-pagination>
+      </div>
+  
+      <el-dialog :title="`详情`" :visible.sync="dialogVisible" width="1000px" :before-close="() => {
+        dialogVisible = false;
+      }
+        ">
+        <el-form label-width="160px" ref="formss" :model="currentSelectRow" class="formStyle moreDetail">
+          <el-form-item :label="$t('币种')" class="mb12">
+            <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('出款金额')" class="mb12">
+            <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('收款账户名称')" class="mb12">
+            <el-input v-model="currentSelectRow.accountName" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('预计到账金额')" class="mb12">
+            <el-input v-model="currentSelectRow.changeValue" :readOnly="true"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('收款账号')" class="mb12">
+            <el-input v-model="currentSelectRow.outbankAccount" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('代码')" class="mb12">
+            <el-input v-model="currentSelectRow.outbankCode" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('所属国家')" class="mb12">
+            <el-input v-model="currentSelectRow.outbankCountry" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('所在地址')" class="mb12">
+            <el-input type="textarea" v-model="currentSelectRow.outbankAdd" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('SWIFT')" class="mb12">
+            <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+            <el-input v-model="currentSelectRow.momo" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('创建时间')" class="mb12">
+            <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('修改时间')" class="mb12">
+            <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('汇款凭证')" class="mb12" v-if="currentSelectRow.reqProof">
+            <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
+                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
+      <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
+        <el-form label-width="160px" ref="formss" :model="currentSelectRow">
+          <el-form-item :label="$t('币种')" class="mb12">
+            <el-input v-model="currentSelectRow.srcCode" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('收款钱包地址')" class="mb12">
+            <el-input v-model="currentSelectRow.cryptAdd" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('目标币种')" class="mb12">
+            <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('出款金额')" class="mb12">
+            <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('预计到账金额')" class="mb12">
+            <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+            <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('创建时间')" class="mb12">
+            <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('修改时间')" class="mb12">
+            <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('汇款凭证')" class="mb12" v-if="currentSelectRow.reqProof">
+            <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
+                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
     </div>
-</template>
-<script>
-import LinkPath from '@/components/common/linkPath.vue'
-export default {
-    name: 'userWithdrawAccountManage',
+  </template>
+  <script>
+  import LinkPath from "@/components/common/linkPath.vue";
+  import { withdrawList, cryptWithdrawList, perWithdraw, depCoins, withdrawAccounts, perCryptWithdraw } from "@/api/out.js"
+  import { upload } from "@/api/file";
+  import { Message } from "element-ui";
+  
+  export default {
+    name: "userMoneyManagementTransfer",
     components: { LinkPath },
     data() {
-        return {
-            tableData: [],
-            options: [],
-            type: '1',
-            dialogVisible2: false,
-            linkList: ['txgl', 'txzhgl'],
-            form: {
-                name: ''
-            }
-        }
+      return {
+        tableData: [],
+        options: [],
+        type: "1",
+        usdtdialogVisible: false,
+        linkList: ["txgl", "出款申请查询"],
+        form: {
+          name: "",
+        },
+        loading: true,
+        usdtstatus: ['全部', '审核中', '完成'],
+        status: ['全部', '审核中', '完成', '财务审核', '完成', '驳回'],
+        typeOption: ['', 'info','success','success','danger'],
+        dialogVisible: false,
+        currentSelectRow: {},
+        inCoinList: [],
+        outCoinList: [],
+        current: 1,
+        size: 10,
+        total: 0,
+        searchForm: {},
+        moneyType: 'fabi',
+      };
+    },
+    created() {
+      this.getInitData()
+      this.getRJBZ()
+      this.getCJZH()
+    },
+    watch: {
+      moneyType() {
+        this.current = 1
+        this.getInitData()
+      },
     },
     methods: {
-        handleClick() {
-
+      handleSizeChange(val) {
+        this.size = val
+        this.getInitData()
+      },
+      handleCurrentChange(val) {
+        this.current = val
+        this.getInitData()
+      },
+      handleChangeSearch() {
+        this.getInitData()
+      },
+      async getRJBZ() {
+        try {
+          let res = await depCoins();
+          this.inCoinList = res.data;
+        } catch (error) {}
+      },
+      async getCJZH() {
+        try {
+          let res = await withdrawAccounts();
+          this.outCoinList = res.data;
+        } catch (error) {}
+      },
+      handleClick() {},
+      handleShowDetail(row) {
+        this.currentSelectRow = row
+        if (this.moneyType == 'fabi') {
+          const outlist = this.outCoinList.filter(item => {return item.id == row.bankId})
+          if (outlist.length) {
+            this.currentSelectRow = {
+              ...this.currentSelectRow,
+              outbankAccount: outlist[0].bankAccount,
+              outbankCode: outlist[0].bankCode,
+              outbankCountry: outlist[0].bankCountry,
+              outbankAdd: outlist[0].bankAdd,
+              outswiftCode: outlist[0].swiftCode,
+            }
+          }
+          this.dialogVisible = true
         }
-    }
-}
-</script>
-<style scoped lang="scss">
-.user_withdrawManage_withdrawAccountManage_contianer {
+        if (this.moneyType == 'usdt') {
+          this.usdtdialogVisible = true
+        }
+  
+      },
+      async getInitData() {
+        this.loading = true
+        let res;
+        if (this.moneyType == 'fabi') {
+          res = await withdrawList({...this.searchForm, current: this.current, size: this.size })
+        } else if (this.moneyType == 'usdt') {
+          res = await cryptWithdrawList({...this.searchForm, current: this.current, size: this.size })
+        }
+        this.loading = false
+        if (res.code === 200) {
+          this.tableData = res.data.records
+          this.total = res.data.total
+        }
+      },
+      async handlesuccess(e, row) {
+        const data = row
+        const size = e.size
+        if (size > 20 * 1024 * 1024) {
+          Message({
+            type: "error",
+            message: this.$t('sizeOver'),
+          });
+          return
+        }
+        const formData = new FormData();
+        formData.append("file", e);
+        try {
+          const req = await upload(formData);
+          if (req.code === 200) {
+            data.reqProof = req.data[0];
+            data.reqStatus = 2
+            let res;
+            if (this.moneyType == 'fabi') {
+              res = await perWithdraw(data)
+            } else {
+              res = await perCryptWithdraw(data)
+            }
+            if (res.code === 200) {
+              Message({
+                type: "success",
+                message: this.$t('sccg'),
+              });
+            }
+          }
+        } catch (error) {
+          console.log(error)
+        }
+        return false;
+      },
+    },
+  };
+  </script>
+  <style scoped lang="scss">
+  .user_moneymanagement_transfer_contianer {
     .content {
+      padding: 24px;
+      border-radius: 4px;
+      border: 1px solid var(--unnamed, #dcdfe6);
+      background: #fff;
+      // box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
+  
+      .empty_box {
         margin-top: 40px;
-        padding: 24px;
+        padding: 56px 0;
         border-radius: 4px;
-        border: 1px solid var(--unnamed, #DCDFE6);
-        background: #FFF;
-
-        .form {
-            margin-top: 40px;
-        }
+        border: 1px solid var(--unnamed, #dcdfe6);
+        background: var(--unnamed, #fff);
+        box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
+        text-align: center;
+      }
     }
-}
-</style>
+  }
+  .btn {
+    padding: 4px 10px;
+  }
+  .btn a {
+    color: #fff;
+  }
+  .upload-demo {
+    display: inline-block;
+    margin-right: 12px;
+  }
+  </style>
+  

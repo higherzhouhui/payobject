@@ -26,11 +26,12 @@
         </el-form-item>
       </el-form>
       <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
-        <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" />
-        <el-table-column prop="coinCode" :label="$t('币种')" width="200" />
-        <el-table-column prop="reqValue" :label="$t('充值金额')" width="180" />
-        <el-table-column prop="sendAccount" :label="$t('汇款账户')" width="180" />
-        <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
+        <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" show-overflow-tooltip/>
+        <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
+        <el-table-column prop="reqValue" :label="$t('出款金额')" width="100" />
+        <el-table-column prop="targetCode" :label="$t('目标币种')" width="100" />
+        <el-table-column prop="changeValue" :label="$t('预计到账金额')" width="130" />
+        <el-table-column prop="reqStatus" :label="$t('状态')" width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
               {{ status[scope.row.reqStatus] }}
@@ -41,11 +42,11 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="175"
+          width="190"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-upload
+            <!-- <el-upload
                 class="upload-demo"
                 action="null"
                 list-type="text"
@@ -57,9 +58,15 @@
                 <el-button size="small" type="primary" class="btn">
                   {{ $t("上传汇款凭证") }}
                 </el-button>
-            </el-upload>
+            </el-upload> -->
             <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
               {{ $t("详情") }}
+            </el-button>
+            <el-button type="success" class="btn" size="small" @click="passWithdraw(scope.row)" v-if="scope.row.reqStatus == 1">
+              {{ $t("通过") }}
+            </el-button>
+            <el-button type="danger" class="btn" size="small" @click="rejectWithdraw(scope.row)"  v-if="scope.row.reqStatus == 1">
+              {{ $t("驳回") }}
             </el-button>
           </template>
         </el-table-column>
@@ -71,10 +78,12 @@
         </div>
       </el-table>
       <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
+        <el-table-column prop="srcCode" :label="$t('币种')" width="200" />
         <el-table-column prop="cryptAdd" :label="$t('收款钱包地址')" width="180" />
-        <el-table-column prop="coinCode" :label="$t('币种')" width="200" />
-        <el-table-column prop="reqValue" :label="$t('充值金额')" width="180" />
-        <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" />
+        <el-table-column prop="coinCode" :label="$t('目标币种')" width="200" />
+        <el-table-column prop="reqValue" :label="$t('出款金额')" width="180" />
+        <el-table-column prop="witValue" :label="$t('预计到账金额')" width="180" />
+        <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
         <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
@@ -86,11 +95,11 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="175"
+          width="190"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-upload
+            <!-- <el-upload
                 class="upload-demo"
                 action="null"
                 list-type="text"
@@ -102,9 +111,15 @@
                 <el-button size="small" type="primary" class="btn">
                   {{ $t("上传汇款凭证") }}
                 </el-button>
-            </el-upload>
+            </el-upload> -->
             <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
               {{ $t("详情") }}
+            </el-button>
+            <el-button type="success" class="btn" size="small" @click="passWithdraw(scope.row)" v-if="scope.row.reqStatus == 1">
+              {{ $t("通过") }}
+            </el-button>
+            <el-button type="danger" class="btn" size="small" @click="rejectWithdraw(scope.row)"  v-if="scope.row.reqStatus == 1">
+              {{ $t("驳回") }}
             </el-button>
           </template>
         </el-table-column>
@@ -136,41 +151,27 @@
         <el-form-item :label="$t('币种')" class="mb12">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('充值金额')" class="mb12">
+        <el-form-item :label="$t('出款金额')" class="mb12">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('收款账户名称')" class="mb12">
           <el-input v-model="currentSelectRow.accountName" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款账号名称')" class="mb12">
-          <el-input v-model="currentSelectRow.sendAccount" :readOnly="true"></el-input>
+        <el-form-item :label="$t('预计到账金额')" class="mb12">
+          <el-input v-model="currentSelectRow.changeValue" :readOnly="true"></el-input>
         </el-form-item>
+
         <el-form-item :label="$t('收款账号')" class="mb12">
-          <el-input v-model="currentSelectRow.inbankAccount" :readOnly="true"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('汇款账号')" class="mb12">
           <el-input v-model="currentSelectRow.outbankAccount" :readOnly="true"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('代码')" class="mb12">
-          <el-input v-model="currentSelectRow.inbankCode" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('代码')" class="mb12">
           <el-input v-model="currentSelectRow.outbankCode" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('所属国家')" class="mb12">
-          <el-input v-model="currentSelectRow.inbankCountry" :readOnly="true"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('所属国家')" class="mb12">
           <el-input v-model="currentSelectRow.outbankCountry" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('所在地址')" class="mb12">
-          <el-input type="textarea" v-model="currentSelectRow.inbankAdd" :readOnly="true"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('所在地址')" class="mb12">
           <el-input type="textarea" v-model="currentSelectRow.outbankAdd" :readOnly="true"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('SWIFT')" class="mb12">
-          <el-input v-model="currentSelectRow.inswiftCode" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('SWIFT')" class="mb12">
           <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
@@ -190,32 +191,35 @@
               action="null"
               list-type="text"
               accept=".pdf, .zip, .rar, image/*"
-              :before-upload="(e) => handlesuccess(e, currentSelectRow)"
+              :before-upload="(e) => handlesuccess(e)"
               multiple
-              v-if="currentSelectRow.reqStatus == 1"
+              v-if="currentSelectRow.withdrawProof == null"
             >
               <el-button size="small" type="primary" class="btn">
                 {{ $t("上传汇款凭证") }}
               </el-button>
           </el-upload>
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn" v-else><a
-              :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+              :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
     <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
       <el-form label-width="160px" ref="formss" :model="currentSelectRow" class="formStyle">
         <el-form-item :label="$t('币种')" class="mb12">
-          <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
+          <el-input v-model="currentSelectRow.srcCode" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('收款钱包地址')" class="mb12">
           <el-input v-model="currentSelectRow.cryptAdd" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('充值金额')" class="mb12">
+        <el-form-item :label="$t('目标币种')" class="mb12">
+          <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('出款金额')" class="mb12">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款钱包地址')" class="mb12">
-          <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
+        <el-form-item :label="$t('预计到账金额')" class="mb12">
+          <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
           <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
@@ -227,29 +231,60 @@
           <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('汇款凭证')" class="mb12">
+          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
+              :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <el-dialog :title="`出金确认`" :visible.sync="passdialogVisible" width="650" :before-close="() => { passdialogVisible = false; }">
+      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
+        <el-form-item :label="$t('实际到账金额')" class="mb12">
+          <el-input type="number" v-model="currentSelectRow.depValue"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('手续费')" class="mb12">
+          <el-input type="number" v-model="currentSelectRow.commission"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('汇款凭证')" class="mb12">
           <el-upload
               class="upload-demo"
               action="null"
               list-type="text"
               accept=".pdf, .zip, .rar, image/*"
-              :before-upload="(e) => handlesuccess(e, currentSelectRow)"
+              :before-upload="(e) => handlesuccess(e)"
               multiple
-              v-if="currentSelectRow.reqStatus == 1"
+              v-if="currentSelectRow.withdrawProof == null"
             >
               <el-button size="small" type="primary" class="btn">
                 {{ $t("上传汇款凭证") }}
               </el-button>
           </el-upload>
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn" v-else><a
-              :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+            :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
+        <div class="operationBtn">
+          <el-button type="info" size="large" class="mbtn" @click="passdialogVisible = false">取消</el-button>
+          <el-button type="primary" size="large" class="mbtn" @click="passConfirm" v-loading="operationLoading">确认</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
+    <el-dialog :title="`驳回`" :visible.sync="rejectdialogVisible" width="650" :before-close="() => { rejectdialogVisible = false; }">
+      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
+        <el-form-item :label="$t('拒绝理由')" class="mb12">
+          <el-input type="textarea" v-model="currentSelectRow.memo"></el-input>
+        </el-form-item>
+        <div class="operationBtn">
+          <el-button type="info" size="large" class="mbtn" @click="rejectdialogVisible = false">取消</el-button>
+          <el-button type="primary" size="large" class="mbtn" @click="rejectConfirm" v-loading="operationLoading">确认</el-button>
+        </div>
       </el-form>
     </el-dialog>
   </div>
 </template>
 <script>
 import LinkPath from "@/components/common/linkPath.vue";
-import { depositList, cryptDepositList, putDeposit, depCoins, withdrawAccounts, putCryptDeposit } from "@/api/out.js"
+import { withdrawList, cryptWithdrawList, perWithdraw, depCoins, perCryptWithdraw } from "@/api/out.js"
+import { getBankList } from "@/api/bank.js"
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
 
@@ -262,14 +297,14 @@ export default {
       options: [],
       type: "1",
       usdtdialogVisible: false,
-      linkList: ["zjgl", "hh"],
+      linkList: ["txgl", "出款申请查询"],
       form: {
         name: "",
       },
       loading: true,
-      usdtstatus: ['全部', '提交申请', '完成'],
-      status: ['全部', '提交申请', '确认汇款', '财务审核', '完成', '驳回'],
-      typeOption: ['', 'info','warning','','success','danger'],
+      usdtstatus: ['全部', '审核中', '完成'],
+      status: ['全部', '审核中', '完成', '财务审核', '完成', '驳回'],
+      typeOption: ['', 'info','success','success','danger'],
       dialogVisible: false,
       currentSelectRow: {},
       inCoinList: [],
@@ -279,6 +314,9 @@ export default {
       total: 0,
       searchForm: {},
       moneyType: 'fabi',
+      passdialogVisible: false,
+      rejectdialogVisible: false,
+      operationLoading: false,
     };
   },
   created() {
@@ -293,6 +331,60 @@ export default {
     },
   },
   methods: {
+    async passConfirm() {
+      try {
+        const data = {
+          ...this.currentSelectRow,
+          pass: true,
+        }
+        this.operationLoading = true
+        if (this.moneyType == 'fabi') {
+          await perWithdraw(data)
+        } else {
+          await perCryptWithdraw(data)
+        }
+        Message({
+          type: "success",
+          message: this.$t('操作成功！'),
+        });
+        this.operationLoading = false
+        this.passdialogVisible = false
+        this.getInitData()
+      } catch {
+        this.operationLoading = false
+      }
+    },
+    async rejectConfirm() {
+      try {
+        const data = {
+          ...this.currentSelectRow,
+          pass: false,
+        }
+        this.operationLoading = true
+        if (this.moneyType == 'fabi') {
+          await perWithdraw(data)
+        } else {
+          await perCryptWithdraw(data)
+        }
+        Message({
+          type: "success",
+          message: this.$t('操作成功！'),
+        });
+        this.operationLoading = false
+        this.passdialogVisible = false
+        this.getInitData()
+      } catch {
+        this.operationLoading = false
+      }
+    },
+    passWithdraw(row) {
+      this.currentSelectRow = row
+      this.passdialogVisible = true
+    },
+    rejectWithdraw(row) {
+      this.currentSelectRow = row
+      this.rejectdialogVisible = true
+    },
     handleSizeChange(val) {
       this.size = val
       this.getInitData()
@@ -312,7 +404,7 @@ export default {
     },
     async getCJZH() {
       try {
-        let res = await withdrawAccounts();
+        let res = await getBankList(); 
         this.outCoinList = res.data;
       } catch (error) {}
     },
@@ -320,16 +412,10 @@ export default {
     handleShowDetail(row) {
       this.currentSelectRow = row
       if (this.moneyType == 'fabi') {
-        const inlist = this.inCoinList.filter(item => {return item.coinCode == row.coinCode})
-        const outlist = this.outCoinList.filter(item => {return item.id == row.sendBank})
-        if (inlist.length && outlist.length) {
+        const outlist = this.outCoinList.filter(item => {return item.id == row.bankId})
+        if (outlist.length) {
           this.currentSelectRow = {
             ...this.currentSelectRow,
-            inbankAccount: inlist[0].bank.bankAccount,
-            inbankCode: inlist[0].bank.bankCode,
-            inbankCountry: inlist[0].bank.bankCountry,
-            inbankAdd: inlist[0].bank.bankAdd,
-            inswiftCode: inlist[0].bank.swiftCode,
             outbankAccount: outlist[0].bankAccount,
             outbankCode: outlist[0].bankCode,
             outbankCountry: outlist[0].bankCountry,
@@ -348,9 +434,9 @@ export default {
       this.loading = true
       let res;
       if (this.moneyType == 'fabi') {
-        res = await depositList({...this.searchForm, current: this.current, size: this.size })
+        res = await withdrawList({...this.searchForm, current: this.current, size: this.size })
       } else if (this.moneyType == 'usdt') {
-        res = await cryptDepositList({...this.searchForm, current: this.current, size: this.size })
+        res = await cryptWithdrawList({...this.searchForm, current: this.current, size: this.size })
       }
       this.loading = false
       if (res.code === 200) {
@@ -358,8 +444,7 @@ export default {
         this.total = res.data.total
       }
     },
-    async handlesuccess(e, row) {
-      const data = row
+    async handlesuccess(e) {
       const size = e.size
       if (size > 20 * 1024 * 1024) {
         Message({
@@ -373,20 +458,11 @@ export default {
       try {
         const req = await upload(formData);
         if (req.code === 200) {
-          data.reqProof = req.data[0];
-          data.reqStatus = 2
-          let res;
-          if (this.moneyType == 'fabi') {
-            res = await putDeposit(data)
-          } else {
-            res = await putCryptDeposit(data)
-          }
-          if (res.code === 200) {
-            Message({
-              type: "success",
-              message: this.$t('sccg'),
-            });
-          }
+          this.currentSelectRow.withdrawProof = req.data[0];
+          Message({
+            type: "success",
+            message: this.$t('sccg'),
+          });
         }
       } catch (error) {
         console.log(error)
@@ -425,5 +501,13 @@ export default {
 .upload-demo {
   display: inline-block;
   margin-right: 12px;
+}
+.operationBtn {
+  display: flex;
+  justify-content: flex-end;
+  .mbtn {
+    padding: 8px 14px;
+    font-size: 15px;
+  }
 }
 </style>

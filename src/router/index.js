@@ -35,6 +35,8 @@ const router = new VueRouter({
                 { path: 'exchange', component: () => import('../pages/manage/exchange/index.vue') },
                 { path: 'deposit', component: () => import('../pages/manage/deposit/index.vue') },
                 { path: 'withdraw', component: () => import('../pages/manage/withdraw/index.vue') },
+                { path: 'change', component: () => import('../pages/manage/change/index.vue') },
+                { path: 'bill', component: () => import('../pages/manage/bill/index.vue') },
                 { path: 'transactionDetails', component: () => import('../pages/home/transactionInquiry/transactionDetails.vue') },
                 { path: 'fundingDetails', component: () => import('../pages/home/transactionInquiry/fundingDetails.vue') },
             ]

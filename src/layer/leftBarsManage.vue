@@ -25,6 +25,14 @@
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('出金列表') }}</span>
             </el-menu-item>
+            <el-menu-item index="/manage/bill">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('交易明细') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/manage/change">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('兑换明细') }}</span>
+            </el-menu-item>
             <el-menu-item index="/manage/transactionDetails">
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('ddgl') }}</span>

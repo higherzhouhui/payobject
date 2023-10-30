@@ -119,10 +119,10 @@
 <script>
 import LinkPath from "@/components/common/linkPath.vue";
 import TypeOne from "./form/type1.vue";
+import { Local } from "@/utils/index";
 
 export default {
   components: { LinkPath, TypeOne },
-
   name: "userVerified",
   data() {
     return {
@@ -131,7 +131,16 @@ export default {
       qyType: 1,
     };
   },
+  created() {
+    this.calcCurrentStep()
+  },
   methods: {
+    calcCurrentStep() {
+      const accountKyc = Local('accountKyc') || {}
+      if (accountKyc.kyc && accountKyc.kyc.kycStatus == 2) {
+        this.tips = 4
+      } 
+    },
     checkTips(index, type, qytype) {
       if (index == 2) {
         this.linkList = ["jxrz", "wysk"];

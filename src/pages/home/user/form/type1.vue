@@ -261,7 +261,7 @@ export default {
   created() {
     this.form.busType = this.type;
     this.getAreaCode();
-    // getAccountKyc()
+    this.getAccountKyc()
   },
   methods: {
     async sendForm() {
@@ -316,6 +316,12 @@ export default {
         Local("aereList", res.data);
       } catch (error) {}
     },
+    getAccountKyc() {
+      const accountKyc = Local('accountKyc') || {}
+      if (accountKyc.kyc && accountKyc.kyc.kycStatus == 2) {
+        this.form = accountKyc.kyc
+      }
+    }
   },
 };
 </script>

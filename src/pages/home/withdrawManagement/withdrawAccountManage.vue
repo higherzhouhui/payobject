@@ -67,7 +67,7 @@
           <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
           <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
             <template slot-scope="scope">
-              <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
+              <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
                 {{ usdtstatus[scope.row.reqStatus] }}
               </el-tag>
             </template>
@@ -138,8 +138,8 @@
           <el-form-item :label="$t('SWIFT')" class="mb12">
             <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
-            <el-input v-model="currentSelectRow.momo" :readOnly="true"></el-input>
+          <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.memo">
+            <el-input type="textarea" v-model="currentSelectRow.memo" :readOnly="true"></el-input>
           </el-form-item>
           <el-form-item :label="$t('创建时间')" class="mb12">
             <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
@@ -170,7 +170,7 @@
           <el-form-item :label="$t('预计到账金额')" class="mb12">
             <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+          <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
             <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
           </el-form-item>
           <el-form-item :label="$t('创建时间')" class="mb12">
@@ -204,12 +204,13 @@
         usdtdialogVisible: false,
         linkList: ["txgl", "出款申请查询"],
         form: {
-          name: "",
+          name: "", 
         },
         loading: true,
-        usdtstatus: ['全部', '审核中', '完成'],
-        status: ['全部', '审核中', '完成', '财务审核', '完成', '驳回'],
-        typeOption: ['', 'info','success','success','danger'],
+        usdtstatus: ['全部', '审核中', '完成', '驳回'],
+        usdttypeOption: ['', 'info','success','danger','danger', 'danger'],
+        status: ['全部', '审核中', '处理中', '完成', '完成', '驳回'],
+        typeOption: ['', 'info','warning','success','danger', 'danger'],
         dialogVisible: false,
         currentSelectRow: {},
         inCoinList: [],

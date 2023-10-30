@@ -160,8 +160,8 @@
         <el-form-item :label="$t('SWIFT')" class="mb12">
           <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
-          <el-input v-model="currentSelectRow.momo" :readOnly="true"></el-input>
+        <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+          <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('创建时间')" class="mb12">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
@@ -202,7 +202,7 @@
         <el-form-item :label="$t('汇款钱包地址')" class="mb12">
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+        <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
           <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('创建时间')" class="mb12">

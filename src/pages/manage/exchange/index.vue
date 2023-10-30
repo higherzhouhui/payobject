@@ -79,7 +79,7 @@
               >
               <span
                 class="cursor"
-                style="cursor: pointer; margin-left: 10px"
+                style="cursor: pointer; margin-left: 10px; color: red"
                 @click="del1(scope.row.id)"
               >
                 删除
@@ -107,9 +107,9 @@
           style="width: 100%; margin-top: 16px"
           v-loading="loading"
         >
-          <el-table-column prop="exFrom" label="被兑换币种" width="180" />
-          <el-table-column prop="exTarget" label="兑换币种" width="200" />
-          <el-table-column prop="exRate" label="汇率" width="180" />
+          <el-table-column prop="exFrom" label="被兑换币种" width="100" />
+          <el-table-column prop="exTarget" label="兑换币种" width="100" />
+          <el-table-column prop="exRate" label="汇率" width="120" />
           <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" />
           <el-table-column
             prop="createTime"
@@ -290,25 +290,25 @@
       "
     >
       <el-form label-width="160px" ref="formss" :model="bankForm2">
-        <el-form-item label="法币" class="mb24">
+        <el-form-item label="被兑换币种" class="mb24">
           <el-select v-model="bankForm2.exFrom" class="elSelect">
             <el-option
               style="padding: 0 10px"
               v-for="item in getNewaereList(aereList)"
-              :key="item.value"
+              :key="item.id"
               :label="item.coinCode"
               :value="item.coinCode"
             />
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan">兑换</el-form-item>
-        <el-form-item label="数字货币" class="mb24">
+        <el-form-item label="兑换币种" class="mb24">
           <el-select v-model="bankForm2.exTarget"  class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in szList"
+              v-for="item in getAllCoin(aereList, szList)"
               :key="item.id"
-              :label="item.name"
+              :label="item.coinCode"
               :value="item.coinCode"
             />
           </el-select>
@@ -442,6 +442,16 @@ export default {
         const arr = list.filter((obj, index, self) => {  
           return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
         })
+        return arr
+      }
+      return []
+    },
+    getAllCoin(areaList, usdtLit) {
+      if (areaList.length) {
+        const arr = areaList.filter((obj, index, self) => {  
+          return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
+        })
+        arr.concat(usdtLit)
         return arr
       }
       return []

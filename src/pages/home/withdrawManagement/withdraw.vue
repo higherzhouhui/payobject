@@ -96,7 +96,7 @@
                 :placeholder="$t('请输入出款金额')"
               />
             </el-form-item>
-            <el-form-item :label="$t('预计金额')" v-if="form.bankId && form.coinCode && form.reqValue">
+            <el-form-item :label="$t('预计金额')" v-if="form.coinCode && form.reqValue">
               <el-input
                 class="form-item-1"
                 v-model="calculateMoney"
@@ -146,6 +146,7 @@
                 class="form-item-1"
                 v-model="usdtForm.srcCode"
                 :placeholder="$t('请选择要出款的币种')"
+                disabled
               >
                 <el-option
                   style="padding: 0 20px"
@@ -304,7 +305,7 @@ export default {
         coinCode: "",
         reqValue: "",
         cryptAdd: "",
-        srcCode: "",
+        srcCode: "USDT",
       },
       moneyType: 'fabi',
       tableData: [],
@@ -336,7 +337,7 @@ export default {
   created() {
     this.getCjZh();
     this.getBalanceList();
-    this.getCJBZ();
+    // this.getCJBZ();
     this.getRJBZ();
     this.getSzList();
     //   calculateRate({
@@ -352,7 +353,13 @@ export default {
         if (this.form.coinCode && this.form.targetCode && this.form.reqValue) {
           this.calculateRateMoney()
         }
-      }, 
+        if (this.form.coinCode) {
+          this.getCJBZ()
+        }
+      },
+    },
+    moneyType() {
+      this.getCJBZ()
     }
   },
   methods: {
@@ -461,7 +468,12 @@ export default {
     // 获取出金币种
     async getCJBZ() {
       try {
-        let res = await withdrawCoins();
+        let res
+        if (this.moneyType == 'fabi') {
+          res = await withdrawCoins({code: this.form.coinCode});
+        } else {
+          res = await withdrawCoins({code: this.usdtForm.srcCode})
+        }
         this.outCoinList = res.data;
       } catch (error) {}
     },

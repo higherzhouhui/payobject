@@ -102,6 +102,9 @@ export default {
       this.dialogTableVisible = false;
       location.reload();
     },
+    reload() {
+      location.reload()
+    },
     quit() {
       this.$router.push("/index");
       Local("userInfo", "");

@@ -300,7 +300,7 @@
         </el-form-item>
       </el-form>
 
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow" class="formStyle" v-if="moneyType == 'usdt'">
+      <el-form label-width="160px" ref="formss" :model="currentSelectRow" v-if="moneyType == 'usdt'">
         <el-form-item :label="$t('币种')" class="mb12">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>

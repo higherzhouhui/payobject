@@ -42,7 +42,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="190"
+          width="210"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -62,7 +62,10 @@
             <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
               {{ $t("详情") }}
             </el-button>
-            <el-button type="success" class="btn" size="small" @click="passWithdraw(scope.row)" v-if="scope.row.reqStatus == 1">
+            <el-button type="success" class="btn" size="small" @click="currentSelectRow = scope.row; passConfirm()" v-if="scope.row.reqStatus == 1">
+              {{ $t("确认申请") }}
+            </el-button>
+            <el-button type="success" class="btn" size="small" @click="passWithdraw(scope.row)" v-if="scope.row.reqStatus == 2">
               {{ $t("通过") }}
             </el-button>
             <el-button type="danger" class="btn" size="small" @click="rejectWithdraw(scope.row)"  v-if="scope.row.reqStatus == 1">
@@ -86,7 +89,7 @@
         <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
         <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
           <template slot-scope="scope">
-            <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
+            <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
               {{ usdtstatus[scope.row.reqStatus] }}
             </el-tag>
           </template>
@@ -154,6 +157,12 @@
         <el-form-item :label="$t('出款金额')" class="mb12">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('实际到账金额')" class="mb12" v-if="currentSelectRow.withdrawValue">
+          <el-input v-model="currentSelectRow.withdrawValue" :readOnly="true"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('手续费')" class="mb12" v-if="currentSelectRow.withdrawValue">
+          <el-input v-model="currentSelectRow.commission" :readOnly="true"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('收款账户名称')" class="mb12">
           <el-input v-model="currentSelectRow.accountName" :readOnly="true"></el-input>
         </el-form-item>
@@ -176,8 +185,8 @@
         <el-form-item :label="$t('SWIFT')" class="mb12">
           <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
-          <el-input v-model="currentSelectRow.momo" :readOnly="true"></el-input>
+        <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+          <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('创建时间')" class="mb12">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
@@ -205,7 +214,7 @@
       </el-form>
     </el-dialog>
     <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow" class="formStyle">
+      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
         <el-form-item :label="$t('币种')" class="mb12">
           <el-input v-model="currentSelectRow.srcCode" :readOnly="true"></el-input>
         </el-form-item>
@@ -221,8 +230,8 @@
         <el-form-item :label="$t('预计到账金额')" class="mb12">
           <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('拒绝理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
-          <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
+        <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.memo">
+          <el-input type="textarea" v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('创建时间')" class="mb12">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
@@ -230,7 +239,7 @@
         <el-form-item :label="$t('修改时间')" class="mb12">
           <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')" class="mb12">
+        <el-form-item :label="$t('汇款凭证')" class="mb12" v-if="current.reqProof">
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
@@ -239,10 +248,10 @@
 
     <el-dialog :title="`出金确认`" :visible.sync="passdialogVisible" width="650" :before-close="() => { passdialogVisible = false; }">
       <el-form label-width="160px" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('实际到账金额')" class="mb12">
-          <el-input type="number" v-model="currentSelectRow.depValue"></el-input>
+        <el-form-item :label="$t('实际到账金额')" class="mb12" v-if="moneyType == 'fabi'">
+          <el-input type="number" v-model="currentSelectRow.withdrawValue"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('手续费')" class="mb12">
+        <el-form-item :label="$t('手续费')" class="mb12" v-if="moneyType == 'fabi'">
           <el-input type="number" v-model="currentSelectRow.commission"></el-input>
         </el-form-item>
         <el-form-item :label="$t('汇款凭证')" class="mb12">
@@ -270,7 +279,7 @@
     </el-dialog>
     <el-dialog :title="`驳回`" :visible.sync="rejectdialogVisible" width="650" :before-close="() => { rejectdialogVisible = false; }">
       <el-form label-width="160px" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('拒绝理由')" class="mb12">
+        <el-form-item :label="$t('驳回理由')" class="mb12">
           <el-input type="textarea" v-model="currentSelectRow.memo"></el-input>
         </el-form-item>
         <div class="operationBtn">
@@ -302,9 +311,10 @@ export default {
         name: "",
       },
       loading: true,
-      usdtstatus: ['全部', '审核中', '完成'],
-      status: ['全部', '审核中', '完成', '财务审核', '完成', '驳回'],
-      typeOption: ['', 'info','success','success','danger'],
+      usdtstatus: ['全部', '审核中', '完成', '驳回'],
+      usdttypeOption: ['', 'info','success','danger','danger', 'danger'],
+      status: ['全部', '审核中', '处理中', '完成', '完成', '驳回'],
+      typeOption: ['', 'info','warning','success','danger', 'danger'],
       dialogVisible: false,
       currentSelectRow: {},
       inCoinList: [],
@@ -371,7 +381,7 @@ export default {
           message: this.$t('操作成功！'),
         });
         this.operationLoading = false
-        this.passdialogVisible = false
+        this.rejectdialogVisible = false
         this.getInitData()
       } catch {
         this.operationLoading = false
@@ -461,7 +471,7 @@ export default {
           this.currentSelectRow.withdrawProof = req.data[0];
           Message({
             type: "success",
-            message: this.$t('sccg'),
+            message: this.$t('sccg'), 
           });
         }
       } catch (error) {

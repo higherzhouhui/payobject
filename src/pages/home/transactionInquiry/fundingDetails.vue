@@ -24,7 +24,7 @@
             <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
               <el-table-column prop="coinCode" :label="$t('币种')" width="100" show-overflow-tooltip/>
               <el-table-column prop="billValue" :label="$t('金额')" width="100" />
-              <el-table-column prop="billType" :label="$t('汇率')" width="100">
+              <el-table-column prop="billType" :label="$t('类型')" width="100">
                 <template slot-scope="scope">
                     {{ scope.row.billType == 1 ?  '充值' : '提现'}}
                 </template>

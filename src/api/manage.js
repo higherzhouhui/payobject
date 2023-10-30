@@ -6,3 +6,18 @@ export const getKycListt = (data) => service({
     data,
     method: 'get'
 })
+
+
+// 余额变更明细
+export const getBillDetails = (data) => service({
+    url: '/billDetails',
+    data,
+    method: 'post'
+})
+
+// 兑换详情
+export const getchangeDetails = (data) => service({
+    url: '/changeDetails',
+    data,
+    method: 'post'
+})

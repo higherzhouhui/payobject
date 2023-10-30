@@ -2,127 +2,69 @@
     <div class="user_transactionInquiry_transactionDetails_contianer">
         <LinkPath :linkList="linkList" />
         <div class="content">
-            <div class="s_title flex flex_align_center flex_jc_sb">
-                <div>{{ $t('jymx') }}</div> <el-button v-if="type == 2" type="primary" class="primary"><i class="el-icon-plus"></i>{{ $t('tjtxzh') }}</el-button></div>
-            <el-tabs class="mt30" v-model="type" @tab-click="handleClick">
-                <el-tab-pane :label="$t('tx')" name="1">
-                    <el-form ref="form" :inline="true" class="mt40">
-                        <el-form-item>
-                            <el-date-picker v-model="value1" type="datetimerange" :range-separator="$t('to')"
-                                :start-placeholder="$t('startTime')" :end-placeholder="$t('endTime')">
-                            </el-date-picker>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input :placeholder="$t('skzh')" v-model="form.name"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-select v-model="value" :placeholder="$t('ddzt')">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                    :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" class="primary">
-                                <i class="el-icon-search"></i>{{ $t('search') }}
-                            </el-button>
-                            <el-button class="primary">
-                                <i class="el-icon-refresh"></i>{{ $t('reset') }}
-                            </el-button>
-                        </el-form-item>
-                    </el-form>
-                    <el-table class="tables" :data="tableData" style="width: 100%">
-                        <el-table-column prop="name" :label="$t('tksj')" width="180" />
-                        <el-table-column prop="name" :label="$t('jyje')" width="200" />
-                        <el-table-column prop="name" :label="$t('ddzt')" width="180" />
-                        <el-table-column prop="name" :label="$t('skzh')" width="180" />
-                        <el-table-column prop="name" :label="$t('jydh')" width="180" />
-                        <el-table-column prop="name" :label="$t('cz')" width="180" fixed="right" />
-                        <div slot="empty">
-                            <el-empty :description="$t('nodata')" style="padding: 50px;"></el-empty>
-                        </div>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane :label="$t('zz')" name="2">
-                    <el-form ref="form" :inline="true" class="mt40">
-                        <el-form-item>
-                            <el-date-picker v-model="value1" type="datetimerange" :range-separator="$t('to')"
-                                :start-placeholder="$t('startTime')" :end-placeholder="$t('endTime')">
-                            </el-date-picker>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input :placeholder="$t('skzh')" v-model="form.name"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-select v-model="value" :placeholder="$t('ddzt')">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                    :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" class="primary">
-                                <i class="el-icon-search"></i>{{ $t('search') }}
-                            </el-button>
-                            <el-button class="primary">
-                                <i class="el-icon-refresh"></i>{{ $t('reset') }}
-                            </el-button>
-                        </el-form-item>
-                    </el-form>
-                    <el-table class="tables" :data="tableData" style="width: 100%">
-                        <el-table-column prop="name" :label="$t('tksj')" width="180" />
-                        <el-table-column prop="name" :label="$t('jyje')" width="200" />
-                        <el-table-column prop="name" :label="$t('ddzt')" width="180" />
-                        <el-table-column prop="name" :label="$t('skzh')" width="180" />
-                        <el-table-column prop="name" :label="$t('jydh')" width="180" />
-                        <el-table-column prop="name" :label="$t('cz')" width="180" fixed="right" />
-                        <div slot="empty">
-                            <el-empty :description="$t('nodata')" style="padding: 50px;"></el-empty>
-                        </div>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane :label="$t('hh')" name="3">
-                    <el-form ref="form" :inline="true" class="mt40">
-                        <el-form-item>
-                            <el-date-picker v-model="value1" type="datetimerange" :range-separator="$t('to')"
-                                :start-placeholder="$t('startTime')" :end-placeholder="$t('endTime')">
-                            </el-date-picker>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-select v-model="value" :placeholder="$t('ddzt')">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                    :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" class="primary">
-                                <i class="el-icon-search"></i>{{ $t('search') }}
-                            </el-button>
-                            <el-button class="primary">
-                                <i class="el-icon-refresh"></i>{{ $t('reset') }}
-                            </el-button>
-                        </el-form-item>
-                    </el-form>
-                    <el-table class="tables" :data="tableData" style="width: 100%">
-                        <el-table-column prop="name" :label="$t('fqsj')" width="180" />
-                        <el-table-column prop="name" :label="$t('mcjebz')" width="200" />
-                        <el-table-column prop="name" :label="$t('jghl')" width="180" />
-                        <el-table-column prop="name" :label="$t('jyzt')" width="180" />
-                        <el-table-column prop="name" :label="$t('jydh')" width="180" />
-                        <el-table-column prop="name" :label="$t('cz')" width="180" fixed="right" />
-                        <div slot="empty">
-                            <el-empty :description="$t('nodata')" style="padding: 50px;"></el-empty>
-                        </div>
-                    </el-table>
-                </el-tab-pane>
-            </el-tabs>
-
-        </div>
+            <!-- <el-form ref="form2" :inline="true" class="mt12">
+              <el-form-item>
+                <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
+                  <el-option
+                    style="padding: 0 20px"
+                    v-for="(item, index) in status"
+                    :key="item"
+                    :label="item"
+                    :value="index"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="handleChangeSearch" class="primary">
+                  <i class="el-icon-search"></i>{{ $t("search") }}
+                </el-button>
+              </el-form-item>
+            </el-form> -->
+            <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
+              <el-table-column prop="depCoin" :label="$t('币种')" width="100" show-overflow-tooltip/>
+              <el-table-column prop="targetCoin" :label="$t('兑换币种')" width="100" />
+              <el-table-column prop="changeRate" :label="$t('汇率')" width="100" />
+              <el-table-column prop="depValue" :label="$t('金额')" width="100" />
+              <el-table-column prop="targetValue" :label="$t('到账金额')" width="130" />
+              <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" show-overflow-tooltip/>
+              <el-table-column prop="modifiedTime" :label="$t('更新时间')" minWidth="180" show-overflow-tooltip/>
+              <!-- <el-table-column
+                prop="name"
+                :label="$t('cz')"
+                width="100"
+                fixed="right"
+              >
+                <template slot-scope="scope">
+                  <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
+                    {{ $t("详情") }}
+                  </el-button>
+                </template>
+              </el-table-column> -->
+              <div slot="empty">
+                <el-empty
+                  :description="$t('nodata')"
+                  style="padding: 50px"
+                ></el-empty>
+              </div>
+            </el-table>
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="current"
+              :page-sizes="[10, 50, 100, 500]"
+              :page-size="size"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total"
+              class="elPagination"
+              >
+            </el-pagination>
+          </div>
     </div>
 </template>
 <script>
 import LinkPath from '@/components/common/linkPath.vue'
+import { getchangeDetails } from "@/api/manage"
 export default {
     name: 'transactionInquiry',
     components: { LinkPath },
@@ -132,16 +74,42 @@ export default {
             options: [],
             type: '1',
             dialogVisible2: false,
-            linkList: ['jycx', 'jymx'],
+            linkList: ['jycx', '兑换记录'],
             form: {
                 name: ''
-            }
+            },
+            loading: true,
+            current: 1,
+            size: 10,
+            total: 0,
+            searchForm: {},
         }
     },
+    created() {
+        this.getInitData()
+    },
     methods: {
-        handleClick() {
-
+      handleSizeChange(val) {
+        this.size = val
+        this.getInitData()
+      },
+      handleCurrentChange(val) {
+        this.current = val
+        this.getInitData()
+      },
+      handleChangeSearch() {
+        this.getInitData()
+      },
+      async getInitData() {
+        this.loading = true
+        let res;
+        res = await getchangeDetails(this.searchForm)
+        this.loading = false
+        if (res.code === 200) {
+          this.tableData = res.data.records
+          this.total = res.data.total
         }
+      },
     }
 }
 </script>
@@ -158,5 +126,9 @@ export default {
             margin-top: 40px;
         }
     }
+}
+.btn {
+    padding: 4px 6px;
+    color: #fff;
 }
 </style>

@@ -101,7 +101,7 @@ export default {
     },
     quit() {
       this.$router.push("/index");
-      Local("userInfo", "");
+      localStorage.clear()
       logout()
     },
     checkLang(lang) {

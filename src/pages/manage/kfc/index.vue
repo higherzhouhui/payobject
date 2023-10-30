@@ -96,7 +96,7 @@
                   通过
                 </span>
                 <span v-if="scope.row.kycStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: red"
-                  @click="sh2(scope.row.id, false)">
+                  @click="rejectKyc(scope.row)">
                   驳回
                 </span>
               </div>
@@ -193,6 +193,9 @@
         <el-form-item :label="$t('qygw')" class="mb24">
           <el-input v-model="bankForm2.webSite" :disabled="true"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('驳回理由')" class="mb24" v-if="bankForm2.reason">
+          <el-input type="textarea" v-model="bankForm2.reason" :disabled="true"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("t1") }}
@@ -236,6 +239,21 @@
         }}</el-button>
       </span>
     </el-dialog>
+    <el-dialog :title="'驳回'" :visible.sync="rejectdialogVisible" width="636px" :before-close="() => {
+      rejectdialogVisible = false;
+    }
+      ">
+      <el-form label-width="160px">
+        <el-form-item label="驳回理由" class="mb24">
+          <el-input type="textarea" v-model="currentSelectRow.reason"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="rejectdialogVisible = false">{{ $t("cancel") }}</el-button>
+        <el-button type="primary" :class="bankloading && 'loading'" @click="rejectConfirm">{{ $t("sure")
+        }}</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -263,6 +281,8 @@ export default {
       tableData2: [],
       loading: false,
       bankloading: false,
+      currentSelectRow: false,
+      rejectdialogVisible: false,
       options: [
         {
           label: "审核中",
@@ -310,6 +330,26 @@ export default {
     },
   },
   methods: {
+    rejectKyc(row) {
+      this.currentSelectRow = row
+      this.rejectdialogVisible = true
+    },
+    async rejectConfirm() {
+      try {
+        this.bankloading = true
+        await perKyc({ id: this.currentSelectRow.id, pass: false, reason: this.currentSelectRow.reason });
+        Message({
+          type: "success",
+          message: "操作成功",
+        });
+        this.getlist2();
+        this.bankloading = false
+        this.rejectdialogVisible = false
+      } catch {
+        this.bankloading = false
+      }
+
+    },
     async addAddress() {
       try {
         this.dialogVisible3Loading = true

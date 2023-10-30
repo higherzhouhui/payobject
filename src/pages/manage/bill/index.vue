@@ -106,7 +106,12 @@ export default {
       async getInitData() {
         this.loading = true
         let res;
-        res = await getBillDetails(this.searchForm)
+        const param = {
+            ...this.searchForm,
+            current: this.current,
+            size: this.size
+        }
+        res = await getBillDetails(param)
         this.loading = false
         if (res.code === 200) {
           this.tableData = res.data.records

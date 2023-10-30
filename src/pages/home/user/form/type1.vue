@@ -217,7 +217,7 @@
         :class="loading && 'loading'"
         type="primary"
         @click="sendForm"
-        >{{ $t("next") }}</el-button
+        >{{ $t("完成") }}</el-button
       >
     </div>
   </div>

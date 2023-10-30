@@ -10,11 +10,14 @@
                 </div>
                 <div class="right ">
                     <div class="item contentBg">
-                        <div class="txt smrz">实名认证</div>
+                        <div class="txt smrz">
+                            <span>实名认证</span>
+                        </div>
                         <el-button  @click="to('/home/verified')" type="primary" class="btn"><img class="icon" src="@/assets/images/home/smrz.png"
                                 alt="id">
                             {{ getCurrentStatus }}
                         </el-button>
+                        <span class="meltag">{{ getRejectReason }}</span>
                     </div>
                     <div class="item contentBg">
                         <div class="txt span">开通收款账户，从电商平台/支付网关等开始收款</div>
@@ -126,7 +129,7 @@
             dialogVisible = false;
           }
             ">
-            <el-form label-width="160px" ref="formss" :model="accountKyc.kyc" class="formStyle">
+            <el-form label-width="160px" ref="formss" :model="accountKyc.kyc" class="formStyle" v-if="accountKyc.kyc">
               <el-form-item :label="$t('qymc')" class="mb24">
                 <el-input v-model="accountKyc.kyc.companyName" :readOnly="true"></el-input>
               </el-form-item>
@@ -216,7 +219,17 @@ export default {
                     status = '已认证'
                 }
                 if (accountKyc.kyc.kycStatus === 2) {
-                    status = `重新认证${accountKyc.kyc.reason}`
+                    status = `重新认证`
+                }
+            }
+            return status
+        } ,
+        getRejectReason() {
+            let status = ''
+            const accountKyc = Local('accountKyc') || {};
+            if (accountKyc.kyc) {
+                if (accountKyc.kyc.kycStatus === 2) {
+                    status = accountKyc.kyc.reason
                 }
             }
             return status
@@ -241,7 +254,7 @@ export default {
                 name: '王小虎',
                 address: '上海市普陀区金沙江路 1516 弄'
             }],
-            accountKyc: Local('accountKyc') || {},
+            accountKyc: Local('accountKyc') || {kyc: {}},
             dialogVisible: false,
             options3: [
                 {
@@ -262,7 +275,7 @@ export default {
     methods: {
         to(path) {
             // 通过KYC
-            if (this.accountKyc.kyc && this.accountKyc.kyc.id) {
+            if (this.accountKyc.kyc && this.accountKyc.kyc.kycStatus !== 2) {
                 this.dialogVisible = true
             } else {
                 this.$router.push(path)
@@ -470,5 +483,10 @@ export default {
 ::v-deep .el-progress__text {
     font-size: 60px !important;
     font-weight: 600;
+}
+.meltag {
+    margin-left: 20px;
+    text-overflow: ellipsis;
+    color: red;
 }
 </style>

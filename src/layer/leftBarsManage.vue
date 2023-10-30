@@ -33,10 +33,10 @@
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('兑换明细') }}</span>
             </el-menu-item>
-            <el-menu-item index="/manage/transactionDetails">
+            <!-- <el-menu-item index="/manage/transactionDetails">
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
                 <span slot="title">{{ $t('ddgl') }}</span>
-            </el-menu-item>
+            </el-menu-item> -->
             <el-menu-item index="/manage/exchange">
                 <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
                 <span slot="title">{{ $t('hlgl') }}</span>

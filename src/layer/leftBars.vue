@@ -84,14 +84,13 @@ export default {
     name: "leftBar",
     computed: {
         path() {
-            return this.$store.state.user.path
+            return this.$store.state.path
         }
     },
     methods: {
         select(path) {
             console.log(path)
             if (this.path == path) return
-            console.log(this.path,'---', path)
             this.$router.push(path)
         }
     }

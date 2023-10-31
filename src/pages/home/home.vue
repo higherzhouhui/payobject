@@ -5,7 +5,7 @@
             <section class="box box_1 flex flex_jc_sb flex_align_center">
                 <div class="left contentBg">
                     <el-progress :width="240" class="process" text-color="#3476FF" :stroke-width="10" type="circle"
-                        :percentage="getPercentage"></el-progress>
+                        :percentage="percentage"></el-progress>
                     <div class="txt">当前任务进度</div>
                 </div>
                 <div class="right ">
@@ -15,9 +15,9 @@
                         </div>
                         <el-button  @click="to('/home/verified')" type="primary" class="btn"><img class="icon" src="@/assets/images/home/smrz.png"
                                 alt="id">
-                            {{ getCurrentStatus }}
+                            {{ status }}
                         </el-button>
-                        <span class="meltag">{{ getRejectReason }}</span>
+                        <span class="meltag">{{ reason }}</span>
                     </div>
                     <div class="item contentBg">
                         <div class="txt span">开通收款账户，从电商平台/支付网关等开始收款</div>
@@ -104,8 +104,6 @@
 
                     </el-col>
                 </el-row>
-
-
             </section>
             <section class="box box_4 contentBg box_base">
                 <div class="s_title">近期交易</div>
@@ -129,112 +127,74 @@
             dialogVisible = false;
           }
             ">
-            <el-form label-width="160px" ref="formss" :model="accountKyc.kyc" class="formStyle" v-if="accountKyc.kyc">
+            <el-form label-width="160px" ref="formss" :model="userInfo.kyc" class="formStyle" v-if="userInfo.kyc">
               <el-form-item :label="$t('qymc')" class="mb24">
-                <el-input v-model="accountKyc.kyc.companyName" :readOnly="true"></el-input>
+                <el-input v-model="userInfo.kyc.companyName" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qyjydz')" class="mb24">
-                <el-input type="textarea" v-model="accountKyc.kyc.businessAdd" :readOnly="true"></el-input>
+                <el-input type="textarea" v-model="userInfo.kyc.businessAdd" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qylx')" class="mb24">
-                <el-select v-model="accountKyc.kyc.busType" :readOnly="true">
+                <el-select v-model="userInfo.kyc.busType" :readOnly="true" style="width: 100%">
                   <el-option style="padding: 0 10px" v-for="item in options3" :key="item.value" :label="$t(item.label)"
                     :value="item.value" />
                 </el-select>
               </el-form-item>
               <el-form-item :label="$t('qyzcszgj')" class="mb24">
-                <el-input v-model="accountKyc.kyc.country" :readOnly="true"></el-input>
+                <el-input v-model="userInfo.kyc.country" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('zcrq')" class="mb24">
                 <el-date-picker style="width: 100%" size="small" :readOnly="true" value-format="timestamp"
-                  v-model="accountKyc.kyc.regDate" type="date" :placeholder="$t('xzsj')" />
+                  v-model="userInfo.kyc.regDate" type="date" :placeholder="$t('xzsj')" />
               </el-form-item>
               <el-form-item :label="$t('qyyxq')" class="mb24">
                 <el-date-picker :readOnly="true" style="width: 100%" value-format="timestamp" size="small"
-                  v-model="accountKyc.kyc.period" type="date" :placeholder="$t('xzsj')" />
+                  v-model="userInfo.kyc.period" type="date" :placeholder="$t('xzsj')" />
               </el-form-item>
               <el-form-item :label="$t('ygyhkje')" class="mb24">
-                <el-input v-model="accountKyc.kyc.monthlyRemittance" :readOnly="true"></el-input>
+                <el-input v-model="userInfo.kyc.monthlyRemittance" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('ygyjybs')" class="mb24">
-                <el-input v-model="accountKyc.kyc.transactionsMonth" :readOnly="true"></el-input>
+                <el-input v-model="userInfo.kyc.transactionsMonth" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('dbjyed')" class="mb24">
-                <el-input v-model="accountKyc.kyc.transactionLimit" :readOnly="true"></el-input>
+                <el-input v-model="userInfo.kyc.transactionLimit" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('ywcjsm')" class="mb24">
-                <el-input type="textarea" v-model="accountKyc.kyc.businessScenario" :readOnly="true"></el-input>
+                <el-input type="textarea" v-model="userInfo.kyc.businessScenario" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qygw')" class="mb24">
-                <el-input v-model="accountKyc.kyc.webSite" :readOnly="true"></el-input>
+                <el-input v-model="userInfo.kyc.webSite" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24">
                 <label style="font-size: 12px">
                   {{ $t("t1") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.regCer" target="_blank">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + userInfo.kyc.regCer" target="_blank">点击下载</a></el-button>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24">
                 <label style="font-size: 12px">
                   {{ $t("t2") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.legal" target="_blank">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + userInfo.kyc.legal" target="_blank">点击下载</a></el-button>
               </el-form-item>
-              <el-form-item :label="$t('scwj')" class="mb24" v-if="accountKyc.kyc.busType != 1">
+              <el-form-item :label="$t('scwj')" class="mb24" v-if="userInfo.kyc.busType != 1">
                 <label style="font-size: 12px">
                   {{ $t("t3") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + accountKyc.kyc.shareholder" target="_blank">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + userInfo.kyc.shareholder" target="_blank">点击下载</a></el-button>
               </el-form-item>
             </el-form>
           </el-dialog>
     </div>
 </template>
 <script>
-import { Local } from "@/utils/index";
 
 export default {
     name: 'homeHide',
-    computed: {
-        getPercentage() {
-            let percentage = 0;
-            const accountKyc = Local('accountKyc') || {};
-            if (accountKyc.authBanks) {
-                percentage += 50
-            }
-            if (accountKyc.kyc && accountKyc.kyc.kycStatus == 1) {
-                percentage += 50
-            }
-            return percentage
-        },
-        getCurrentStatus() {
-            let status = '去认证'
-            const accountKyc = Local('accountKyc') || {};
-            if (accountKyc.kyc) {
-                status = '审核中'
-                if (accountKyc.kyc.kycStatus == 1) {
-                    status = '已认证'
-                }
-                if (accountKyc.kyc.kycStatus === 2) {
-                    status = `重新认证`
-                }
-            }
-            return status
-        } ,
-        getRejectReason() {
-            let status = ''
-            const accountKyc = Local('accountKyc') || {};
-            if (accountKyc.kyc) {
-                if (accountKyc.kyc.kycStatus === 2) {
-                    status = accountKyc.kyc.reason
-                }
-            }
-            return status
-        } 
-    },
     data() {
         return {
             tableData: [{
@@ -254,7 +214,7 @@ export default {
                 name: '王小虎',
                 address: '上海市普陀区金沙江路 1516 弄'
             }],
-            accountKyc: Local('accountKyc') || {kyc: {}},
+            userInfo: {},
             dialogVisible: false,
             options3: [
                 {
@@ -270,17 +230,58 @@ export default {
                 value: 3,
                 },
             ],
+            percentage: 0,
+            status: '去认证',
+            reason: '',
         }
+    },
+    mounted() {
+        this.userInfo = this.$store.getters.getUserInfo || {kyc: {}}
+        this.getPercentage()
+        this.getRejectReason()
+        this.getCurrentStatus()
     },
     methods: {
         to(path) {
             // 通过KYC
-            if (this.accountKyc.kyc && this.accountKyc.kyc.kycStatus !== 2) {
+            if (this.userInfo.kyc && this.userInfo.kyc.kycStatus !== 2) {
                 this.dialogVisible = true
             } else {
                 this.$router.push(path)
             }
-        }
+        },
+        getPercentage() {
+            let percentage = 0;
+            if (this.userInfo.authBanks) {
+                percentage += 50
+            }
+            if (this.userInfo.kyc && this.userInfo.kyc.kycStatus == 1) {
+                percentage += 50
+            }
+            this.percentage = percentage
+        },
+        getCurrentStatus() {
+            let status = '去认证'
+            if (this.userInfo.kyc) {
+                status = '审核中'
+                if (this.userInfo.kyc.kycStatus == 1) {
+                    status = '已认证'
+                }
+                if (this.userInfo.kyc.kycStatus === 2) {
+                    status = `重新认证`
+                }
+            }
+            this.status = status
+        } ,
+        getRejectReason() {
+            let reason = ''
+            if (this.userInfo.kyc) {
+                if (this.userInfo.kyc.kycStatus === 2) {
+                    reason = this.userInfo.kyc.reason
+                }
+            }
+            this.reason = reason
+        } 
     }
 }
 </script>

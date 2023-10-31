@@ -3,7 +3,7 @@
         <div class="top_info flex flex_align_center">
             <img class="avatar pointer" src="@/assets/images/home/user.png" alt="">
             <div>
-                <div class="name">{{Local('userInfo').username}}</div>
+                <div class="name">{{store.state.userInfo.username}}</div>
                 <div class="des">管理员</div>
             </div>
 
@@ -55,7 +55,7 @@ export default {
     },
     computed: {
         path() {
-            return this.$store.state.user.path
+            return this.$store.state.path
         }
     },
     methods: {

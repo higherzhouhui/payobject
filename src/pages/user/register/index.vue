@@ -25,6 +25,7 @@
             class="input"
             :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
             v-model="form.phone"
+            ref="myName"
           >
             <!-- :remote-method="remoteMethod"
                 :loading="loading" -->
@@ -189,6 +190,9 @@ export default {
   created() {
     this.getAreaCode();
   },
+  mounted() {  
+    this.$refs.myName.focus();  
+  }, 
   methods: {
     routerToIndex() {
       this.$router.push('/index');
@@ -348,14 +352,17 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
   width: 30%;
-  max-width: 548px;
-  min-width: 380px;
+  max-width: 700px;
+  min-width: 600px;
   .tabs {
     .item {
+      font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
-      margin-right: 10px;
+      margin-right: 20px;
+      
       &.active {
-        border-bottom: 1px solid;
+        border-bottom: 2px solid;
       }
     }
   }
@@ -387,6 +394,7 @@ export default {
       img {
         width: 100%;
         height: 48px;
+        object-fit: contain;
       }
     }
     .input {
@@ -436,9 +444,7 @@ export default {
       }
 
       .item {
-        width: 50%;
         text-align: center;
-        flex: 1;
         justify-content: center;
         display: flex;
       }

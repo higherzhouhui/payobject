@@ -136,7 +136,7 @@ export default {
   },
   methods: {
     calcCurrentStep() {
-      const accountKyc = Local('accountKyc') || {}
+      const accountKyc = this.$store.state.userInfo || {}
       if (accountKyc.kyc && accountKyc.kyc.kycStatus == 2) {
         this.tips = 4
       } 

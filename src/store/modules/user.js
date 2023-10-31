@@ -1,9 +1,7 @@
+import { Local } from "@/utils/index"
 const state = {
     path: '/',
     userInfo: {
-        name: '小龙人',
-        phone: '13436129024',
-        email: ''
     }
 };
 
@@ -13,6 +11,7 @@ const mutations = {
     },
     SET_USER_INFO(state, info) {
         state.userInfo = info
+        Local('userInfo', info)
     }
 }
 const getters = {

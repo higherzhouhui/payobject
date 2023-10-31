@@ -1,7 +1,7 @@
 <template>
   <div class="login_box">
     <div class="top">
-      <img src="@/assets/images/index/logo.png" alt="" />
+      <img src="@/assets/images/index/logo.png" alt="" @click="routerToIndex" style="cursor: pointer"/>
       <div class="form">
         <div class="line">
           <img class="icon" src="@/assets/images/user/user.png" alt="" />
@@ -9,6 +9,7 @@
             class="input"
             :placeholder="$t('qsrsjhyx')"
             v-model="form.username"
+            ref="myName"
           />
         </div>
         <div class="line">
@@ -104,7 +105,13 @@ export default {
       },
     };
   },
+  mounted() {  
+    this.$refs.myName.focus();  
+  }, 
   methods: {
+    routerToIndex() {
+      this.$router.push('/index');
+    },
     async toLogin() {
       if (this.loading) return;
       let { username, password, code } = this.form;
@@ -129,7 +136,8 @@ export default {
           type: "success",
           message: this.$t("dlcg"),
         });
-        Local("userInfo", res.data);
+        // Local("userInfo", res.data);
+        this.$store.commit('SET_USERINFO', res.data)
         this.loading = false;
 
         if (!res.data.admin) {
@@ -163,14 +171,14 @@ export default {
   padding: 24px 40px;
   position: absolute;
   left: 50%;
-  top: 40%;
+  top: 42%;
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
   width: 30%;
-  max-width: 548px;
-  min-width: 380px;
+  max-width: 700px;
+  min-width: 500px;
 
   .top {
     text-align: center;
@@ -245,6 +253,7 @@ export default {
   img {
     width: 100%;
     height: 48px;
+    object-fit: contain;
   }
 }
 .down_line {

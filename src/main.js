@@ -11,7 +11,6 @@ import { Local } from '@/utils/index'
 import locale from 'element-ui/lib/locale'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
-
 Vue.use(ElementUI, {
   i18n: function () {
       if(Local('lang') == 'en') {
@@ -25,6 +24,8 @@ Vue.use(ElementUI, {
 
 
 Vue.config.productionTip = false
+Vue.prototype.$store=store;
+
 new Vue({
   router,
   store,

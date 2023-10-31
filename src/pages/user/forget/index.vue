@@ -2,17 +2,17 @@
     <div class="login_box">
         <div class="top">
             <div class="title">{{ $t('zhmm') }}</div>
-            <el-form class="form" :rules="rules">
+            <el-form class="form" :rules="rules" :model="form" ref="form">
                 <el-form-item :label="$t('email')" prop="email">
                     <div class="line">
                         <img class="icon icon2" src="@/assets/images/user/email.png" alt="">
-                        <el-input class="input" placeholder="请输入内容" v-model="input3" />
+                        <el-input class="input" placeholder="请输入内容" v-model="form.email" />
                     </div>
                 </el-form-item>
                 <el-form-item :label="$t('yxyzm')" prop="emailecode">
                     <div class="line flex flex_jc_sb flex_align_center">
                         <img class="icon" src="@/assets/images/user/yzm.png" alt="">
-                        <el-input class="input yzm" placeholder="请输入内容" v-model="input3" />
+                        <el-input class="input yzm" placeholder="请输入内容" v-model="form.emailecode" />
                         <el-button class="send_btn" type="primary">{{ $t('send') }}</el-button>
                     </div>
                 </el-form-item>
@@ -21,9 +21,9 @@
                     <el-dropdown class="item pointer" style="width: 100%" trigger="click">
                         <div class="line">
                             <img class="icon" src="@/assets/images/user/password.png" alt="">
-                            <el-input class="input" placeholder="请输入内容" v-model="input3" />
+                            <el-input class="input" placeholder="请输入内容" v-model="form.newPassword" />
                             <el-dropdown-menu slot="dropdown">
-                                21312312131231213123121312312131231
+                                大小写字母，不少于8个字符
                             </el-dropdown-menu>
                         </div>
                     </el-dropdown>
@@ -31,20 +31,20 @@
                 <el-form-item :label="$t('zcxdlmm')" prop="renewPassword">
                     <div class="line">
                         <img class="icon icon2" src="@/assets/images/user/password.png" alt="">
-                        <el-input class="input" placeholder="请输入内容" v-model="input3" />
+                        <el-input class="input" placeholder="请输入内容" v-model="form.renewPassword" />
                     </div>
                 </el-form-item>
                 <el-form-item :label="$t('txm')" prop="ecode">
                     <div class="line flex flex_jc_sb flex_align_center">
                         <img class="icon icon3" src="@/assets/images/user/txm.png" alt="">
-                        <el-input class="input yzm" placeholder="请输入内容" v-model="input3" />
+                        <el-input class="input yzm" placeholder="请输入内容" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
                         <div class="ecode pointer" @click="refreshCode">
                             <Ecode  :identifyCode="identifyCode"   />
                         </div>
                     </div>
                 </el-form-item>
                 <div class="flex btn_group">
-                    <el-button class="btn" type="primary">{{ $t('sure') }}</el-button>
+                    <el-button class="btn" type="primary" @click="submitForm('form')">{{ $t('sure') }}</el-button>
                     <el-button class="btn" @click="to('/user/login')">{{ $t('back') }}</el-button>
                 </div>
 
@@ -66,21 +66,22 @@ export default {
             identifyCode: '',
             rules: {
                 email: [{
-                    required: true, message: '请输入名称', trigger: 'blur'
+                    required: true, message: '请输入电子邮箱', trigger: 'blur'
                 }],
                 emailecode: [{
-                    required: true, message: '请输入名称', trigger: 'blur'
+                    required: true, message: '请输入验证码', trigger: 'blur'
                 }],
                 newPassword: [{
-                    required: true, message: '请输入名称', trigger: 'blur'
+                    required: true, message: '请输入新密码', trigger: 'blur'
                 }],
                 renewPassword: [{
-                    required: true, message: '请输入名称', trigger: 'blur'
+                    required: true, message: '请再次确认密码', trigger: 'blur'
                 }],
                 ecode: [{
-                    required: true, message: '请输入名称', trigger: 'blur'
+                    required: true, message: '请输入图形验证码', trigger: 'blur'
                 }]
-            }
+            },
+            form: {},
         }
     },
     mounted() {
@@ -108,6 +109,15 @@ export default {
             this.languge = lang
             Local('lang', lang)
             this.$i18n.locale = lang;
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {  
+                if (valid) {  
+                    alert('提交成功');  
+                } else {  
+                    return false;  
+                }  
+            });
         }
     }
 }
@@ -117,14 +127,14 @@ export default {
     padding: 24px 40px;
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 45%;
     transform: translate(-50%, -50%);
     background: #fff;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
     width: 30%;
-    max-width: 632px;
-    min-width: 250px;
+    max-width: 700px;
+    min-width: 600px;
 
     .top {
         text-align: center;

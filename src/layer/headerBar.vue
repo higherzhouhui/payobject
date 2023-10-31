@@ -89,7 +89,7 @@ export default {
     return {
       languge: Local("lang") || "zh",
       dialogTableVisible: false,
-      userInfo: Local("userInfo") || {},
+      userInfo: this.$store.state.userInfo || {},
     };
   },
   methods: {

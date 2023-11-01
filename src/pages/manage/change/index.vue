@@ -2,25 +2,60 @@
     <div class="user_transactionInquiry_transactionDetails_contianer">
         <LinkPath :linkList="linkList" />
         <div class="content">
-            <!-- <el-form ref="form2" :inline="true" class="mt12">
-              <el-form-item>
-                <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
-                  <el-option
-                    style="padding: 0 20px"
-                    v-for="(item, index) in status"
-                    :key="item"
-                    :label="item"
-                    :value="index"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="handleChangeSearch" class="primary">
-                  <i class="el-icon-search"></i>{{ $t("search") }}
-                </el-button>
-              </el-form-item>
-            </el-form> -->
+          <el-form ref="form2" :inline="true" class="mt12">
+            <el-form-item>
+              <el-input v-model="searchForm.email" :placeholder="$t('请输入用户邮箱')" clearable />
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="searchForm.fromCode" :placeholder="$t('请选择源货币种类')" clearable>
+                <el-option
+                  style="padding: 0 20px"
+                  v-for="(item, index) in coinCodeList"
+                  :key="index"
+                  :label="item.coinCode"
+                  :value="item.coinCode"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="searchForm.targetCode" :placeholder="$t('请选择兑换货币种类')" clearable>
+                <el-option
+                  style="padding: 0 20px"
+                  v-for="(item, index) in coinCodeList"
+                  :key="index"
+                  :label="item.coinCode"
+                  :value="item.coinCode"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-date-picker
+                v-model="searchForm.startTime"
+                align="right"
+                type="datetime"
+                placeholder="开始时间"
+                value-format="timestamp"
+                :picker-options="pickerOptions">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item>
+              <el-date-picker
+                v-model="searchForm.endTime"
+                align="right"
+                type="datetime"
+                placeholder="结束时间"
+                value-format="timestamp"
+                :picker-options="pickerOptions">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="handleChangeSearch" class="primary">
+                <i class="el-icon-search"></i>{{ $t("search") }}
+              </el-button>
+            </el-form-item>
+          </el-form>
             <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
               <el-table-column prop="depCoin" :label="$t('币种')" width="100" show-overflow-tooltip/>
               <el-table-column prop="targetCoin" :label="$t('兑换币种')" width="100" />
@@ -65,6 +100,8 @@
 <script>
 import LinkPath from '@/components/common/linkPath.vue'
 import { getchangeDetails } from "@/api/manage"
+import { depCoins } from "@/api/out"
+
 export default {
     name: 'transactionInquiry',
     components: { LinkPath },
@@ -83,12 +120,46 @@ export default {
             size: 10,
             total: 0,
             searchForm: {},
+            coinCodeList: [],
+            pickerOptions: {
+              disabledDate(time) {
+                return time.getTime() > Date.now();
+              },
+              shortcuts: [{
+                text: '今天',
+                onClick(picker) {
+                  picker.$emit('pick', new Date());
+                }
+              }, {
+                text: '昨天',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24);
+                  picker.$emit('pick', date);
+                }
+              }, {
+                text: '一周前',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                  picker.$emit('pick', date);
+                }
+              }]
+            },
         }
     },
     created() {
         this.getInitData()
+        this.getCoinCodeList()
     },
     methods: {
+      async getCoinCodeList() {
+        try {
+          const res = await depCoins()
+          this.coinCodeList = res.data
+        } catch {
+        }
+      },
       handleSizeChange(val) {
         this.size = val
         this.getInitData()

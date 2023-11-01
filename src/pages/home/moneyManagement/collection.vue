@@ -12,7 +12,7 @@ export default {
     components: { LinkPath, Trans },
     computed: {
         userInfo() {
-            return this.$store.state.user.userInfo
+            return this.$store.state.userInfo
         }
     },
     data() {

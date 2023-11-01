@@ -3,7 +3,7 @@
         <div class="top_info flex flex_align_center">
             <img class="avatar pointer" src="@/assets/images/home/user.png" alt="">
             <div>
-                <div class="name">{{store.state.userInfo.username}}</div>
+                <div class="name">{{$store.state.userInfo.username}}</div>
                 <div class="des">管理员</div>
             </div>
 
@@ -62,7 +62,6 @@ export default {
         select(path) {
             console.log(path)
             if (this.path == path) return
-            console.log(this.path, '---', path)
             this.$router.push(path)
         }
     }

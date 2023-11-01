@@ -214,7 +214,6 @@ export default {
                 name: '王小虎',
                 address: '上海市普陀区金沙江路 1516 弄'
             }],
-            userInfo: {},
             dialogVisible: false,
             options3: [
                 {
@@ -233,10 +232,10 @@ export default {
             percentage: 0,
             status: '去认证',
             reason: '',
+            userInfo: this.$store.getters.getUserInfo || {kyc: {}}
         }
     },
     mounted() {
-        this.userInfo = this.$store.getters.getUserInfo || {kyc: {}}
         this.getPercentage()
         this.getRejectReason()
         this.getCurrentStatus()

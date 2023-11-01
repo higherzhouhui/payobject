@@ -4,16 +4,48 @@
         <div class="content">
             <el-form ref="form2" :inline="true" class="mt12">
               <el-form-item>
-                <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
+                <el-select v-model="searchForm.bizType" :placeholder="$t('请选择业务类型')" clearable>
                   <el-option
                     style="padding: 0 20px"
-                    v-for="(item, index) in status"
-                    :key="item"
-                    :label="item"
-                    :value="index"
+                    v-for="(item, index) in bizTypeList"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.value"
                   >
                   </el-option>
                 </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-select v-model="searchForm.coinCode" :placeholder="$t('请选择货币种类')" clearable>
+                  <el-option
+                    style="padding: 0 20px"
+                    v-for="(item, index) in coinCodeList"
+                    :key="index"
+                    :label="item.coinCode"
+                    :value="item.coinCode"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-date-picker
+                  v-model="searchForm.startTime"
+                  align="right"
+                  type="datetime"
+                  placeholder="开始时间"
+                  value-format="timestamp"
+                  :picker-options="pickerOptions">
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item>
+                <el-date-picker
+                  v-model="searchForm.endTime"
+                  align="right"
+                  type="datetime"
+                  placeholder="结束时间"
+                  value-format="timestamp"
+                  :picker-options="pickerOptions">
+                </el-date-picker>
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="handleChangeSearch" class="primary">
@@ -65,6 +97,9 @@
 <script>
 import LinkPath from '@/components/common/linkPath.vue'
 import { getchangeDetails } from "@/api/manage"
+import {
+  depCoins,
+} from "@/api/out";
 export default {
     name: 'transactionInquiry',
     components: { LinkPath },
@@ -83,12 +118,50 @@ export default {
             size: 10,
             total: 0,
             searchForm: {},
+            bizTypeList: [
+              {label: '法币', value: 1},
+              {label: '数字货币', value: 2},
+            ],
+            coinCodeList: [],
+            pickerOptions: {
+              disabledDate(time) {
+                return time.getTime() > Date.now();
+              },
+              shortcuts: [{
+                text: '今天',
+                onClick(picker) {
+                  picker.$emit('pick', new Date());
+                }
+              }, {
+                text: '昨天',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24);
+                  picker.$emit('pick', date);
+                }
+              }, {
+                text: '一周前',
+                onClick(picker) {
+                  const date = new Date();
+                  date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                  picker.$emit('pick', date);
+                }
+              }]
+            },
         }
     },
     created() {
         this.getInitData()
+        this.getCoinCodeList()
     },
     methods: {
+      async getCoinCodeList() {
+        try {
+          const res = await depCoins()
+          this.coinCodeList = res.data
+        } catch {
+        }
+      },
       handleSizeChange(val) {
         this.size = val
         this.getInitData()

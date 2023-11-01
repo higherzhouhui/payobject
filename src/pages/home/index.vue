@@ -45,9 +45,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .container {
-    padding: 88px 0;
+    padding: 88px 0 20px 0;
     display: flex;
-    min-height: calc(100vh - 88px);
+    min-height: calc(100vh - 108px);
     box-sizing: border-box;
     width: 100%;
 

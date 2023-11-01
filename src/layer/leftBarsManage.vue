@@ -110,7 +110,7 @@ export default {
     height: 100%;
     padding: 16px 0;
     box-sizing: border-box;
-    width: 280px;
+    width: 220px;
     overflow-y: auto;
     border-right: unset;
 

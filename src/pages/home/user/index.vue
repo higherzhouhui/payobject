@@ -117,7 +117,7 @@ export default {
     components: { LinkPath, TelEcode },
     computed: {
         userInfo() {
-            return this.$store.state.user.userInfo
+            return this.$store.getters.getUserInfo
         }
     },
     data() {

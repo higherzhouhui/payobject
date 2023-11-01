@@ -2,7 +2,7 @@
     <div class="user_transactionInquiry_transactionDetails_contianer">
         <LinkPath :linkList="linkList" />
         <div class="content">
-            <!-- <el-form ref="form2" :inline="true" class="mt12">
+            <el-form ref="form2" :inline="true" class="mt12">
               <el-form-item>
                 <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
                   <el-option
@@ -20,7 +20,7 @@
                   <i class="el-icon-search"></i>{{ $t("search") }}
                 </el-button>
               </el-form-item>
-            </el-form> -->
+            </el-form>
             <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
               <el-table-column prop="depCoin" :label="$t('币种')" width="100" show-overflow-tooltip/>
               <el-table-column prop="targetCoin" :label="$t('兑换币种')" width="100" />

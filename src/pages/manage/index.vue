@@ -33,11 +33,11 @@ export default {
     width: 100%;
 
     .content {
-        width: calc(100% - 280px);
+        width: calc(100% - 220px);
     }
 
     .index_content {
-        margin: 0 0 0 280px;
+        margin: 0 0 0 220px;
         box-sizing: border-box;
         padding: 22px;
         background: #fff;

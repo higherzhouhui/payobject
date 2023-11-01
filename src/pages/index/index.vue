@@ -343,7 +343,7 @@ export default {
         }
 
         .logo {
-            width: 280px;
+            width: 220px;
             height: 88px;
         }
 

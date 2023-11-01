@@ -102,7 +102,7 @@ export default {
     height: calc(100vh - 88px);
     padding: 16px 0;
     box-sizing: border-box;
-    width: 280px;
+    width: 220px;
     overflow-y: auto;
     background: #F2F6FF;
     border-right: unset;

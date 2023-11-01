@@ -153,7 +153,7 @@ header {
   }
 
   .top_title {
-    padding-left: 280px;
+    padding-left: 220px;
     text-align: center;
     font-size: 40px;
     font-family: PingFang SC-Bold, PingFang SC;

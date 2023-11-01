@@ -42,13 +42,16 @@ export default {
 <style lang="scss" scoped>
 .link_path_container {
     position: relative;
-    padding: 20px 32px;
+    padding: 12px 22px;
     color: #606266;
     font-size: 14px;
     background: #F4F4F4;
     border-radius: 4px;
     .flex{
         // width: 100%;
+    }
+    span {
+     font-weight: bold;   
     }
     img {
         margin: 0 8px;

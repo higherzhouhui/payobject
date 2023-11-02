@@ -312,6 +312,20 @@ div::-webkit-scrollbar-thumb {
     background: #6592d1;
     border-radius: 20px;
 }
+ul::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+}
+
+ul::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background: #6592d1;
+    border-radius: 20px;
+}
+
 .elPagination {
     display: flex;
     margin-top: 10px;

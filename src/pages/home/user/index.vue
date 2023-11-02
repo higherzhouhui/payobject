@@ -5,8 +5,8 @@
             <div class="head_line line flex flex_align_center">
                 <img class="avatar" src="@/assets/images/home/user.png" alt="">
                 <div class="user_info">
-                    <div class="title">{{ userInfo.name }}</div>
-                    <div class="des">{{$t('dlzh')}}：{{ userInfo.phone }}</div>
+                    <div class="title">{{ userInfo.nickName || userInfo.kyc?.companyName }}</div>
+                    <div class="des">{{$t('dlzh')}}：{{ userInfo.phone || userInfo.email }}</div>
                 </div>
             </div>
             <div class="line item flex flex_align_center">
@@ -77,7 +77,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">{{ $t('cancel') }}</el-button>
+                <el-button @click="dialogVisible2 = false">{{ $t('cancel') }}</el-button>
                 <el-button type="primary" @click="dialogVisible = false">{{ $t('sure') }}</el-button>
             </span>
         </el-dialog>
@@ -103,7 +103,7 @@
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">{{ $t('cancel') }}</el-button>
+                <el-button @click="dialogVisible3 = false">{{ $t('cancel') }}</el-button>
                 <el-button type="primary" @click="dialogVisible = false">{{ $t('sure') }}</el-button>
             </span>
         </el-dialog>
@@ -131,6 +131,13 @@ export default {
             }
         }
     },
+    methods: {
+        handleClose() {
+            this.dialogVisible = false
+            this.dialogVisible2 = false
+            this.dialogVisible3 = false
+        }
+    }
 }
 </script>
 <style scoped lang="scss">

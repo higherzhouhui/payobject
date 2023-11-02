@@ -38,7 +38,7 @@
                                     <img class="icon" src="@/assets/images/home/dh_fk_1.png" alt="">
                                     <span>提现</span>
                                 </div>
-                                <div class="btn pointer">立即提现</div>
+                                <div class="btn pointer" @click="navgation('/home/withdraw')">立即提现</div>
                             </div>
                         </el-col>
                         <el-col :span="8">
@@ -47,7 +47,7 @@
                                     <img class="icon" src="@/assets/images/home/dh_fk_2.png" alt="">
                                     <span>付款</span>
                                 </div>
-                                <div class="btn pointer">立即提现</div>
+                                <div class="btn pointer" @click="navgation('/home/transfers')">立即付款</div>
                             </div>
                         </el-col>
                         <el-col :span="8">
@@ -56,7 +56,7 @@
                                     <img class="icon" src="@/assets/images/home/dh_fk_3.png" alt="">
                                     <span>换汇</span>
                                 </div>
-                                <div class="btn pointer">立即提现</div>
+                                <div class="btn pointer"  @click="navgation('/home/collection')">立即换汇</div>
                             </div>
                         </el-col>
                     </el-row>
@@ -69,55 +69,66 @@
                             <div class="s_title">{{ $t('myaccount') }}</div>
                             <div class="txt">支持美元、欧元、英镑、日元、港币等全球12大主流货币收款</div>
                             <div class="box_content">
-                                <el-table :data="tableData" style="width: 100%">
-                                    <el-table-column prop="name" label="账户姓名" width="180">
+                                <el-table :data="myAccountList" v-loading="myAccountListLoading" style="width: 100%" height="250" border>
+                                    <el-table-column prop="accountName" label="名称" min-width="120" show-overflow-tooltip>
                                     </el-table-column>
-
-                                    <el-table-column prop="name" label="账户姓名" width="180">
+                                    <el-table-column prop="bankAccount" label="账号" min-width="180" show-overflow-tooltip>
                                     </el-table-column>
-                                    <el-table-column prop="address" width="220" label="账户用途">
+                                    <el-table-column prop="bankAdd" label="开户行地址" min-width="160" show-overflow-tooltip>
                                     </el-table-column>
-                                    <el-table-column prop="date" label="日期" width="120" fixed="right">
+                                    <el-table-column prop="createTime" label="添加日期" min-width="120" show-overflow-tooltip>
                                     </el-table-column>
+                                    <div slot="empty">
+                                        <el-empty
+                                        :description="$t('nodata')"
+                                        style="padding: 50px"
+                                        ></el-empty>
+                                    </div>
                                 </el-table>
                             </div>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="left box_base contentBg">
-                            <div class="s_title">我的汇率</div>
+                            <div class="s_title">当前汇率</div>
                             <div class="txt">仅供参考，交易时以实际成交价为准</div>
                             <div class="box_content">
-                                <el-table :data="tableData" style="width: 100%">
-                                    <el-table-column prop="name" label="账户姓名" width="180">
+                                <el-table :data="exchangeList" v-loading="exchangeListLoading" style="width: 100%" height="250" border>
+                                    <el-table-column prop="exFrom" label="币种" min-width="80" show-overflow-tooltip>
                                     </el-table-column>
-
-                                    <el-table-column prop="name" label="账户姓名" width="180">
+                                    <el-table-column prop="exRate" label="汇率" min-width="80" show-overflow-tooltip>
                                     </el-table-column>
-                                    <el-table-column prop="address" width="220" label="账户用途">
+                                    <el-table-column prop="exTarget" label="兑换币种" min-width="80" show-overflow-tooltip>
                                     </el-table-column>
-                                    <el-table-column prop="date" label="日期" width="120" fixed="right">
-                                    </el-table-column>
+                                    <div slot="empty">
+                                        <el-empty
+                                        :description="$t('nodata')"
+                                        style="padding: 50px"
+                                        ></el-empty>
+                                    </div>
                                 </el-table>
                             </div>
                         </div>
-
                     </el-col>
                 </el-row>
             </section>
             <section class="box box_4 contentBg box_base">
                 <div class="s_title">近期交易</div>
                 <div class="box_content">
-                    <el-table :data="tableData" style="width: 100%">
-                        <el-table-column prop="name" label="账户姓名" width="180">
-                        </el-table-column>
-
-                        <el-table-column prop="name" label="账户姓名" width="180">
-                        </el-table-column>
-                        <el-table-column prop="address" width="220" label="账户用途">
-                        </el-table-column>
-                        <el-table-column prop="date" label="日期" width="120" fixed="right">
-                        </el-table-column>
+                    <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" max-height="350" border>
+                        <el-table-column prop="depCoin" :label="$t('币种')" min-width="100" show-overflow-tooltip/>
+                        <el-table-column prop="targetCoin" :label="$t('兑换币种')" min-width="100" />
+                        <el-table-column prop="changeRate" :label="$t('汇率')" min-width="100" />
+                        <el-table-column prop="depValue" :label="$t('金额')" min-width="100" />
+                        <el-table-column prop="targetValue" :label="$t('到账金额')" width="130" />
+                        <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" show-overflow-tooltip/>
+                        <el-table-column prop="modifiedTime" :label="$t('更新时间')" min-width="180" show-overflow-tooltip/>
+                        <div slot="empty">
+                            <el-empty
+                            :description="$t('nodata')"
+                            style="padding: 50px"
+                            ></el-empty>
+                        </div>
                     </el-table>
                 </div>
             </section>
@@ -192,28 +203,18 @@
     </div>
 </template>
 <script>
+import { getAccountKyc } from '@/api/user'
+import { Local } from "@/utils/index"
+import { withdrawAccounts } from "@/api/out.js"
+import { getExchanges } from "@/api/exchange";
+import { getchangeDetails } from "@/api/manage"
 
 export default {
     name: 'homeHide',
     data() {
         return {
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }],
+            tableData: [],
+            loading: true,
             dialogVisible: false,
             options3: [
                 {
@@ -232,15 +233,67 @@ export default {
             percentage: 0,
             status: '去认证',
             reason: '',
-            userInfo: this.$store.getters.getUserInfo || {kyc: {}}
+            userInfo: {kyc: {}},
+            myAccountList: [],
+            myAccountListLoading: true,
+            exchangeList: [],
+            exchangeListLoading: true,
         }
     },
-    mounted() {
-        this.getPercentage()
-        this.getRejectReason()
-        this.getCurrentStatus()
+    created() {
+        this.initKycData()
+        this.getAccountList()
+        this.getExchangeList()
+        this.getTransationList()
     },
     methods: {
+        async getTransationList() {
+            this.loading = true
+            let res;
+            res = await getchangeDetails()
+            this.loading = false
+            if (res.code === 200) { 
+                this.tableData = res.data.records
+            }
+        },
+        async getAccountList() {
+            this.myAccountListLoading = true
+            try {
+                const res = await withdrawAccounts()
+                this.myAccountList = res.data
+            } catch(error) {
+                console.error(error)
+            }
+            this.myAccountListLoading = false
+        },
+        async getExchangeList() {
+            this.exchangeListLoading = true
+            try {
+                const res = await getExchanges()
+                this.exchangeList = res.data
+            } catch(error) {
+                console.error(error)
+            }
+            this.exchangeListLoading = false
+        },
+        initKycData() {
+            getAccountKyc().then(rt=>{
+                const userInfo = this.$store.state.userInfo
+                try {
+                    Object.keys(rt.data).map(key => {
+                        userInfo[key] = rt.data[key]
+                    })
+                    this.$store.commit('SET_USERINFO', userInfo)
+                    this.userInfo = userInfo
+                    this.getBaseKycInfo()
+                    this
+                } catch {
+                    if(rt.data && rt.data.kyc && rt.data.kyc.kycStatus) {
+                        Local('isSMZ',  true)
+                    }
+                }
+            })
+        },
         to(path) {
             // 通过KYC
             if (this.userInfo.kyc && this.userInfo.kyc.kycStatus !== 2) {
@@ -249,7 +302,7 @@ export default {
                 this.$router.push(path)
             }
         },
-        getPercentage() {
+        getBaseKycInfo() {
             let percentage = 0;
             if (this.userInfo.authBanks) {
                 percentage += 50
@@ -258,8 +311,6 @@ export default {
                 percentage += 50
             }
             this.percentage = percentage
-        },
-        getCurrentStatus() {
             let status = '去认证'
             if (this.userInfo.kyc) {
                 status = '审核中'
@@ -271,8 +322,6 @@ export default {
                 }
             }
             this.status = status
-        } ,
-        getRejectReason() {
             let reason = ''
             if (this.userInfo.kyc) {
                 if (this.userInfo.kyc.kycStatus === 2) {
@@ -280,7 +329,10 @@ export default {
                 }
             }
             this.reason = reason
-        } 
+        },
+        navgation(url) {
+            this.$router.push(url)
+        }
     }
 }
 </script>

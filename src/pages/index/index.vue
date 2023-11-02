@@ -207,8 +207,7 @@
                 <div class="txt">{{ $t('jt') }}</div>
                 <div class="btn">{{ $t('lxwm') }}</div>
             </section>
-
-
+            <el-backtop></el-backtop>
         </div>
         <footer>
             {{ $t('footer') }}
@@ -218,11 +217,11 @@
             <div class="item" :class="languge == 'en' && 'active'" @click="checkLang('en')">English</div>
         </el-dialog>
     </div>
+    
 </template>
 <script>
 import { Local } from '@/utils/index'
 import CountTo from 'vue-count-to'
-
 export default {
     name: 'indexVue',
     components: { CountTo },
@@ -232,7 +231,7 @@ export default {
             type: 0,
             languge: Local('lang') || 'zh',
             dialogTableVisible: false,
-            noteice: '这里是提示',
+            noteice: 'Reliance-Pay正式上线了',
             serviceLeftData: [
                 { title: 'szyw', des: 's1' },
                 { title: 'qqsk', des: 's2' },
@@ -343,12 +342,10 @@ export default {
         }
 
         .logo {
-            width: 220px;
             height: 88px;
         }
 
         .logo2 {
-            width: 140px;
             height: 44px;
         }
 

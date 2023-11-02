@@ -22,20 +22,19 @@ export default {
         }
     },
     created() {
-        getAccountKyc().then(rt=>{
-            const userInfo = this.$store.state.userInfo
-            try {
-                Object.keys(rt.data).map(key => {
-                    userInfo[key] = rt.data[key]
-                })
-                this.$store.commit('SET_USERINFO', userInfo)
-                this.$store.setters.setUserInfo(userInfo)
-            } catch {
-                if(rt.data && rt.data.kyc && rt.data.kyc.kycStatus) {
-                Local('isSMZ',  true)
-                }
-            }
-        })
+        // getAccountKyc().then(rt=>{
+        //     const userInfo = this.$store.state.userInfo
+        //     try {
+        //         Object.keys(rt.data).map(key => {
+        //             userInfo[key] = rt.data[key]
+        //         })
+        //         this.$store.commit('SET_USERINFO', userInfo)
+        //     } catch {
+        //         if(rt.data && rt.data.kyc && rt.data.kyc.kycStatus) {
+        //             Local('isSMZ',  true)
+        //         }
+        //     }
+        // })
     },
     components: { LeftBar, HeaderBar },
     methods: {

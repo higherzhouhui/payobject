@@ -106,9 +106,17 @@ export default {
       location.reload()
     },
     quit() {
-      this.$router.push("/index");
-      localStorage.clear()
-      logout();
+      this.$confirm("确认退出？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+      }).then(() => {
+        this.$router.push("/index");
+        localStorage.clear()
+        logout()
+      }).catch(() => {
+        console.log('取消')
+      })
     },
     open() {
       this.dialogTableVisible = true;

@@ -61,18 +61,6 @@
               <el-table-column prop="targetValue" :label="$t('到账金额')" width="130" />
               <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" show-overflow-tooltip/>
               <el-table-column prop="modifiedTime" :label="$t('更新时间')" minWidth="180" show-overflow-tooltip/>
-              <!-- <el-table-column
-                prop="name"
-                :label="$t('cz')"
-                width="100"
-                fixed="right"
-              >
-                <template slot-scope="scope">
-                  <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
-                    {{ $t("详情") }}
-                  </el-button>
-                </template>
-              </el-table-column> -->
               <div slot="empty">
                 <el-empty
                   :description="$t('nodata')"

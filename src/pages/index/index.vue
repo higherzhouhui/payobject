@@ -11,23 +11,28 @@
                             <div class="btn" @click="to('/user/login')">{{ $t('login') }}</div>
                             <div class="btn active" @click="to('/user/register')">{{ $t('register') }}</div>
                         </div>
-                        <div class="language flex flex_align_center hidden-md-and-down" @click="open">
+                        <div class="language flex flex_align_center" @click="open">
                             <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
                             <img class="icon" v-else src="@/assets/images/index/en.png" alt="en">
                             <span class="txt">{{ $t('languageChange') }}</span>
                             <img src="@/assets/images/index/down.png" alt="">
                         </div>
-                        <el-dropdown class="hidden-md-and-up" trigger="click">
+                        <div class="hidden-md-and-up" @click="handleShowMenu">
                             <div class="menu-btn">
                                 <div />
                                 <div />
                                 <div />
                             </div>
-                        </el-dropdown>
+                            <div class="menus" :class="showMenu && 'showMenu'">
+                                <div class="menus-item" @click="to('/index')">首页</div>
+                                <div class="menus-item" @click="to('/user/login')">登陆</div>
+                                <div class="menus-item" @click="to('/user/register')">注册</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
-            <section class="content">
+            <section class="header-bg">
                 <img class="banner" v-if="languge == 'zh'" src="@/assets/images/index/top.png" alt="">
                 <img class="banner" v-else src="@/assets/images/index/top_en.png" alt="">
             </section>
@@ -42,35 +47,27 @@
             </section>
             <section class="content">
                 <div class="numbers_box">
-                    <el-row :gutter="56">
-                        <el-col :xs="24" :sm="8">
-                            <div class="item">
-                                <div>
-                                    <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
-                                    <img src="@/assets/images/index/add.png" alt="">
-                                </div>
-                                <div class="txt">{{ $t('fggj') }}</div>
-                            </div>
-                        </el-col>
-                        <el-col :xs="24" :sm="8">
-                            <div class="item">
-                                <div>
-                                    <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
-                                    <img src="@/assets/images/index/add.png" alt="">
-                                </div>
-                                <div class="txt">{{ $t('fggj') }}</div>
-                            </div>
-                        </el-col>
-                        <el-col :xs="24" :sm="8">
-                            <div class="item">
-                                <div>
-                                    <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
-                                    <img src="@/assets/images/index/add.png" alt="">
-                                </div>
-                                <div class="txt">{{ $t('fggj') }}</div>
-                            </div>
-                        </el-col>
-                    </el-row>
+                    <div class="item">
+                        <div>
+                            <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
+                            <img src="@/assets/images/index/add.png" alt="">
+                        </div>
+                        <div class="txt">{{ $t('fggj') }}</div>
+                    </div>
+                    <div class="item">
+                        <div>
+                            <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
+                            <img src="@/assets/images/index/add.png" alt="">
+                        </div>
+                        <div class="txt">{{ $t('fggj') }}</div>
+                    </div>
+                    <div class="item">
+                        <div>
+                            <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
+                            <img src="@/assets/images/index/add.png" alt="">
+                        </div>
+                        <div class="txt">{{ $t('fggj') }}</div>
+                    </div>
                 </div>
 
             </section>
@@ -113,9 +110,8 @@
                     </div>
                 </div>
             </section>
-            <section class="content">
+            <section class="">
                 <div class="advantage_box">
-
                     <div class="inner_box">
                         <div class="title">
                             <div class="txt">{{ $t('fwys') }}</div>
@@ -124,7 +120,7 @@
                             <div class="block hidden-sm-and-down"></div>
                             <div class="info">
                                 <div class="black hidden-sm-and-down"></div>
-                                <el-row :gutter="56">
+                                <el-row :gutter="24">
                                     <el-col :xs="24" :sm="8" :offset="2" v-for="(item, index) in advantageData"
                                         :key="index">
                                         <div class="item">
@@ -186,14 +182,14 @@
                     </div>
                 </div>
             </section>
-            <section class="content componey_box">
+            <section class="componey_box">
                 <div class="inner_box">
                     <div class="title">
                         <div class="txt">{{ $t('hzhb') }}</div>
                     </div>
                     <div class="info">
-                        <el-row :gutter="52">
-                            <el-col :xs="24" :sm="6" v-for="(item) in 12" :key="item">
+                        <el-row :gutter="24">
+                            <el-col :xs="12" :sm="4" v-for="(item) in 12" :key="item">
                                 <img :src="require('@/assets/images/index/p' + item + '.png')" alt="">
                             </el-col>
                         </el-row>
@@ -277,12 +273,11 @@ export default {
                 {name: '博客', url: '/blog'},
                 {name: '注册', url: '/user/register'},
                 {name: '隐私&政策', url: '/privacy'},
-            ]
+            ],
+            showMenu: false,
         }
     },
     created() {
-
-
 
     },
     mounted() {
@@ -293,6 +288,9 @@ export default {
         window.removeEventListener('scroll', this.onScroll)
     },
     methods: {
+        handleShowMenu() {
+            this.showMenu = !this.showMenu
+        },
         to(path) {
             this.$router.push(path)
         },
@@ -329,6 +327,37 @@ export default {
     color: #0b07fa;
     font-weight: bold;
 }
+.menus {
+    position: fixed;
+    top: 88px;
+    width: 100%;
+    left: 0;
+    background: rgb(207, 223, 245);
+    z-index: 999;
+    box-sizing: border-box;
+    transition: all 0.5s;
+    height: 0;
+    overflow: hidden;
+    box-shadow: 2px 2px 1px #cddbee;
+    .menus-item {
+        color: #fff;
+        font-size: 15px;
+        line-height: 36px;
+        color: #000000;
+        cursor: pointer;
+        text-align: center;
+        &:hover {
+            color: #0501fc;
+            background: rgba($color: #0501fc, $alpha: 0.2);
+            font-weight: bold;
+        }
+    }
+}
+.showMenu {
+    height: 156px;
+    padding: 24px 0;
+}
+
 .lang_box {
     .item {
         text-align: center;
@@ -355,12 +384,16 @@ export default {
 
     .content {
         margin: 0 auto;
-        max-width: 1920px;
         box-sizing: border-box;
-        width: 100%;
-        // min-width: 1180px;
-
-
+        width: 1180px;
+        @media screen and (max-width: 1250px) {
+            width: 100%;
+            padding: 0 24px;
+        }
+        @media screen and (max-width: 700px) {
+            width: 100%;
+            padding: 0 12px;
+        }
     }
 
     @keyframes headerMove {
@@ -377,18 +410,23 @@ export default {
     }
     header {
         position: fixed;
-        z-index: 999;
+        z-index: 1001;
         left: 0;
         top: 0;
         width: 100%;
         height: 88px;
+        display: flex;
+        align-items: center;
         background: rgba(255, 255, 255, 0.05);
         &.headerShow {
             animation: headerMove forwards 1s;
         }
 
         .logo {
-            height: 88px;
+            height: 60px;
+            @media screen and (max-width: 700px) {
+                height: 35px;
+            }
         }
 
         .logo2 {
@@ -400,11 +438,15 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1220px;
             width: 100%;
-            padding: 0 20px;
+            padding: 0 120px;
+            @media screen and (max-width: 1200px) {
+                padding: 0 60px;
+            }
+            @media screen and (max-width: 700px) {
+                padding: 0 10px;
+            }
             box-sizing: border-box;
-
             .info {
                 // margin-right: 24px;
                 font-size: 18px;
@@ -448,7 +490,7 @@ export default {
 
             .language {
                 cursor: pointer;
-
+                margin-right: 6px;
                 .icon {
                     width: 32px;
                 }
@@ -462,7 +504,6 @@ export default {
     }
 
     .notice_box {
-        padding: 0 20px;
         box-sizing: border-box;
     }
 
@@ -470,7 +511,6 @@ export default {
         margin: 32px auto;
         box-sizing: border-box;
         padding: 14px 26px 20px;
-        max-width: 1180px;
         width: 100%;
         height: 64px;
         background: #FFFFFF;
@@ -478,12 +518,30 @@ export default {
         border-radius: 40px 40px 40px 40px;
         opacity: 1;
         border: 1px solid #3476FF;
-
+        display: flex;
+        align-items: center;
+        @media screen and (max-width: 1200px) {
+            margin: 12px auto;
+            padding: 8px 12px 10px;
+            height: 32px;
+            .txt {
+                font-size: 15px!important;
+            }
+            img {
+                width: 16px!important;
+                height: 16px!important;
+            }
+        }
         .txt {
             margin-left: 8px;
             color: #606266;
             font-size: 18px;
             font-weight: 400;
+            width: calc(100% - 40px);
+            white-space: nowrap;  
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 21px;
         }
 
         img {
@@ -494,22 +552,36 @@ export default {
 
     .numbers_box {
         margin: 128px auto 0;
-        padding: 0 28px;
         box-sizing: border-box;
-        max-width: 1236px;
         width: 100%;
-
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 32px;
+        @media screen and (max-width: 1200px) {
+            margin: 68px auto 0;
+            grid-template-columns: repeat(1, 1fr);
+            .item {
+                padding: 12px 0!important;
+                .count {
+                    font-size: 18px!important;
+                }
+                img {
+                    width: 20px!important;
+                    height: 20px!important;
+                }
+                .txt {
+                    font-size: 16px!important;
+                }
+            }
+        }
         .item {
             margin-bottom: 20px;
             box-sizing: border-box;
             padding: 40px 0;
-            // width: 356px;
-            height: 176px;
             background: #3476FF;
             box-shadow: 0px 10px 10px 0px rgba(1, 33, 105, 0.25);
             border-radius: 10px;
             text-align: center;
-
             .count {
                 font-size: 48px;
                 font-family: Roboto-SemiBold, Roboto;
@@ -534,11 +606,15 @@ export default {
     .serve_box {
         margin: 172px auto 0;
         padding: 0 20px 96px;
-        max-width: 1220px;
         box-sizing: border-box;
         width: 100%;
         border-bottom: 1px solid #DCDFE6;
-
+        @media screen and (max-width: 1200px) {
+            margin: 64px auto 0;
+            .txt {
+                font-size: 26px!important;
+            }
+        }
         .title {
             text-align: center;
 
@@ -549,7 +625,6 @@ export default {
                 font-family: PingFang SC-Bold, PingFang SC;
                 font-weight: bold;
                 color: #3476FF;
-
                 &::before {
                     content: '';
                     position: absolute;
@@ -607,6 +682,10 @@ export default {
                     padding: 32px;
                     // box-sizing: border-box;
                     width: 252px;
+                    @media screen and (max-width: 700px) {
+                        width: 230px;
+                        padding: 18px;
+                    }
                     // height: 218px;
                     background: #fff;
                     box-shadow: 10px 10px 10px 0px rgba(52, 118, 255, 0.25);
@@ -658,7 +737,13 @@ export default {
         background: url('@/assets/images/index/left_bg.png');
         padding: 80px 0;
         box-sizing: border-box;
-
+        @media screen and (max-width: 1336px) {
+            margin-top: 40px;
+            padding: 40px 0;
+            .txt {
+                font-size: 26px!important;
+            }
+        }
         .block {
             width: 104px;
             height: 1px;
@@ -669,7 +754,6 @@ export default {
         }
 
         .inner_box {
-
             position: relative;
             z-index: 1;
             margin: auto;
@@ -677,8 +761,6 @@ export default {
             background: #fff;
             box-shadow: 0px 0px 20px 0px rgba(1, 33, 105, 0.25);
             border-radius: 10px;
-            max-width: 1180px;
-
             .title {
                 text-align: center;
 
@@ -806,10 +888,12 @@ export default {
     .process_box {
         padding-bottom: 100px;
         margin: 216px auto 0;
-        max-width: 1180px;
         width: 100%;
         border-bottom: 1px solid #DCDFE6;
-
+        @media screen and (max-width: 1200px) {
+            padding-bottom: 40px;
+            margin: 120px auto 0;
+        }
         .title {
             text-align: center;
 
@@ -821,7 +905,9 @@ export default {
                 font-weight: bold;
                 color: #3476FF;
                 white-space: nowrap;
-
+                @media screen and (max-width: 1200px) {
+                    font-size: 22px;
+                }
                 &::before {
                     content: '';
                     position: absolute;
@@ -899,7 +985,6 @@ export default {
         .inner_box {
             position: relative;
             margin: auto;
-            max-width: 1084px;
             padding: 56px 48px;
             background: #F4F4F4;
             border-radius: 10px;
@@ -916,7 +1001,9 @@ export default {
                     font-family: PingFang SC-Bold, PingFang SC;
                     font-weight: bold;
                     color: #303133;
-
+                    @media screen and (max-width: 1200px) {
+                        font-size: 22px;
+                    }
                     &::before {
                         content: '';
                         position: absolute;
@@ -963,9 +1050,11 @@ footer {
     box-sizing: border-box;
     text-align: left;
     .footer-content {
-        width: 100%;
-        @media screen and (min-width: 1366px) {
-            width: 1180px;
+        width: 1180px;
+        box-sizing: border-box;
+        @media screen and (max-width: 1200px) {
+            width: 100%;
+            padding: 0 24px;
         }
         margin: 0 auto;
         .footer-icon {
@@ -977,11 +1066,17 @@ footer {
         text-align: center;
     }
     .footer-top {
+        box-sizing: border-box;
         margin-bottom: 28px;
-        @media screen and (min-width: 1366px) {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            column-gap: 20px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 20px;
+        @media screen and (max-width: 1200px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media screen and (max-width: 700px) {
+            grid-template-columns: repeat(1, 1fr);
+            column-gap: 0;
         }
         h3 {
             text-align: left;
@@ -1023,8 +1118,8 @@ footer {
     }
 }
 .menu-btn {
-    width: 40px;
-    height: 26px;
+    width: 36px;
+    height: 22px;
     border-radius: 5px;
     background-color: #723eeb;
     color: #ffffff;

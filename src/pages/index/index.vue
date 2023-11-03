@@ -5,26 +5,25 @@
                 <div class="inner">
                     <img class="logo" src="@/assets/images/index/logo.png" alt="">
                     <div class="info flex flex_align_center">
-                        <div class="item hidden-sm-and-down">{{ $t('home') }}</div>
-                        <div class="item hidden-sm-and-down">{{ $t('product') }}&{{ $t('serve') }}</div>
-                        <div class="btn-group flex hidden-sm-and-down">
+                        <div class="item hidden-md-and-down item-active">{{ $t('home') }}</div>
+                        <div class="item hidden-md-and-down">{{ $t('product') }}&{{ $t('serve') }}</div>
+                        <div class="btn-group flex hidden-md-and-down">
                             <div class="btn" @click="to('/user/login')">{{ $t('login') }}</div>
                             <div class="btn active" @click="to('/user/register')">{{ $t('register') }}</div>
                         </div>
-                        <div class="language flex flex_align_center hidden-sm-and-down" @click="open">
+                        <div class="language flex flex_align_center hidden-md-and-down" @click="open">
                             <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
                             <img class="icon" v-else src="@/assets/images/index/en.png" alt="en">
                             <span class="txt">{{ $t('languageChange') }}</span>
                             <img src="@/assets/images/index/down.png" alt="">
                         </div>
-                        <el-dropdown class="hidden-sm-and-up" trigger="click">
-                            <i class="el-icon-s-fold pointer"></i>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item ><div style="padding: 10px 20px;"  @click="open">{{ $t('languageChange') }}</div> </el-dropdown-item>
-                                <el-dropdown-item ><div style="padding: 10px 20px;"  @click="to('/user/login')">{{ $t('login') }}</div> </el-dropdown-item>
-                            </el-dropdown-menu>
+                        <el-dropdown class="hidden-md-and-up" trigger="click">
+                            <div class="menu-btn">
+                                <div />
+                                <div />
+                                <div />
+                            </div>
                         </el-dropdown>
-                        
                     </div>
                 </div>
             </header>
@@ -202,15 +201,42 @@
                 </div>
 
             </section>
-            <section class="content to_us">
+            <!-- <section class="content to_us">
                 <div class="txt">{{ $t('jjfa') }}</div>
                 <div class="txt">{{ $t('jt') }}</div>
                 <div class="btn">{{ $t('lxwm') }}</div>
-            </section>
+            </section> -->
             <el-backtop></el-backtop>
         </div>
         <footer>
-            {{ $t('footer') }}
+            <div class="footer-content">
+                <div class="footer-top">
+                    <div class="footer-item">
+                        <p class="desc">
+                            ReliancePay旨在为更多的跨境企业提供便利的服务于技术支持
+                        </p>
+                        <h3>关注我们</h3>
+                        <img class="footer-icon" src="@/assets/images/index/facebook.png" alt="facebook" />
+                        <img class="footer-icon" src="@/assets/images/index/twitter.png" alt="twitter" />
+                        <img class="footer-icon" src="@/assets/images/index/telegram.png" alt="telegram" />
+                        <img class="footer-icon" src="@/assets/images/index/skype.png" alt="skype" />
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-title">有效链接</div>
+                        <div class="item-warppaer">
+                            <div class="item" v-for="item in links" :key="item.name" @click="to(item.url)">
+                                {{item.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-title">订阅</div>
+                        <div class="item-desc">探索更多的解决方案，请与我们联系</div>
+                        <div class="btn">{{ $t('lxwm') }}</div>
+                    </div>
+                </div>
+                <div class="copyright">{{$t('footer')}}</div>
+            </div>
         </footer>
         <el-dialog class="lang_box" width="300px" :title="$t('choiceLanguage')" :visible.sync="dialogTableVisible">
             <div class="item" :class="languge == 'zh' && 'active'" @click="checkLang('zh')">中文</div>
@@ -243,6 +269,14 @@ export default {
                     title: 'cxjs', des: 'cpjs2'
                 },
                 { title: 'cpjz', desList: ['kj', 'xf', 'gycp', 'qc', 'jr', 'cm', 'fc'] }
+            ],
+            links: [
+                {name: '首页', url: '/index'},
+                {name: '关于我们', url: '/about'},
+                {name: '登录', url: '/user/login'},
+                {name: '博客', url: '/blog'},
+                {name: '注册', url: '/user/register'},
+                {name: '隐私&政策', url: '/privacy'},
             ]
         }
     },
@@ -291,6 +325,10 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.item-active {
+    color: #0b07fa;
+    font-weight: bold;
+}
 .lang_box {
     .item {
         text-align: center;
@@ -325,6 +363,18 @@ export default {
 
     }
 
+    @keyframes headerMove {
+        0% {
+            top: -88px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        100% {
+            top: 0;
+            background: rgba(202, 210, 255, .6);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 10px rgba($color: #000000, $alpha: .1);
+        }
+    }
     header {
         position: fixed;
         z-index: 999;
@@ -333,12 +383,8 @@ export default {
         width: 100%;
         height: 88px;
         background: rgba(255, 255, 255, 0.05);
-        transition: all .5s;
-
         &.headerShow {
-            background: rgba(202, 210, 255, .6);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 2px 10px rgba($color: #000000, $alpha: .1);
+            animation: headerMove forwards 1s;
         }
 
         .logo {
@@ -909,13 +955,89 @@ export default {
 }
 
 footer {
-
-    padding: 37px;
+    padding: 50px 0 8px 0;
     font-size: 14px;
-    color: #606266;
-    background: #F4F4F4;
+    color: #fff;
+    background: #6967ca;
     text-align: center;
-    width: 100%;
     box-sizing: border-box;
-    // min-width: 1180px;
-}</style>
+    text-align: left;
+    .footer-content {
+        width: 100%;
+        @media screen and (min-width: 1366px) {
+            width: 1180px;
+        }
+        margin: 0 auto;
+        .footer-icon {
+            height: 30px;
+            margin-right: 9px;
+        }
+    }
+    .copyright {
+        text-align: center;
+    }
+    .footer-top {
+        margin-bottom: 28px;
+        @media screen and (min-width: 1366px) {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 20px;
+        }
+        h3 {
+            text-align: left;
+            margin: 12px 0;
+        }
+        .footer-title {
+            font-size: 17px;
+            &::after {
+                content: '';
+                width: 30px;
+                height: 1px;
+                background: #ddd6d6;
+                display: block;
+                margin: 12px 0;
+            }
+        }
+        .item-warppaer {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            row-gap: 12px;
+            .item {
+                cursor: pointer;
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+        }
+        .btn {
+            background: #1916d6;
+            width: fit-content;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-top: 16px;
+            cursor: pointer;
+            &:hover {
+                background: #0501fc;
+            }
+        }
+    }
+}
+.menu-btn {
+    width: 40px;
+    height: 26px;
+    border-radius: 5px;
+    background-color: #723eeb;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 7px 0;
+    cursor: pointer;
+    > div {
+        width: 20px;
+        height: 3px;
+        background: #fff;
+    }
+}
+</style>

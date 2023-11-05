@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <router-view></router-view>
-        <footer>{{ $t('footer') }}</footer>
+        <!-- <footer>{{ $t('footer') }}</footer> -->
     </div>
 </template>
 <script>

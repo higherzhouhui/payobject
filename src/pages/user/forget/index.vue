@@ -13,7 +13,11 @@
                     <div class="line flex flex_jc_sb flex_align_center">
                         <img class="icon" src="@/assets/images/user/yzm.png" alt="">
                         <el-input class="input yzm" placeholder="请输入验证码" v-model="form.emailecode" />
-                        <el-button class="send_btn" type="primary">{{ $t('send') }}</el-button>
+                        
+
+                        <el-button class="send_btn" type="primary" @click="sendSms">
+                            {{ timer == 60 ? $t("send") : timer }}
+                        </el-button>
                     </div>
                 </el-form-item>
 
@@ -65,7 +69,8 @@
 </template>
 <script>
 import { Local } from '@/utils/index'
-import { forgotPwd } from '@/api/login'
+import { forgotPwd, sendCheckCode } from '@/api/login'
+import { Message } from "element-ui";
 import Ecode from '@/components/common/ecode.vue'
 export default {
     name: 'userRegister',
@@ -74,6 +79,7 @@ export default {
         return {
             imgLoading: true,
             input3: '',
+            timer: 60,
             t: Math.random(),
             languge: Local('lang') || 'zh',
             identifyCodes: "123456789abcdwerwshdjeJKDHRJHKPLMKQ",//绘制的随机数
@@ -102,6 +108,37 @@ export default {
         // this.refreshCode()
     },
     methods: {
+        async sendSms() {
+            if (this.timer != 60) return;
+            let { email } = this.form;
+            if (!email) {
+                const msg = "qsryxhm";
+                    return Message({
+                    type: "error",
+                    message: this.$t(msg),
+                });
+            }
+            try {
+                const result = await sendCheckCode({email: email});
+                if (result.code === 200) {
+                this.timer--;
+                this.tt = setInterval(() => {
+                    this.timer--;
+                    if (this.timer <= 0) {
+                    clearInterval(this.tt);
+                    this.timer = 60;
+                    }
+                }, 1000);
+                Message({
+                    type: "success",
+                    message: this.$t("fscg"),
+                });
+                // eslint-disable-next-line no-empty
+                } else {
+                }
+            } catch (error) {
+            }
+        },
         randomT() {
             if (this.imgLoading) return;
             this.imgLoading = true;
@@ -177,6 +214,10 @@ export default {
     box-sizing: border-box;
     @media screen and (max-width: 700px) {
         min-width: 100%;
+        left: 0;
+        top: 0;
+        transform: translate(0, 0);
+        padding: 24px 12px;
     }
     .top {
         text-align: center;
@@ -201,12 +242,12 @@ export default {
         .send_btn {
             // margin-bottom: 24px;
             padding: 15px 0;
-            width: 20%;
+            width: 27%;
         }
 
         .ecode {
             // margin-bottom: 24px;
-            width: 20%;
+            width: 27%;
             transform: translateY(5px);
         }
 
@@ -222,7 +263,7 @@ export default {
             }
 
             &.yzm {
-                width: 76% !important;
+                width: 70% !important;
             }
         }
 

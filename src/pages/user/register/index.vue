@@ -338,7 +338,6 @@ export default {
         } else {
         }
       } catch (error) {
-        hide()
       }
     },
   },
@@ -372,6 +371,10 @@ export default {
   }
   @media screen and (max-width: 700px) {
     min-width: 100%;
+    left: 0;
+    top: 0;
+    transform: translate(0, 0);
+    padding: 24px 12px;
   }
   .top {
     text-align: center;

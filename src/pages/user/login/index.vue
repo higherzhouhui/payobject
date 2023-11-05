@@ -182,6 +182,7 @@ export default {
   min-width: 500px;
   @media screen and (max-width: 700px) {
     min-width: 100%;
+    padding: 24px 12px;
   }
   .top {
     text-align: center;
@@ -209,7 +210,7 @@ export default {
         line-height: 48px;
       }
       &.yzm {
-        width: 60.56% !important;
+        width: 63.56% !important;
       }
     }
 
@@ -251,12 +252,11 @@ export default {
 }
 .ecode {
   margin-bottom: 24px;
-  width: 37%;
-  //   transform: translateY(5px);
+  width: 32%;
   img {
-    width: 100%;
+    width: 100%!important;
     height: 48px;
-    object-fit: contain;
+    object-fit: scale-down;
   }
 }
 .down_line {

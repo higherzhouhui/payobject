@@ -5,6 +5,11 @@ export const reg = (data) => service({
     data,
     method: 'post'
 })
+export const forgotPwd = (data) => service({
+    url: '/forgotPwd',
+    data,
+    method: 'post'
+})
 export const sendCheckCode = (data) => service({
     url: '/sendCheckCode',
     data,

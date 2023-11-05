@@ -6,13 +6,13 @@
                 <el-form-item :label="$t('email')" prop="email">
                     <div class="line">
                         <img class="icon icon2" src="@/assets/images/user/email.png" alt="">
-                        <el-input class="input" placeholder="请输入内容" v-model="form.email" />
+                        <el-input class="input" placeholder="请输入电子邮箱" v-model="form.email" />
                     </div>
                 </el-form-item>
                 <el-form-item :label="$t('yxyzm')" prop="emailecode">
                     <div class="line flex flex_jc_sb flex_align_center">
                         <img class="icon" src="@/assets/images/user/yzm.png" alt="">
-                        <el-input class="input yzm" placeholder="请输入内容" v-model="form.emailecode" />
+                        <el-input class="input yzm" placeholder="请输入验证码" v-model="form.emailecode" />
                         <el-button class="send_btn" type="primary">{{ $t('send') }}</el-button>
                     </div>
                 </el-form-item>
@@ -21,7 +21,7 @@
                     <el-dropdown class="item pointer" style="width: 100%" trigger="click">
                         <div class="line">
                             <img class="icon" src="@/assets/images/user/password.png" alt="">
-                            <el-input class="input" placeholder="请输入内容" v-model="form.newPassword" />
+                            <el-input class="input" placeholder="请输入新密码" v-model="form.newPassword" />
                             <el-dropdown-menu slot="dropdown">
                                 大小写字母，不少于8个字符
                             </el-dropdown-menu>
@@ -31,36 +31,50 @@
                 <el-form-item :label="$t('zcxdlmm')" prop="renewPassword">
                     <div class="line">
                         <img class="icon icon2" src="@/assets/images/user/password.png" alt="">
-                        <el-input class="input" placeholder="请输入内容" v-model="form.renewPassword" />
+                        <el-input class="input" placeholder="请再次输入密码" v-model="form.renewPassword" />
                     </div>
                 </el-form-item>
                 <el-form-item :label="$t('txm')" prop="ecode">
                     <div class="line flex flex_jc_sb flex_align_center">
                         <img class="icon icon3" src="@/assets/images/user/txm.png" alt="">
-                        <el-input class="input yzm" placeholder="请输入内容" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
-                        <div class="ecode pointer" @click="refreshCode">
-                            <Ecode  :identifyCode="identifyCode"   />
-                        </div>
+                        <el-input class="input yzm" placeholder="请输入图像验证码" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
+                            <div class="ecode pointer" :class="imgLoading && 'loading'">
+                                <img
+                                  width="100%"
+                                  @load="() => (imgLoading = false)"
+                                  class="captchaImg"
+                                  @error="
+                                    () => {
+                                      imgLoading = false;
+                                      randomT();
+                                    }
+                                  "
+                                  :src="'/api/assets/captcha?t=' + t"
+                                  @click="randomT"
+                                />
+                              </div>
                     </div>
                 </el-form-item>
                 <div class="flex btn_group">
                     <el-button class="btn" type="primary" @click="submitForm('form')">{{ $t('sure') }}</el-button>
                     <el-button class="btn" @click="to('/user/login')">{{ $t('back') }}</el-button>
                 </div>
-
             </el-form>
         </div>
     </div>
 </template>
 <script>
 import { Local } from '@/utils/index'
+import { forgotPwd } from '@/api/login'
 import Ecode from '@/components/common/ecode.vue'
 export default {
     name: 'userRegister',
     components: { Ecode },
     data() {
         return {
+            imgLoading: true,
             input3: '',
+            t: Math.random(),
             languge: Local('lang') || 'zh',
             identifyCodes: "123456789abcdwerwshdjeJKDHRJHKPLMKQ",//绘制的随机数
             identifyCode: '',
@@ -85,9 +99,14 @@ export default {
         }
     },
     mounted() {
-        this.refreshCode()
+        // this.refreshCode()
     },
     methods: {
+        randomT() {
+            if (this.imgLoading) return;
+            this.imgLoading = true;
+            this.t = Math.random();
+        },
         refreshCode() {
             this.identifyCode = "";
             this.makeCode(this.identifyCodes, 4);
@@ -110,10 +129,30 @@ export default {
             Local('lang', lang)
             this.$i18n.locale = lang;
         },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {  
+        async submitForm(formName) {
+            this.$refs[formName].validate(async (valid) => {  
                 if (valid) {  
-                    alert('提交成功');  
+                    if (this.loading) return;
+                    let params = this.valid();
+                    if (!params) return;
+                    try {
+                        this.loading = true;
+                        const res = await forgotPwd(params);
+                        Message({
+                        type: "success",
+                        message: this.$t("zccg"),
+                        });
+                        this.$store.commit('SET_USERINFO', res.data)
+                        this.loading = false;
+                        if (!res.data.admin) {
+                        return this.$router.push("/home");
+                        }
+                        this.$router.push("/manage");
+                    } catch {
+                        this.randomT();
+                        this.loading = false;
+                        this.form.code = ''
+                    }
                 } else {  
                     return false;  
                 }  
@@ -135,7 +174,10 @@ export default {
     width: 30%;
     max-width: 700px;
     min-width: 600px;
-
+    box-sizing: border-box;
+    @media screen and (max-width: 700px) {
+        min-width: 100%;
+    }
     .top {
         text-align: center;
 
@@ -196,7 +238,7 @@ export default {
                 top: 56px;
             }
             &.icon3 {
-                top: 19px;
+                top: 24px;
             }
         }
 
@@ -253,6 +295,13 @@ export default {
 .wd {
     font-size: 14px;
     color: #606266;
+}
+.ecode {
+    img {
+    width: 100%;
+    height: 48px;
+    object-fit: contain;
+    }
 }
 </style>
 <style></style>

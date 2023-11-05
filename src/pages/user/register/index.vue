@@ -170,7 +170,7 @@ export default {
       imgLoading: true,
       loading: false,
       timer: 60,
-      type: 1,
+      type: 2,
       checked: true,
       aereList: [],
       form: {
@@ -285,7 +285,7 @@ export default {
           type: "success",
           message: this.$t("zccg"),
         });
-        Local("userInfo", res.data);
+        this.$store.commit('SET_USERINFO', res.data)
         this.loading = false;
         if (!res.data.admin) {
           return this.$router.push("/home");
@@ -294,6 +294,7 @@ export default {
       } catch (error) {
         this.randomT();
         this.loading = false;
+        this.form.code = ''
       }
     },
     async sendSms() {
@@ -336,7 +337,9 @@ export default {
         // eslint-disable-next-line no-empty
         } else {
         }
-      } catch (error) {}
+      } catch (error) {
+        hide()
+      }
     },
   },
 };
@@ -354,6 +357,7 @@ export default {
   width: 30%;
   max-width: 700px;
   min-width: 600px;
+  box-sizing: border-box;
   .tabs {
     .item {
       font-weight: bold;
@@ -365,6 +369,9 @@ export default {
         border-bottom: 2px solid;
       }
     }
+  }
+  @media screen and (max-width: 700px) {
+    min-width: 100%;
   }
   .top {
     text-align: center;

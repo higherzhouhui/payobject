@@ -172,6 +172,7 @@ export default {
   position: absolute;
   left: 50%;
   top: 42%;
+  box-sizing: border-box;
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 10px;
@@ -179,7 +180,9 @@ export default {
   width: 30%;
   max-width: 700px;
   min-width: 500px;
-
+  @media screen and (max-width: 700px) {
+    min-width: 100%;
+  }
   .top {
     text-align: center;
 

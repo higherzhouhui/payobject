@@ -155,9 +155,10 @@ header {
   border-bottom: 1px solid #dcdfe6;
   background: #fff;
   z-index: 99;
-
+  padding: 0 24px;
+  box-sizing: border-box;
   .logo {
-    height: 88px;
+    height: 60px;
   }
 
   .notice {

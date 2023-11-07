@@ -438,8 +438,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
-            padding: 0 120px;
+            width: 1180px;
             @media screen and (max-width: 1200px) {
                 padding: 0 60px;
             }

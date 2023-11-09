@@ -55,7 +55,6 @@ const router = new VueRouter({
 )
 
 router.beforeEach((to, from, next) => {
-    console.log(to)
     store.commit('SET_PATH', to.fullPath)
     return next()
     // if (token) {

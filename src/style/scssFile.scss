@@ -3,8 +3,39 @@
     margin: 0;
     font-family: PingFang SC;
     font-weight: 400;
-    // color: #303133;
+    box-sizing: border-box;
+}
 
+$baseColor: #2dbe60;
+$baseHover: #1be762;
+$contentColor: #F4F4F4;
+
+html {
+    font-size: 12px;
+    @media screen and (min-width: 500px) {
+        font-size: 14px;
+    }
+    @media screen and (min-width: 700px) {
+        font-size: 16px;
+    }
+    @media screen and (min-width: 1200px) {
+        font-size: 18px;
+    }
+}
+
+.container-auto {
+    margin: 0 auto;
+    @media screen and (min-width: 1200px) {
+        width: 1140px;
+    }
+    @media screen and (max-width: 1199px) {
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    @media screen and (max-width: 500px) {
+        width: 100%;
+        padding: 0 1rem;
+    }
 }
 
 .mb24 {
@@ -28,9 +59,6 @@
 .mt16{
     margin-top: 16px;
 }
-
-$baseColor: #3476FF;
-$contentColor: #F4F4F4;
 
 .flex {
     display: flex;
@@ -56,6 +84,25 @@ $contentColor: #F4F4F4;
 
 .pointer {
     cursor: pointer;
+}
+
+.normal-btn {
+    padding: 0 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.5s;
+    background: $baseColor;
+    color: #fff;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    &:hover {
+        background: transparent;
+        color: $baseColor;
+        border: 1px solid $baseColor;
+    }
 }
 
 .el-button--primary {
@@ -236,10 +283,7 @@ $contentColor: #F4F4F4;
     border: 1px solid var(--unnamed, #DCDFE6);
     border-radius: 4px;
 }
-input{
-    // height: 48px!important;
-    // line-height: 48px!important;
-}
+
 .loading {
     position: relative;
     opacity: .4!important;
@@ -282,7 +326,7 @@ html::-webkit-scrollbar {
 }
 
 html::-webkit-scrollbar-thumb {
-    background: #6592d1;
+    background: #384d78;
     border-radius: 20px;
 }
 
@@ -296,7 +340,7 @@ form::-webkit-scrollbar {
 }
 
 form::-webkit-scrollbar-thumb {
-    background: #6592d1;
+    background: #384d78;
     border-radius: 20px;
 }
 div::-webkit-scrollbar-track-piece {
@@ -309,7 +353,7 @@ div::-webkit-scrollbar {
 }
 
 div::-webkit-scrollbar-thumb {
-    background: #6592d1;
+    background: #384d78;
     border-radius: 20px;
 }
 ul::-webkit-scrollbar-track-piece {
@@ -322,7 +366,7 @@ ul::-webkit-scrollbar {
 }
 
 ul::-webkit-scrollbar-thumb {
-    background: #6592d1;
+    background: #384d78;
     border-radius: 20px;
 }
 

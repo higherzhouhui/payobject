@@ -1833,6 +1833,7 @@ footer {
                 .bottom {
                     background: #455b86;
                     padding-left: 1rem;
+                    color: #fff;
                         .more-btn {
                             color: #455b86;
                             background: #fff;

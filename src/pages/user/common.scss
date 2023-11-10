@@ -1,0 +1,99 @@
+.left {
+  display: flex;
+  align-items: center;
+  .leftImg {
+    width: 100%;
+    object-fit: contain;
+    animation: bounceln 1.5s forwards 0.5s;
+  }
+}
+.form {
+  min-width: 360px;
+  padding: 20px;
+  box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .line {
+    position: relative;
+  }
+
+  .input {
+    margin-bottom: 24px;
+    width: 100% !important;
+    ::v-deep input {
+      padding-left: 30px !important;
+      height: 48px;
+      line-height: 48px;
+    }
+    &.yzm {
+      width: 63.56% !important;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 10px;
+    top: 16px;
+    z-index: 1;
+    &.icon3 {
+      top: 19px;
+    }
+  }
+
+  .btn {
+    margin-top: 16px;
+    padding: 16px 0;
+    width: 100%;
+  }
+
+  .txt {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #606266;
+
+    img {
+      margin-right: 4px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .txt2 {
+    margin-top: 20px;
+  }
+  .forget-btn {
+    color: #eee;
+    cursor: pointer;
+  }
+  .register-line {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  .register-btn {
+    color: $baseColor;
+    margin-left: .5rem;
+  }
+}
+
+.ecode {
+  margin-bottom: 24px;
+  width: 32%;
+img {
+  width: 100%!important;
+  height: 48px;
+  object-fit: scale-down;
+}
+}
+.down_line {
+  padding: 4px 20px;
+  text-align: center;
+}
+.wd {
+  font-size: 14px;
+  color: #606266;
+}

@@ -1,70 +1,71 @@
 <template>
-    <div class="login_box">
-        <div class="top">
-            <div class="title">{{ $t('zhmm') }}</div>
-            <el-form class="form" :rules="rules" :model="form" ref="form">
-                <el-form-item :label="$t('email')" prop="email">
-                    <div class="line">
-                        <img class="icon icon2" src="@/assets/images/user/email.png" alt="">
-                        <el-input class="input" placeholder="请输入电子邮箱" v-model="form.email" />
-                    </div>
-                </el-form-item>
-                <el-form-item :label="$t('yxyzm')" prop="emailecode">
-                    <div class="line flex flex_jc_sb flex_align_center">
-                        <img class="icon" src="@/assets/images/user/yzm.png" alt="">
-                        <el-input class="input yzm" placeholder="请输入验证码" v-model="form.emailecode" />
-                        
-
-                        <el-button class="send_btn" type="primary" @click="sendSms">
-                            {{ timer == 60 ? $t("send") : timer }}
-                        </el-button>
-                    </div>
-                </el-form-item>
-
-                <el-form-item :label="$t('xdlmm')" prop="newPassword">
-                    <el-dropdown class="item pointer" style="width: 100%" trigger="click">
-                        <div class="line">
-                            <img class="icon" src="@/assets/images/user/password.png" alt="">
-                            <el-input class="input" placeholder="请输入新密码" v-model="form.newPassword" />
-                            <el-dropdown-menu slot="dropdown">
-                                大小写字母，不少于8个字符
-                            </el-dropdown-menu>
-                        </div>
-                    </el-dropdown>
-                </el-form-item>
-                <el-form-item :label="$t('zcxdlmm')" prop="renewPassword">
-                    <div class="line">
-                        <img class="icon icon2" src="@/assets/images/user/password.png" alt="">
-                        <el-input class="input" placeholder="请再次输入密码" v-model="form.renewPassword" />
-                    </div>
-                </el-form-item>
-                <el-form-item :label="$t('txm')" prop="ecode">
-                    <div class="line flex flex_jc_sb flex_align_center">
-                        <img class="icon icon3" src="@/assets/images/user/txm.png" alt="">
-                        <el-input class="input yzm" placeholder="请输入图像验证码" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
-                            <div class="ecode pointer" :class="imgLoading && 'loading'">
-                                <img
-                                  width="100%"
-                                  @load="() => (imgLoading = false)"
-                                  class="captchaImg"
-                                  @error="
-                                    () => {
-                                      imgLoading = false;
-                                      randomT();
-                                    }
-                                  "
-                                  :src="'/api/assets/captcha?t=' + t"
-                                  @click="randomT"
-                                />
-                              </div>
-                    </div>
-                </el-form-item>
-                <div class="flex btn_group">
-                    <el-button class="btn" type="primary" @click="submitForm('form')">{{ $t('sure') }}</el-button>
-                    <el-button class="btn" @click="to('/user/login')">{{ $t('back') }}</el-button>
-                </div>
-            </el-form>
+    <div class="login_box container-auto normal-content">
+        <div class="left">
+          <img class="leftImg" alt="money" src="@/assets/images/login/left.png" />
         </div>
+        <el-form class="form" :rules="rules" :model="form" ref="form">
+            <h2>{{$t("zhmm")}}</h2>
+            <el-form-item :label="$t('email')" prop="email">
+                <div class="line">
+                    <img class="icon icon2" src="@/assets/images/user/email.png" alt="">
+                    <el-input class="input" placeholder="请输入电子邮箱" v-model="form.email" />
+                </div>
+            </el-form-item>
+            <el-form-item :label="$t('yxyzm')" prop="emailecode">
+                <div class="line flex flex_jc_sb flex_align_center">
+                    <img class="icon" src="@/assets/images/user/yzm.png" alt="">
+                    <el-input class="input yzm" placeholder="请输入验证码" v-model="form.emailecode" />
+                    
+
+                    <el-button class="send_btn" type="primary" @click="sendSms">
+                        {{ timer == 60 ? $t("send") : timer }}
+                    </el-button>
+                </div>
+            </el-form-item>
+
+            <el-form-item :label="$t('xdlmm')" prop="newPassword">
+                <el-dropdown class="item pointer" style="width: 100%" trigger="click">
+                    <div class="line">
+                        <img class="icon" src="@/assets/images/user/password.png" alt="">
+                        <el-input class="input" placeholder="请输入新密码" v-model="form.newPassword" />
+                        <el-dropdown-menu slot="dropdown">
+                            大小写字母，不少于8个字符
+                        </el-dropdown-menu>
+                    </div>
+                </el-dropdown>
+            </el-form-item>
+            <el-form-item :label="$t('zcxdlmm')" prop="renewPassword">
+                <div class="line">
+                    <img class="icon icon2" src="@/assets/images/user/password.png" alt="">
+                    <el-input class="input" placeholder="请再次输入密码" v-model="form.renewPassword" />
+                </div>
+            </el-form-item>
+            <el-form-item :label="$t('txm')" prop="ecode">
+                <div class="line flex flex_jc_sb flex_align_center">
+                    <img class="icon icon3" src="@/assets/images/user/txm.png" alt="">
+                    <el-input class="input yzm" placeholder="请输入图像验证码" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
+                        <div class="ecode pointer" :class="imgLoading && 'loading'">
+                            <img
+                                width="100%"
+                                @load="() => (imgLoading = false)"
+                                class="captchaImg"
+                                @error="
+                                () => {
+                                    imgLoading = false;
+                                    randomT();
+                                }
+                                "
+                                :src="'/api/assets/captcha?t=' + t"
+                                @click="randomT"
+                            />
+                            </div>
+                </div>
+            </el-form-item>
+            <div class="flex btn_group">
+                <el-button class="btn normal-btn" type="primary" @click="submitForm('form')">{{ $t('sure') }}</el-button>
+                <el-button class="btn" @click="to('/user/login')">{{ $t('back') }}</el-button>
+            </div>
+        </el-form>
     </div>
 </template>
 <script>
@@ -199,41 +200,11 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import "../common.scss";
+
 .login_box {
-    padding: 24px 40px;
-    position: absolute;
-    left: 50%;
-    top: 45%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
-    width: 30%;
-    max-width: 700px;
-    min-width: 600px;
-    box-sizing: border-box;
-    @media screen and (max-width: 700px) {
-        min-width: 100%;
-        left: 0;
-        top: 0;
-        transform: translate(0, 0);
-        padding: 24px 12px;
-    }
-    .top {
-        text-align: center;
-
-        .title {
-            padding: 18px 0;
-            border-bottom: 1px solid #DCDFE6;
-            font-size: 20px;
-            color: #303133;
-        }
-    }
-
-
     .form {
-        margin-top: 16px;
-
+        display: block;
         .line {
             position: relative;
             width: 100%;
@@ -249,12 +220,13 @@ export default {
             // margin-bottom: 24px;
             width: 27%;
             transform: translateY(5px);
+            margin-bottom: 0;
         }
 
         .input {
             // margin-bottom: 14px;
             width: 100% !important;
-
+            margin-bottom: 0;
             /* width: 30%!important; */
             ::v-deep input {
                 padding-left: 30px !important;
@@ -318,31 +290,10 @@ export default {
         .txt2 {
             margin-top: 20px;
         }
-
-
-    }
-
-    .agree_txt {
-        font-size: 12px;
-        margin: 10px 0 20px;
     }
 }
-
-.down_line {
-    padding: 4px 20px;
-    text-align: center;
+::v-deep .el-form-item__label {
+    color: #fff;
 }
 
-.wd {
-    font-size: 14px;
-    color: #606266;
-}
-.ecode {
-    img {
-    width: 100%;
-    height: 48px;
-    object-fit: contain;
-    }
-}
 </style>
-<style></style>

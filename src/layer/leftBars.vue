@@ -97,7 +97,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-    .el-menu-vertical-demo {
+.el-menu-vertical-demo {
     position: fixed;
     height: calc(100vh - 88px);
     padding: 16px 0;

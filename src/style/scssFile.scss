@@ -9,17 +9,17 @@
 $baseColor: #2dbe60;
 $baseHover: #1be762;
 $contentColor: #F4F4F4;
-
+$bgColor: #455b86;
 html {
     font-size: 12px;
-    @media screen and (min-width: 500px) {
-        font-size: 14px;
+    @media screen and (min-width: 900px) {
+        font-size: 18px;
     }
-    @media screen and (min-width: 700px) {
+    @media screen and (max-width: 900px) {
         font-size: 16px;
     }
-    @media screen and (min-width: 1200px) {
-        font-size: 18px;
+    @media screen and (max-width: 500px) {
+        font-size: 14px;
     }
 }
 
@@ -35,6 +35,16 @@ html {
     @media screen and (max-width: 500px) {
         width: 100%;
         padding: 0 1rem;
+    }
+}
+
+.normal-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+    @media screen and (max-width: 800px) {
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 2rem;
     }
 }
 
@@ -59,6 +69,37 @@ html {
 .mt16{
     margin-top: 16px;
 }
+
+@keyframes bounceln {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.3,.3,.3);
+        transform: scale3d(.3,.3,.3);
+    }
+    20% {
+        -webkit-transform: scale3d(1.1,1.1,1.1);
+        transform: scale3d(1.1,1.1,1.1);
+    }
+    40% {
+        -webkit-transform: scale3d(.9,.9,.9);
+        transform: scale3d(.9,.9,.9);
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: scale3d(1.03,1.03,1.03);
+        transform: scale3d(1.03,1.03,1.03);
+    }
+    80% {
+        -webkit-transform: scale3d(.97,.97,.97);
+        transform: scale3d(.97,.97,.97);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+    
+  }
 
 .flex {
     display: flex;

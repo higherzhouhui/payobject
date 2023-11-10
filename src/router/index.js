@@ -6,6 +6,9 @@ Vue.use(VueRouter)
 
 //3. 创建路由的实例对象
 const router = new VueRouter({
+    meta: {  
+        duplicateNavigationPolicy: 'ignore' // Ignore the warning for redundant navigation  
+    },
     routes: [
         { path: '/', redirect: 'index' },
         { path: '/index', name: 'index', component: () => import('../pages/index/index.vue') },

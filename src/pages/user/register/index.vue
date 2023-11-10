@@ -1,7 +1,10 @@
 <template>
-  <div class="login_box">
-    <div class="top">
-      <img src="@/assets/images/index/logo.png" alt="logo" @click="routerToIndex" style="cursor: pointer"/>
+  <div class="login_box container-auto normal-content">
+    <div class="left">
+      <img class="leftImg" alt="money" src="@/assets/images/register/left.png" />
+    </div>
+    <div class="form">
+      <h2>{{$t("createProfile")}}</h2>
       <div class="flex tabs">
         <div
           class="item"
@@ -18,142 +21,123 @@
           {{ $t("email") }}
         </div>
       </div>
-      <div class="form">
-        <div class="line">
-          <img class="icon" src="@/assets/images/user/user.png" alt="" />
-          <el-input
-            class="input"
-            :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
-            v-model="form.phone"
-            ref="myName"
-          >
-            <!-- :remote-method="remoteMethod"
-                :loading="loading" -->
-            <template v-if="type == 1" slot="prepend">
-              <el-select
-                style="width: 100px"
-                v-model="form.areaCode"
-                :placeholder="$t('qsr')"
-              >
-                <el-option
-                  style="padding: 0 10px"
-                  v-for="item in aereList"
-                  :key="item.id"
-                  :label="item.areaCode"
-                  :value="item.areaCode"
-                >
-                  {{ languge == 'zh' ? item.name : item.enName}}
-                </el-option>
-              </el-select>
-            </template>
-          </el-input>
-        </div>
-        <div class="line flex flex_jc_sb flex_align_center">
-          <img class="icon" src="@/assets/images/user/yzm.png" alt="" />
-          <el-input
-            class="input yzm"
-            :placeholder="$t('qsryzm')"
-            v-model="form.checkCode"
-          />
-          <el-button class="send_btn" type="primary" @click="sendSms">
-            {{ timer == 60 ? $t("send") : timer }}
-          </el-button>
-        </div>
-
-        <div class="line">
-          <img class="icon" src="@/assets/images/user/password.png" alt="" />
-          <el-input
-            class="input"
-            show-password
-            :placeholder="$t('qsrmm')"
-            v-model="form.password"
-          />
-        </div>
-        <div class="line">
-          <img class="icon" src="@/assets/images/user/password.png" alt="" />
-          <el-input
-            class="input"
-            show-password
-            :placeholder="$t('qzcsrmm')"
-            v-model="form.repassWord"
-          />
-        </div>
-        <div class="line">
-          <img class="icon" src="@/assets/images/user/tjr.png" alt="" />
-          <el-input
-            class="input"
-            :placeholder="$t('qsryqm')"
-            v-model="form.inviteCode"
-          />
-        </div>
-
-        <div class="line flex flex_jc_sb flex_align_center">
-          <img class="icon icon3" src="@/assets/images/user/txm.png" alt="" />
-          <el-input
-            class="input yzm"
-            :placeholder="$t('qsrtxm')"
-            @keyup.enter.native="regester"
-            v-model="form.code"
-          />
-          <div class="ecode pointer" :class="imgLoading && 'loading'">
-            <img
-              width="100%"
-              @load="() => (imgLoading = false)"
-              @error="
-                () => {
-                  imgLoading = false;
-                  randomT();
-                }
-              "
-              :src="'/api/assets/captcha?t=' + t"
-              @click="randomT"
-            />
-          </div>
-        </div>
-
-        <div class="flex agree_txt flex_align_center">
-          <el-checkbox
-            v-model="checked"
-            style="margin-right: 5px"
-          ></el-checkbox>
-          <span @click="checked = !checked" style="cursor: pointer">{{ $t("tybzs") }}</span>
-          <span class="baseColor pointer">《{{ $t("wlptfwxy") }}》</span
-          >{{ $t("he")
-          }}<span class="baseColor pointer">《{{ $t("yszc") }}》</span>
-        </div>
-        <el-button
-          class="btn"
-          type="primary"
-          :class="loading && 'loading'"
-          @click="regester"
-          >{{ $t("register") }}</el-button
+      <div class="line">
+        <img class="icon" src="@/assets/images/user/user.png" alt="" />
+        <el-input
+          class="input"
+          :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
+          v-model="form.phone"
+          ref="myName"
         >
+          <template v-if="type == 1" slot="prepend">
+            <el-select
+              style="width: 100px"
+              v-model="form.areaCode"
+              :placeholder="$t('qsr')"
+            >
+              <el-option
+                style="padding: 0 10px"
+                v-for="item in aereList"
+                :key="item.id"
+                :label="item.areaCode"
+                :value="item.areaCode"
+              >
+                {{ languge == 'zh' ? item.name : item.enName}}
+              </el-option>
+            </el-select>
+          </template>
+        </el-input>
+      </div>
+      <div class="line flex flex_jc_sb flex_align_center">
+        <img class="icon" src="@/assets/images/user/yzm.png" alt="" />
+        <el-input
+          class="input yzm"
+          :placeholder="$t('qsryzm')"
+          v-model="form.checkCode"
+        />
+        <el-button class="send_btn" type="primary" @click="sendSms">
+          {{ timer == 60 ? $t("send") : timer }}
+        </el-button>
+      </div>
 
-        <div class="txt flex flex_nowrap flex_align_center flex_jc_sb">
-          <div
-            class="pointer item baseColor flex flex_nowrap flex_align_center"
-            @click="to('/user/login')"
-          >
-            <img src="@/assets/images/user/back.png" alt="" />{{ $t("login") }}
-          </div>
-          <el-dropdown class="item pointer" trigger="click">
-            <div class="pointer flex flex_nowrap flex_align_center wd">
-              {{ $t("nowLanguage")
-              }}<img src="@/assets/images/user/down.png" alt="" />
-            </div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item class="down_line">
-                <div @click="checkLang('zh')">中文</div>
-              </el-dropdown-item>
-              <el-dropdown-item class="down_line">
-                <div @click="checkLang('en')">English</div>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+      <div class="line">
+        <img class="icon" src="@/assets/images/user/password.png" alt="" />
+        <el-input
+          class="input"
+          show-password
+          :placeholder="$t('qsrmm')"
+          v-model="form.password"
+        />
+      </div>
+      <div class="line">
+        <img class="icon" src="@/assets/images/user/password.png" alt="" />
+        <el-input
+          class="input"
+          show-password
+          :placeholder="$t('qzcsrmm')"
+          v-model="form.repassWord"
+        />
+      </div>
+      <div class="line">
+        <img class="icon" src="@/assets/images/user/tjr.png" alt="" />
+        <el-input
+          class="input"
+          :placeholder="$t('qsryqm')"
+          v-model="form.inviteCode"
+        />
+      </div>
+
+      <div class="line flex flex_jc_sb flex_align_center">
+        <img class="icon icon3" src="@/assets/images/user/txm.png" alt="" />
+        <el-input
+          class="input yzm"
+          :placeholder="$t('qsrtxm')"
+          @keyup.enter.native="regester"
+          v-model="form.code"
+        />
+        <div class="ecode pointer" :class="imgLoading && 'loading'">
+          <img
+            width="100%"
+            @load="() => (imgLoading = false)"
+            @error="
+              () => {
+                imgLoading = false;
+                randomT();
+              }
+            "
+            :src="'/api/assets/captcha?t=' + t"
+            @click="randomT"
+          />
         </div>
       </div>
-    </div>
+
+      <div class="flex agree_txt flex_align_center">
+        <el-checkbox
+          v-model="checked"
+          style="margin-right: 5px"
+        ></el-checkbox>
+        <span @click="checked = !checked" style="cursor: pointer">{{ $t("tybzs") }}</span>
+        <span class="baseColor pointer">《{{ $t("wlptfwxy") }}》</span
+        >{{ $t("he")
+        }}<span class="baseColor pointer">《{{ $t("yszc") }}》</span>
+      </div>
+      <el-button
+        class="btn normal-btn"
+        type="primary"
+        :class="loading && 'loading'"
+        @click="regester"
+        >{{ $t("register") }}</el-button
+      >
+
+      <div
+        class="flex register-line flex_align_center pointer flex_jc_sb_center"
+        @click="to('/user/login')"
+      >
+      {{$t("hadAccount")}}
+      <span class="register-btn">{{$t("login")}}</span>-
   </div>
+    </div>
+    </div>
 </template>
 <script>
 import { Local } from "@/utils/index";
@@ -344,20 +328,11 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+@import "../common.scss";
+
 .login_box {
-  padding: 20px 40px;
-  position: absolute;
-  left: 50%;
-  top: 44%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
-  width: 30%;
-  max-width: 700px;
-  min-width: 600px;
-  box-sizing: border-box;
   .tabs {
+    margin-bottom: 1.2rem;
     .item {
       font-weight: bold;
       font-size: 16px;
@@ -376,14 +351,6 @@ export default {
     transform: translate(0, 0);
     padding: 24px 12px;
   }
-  .top {
-    text-align: center;
-
-    img {
-      width: 62.5%;
-    }
-  }
-
   .form {
     margin-top: 10px;
 
@@ -481,4 +448,3 @@ export default {
   color: #606266;
 }
 </style>
-<style></style>

@@ -1,42 +1,9 @@
 <template>
     <div>
         <div class="container" ref="container">
-            <header :class="headerShow && 'headerShow'">
-                <div class="inner container-auto">
-                    <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
-                    <div class="flex flex_algin_center hidden-md-and-down">
-                        <div class="item item-active">{{ $t('home') }}</div>
-                        <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div>
-                    </div>
-                    <div class="info flex flex_align_center">
-                        <div class="btn-group flex hidden-md-and-down">
-                            <div class="btn" @click="to('/user/login')">{{ $t('login') }}</div>
-                            <div class="btn normal-btn" @click="to('/user/register')">{{ $t('register') }}</div>
-                        </div>
-                        <div class="language flex flex_align_center" @click="open">
-                            <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
-                            <img class="icon" v-else src="@/assets/images/index/en.png" alt="en">
-                            <span class="txt">{{ $t('languageChange') }}</span>
-                            <img src="@/assets/images/index/down.png" alt="">
-                        </div>
-                        <div class="hidden-md-and-up" @click="handleShowMenu">
-                            <div class="menu-btn">
-                                <div />
-                                <div />
-                                <div />
-                            </div>
-                            <div class="menus" :class="showMenu && 'showMenu'">
-                                <div class="menus-item" @click="to('/index')">{{ $t('home') }}</div>
-                                <div class="menus-item" @click="to('/user/login')">{{ $t('login') }}</div>
-                                <div class="menus-item" @click="to('/user/register')">{{ $t('register') }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
             <div class="banner">
                 <div class="container-auto banner-content">
-                    <div class="left">
+                    <div class="left leftAni">
                         <h4>{{ $t("trusted")}}</h4>
                         <div class="title-big">
                             {{ $t("moveMoney")}}
@@ -286,207 +253,7 @@
                       </el-carousel>
                 </div>
             </div>
-
-
-            <!-- <section class="content">
-                <div class="notice_box">
-                    <div class="notice flex flex_align_center">
-                        <img src="@/assets/images/index/notice_icon.png" alt="">
-                        <div class="txt">{{ notice }}</div>
-                    </div>
-                </div>
-            </section>
-            <section class="content">
-                <div class="numbers_box">
-                    <div class="item">
-                        <div>
-                            <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
-                            <img src="@/assets/images/index/add.png" alt="">
-                        </div>
-                        <div class="txt">{{ $t('fggj') }}</div>
-                    </div>
-                    <div class="item">
-                        <div>
-                            <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
-                            <img src="@/assets/images/index/add.png" alt="">
-                        </div>
-                        <div class="txt">{{ $t('fggj') }}</div>
-                    </div>
-                    <div class="item">
-                        <div>
-                            <CountTo class="count" :startVal='0' :endVal='100' :duration='500'></CountTo>
-                            <img src="@/assets/images/index/add.png" alt="">
-                        </div>
-                        <div class="txt">{{ $t('fggj') }}</div>
-                    </div>
-                </div>
-
-            </section>
-            <section class="content">
-                <div class="serve_box">
-                    <div class="title">
-                        <div class="txt">{{ $t('ouerserve') }}</div>
-                    </div>
-
-                    <div class="info">
-                        <el-row>
-                            <el-col :xs="24" :sm="8">
-                                <div class="left">
-                                    <div v-for="(item, index) in serviceLeftData" :key="index"
-                                        class="item flex flex_align_center" @mousemove="type = index">
-                                        <img v-if="type == index"
-                                            :src="require('@/assets/images/index/s_l_' + index + '_active.png')" alt="">
-                                        <img v-else :src="require('@/assets/images/index/s_l_' + index + '.png')" alt="">
-                                        {{ $t(item.title) }}
-                                    </div>
-                                </div>
-                            </el-col>
-                            <el-col :xs="24" :sm="16">
-                                <div class="right">
-                                    <img class="img" :src="require('@/assets/images/index/s_' + type + '.png')" alt="">
-                                    <div class="info">
-                                        <div class="s_title">
-                                            {{ $t(serviceLeftData[type].title) }}
-                                        </div>
-                                        <div class="des">{{ $t(serviceLeftData[type].des) }}</div>
-                                        <div class="btn flex flex_align_center"> <img
-                                                src="@/assets/images/index/r_w_icon.png" alt="">{{
-                                                    $t('learnmore') }}</div>
-                                    </div>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                </div>
-            </section>
-            <section class="">
-                <div class="advantage_box">
-                    <div class="inner_box">
-                        <div class="title">
-                            <div class="txt">{{ $t('fwys') }}</div>
-                        </div>
-                        <div class="flex">
-                            <div class="block hidden-sm-and-down"></div>
-                            <div class="info">
-                                <div class="black hidden-sm-and-down"></div>
-                                <el-row :gutter="24">
-                                    <el-col :xs="24" :sm="8" :offset="2" v-for="(item, index) in advantageData"
-                                        :key="index">
-                                        <div class="item">
-                                            <img :src="require('@/assets/images/index/a_' + index + '.png')" alt="">
-                                            <div class="title">{{ $t(item.title) }}</div>
-                                            <div class="text" v-if="index != 2">
-                                                {{ $t(item.des) }}
-                                            </div>
-                                            <div class="text3" v-else-if="index == 2">
-                                                <div class="inner_item flex" v-for="(item, idx) in item.desList" :key="idx">
-                                                    <div class="key">{{ $t(item) }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="btn flex flex_align_center"> <img
-                                                    src="@/assets/images/index/r_w_icon.png" alt="">{{
-                                                        $t('learnmore') }}</div>
-                                        </div>
-                                    </el-col>
-                                </el-row>
-                                <div class="black hidden-sm-and-down"></div>
-                            </div>
-                            <div class="block hidden-sm-and-down"></div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-            <section class="content">
-                <div class="process_box">
-                    <div class="title">
-                        <div class="txt">{{ $t('process') }}</div>
-                        <div class="des">{{ $t('processdes') }}</div>
-                    </div>
-
-                    <div class="info">
-                        <el-row :gutter="16">
-                            <el-col :xs="24" :sm="5">
-                                <div class="item">{{ $t('p1') }}</div>
-                            </el-col>
-                            <el-col class="hidden-sm-and-down" :span="1">
-                                <img src="@/assets/images/index/h-jt.png" alt="">
-                            </el-col>
-                            <el-col :xs="24" :sm="6">
-                                <div class="item">{{ $t('p2') }}</div>
-                            </el-col>
-                            <el-col class="hidden-sm-and-down" :span="1">
-                                <img src="@/assets/images/index/h-jt.png" alt="">
-                            </el-col>
-                            <el-col :xs="24" :sm="5">
-                                <div class="item">{{ $t('p3') }}</div>
-                            </el-col>
-                            <el-col class="hidden-sm-and-down" :span="1">
-                                <img src="@/assets/images/index/h-jt.png" alt="">
-                            </el-col>
-                            <el-col :xs="24" :sm="5">
-                                <div class="item">{{ $t('p4') }}</div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                </div>
-            </section>
-            <section class="componey_box">
-                <div class="inner_box">
-                    <div class="title">
-                        <div class="txt">{{ $t('hzhb') }}</div>
-                    </div>
-                    <div class="info">
-                        <el-row :gutter="24">
-                            <el-col :xs="12" :sm="4" v-for="(item) in 12" :key="item">
-                                <img :src="require('@/assets/images/index/p' + item + '.png')" alt="">
-                            </el-col>
-                        </el-row>
-                    </div>
-                </div>
-
-            </section> -->
-            <!-- <section class="content to_us">
-                <div class="txt">{{ $t('jjfa') }}</div>
-                <div class="txt">{{ $t('jt') }}</div>
-                <div class="btn">{{ $t('lxwm') }}</div>
-            </section> -->
-            <el-backtop class="elbacktop"></el-backtop>
         </div>
-        <footer>
-            <div class="footer-content">
-                <div class="footer-top">
-                    <div class="footer-item">
-                        <p class="desc">
-                            ReliancePay旨在为更多的跨境企业提供便利的服务于技术支持
-                        </p>
-                        <h3>关注我们</h3>
-                        <img class="footer-icon" src="@/assets/images/index/facebook.png" alt="facebook" />
-                        <img class="footer-icon" src="@/assets/images/index/twitter.png" alt="twitter" />
-                        <img class="footer-icon" src="@/assets/images/index/telegram.png" alt="telegram" />
-                        <img class="footer-icon" src="@/assets/images/index/skype.png" alt="skype" />
-                    </div>
-                    <div class="footer-item">
-                        <div class="footer-title">有效链接</div>
-                        <div class="item-warppaer">
-                            <div class="item" v-for="item in links" :key="item.name" @click="to(item.url)">
-                                {{item.name}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-item">
-                        <div class="footer-title">订阅</div>
-                        <div class="item-desc">探索更多的解决方案，请与我们联系</div>
-                        <div class="btn">{{ $t('lxwm') }}</div>
-                    </div>
-                </div>
-                <div class="copyright">{{$t('footer')}}</div>
-            </div>
-        </footer>
-        <el-dialog class="lang_box" width="300px" :title="$t('choiceLanguage')" :visible.sync="dialogTableVisible">
-            <div class="item" :class="languge == 'zh' && 'active'" @click="checkLang('zh')">中文</div>
-            <div class="item" :class="languge == 'en' && 'active'" @click="checkLang('en')">English</div>
-        </el-dialog>
         <div class="modal" v-if="showMovie">
             <div class="mask" @click="showMovie = false"></div>
             <div class="close" @click="showMovie = false">
@@ -509,10 +276,8 @@
 </template>
 <script>
 import { Local } from '@/utils/index'
-// import CountTo from 'vue-count-to'
 export default {
     name: 'indexVue',
-    // components: { CountTo },
     data() {
         return {
             comments: [
@@ -552,10 +317,8 @@ export default {
             },
             showMovie: false,
             movieSrc: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Schlossbergbahn.webm',
-            headerShow: false,
             type: 0,
             languge: Local('lang') || 'zh',
-            dialogTableVisible: false,
             notice: 'Reliance-Pay正式上线了',
             serviceLeftData: [
                 { title: 'szyw', des: 's1' },
@@ -577,14 +340,7 @@ export default {
                 },
                 { title: 'cpjz', desList: ['kj', 'xf', 'gycp', 'qc', 'jr', 'cm', 'fc'] }
             ],
-            links: [
-                {name: '首页', url: '/index'},
-                {name: '关于我们', url: '/about'},
-                {name: '登录', url: '/user/login'},
-                {name: '博客', url: '/blog'},
-                {name: '注册', url: '/user/register'},
-                {name: '隐私&政策', url: '/privacy'},
-            ],
+    
             showMenu: false,
         }
     },
@@ -625,13 +381,7 @@ export default {
                     if (scrollY < 10) {
                         this.animationFlag[`c${i}`] = false
                     }
-
                 }
-            }
-            if (window.scrollY > 88) {
-                this.headerShow = true
-            } else {
-                this.headerShow = false
             }
         },
 
@@ -643,15 +393,6 @@ export default {
             }
             return changeNum[0] + decimal
         },
-        open() {
-            this.dialogTableVisible = true
-        },
-        checkLang(lang) {
-            this.languge = lang
-            Local('lang', lang)
-            this.$i18n.locale = lang;
-            this.dialogTableVisible = false
-        }
     }
 }
 </script>
@@ -729,25 +470,6 @@ export default {
     padding: 1.5rem 0;
 }
 
-.lang_box {
-    .item {
-        text-align: center;
-        font-size: 18px;
-        padding: 10px 0;
-        cursor: pointer;
-        color: $baseColor;
-
-        // &:hover {
-        //     background: $baseColor;
-        //     color: #fff;
-        // }
-        &.active {
-            background: $baseColor;
-            color: #fff;
-        }
-    }
-}
-
 .container {
     width: 100%;
     min-height: 100vh;
@@ -767,44 +489,7 @@ export default {
         }
     }
 
-    @keyframes headerMove {
-        0% {
-            top: -88px;
-        }
-        100% {
-            top: 0;
-        }
-    }
-    @keyframes bounceln {
-        0% {
-            opacity: 0;
-            -webkit-transform: scale3d(.3,.3,.3);
-            transform: scale3d(.3,.3,.3);
-        }
-        20% {
-            -webkit-transform: scale3d(1.1,1.1,1.1);
-            transform: scale3d(1.1,1.1,1.1);
-        }
-        40% {
-            -webkit-transform: scale3d(.9,.9,.9);
-            transform: scale3d(.9,.9,.9);
-        }
-        60% {
-            opacity: 1;
-            -webkit-transform: scale3d(1.03,1.03,1.03);
-            transform: scale3d(1.03,1.03,1.03);
-        }
-        80% {
-            -webkit-transform: scale3d(.97,.97,.97);
-            transform: scale3d(.97,.97,.97);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: scaleX(1);
-            transform: scaleX(1);
-        }
-        
-    }
+
     @keyframes ripple {
         0%, 35% {
             -webkit-transform: scale(0);
@@ -821,86 +506,6 @@ export default {
             opacity: 0;
             -webkit-transform: scale(2);
             transform: scale(2);
-        }
-    }
-    header {
-        position: fixed;
-        z-index: 1001;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 88px;
-        display: flex;
-        align-items: center;
-        background: #384d78;
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
-        color: #fff;
-        &.headerShow {
-            animation: headerMove forwards 1s;
-        }
-
-        .logo {
-            height: 45px;
-            cursor: pointer;
-            animation: bounceln 1.5s forwards 1s;
-            @media screen and (max-width: 700px) {
-                height: 32px;
-            }
-        }
-        .item-active {
-            color: $baseHover;
-        }
-        .inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            .item {
-                cursor: pointer;
-                padding: 0 1rem;
-                &:hover {
-                    color: $baseHover;
-                }
-            }
-            .info {
-                font-size: 1rem;
-            }
-
-            .btn-group {
-                .btn {
-                    margin-right: 16px;
-                    padding: 0.5rem 2rem;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    transition: all 0.5s;
-                    &.active {
-                        background: $baseColor;
-                        color: #fff;
-                        border: 1px solid transparent;
-                        &:hover {
-                            background: transparent;
-                            color: $baseColor;
-                            border: 1px solid $baseColor;
-                        }
-                    }
-
-                    &:hover {
-                        color: $baseColor;
-                    }
-                }
-            }
-
-            .language {
-                cursor: pointer;
-                margin-right: 6px;
-                .icon {
-                    width: 32px;
-                }
-
-                .txt {
-                    margin: 0 8px;
-                    font-size: 16px;
-                }
-            }
         }
     }
 
@@ -1449,6 +1054,9 @@ export default {
                 row-gap: 2rem;
             }
         }
+        .leftAni {
+            animation: bounceln 1.5s forwards 0.5s;
+        }
         .left {
             display: flex;
             flex-direction: column;
@@ -1514,7 +1122,7 @@ export default {
             background-color: #2dbe60;
         }
         .right {
-            background-color: #455b86;
+            background-color: $bgColor;
             padding: 20px;
             border-radius: 10px;
             .form-item {
@@ -1618,107 +1226,7 @@ export default {
         margin: 0 auto;
     }
 }
-footer {
-    padding: 50px 0 8px 0;
-    font-size: 14px;
-    color: #fff;
-    background: #6967ca;
-    text-align: center;
-    box-sizing: border-box;
-    text-align: left;
-    .footer-content {
-        width: 1180px;
-        box-sizing: border-box;
-        @media screen and (max-width: 1200px) {
-            width: 100%;
-            padding: 0 24px;
-        }
-        margin: 0 auto;
-        .footer-icon {
-            height: 30px;
-            margin-right: 9px;
-        }
-    }
-    .copyright {
-        text-align: center;
-    }
-    .footer-top {
-        box-sizing: border-box;
-        margin-bottom: 28px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        column-gap: 20px;
-        @media screen and (max-width: 1200px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        @media screen and (max-width: 700px) {
-            grid-template-columns: repeat(1, 1fr);
-            column-gap: 0;
-        }
-        h3 {
-            text-align: left;
-            margin: 12px 0;
-        }
-        .footer-title {
-            font-size: 17px;
-            &::after {
-                content: '';
-                width: 30px;
-                height: 1px;
-                background: #ddd6d6;
-                display: block;
-                margin: 12px 0;
-            }
-        }
-        .item-warppaer {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            row-gap: 12px;
-            .item {
-                cursor: pointer;
-                &:hover {
-                    font-weight: bold;
-                }
-            }
-        }
-        .btn {
-            background: #1916d6;
-            width: fit-content;
-            padding: 6px 10px;
-            border-radius: 6px;
-            margin-top: 16px;
-            cursor: pointer;
-            &:hover {
-                background: #0501fc;
-            }
-        }
-    }
-}
-.menu-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 5px;
-    background-color: #723eeb;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
-    padding: 5px 0;
-    cursor: pointer;
-    > div {
-        width: 20px;
-        height: 3px;
-        background: #fff;
-    }
-}
-::v-deep .el-icon-caret-top {
-    color: #fff;
-}
-.elbacktop {
-    border-radius: 4px;
-    background: $baseColor;
-}
+
 .have-bg {
     background: #f3f6f8;
 }
@@ -1831,11 +1339,11 @@ footer {
             &:hover {
                 transform: scale(1.05);
                 .bottom {
-                    background: #455b86;
+                    background: $bgColor;
                     padding-left: 1rem;
                     color: #fff;
                         .more-btn {
-                            color: #455b86;
+                            color: $bgColor;
                             background: #fff;
                         }
                 }
@@ -1848,7 +1356,7 @@ footer {
         .more-btn {
             border-radius: 1rem;
             color: #fff;
-            background: #455b86;
+            background: $bgColor;
             padding: 4px 12px;
             width: fit-content;
             margin-top: 1rem;

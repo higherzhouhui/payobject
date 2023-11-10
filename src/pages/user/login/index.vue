@@ -1,8 +1,10 @@
 <template>
-  <div class="login_box">
-    <div class="top">
-      <img src="@/assets/images/index/logo.png" alt="" @click="routerToIndex" style="cursor: pointer"/>
+    <div class="container-auto normal-content">
+      <div class="left">
+        <img class="leftImg" alt="money" src="@/assets/images/login/left.png" />
+      </div>
       <div class="form">
+        <h2>{{$t('welecomBack')}}</h2>
         <div class="line">
           <img class="icon" src="@/assets/images/user/user.png" alt="" />
           <el-input
@@ -45,45 +47,26 @@
           </div>
         </div>
         <el-button
-          class="btn"
+          class="normal-btn btn"
           :class="loading && 'loading'"
           type="primary"
           @click="toLogin"
           >{{ $t("login") }}</el-button
         >
         <div class="txt flex flex_nowrap flex_align_center flex_jc_sb">
-          <div
-            class="baseColor flex flex_nowrap flex_align_center pointer"
-            @click="to('/user/register')"
-          >
-            <img src="@/assets/images/user/user_active.png" alt="" />{{
-              $t("register")
-            }}
-          </div>
-          <div class="pointer" @click="to('/user/forget')">
+          <div class="forget-btn" @click="to('/user/forget')">
             {{ $t("forgetpw") }}？
           </div>
         </div>
-        <div class="txt txt2 flex flex_nowrap flex_align_center flex_jc_sb">
-          <div></div>
-          <el-dropdown trigger="click">
-            <div class="pointer flex flex_nowrap flex_align_center wd">
-              {{ $t("nowLanguage")
-              }}<img src="@/assets/images/user/down.png" alt="" />
-            </div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item class="down_line"
-                ><div @click="checkLang('zh')">中文</div></el-dropdown-item
-              >
-              <el-dropdown-item class="down_line"
-                ><div @click="checkLang('en')">English</div></el-dropdown-item
-              >
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+        <div
+          class="flex register-line flex_align_center pointer flex_jc_sb_center"
+          @click="to('/user/register')"
+        >
+          {{$t("noAccount")}}
+          <span class="register-btn">{{$t("register")}}</span>-
+      </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 import { Local } from "@/utils/index";
@@ -167,105 +150,5 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.login_box {
-  padding: 24px 40px;
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  box-sizing: border-box;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 56, 147, 0.25);
-  width: 30%;
-  max-width: 700px;
-  min-width: 500px;
-  @media screen and (max-width: 700px) {
-    min-width: 100%;
-    padding: 24px 12px;
-  }
-  .top {
-    text-align: center;
-
-    img {
-      width: 62.5%;
-    }
-  }
-
-  .form {
-    margin-top: 16px;
-
-    .line {
-      position: relative;
-    }
-
-    .input {
-      margin-bottom: 24px;
-      width: 100% !important;
-
-      /* width: 30%!important; */
-      ::v-deep input {
-        padding-left: 30px !important;
-        height: 48px;
-        line-height: 48px;
-      }
-      &.yzm {
-        width: 63.56% !important;
-      }
-    }
-
-    .icon {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      left: 10px;
-      top: 16px;
-      z-index: 1;
-      &.icon3 {
-        top: 19px;
-      }
-    }
-
-    .btn {
-      margin-top: 16px;
-      padding: 16px 0;
-      width: 100%;
-    }
-
-    .txt {
-      margin-top: 12px;
-      font-size: 14px;
-      font-weight: 400;
-      color: #606266;
-
-      img {
-        margin-right: 4px;
-        width: 16px;
-        height: 16px;
-      }
-    }
-
-    .txt2 {
-      margin-top: 20px;
-    }
-  }
-}
-.ecode {
-  margin-bottom: 24px;
-  width: 32%;
-  img {
-    width: 100%!important;
-    height: 48px;
-    object-fit: scale-down;
-  }
-}
-.down_line {
-  padding: 4px 20px;
-  text-align: center;
-}
-.wd {
-  font-size: 14px;
-  color: #606266;
-}
+@import "../common.scss";
 </style>
-<style></style>

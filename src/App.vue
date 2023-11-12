@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <NormalHeader />
+    <NormalHeader v-if="normalHeader"/>
     <router-view></router-view>
-    <el-backtop class="elbacktop"></el-backtop>
-    <NormalFooter />
+    <el-backtop class="elbacktop" v-if="normalHeader"></el-backtop>
+    <NormalFooter v-if="normalFooter"/>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       normalList: [],
-      adminList: [],
+      adminList: ['home', 'manage'],
       normalHeader: true,
       normalFooter: true,
     }
@@ -28,7 +28,14 @@ export default {
   watch: {
     $route(to, _from) {
       const path = to.path;
-      
+      this.normalHeader = true
+      this.normalFooter = true
+      this.adminList.map(item => {
+        if (path.includes(item)) {
+          this.normalHeader = false
+          this.normalFooter = false
+        }
+      })
     },
   }
 }
@@ -38,6 +45,9 @@ export default {
 .elbacktop {
   border-radius: 4px;
   background: $baseColor;
+}
+.el-backtop:hover {
+  background: $baseHover;
 }
 ::v-deep .el-icon-caret-top {
   color: #fff;

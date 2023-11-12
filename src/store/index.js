@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     // 登出
     Logout({ commit }) {
-      return new Promise((resolve) => {
+        return new Promise((resolve) => {
       })
     },
   },

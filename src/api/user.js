@@ -11,3 +11,9 @@ export const getAccountKyc = (data) => service({
     data,
     method: 'get'
 })
+// 获取实名认证
+export const getUserInfo = (data) => service({
+    url: '/getCur',
+    data,
+    method: 'get'
+})

@@ -35,3 +35,8 @@ export const logout = (data) => service({
     data,
     method: 'get'
 })
+export const resetPwd = (data) => service({
+    url: '/resetPwd',
+    data,
+    method: 'post'
+})

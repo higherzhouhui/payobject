@@ -1,22 +1,8 @@
 <template>
-  <div>
-    <header class="flex flex_align_center flex_jc_sb flex_nowrap">
-      <div class="flex flex_align_center">
-        <img class="logo" src="@/assets/images/index/logo.png" alt="" />
-        <div class="refresh">
-          <img
-            @click="
-              () => {
-                reload();
-              }
-            "
-            class="notice pointer"
-            src="@/assets/images/home/refresh.png"
-            alt=""
-          />
-        </div>
-        <div
-          class="language flex flex_align_center hidden-sm-and-down"
+  <div class="headerWrapper">
+    <header>
+        <!-- <div
+          class="language flex flex_align_center"
           @click="open"
         >
           <img
@@ -27,35 +13,45 @@
           />
           <img class="icon" v-else src="@/assets/images/index/en.png" alt="" />
           <span class="txt">{{ $t("languageChange") }}</span>
-          <img src="@/assets/images/index/down.png" alt="" />
-        </div>
-      </div>
-
-      <div class="right flex flex_align_center">
-        <img
-          class="notice pointer"
-          src="@/assets/images/home/notice.png"
-          alt=""
-        />
-        <div class="user_info flex flex_align_center">
+          <img class="xiala" src="@/assets/images/index/xiala.png" alt="arrow" />
+        </div> -->
+        <!-- <div class="user_info flex flex_align_center">
           <img
             class="avatar pointer"
             src="@/assets/images/home/user.png"
             alt="header"
           />
-          <span>{{
+          <span class="nickName">{{
             userInfo.nickName || userInfo.phone || userInfo.email
           }}</span>
-        </div>
-        <div @click="quit" class="quite pointer flex flex_align_center">
+        </div> -->
+
+        <el-dropdown trigger="click" @command="handleDropCommand">
+          <span class="el-dropdown-link">
+            <span class="nickName">{{userInfo.nickName || userInfo.phone || userInfo.email}}</span>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item icon="el-icon-user" command="profile">
+              {{$t("profile")}}
+            </el-dropdown-item>
+            <el-dropdown-item icon="el-icon-lock" command="resetPwd">
+              {{$t("重置密码")}}
+            </el-dropdown-item>
+            <el-dropdown-item icon="el-icon-switch-button" command="logout">
+              {{$t("quitLogin")}}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
+        <!-- <div @click="quit" class="quite pointer flex flex_align_center">
           <img
             class="notice pointer"
-            src="@/assets/images/home/quit.png"
-            alt=""
+            src="@/assets/images/home/exit.png"
+            alt="quit"
           />
-          <span>退出登录</span>
-        </div>
-      </div>
+          <span>{{$t('quitLogin')}}</span>
+        </div> -->
     </header>
     <el-dialog
       class="lang_box"
@@ -98,6 +94,14 @@ export default {
     },
     changeLanguge() {
       this.$i18n.locale = "en";
+    },
+    handleDropCommand(command) {
+      if (command == 'profile') {
+
+      }
+      if (command == 'logout') {
+        this.quit()
+      }
     },
     quit() {
       this.$confirm("确认退出？", "提示", {
@@ -145,22 +149,27 @@ export default {
   }
 }
 
+.headerWrapper {
+  background: $bgColor;  
+}
 header {
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  height: 88px;
+  height: 62px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-  border-bottom: 1px solid #dcdfe6;
-  background: #fff;
   z-index: 99;
-  padding: 0 24px;
-  box-sizing: border-box;
-  .logo {
-    height: 60px;
+  padding: 0 1rem 0 $leftSideWidth;
+  background: $bgColor;  
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  @media screen and (max-width: 800px) {
+      width: 100vw;
+      position: relative;
+      padding: 0 1rem;
   }
-
   .notice {
     width: 32px;
     height: 32px;
@@ -170,19 +179,17 @@ header {
     padding-right: 24px;
   }
 
-  .refresh {
-    margin: 0 16px 0 24px;
-    background: #f2f6ff;
-    padding: 25px;
-  }
-
   .language {
     cursor: pointer;
-    font-size: 16px;
-    color: #303133;
-
+    font-size: 1rem;
+    color: #fff;
+    .xiala {
+      width: 20px;
+      object-fit: contain;
+    }
     .icon {
       width: 32px;
+      color: #fff;
     }
 
     .txt {
@@ -192,7 +199,6 @@ header {
   }
 
   .user_info {
-    margin: 0 80px 0 40px;
     font-size: 16px;
     color: #909399;
 
@@ -202,14 +208,30 @@ header {
       height: 48px;
     }
   }
-
+  .nickName {
+    color: #fff;
+  }
   .quite {
-    font-size: 16px;
-    color: #303133;
+    font-size: 1rem;
+    color: #fff;
 
     img {
       margin-right: 8px;
     }
   }
+  .el-dropdown-link {
+    cursor: pointer;
+    font-size: 1rem;
+    i::before{
+      color: #fff;
+      font-size: 1rem;
+      margin-left: 4px;
+    }
+  }
+}
+::v-deep .el-dropdown-menu__item {
+  padding: 0.2rem 1.5rem;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
 }
 </style>

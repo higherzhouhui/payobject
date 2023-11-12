@@ -15,7 +15,7 @@ const router = new VueRouter({
         {
             path: '/home', name: 'home', redirect: '/home/index', component: () => import('../pages/home/index.vue'),
             children: [
-                { path: 'index', component: () => import('../pages/home/home.vue') },
+                { path: 'index', component: () => import('../pages/home/dashboard.vue') },
                 { path: 'account', component: () => import('../pages/home/account/index.vue') },
                 { path: 'user', component: () => import('../pages/home/user/index.vue') },
                 { path: 'collection', component: () => import('../pages/home/moneyManagement/collection.vue') },

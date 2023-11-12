@@ -359,5 +359,7 @@
     "welecomBack": "欢迎回来",
     "noAccount": "-还没有账号?",
     "hadAccount": "-已有账号?",
-    "createProfile": "创建一个账号"
+    "createProfile": "创建一个账号",
+    "profile": "个人中心",
+    "quitLogin": "退出登录"
 }

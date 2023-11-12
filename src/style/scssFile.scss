@@ -10,6 +10,8 @@ $baseColor: #2dbe60;
 $baseHover: #1be762;
 $contentColor: #F4F4F4;
 $bgColor: #455b86;
+$leftSideWidth: 220px;
+
 html {
     font-size: 12px;
     @media screen and (min-width: 900px) {
@@ -172,16 +174,31 @@ html {
 }
 
 .el-menu-item {
-    // font-size: 18px;
-    color: #909399;
-    // background: #F2F6FF;
-
-    &.is-active {
-        background: $baseColor;
+    color: rgba(255,255,255,0.7);
+    background: #20304c;
+    &:hover {
         color: #fff;
-
+        background: rgba($color: #20304c, $alpha: 0.8);
         .icon {
             filter: grayscale(100%) brightness(200%)
+        }
+    }
+    &.is-active {
+        background: rgba($color: #20304c, $alpha: 0.8);
+        color: #fff;
+        font-weight: bold;
+        .icon {
+            filter: grayscale(100%) brightness(200%)
+        }
+        &::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 50px;
+            background-color: #2dbe60;
+            transition: all 0.5s;
         }
     }
 }
@@ -189,18 +206,17 @@ html {
 .is-active {
     .el-submenu__title {
         overflow: hidden;
-        color: $baseColor;
-
+        color: #fff;
+        font-weight: bold;
         .icon {
             transform: translateY(-100px);
-            filter: drop-shadow(0 100px $baseColor);
+            filter: drop-shadow(0 100px #fff);
         }
     }
 
     .el-icon-arrow-down {
         &::before {
-
-            color: $baseColor;
+            color: #fff;
         }
     }
 
@@ -216,7 +232,7 @@ html {
 .is-opened {}
 
 .el-submenu__title {
-    color: #909399;
+    color: rgba(255,255,255,0.7);
 }
 
 .el-table .el-table__header-wrapper,

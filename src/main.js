@@ -11,6 +11,13 @@ import { Local } from '@/utils/index'
 import locale from 'element-ui/lib/locale'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import css from 'swiper/css/swiper.min.css'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+Vue.use(VueAwesomeSwiper, {
+  css
+})
+
 Vue.use(ElementUI, {
   i18n: function () {
       if(Local('lang') == 'en') {

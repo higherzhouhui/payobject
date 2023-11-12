@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <HeaderBar />
         <div class="content">
             <LeftBar />
+            <HeaderBar />
             <div class="index_content">
                 <router-view></router-view>
             </div>
@@ -44,23 +44,30 @@ export default {
 </script>
 <style scoped lang="scss">
 .container {
-    padding: 88px 0 20px 0;
+    padding: 62px 0 0 0;
     display: flex;
     min-height: calc(100vh - 108px);
-    box-sizing: border-box;
     width: 100%;
-
+    @media screen and (max-width: 800px) {
+        padding: 0;
+        .content {
+            width: 100%!important;
+        }
+        .index_content {
+            margin: 0!important;
+            min-height: calc(100vh - 124px)!important;
+        }
+    }
     .content {
         width: calc(100% - 220px);
     }
 
     .index_content {
         margin: 0 0 0 220px;
-        box-sizing: border-box;
-        padding: 20px;
-        background: #fff;
+        padding: 1.5rem;
+        background: $bgColor;
         width: 100%;
-
+        min-height: calc(100vh - 62px);
     }
 }
 </style>

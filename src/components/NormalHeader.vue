@@ -3,22 +3,25 @@
     <header :class="headerShow && 'headerShow'">
         <div class="inner container-auto">
             <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
-            <div class="flex flex_algin_center hidden-md-and-down">
+            <div class="flex flex_algin_center controlMenu">
                 <div class="item item-active" @click="to('/index')">{{ $t('home') }}</div>
                 <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div>
             </div>
             <div class="info flex flex_align_center">
-                <div class="btn-group flex hidden-md-and-down">
+                <div class="btn-group flex controlMenu" v-if="!email">
                     <div class="btn" @click="to('/user/login')">{{ $t('login') }}</div>
                     <div class="btn normal-btn" @click="to('/user/register')">{{ $t('register') }}</div>
+                </div>
+                <div class="btn-group flex controlMenu" v-else>
+                    <div class="btn" @click="to('/home/index')">{{email}}</div>
                 </div>
                 <div class="language flex flex_align_center" @click="open">
                     <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
                     <img class="icon" v-else src="@/assets/images/index/en.png" alt="en">
                     <span class="txt">{{ $t('languageChange') }}</span>
-                    <img src="@/assets/images/index/down.png" alt="down">
+                    <img class="xiala" src="@/assets/images/index/xiala.png" alt="down">
                 </div>
-                <div class="hidden-md-and-up" @click="handleShowMenu">
+                <div class="controlDrop" @click="handleShowMenu">
                     <div class="menu-btn">
                         <div />
                         <div />
@@ -26,8 +29,10 @@
                     </div>
                     <div class="menus" :class="showMenu && 'showMenu'">
                         <div class="menus-item" @click="to('/index')">{{ $t('home') }}</div>
-                        <div class="menus-item" @click="to('/user/login')">{{ $t('login') }}</div>
-                        <div class="menus-item" @click="to('/user/register')">{{ $t('register') }}</div>
+                        <div class="menus-item" @click="to('/user/login')" v-if="!email">{{ $t('login') }}</div>
+                        <div class="menus-item" @click="to('/user/register')" v-if="!email">{{ $t('register') }}</div>
+                        <div class="menus-item" @click="to('/home/index')" v-if="email">{{$t('profile')}}</div>
+                        <div class="menus-item" @click="quit" v-if="email">{{$t('quitLogin')}}</div>
                     </div>
                 </div>
             </div>
@@ -52,6 +57,7 @@ export default {
       languge: Local('lang') || 'zh',
       dialogTableVisible: false,
       showMenu: false,
+      email: this.$store.state.userInfo.email
     }
   },
   mounted() {
@@ -78,12 +84,25 @@ export default {
         this.dialogTableVisible = false
     },
     onScroll() {
-          if (window.scrollY > 88) {
-              this.headerShow = true
-          } else {
-              this.headerShow = false
-          }
-      },
+        if (window.scrollY > 88) {
+            this.headerShow = true
+        } else {
+            this.headerShow = false
+        }
+    },
+    quit() {
+      this.$confirm("确认退出？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+      }).then(() => {
+        this.$router.push("/index");
+        localStorage.clear()
+        logout()
+      }).catch(() => {
+        console.log('取消')
+      })
+    },
   }
 }
 </script>
@@ -119,12 +138,24 @@ header {
       height: 45px;
       cursor: pointer;
       animation: bounceln 1.5s forwards 1s;
-      @media screen and (max-width: 700px) {
+      @media screen and (max-width: 800px) {
           height: 32px;
       }
   }
   .item-active {
       color: $baseHover;
+  }
+  .controlMenu {
+    display: flex;
+    @media screen and (max-width: 800px) {
+        display: none;
+    }
+  }
+  .controlDrop {
+    display: none;
+    @media screen and (max-width: 800px) {
+        display: flex;
+    }
   }
   .inner {
       display: flex;
@@ -168,6 +199,10 @@ header {
       .language {
           cursor: pointer;
           margin-right: 6px;
+          .xiala {
+            width: 20px;
+            object-fit: contain;
+          }
           .icon {
               width: 32px;
           }

@@ -5,24 +5,20 @@
             <img alt="menu" class="menuImg" src="@/assets/images/home/menu.png" @click="toggleMenuShow"/>
         </div>
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'">
-            <el-menu-item index="/home/index">
+            <el-menu-item index="/admin/dashboard">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
                 <span slot="title">{{ $t('home') }}</span>
             </el-menu-item>
-            <el-menu-item index="/home/account">
-                <img class="icon" src="@/assets/images/home/zhanghu.png" alt="">
-                <span slot="title">{{ $t('myaccount') }}</span>
-            </el-menu-item>
-            <el-submenu index="3">
+            <el-submenu index="31">
                 <template slot="title">
-                    <img class="icon" src="@/assets/images/home/zjgl.png" alt="">
+                    <img class="icon" src="@/assets/images/home/zjgl.png" alt="zjgl">
                     <span slot="title">{{ $t('zjgl') }}</span>
                 </template>
-                <el-menu-item index="/home/collection">
+                <el-menu-item index="/admin/deposit/index">
                     <img class="icon" src="@/assets/images/home/sk_icon.png" alt="">
                     <span slot="title">{{ $t('chongzhi') }}</span>
                 </el-menu-item>
-                <el-menu-item index="/home/transfer">
+                <el-menu-item index="/admin/deposit/list">
                     <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
                     <span slot="title">{{ $t('hh') }}</span>
                 </el-menu-item>
@@ -32,11 +28,11 @@
                     <img class="icon" src="@/assets/images/home/txgl.png" alt="">
                     <span slot="title">{{ $t('txgl') }}</span>
                 </template>
-                <el-menu-item index="/home/withdraw">
+                <el-menu-item index="/admin/withdraw/index">
                     <img class="icon" src="@/assets/images/home/tx_icon.png" alt="">
                     <span slot="title">{{ $t('tx') }}</span>
                 </el-menu-item>
-                <el-menu-item index="/home/withdrawAccountManage">
+                <el-menu-item index="/admin/withdraw/list">
                     <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
                     <span slot="title">{{ $t('txzhgl') }}</span>
                 </el-menu-item>
@@ -46,29 +42,41 @@
                     <img class="icon" src="@/assets/images/home/zzgl.png" alt="">
                     <span slot="title">{{ $t('zzgl') }}</span>
                 </template>
-                <el-menu-item index="/home/transfers">
+                <el-menu-item index="/admin/exchange/index">
                     <img class="icon" src="@/assets/images/home/zz_icon.png" alt="">
                     <span slot="title">{{ $t('zz') }}</span>
                 </el-menu-item>
-                <el-menu-item index="/home/transferAccountManagement">
+                <el-menu-item index="/admin/exchange/list">
                     <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
                     <span slot="title">{{ $t('zzzhgl') }}</span>
                 </el-menu-item>
             </el-submenu>
             <el-submenu index="6">
                 <template slot="title">
-                    <img class="icon" src="@/assets/images/home/jycx.png" alt="">
+                    <img class="icon" src="@/assets/images/home/aqsz_icon.png" alt="">
                     <span slot="title">{{ $t('jycx') }}</span>
                 </template>
-                <el-menu-item index="/home/transactionDetails">
+                <el-menu-item index="/admin/record/transactionlist">
                     <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
                     <span slot="title">{{ $t('jymx') }}</span>
                 </el-menu-item>
-                <el-menu-item index="/home/fundingDetails">
+                <el-menu-item index="/admin/record/exchangelist">
                     <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
                     <span slot="title">{{ $t('zjmx') }}</span>
                 </el-menu-item>
             </el-submenu>
+            <el-menu-item index="/admin/kycverification">
+                <img class="icon" src="@/assets/images/home/grzx.png" alt="">
+                <span slot="title">{{ $t('KYC认证') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/admin/referfriends">
+                <img class="icon" src="@/assets/images/home/jycx.png" alt="">
+                <span slot="title">{{ $t('推荐好友') }}</span>
+            </el-menu-item>
+            <!-- <el-menu-item index="/home/account">
+                <img class="icon" src="@/assets/images/home/zhanghu.png" alt="">
+                <span slot="title">{{ $t('myaccount') }}</span>
+            </el-menu-item>
             <el-submenu index="7">
                 <template slot="title">
                     <img class="icon" src="@/assets/images/home/grzx.png" alt="">
@@ -78,7 +86,7 @@
                     <img class="icon" src="@/assets/images/home/aqsz_icon.png" alt="">
                     <span slot="title">{{ $t('aqsz') }}</span>
                 </el-menu-item>
-            </el-submenu>
+            </el-submenu> -->
         </el-menu>
     </div>
 </template>

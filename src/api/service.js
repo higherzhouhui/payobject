@@ -4,6 +4,7 @@ const whiteRetry = new Set(['ECONNABORTED', 'ERR_NETWORK', undefined, 0]);
 import { Local } from "@/utils/index";
 import { Message } from 'element-ui';
 import router from '@/router/index.js'
+import store from '@/store'
 
 const isNoBodyMethod = (method) => ['get', 'delete'].includes(method.toLowerCase());
 
@@ -71,7 +72,6 @@ serviceAxios.interceptors.request.use(
 
 // 统一发起请求的函数
 async function request(options) {
-
     try {
         const response = await serviceAxios.request(options);
         const { status, data = { code: 500 } } = response;
@@ -84,7 +84,9 @@ async function request(options) {
                 type: 'error',
                 message: data.msg
             })
-            return router.push('/user/login')
+            store.commit("SET_Logout", {})
+            router.push("/user/login")
+            return
         } else if (data.code != 200 && data.code != 0) {
             Message({
                 type: 'error',

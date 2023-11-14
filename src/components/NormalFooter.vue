@@ -58,7 +58,7 @@ footer {
     padding: 50px 0 8px 0;
     font-size: 14px;
     color: #fff;
-    background: #6967ca;
+    background: $bgColor;
     text-align: center;
     box-sizing: border-box;
     text-align: left;

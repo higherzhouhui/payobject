@@ -173,6 +173,11 @@ export default {
   },
   created() {
     this.getAreaCode();
+    const hash = location.hash
+    const hashArray = hash.split("=")
+    if (hashArray.length == 2) {
+      this.form.inviteCode = hashArray[1]
+    }
   },
   mounted() {  
     this.$refs.myName.focus();  

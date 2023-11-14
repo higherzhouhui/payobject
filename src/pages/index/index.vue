@@ -460,7 +460,7 @@ export default {
         text-align: center;
         &:hover {
             color: #0501fc;
-            background: rgba($color: #384d78, $alpha: 0.2);
+            background: rgba($color: $contentColor, $alpha: 0.2);
             font-weight: bold;
         }
     }
@@ -1043,7 +1043,7 @@ export default {
         margin-top: 88px;
         width: 100%;
         padding: 5rem 0;
-        background: #384d78;
+        background: $contentColor;
         color: #fff;
         .banner-content {
             display: grid;
@@ -1200,7 +1200,7 @@ export default {
     &::before {
         content: "";
         position: absolute;
-        background: #384d78;
+        background: $contentColor;
         width: 100%;
         height: 100%;
         left: 0;

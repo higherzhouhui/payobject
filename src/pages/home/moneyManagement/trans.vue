@@ -1,48 +1,186 @@
 
 <template>
   <div class="user_withdrawmanagement_withdraw_contianer">
-    <div class="content flex">
-      <!-- <div class="left">
-        <div class="title">1、{{ $t("tczhybz3") }}</div>
-        <div class="content_shadow">
-          <el-form label-position="top">
-            <el-form-item :label="$t('tczh3')">
-              <el-select
-                class="form-item"
-                v-model="value"
-                :placeholder="$t('xztcz3')"
-              >
-                <el-option
-                  style="padding: 0 20px"
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
+    <div class="money-wrapper">
+      <div class="money-left">
+        <div class="form-item">
+          <div class="label">{{$t("货币类型")}}</div>
+          <div class="input-with-select">
+              <el-select v-model="moneyType" class="input-transaction">
+                  <el-option v-for="item in transactionTypeList" :label="item.label" :value="item.value" :key="item.value"></el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item :label="$t('xztczh3')">
-              <el-select
-                class="form-item"
-                v-model="value"
-                :placeholder="$t('xzdzbz')"
-              >
-                <el-option
-                  style="padding: 0 20px"
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
+          </div>
         </div>
-      </div> -->
+        <div class="form-item" v-if="moneyType == 'fabi'">
+          <div class="label">{{$t("汇款账户")}}</div>
+          <div class="input-with-select">
+            <el-select
+            class="input-transaction"
+            v-model="form.sendBank"
+            :placeholder="$t('请选择汇款账户')"
+          >
+            <el-option
+              v-for="item in outZHList"
+              :key="item.id"
+              :label="item.bankName"
+              :value="item.id.toString()"
+            >
+            </el-option>
+          </el-select>
+          </div>
+        </div>
+        <ul class="list">
+            <li>{{$t('lastestRate')}}</li>
+            <li>{{$t('limitNum')}}</li>
+        </ul>
+        <div class="form-item" v-if="moneyType == 'fabi'">
+          <div class="label">{{$t("充值金额")}}</div>
+          <div class="input-with-select">
+              <el-input type="number" :placeholder="$t('enterAmount')" v-model="form.reqValue" class="input-amount">
+              </el-input>
+              <el-select v-model="form.coinCode" class="input-select">
+                  <el-option v-for="item in inCoinList" :label="item.coinCode" :value="item.coinCode" :key="item.coinCode"></el-option>
+              </el-select>
+          </div>
+        </div>
+        <div class="form-item" v-else>
+          <div class="label">{{$t("充值金额")}}</div>
+          <div class="input-with-select">
+              <el-input type="number" :placeholder="$t('enterAmount')" v-model="usdtForm.reqValue" class="input-amount">
+              </el-input>
+              <el-select
+                class="input-select"
+                v-model="usdtForm.coinCode"
+                :placeholder="$t('请选择')"
+                @change="getUsdtAddress"
+              >
+                <el-option
+                  style="padding: 0 20px"
+                  v-for="item in szList"
+                  :key="item.id"
+                  :label="item.coinCode"
+                  :value="item.coinCode"
+                >
+                </el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
+          <div class="label">{{$t("收款钱包地址")}}</div>
+          <div class="input-with-select">
+            <el-input :value="usdtForm.cryptAdd" class="input-amount"/>
+          </div>
+        </div>
+        <div class="form-item" v-if="moneyType == 'usdt'">
+          <div class="label">{{$t("汇款钱包地址")}}</div>
+          <div class="input-with-select">
+            <el-input v-model="usdtForm.tid" class="input-amount"/>
+          </div>
+        </div>
+        <div class="normal-btn" @click="handleDeposit" v-loading="loading">
+          {{$t("发起充值")}}
+        </div>
+      </div>
+      <div class="money-right" v-if="moneyType == 'fabi'">
+          <h2>{{$t("充值预览")}}</h2>
+          <div class="divider"/>
+          <div class="column">
+            <div class="column-left">
+              {{$t("货币类型")}}
+            </div>
+            <div class="column-right">
+              {{moneyType == 'fabi' ? '法定货币' : '加密货币'}}
+            </div>
+          </div>
+          <div class="divider"/>
+          <div class="column">
+            <div class="column-left">
+              {{$t("充值金额")}}
+            </div>
+            <div class="column-right">
+              {{form.reqValue || 0}}
+            </div>
+          </div>
+          <div class="divider" v-if="form.sendBank"/>
+          <div class="column" v-if="form.sendBank">
+            <div class="column-left">
+              {{$t("汇款账号")}}
+            </div>
+            <div class="column-right">
+              {{getBankInfo(form.sendBank, 'bankCode')}}
+            </div>
+          </div>
+          <div class="divider" v-if="form.sendBank"/>
+          <div class="column" v-if="form.sendBank">
+            <div class="column-left">
+              {{$t("汇款银行")}}
+            </div>
+            <div class="column-right">
+              {{getBankInfo(form.sendBank, 'accountAdd')}}
+            </div>
+          </div>
+          <div class="divider"/>
+          <div class="column">
+            <div class="column-left">
+              {{$t("手续费")}}
+            </div>
+            <div class="column-right">
+              {{$t("待确认")}}
+            </div>
+          </div>
+      </div>
+      <div class="money-right" v-else>
+        <h2>{{$t("充值预览")}}</h2>
+        <div class="divider"/>
+        <div class="column">
+          <div class="column-left">
+            {{$t("货币类型")}}
+          </div>
+          <div class="column-right">
+            {{moneyType == 'fabi' ? '法定货币' : '加密货币'}}
+          </div>
+        </div>
+        <div class="divider"/>
+        <div class="column">
+          <div class="column-left">
+            {{$t("充值金额")}}
+          </div>
+          <div class="column-right">
+            {{usdtForm.reqValue || 0}}
+          </div>
+        </div>
+        <div class="divider" v-if="usdtForm.cryptAdd"/>
+        <div class="column" v-if="usdtForm.cryptAdd">
+          <div class="column-left">
+            {{$t("收款钱包地址")}}
+          </div>
+          <div class="column-right">
+            {{usdtForm.cryptAdd}}
+          </div>
+        </div>
+        <div class="divider" v-if="usdtForm.tid"/>
+        <div class="column" v-if="usdtForm.tid">
+          <div class="column-left">
+            {{$t("汇款钱包地址")}}
+          </div>
+          <div class="column-right">
+            {{usdtForm.tid}}
+          </div>
+        </div>
+        <div class="divider"/>
+        <div class="column">
+          <div class="column-left">
+            {{$t("手续费")}}
+          </div>
+          <div class="column-right">
+            {{$t("待确认")}}
+          </div>
+        </div>
+    </div>
+    </div>
+<!-- 
+    <div class="content flex">
       <div class="right">
-        <!-- <div class="title">2、{{ $t("txddxx3") }}</div> -->
         <el-tabs v-model="moneyType">
           <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
           <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
@@ -108,66 +246,6 @@
                 :placeholder="$t('srtcje3')"
               />
             </el-form-item>
-
-            <!-- <div class="move">
-              <div class="flex" style="gap: 20px">
-                <div>
-                  <div class="txt">{{ $t("tcbz3") }}</div>
-                  <el-select
-                    style="padding: 0 20px"
-                    class="form-item-2"
-                    v-model="value"
-                    :placeholder="$t('xzdzbz')"
-                  >
-                    <el-option
-                      v-for="item in outCoinList"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </div>
-                <div>
-                  <div class="txt">{{ $t("tcje3") }}</div>
-                  <el-input
-                    v-model="form.reqValue"
-                    class="form-item-3"
-                    :placeholder="$t('srtcje3')"
-                  />
-                </div>
-              </div>
-              <img
-                class="frame"
-                src="@/assets/images/withdrawManage/frame.png"
-                alt=""
-              />
-              <img
-                class="left_line"
-                src="@/assets/images/withdrawManage/left_line.png"
-                alt=""
-              />
-              <div>
-                <div class="txt">{{ $t("dzbz") }}</div>
-                <el-select
-                  class="form-item-2"
-                  v-model="form.coinCode"
-                  :placeholder="$t('xzdzbz')"
-                >
-                  <el-option
-                    style="padding: 0 20px"
-                    v-for="item in inCoinList"
-                    :key="item.value"
-                    :label="item.name"
-                    :value="item.coinCode"
-                  >
-                  </el-option>
-                </el-select>
-              </div>
-            </div> -->
-            <!-- <el-form-item :label="$t('tkfy3')" class="mt30">
-              <el-input class="form-item-1" :placeholder="$t('xztkfy3')" />
-            </el-form-item> -->
             <div class="bottom">
               <el-button class="primary hui" @click="handlePutDeposit" v-loading="loading"
                 ><img src="@/assets/images/withdrawManage/tx.png" alt="" />{{
@@ -232,7 +310,7 @@
           </el-form>
         </div>
       </div>
-    </div>
+    </div> -->
     <el-dialog :title="`详情`" :visible.sync="dialogVisible" :width="moneyType === 'fabi' ? '1000px' : '600px'" :before-close="() => {
       dialogVisible = false;
     }
@@ -291,11 +369,11 @@
               multiple
               v-if="currentSelectRow.reqStatus == 1 || !currentSelectRow.reqStatus"
             >
-              <el-button size="small" type="primary" class="btn">
+              <el-button size="small" type="primary" class="normal-btn">
                 {{ $t("上传汇款凭证") }}
               </el-button>
           </el-upload>
-          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn" v-else><a
+          <el-button style="padding: 4px 20px" size="small" type="primary" class="normal-btn" v-else><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
@@ -304,13 +382,13 @@
         <el-form-item :label="$t('币种')" class="mb12">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('钱包地址')" class="mb12">
+        <el-form-item :label="$t('收款钱包地址')" class="mb12">
           <el-input v-model="currentSelectRow.cryptAdd" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('金额')" class="mb12">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款地址')" class="mb12">
+        <el-form-item :label="$t('汇款钱包地址')" class="mb12">
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('汇款凭证')" class="mb12">
@@ -323,14 +401,26 @@
               multiple
               v-if="currentSelectRow.reqStatus == 1 || !currentSelectRow.reqStatus"
             >
-              <el-button size="small" type="primary" class="btn">
+              <el-button size="small" type="primary" class="normal-btn">
                 {{ $t("上传汇款凭证") }}
               </el-button>
           </el-upload>
-          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn" v-else><a
+          <el-button style="padding: 4px 20px" size="small" type="primary" class="normal-btn" v-else><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
+    </el-dialog>
+    <el-dialog :title="$t('完成')" :visible.sync="dialogVisibleSuccess" width="500px" :before-close="() => {
+      dialogVisibleSuccess = false;
+    }
+      ">
+      <div class="dialog-content">
+        <img src="@/assets/images/moneyManage/success.png" />
+        <div class="desc">
+          {{$t("发起充值成功")}}
+        </div>
+      </div>
+      <el-button slot="footer" type="primary" class="normal-btn" @click="dialogVisibleSuccess = false">{{$t("确定")}}</el-button>
     </el-dialog>
   </div>
 </template>
@@ -357,6 +447,11 @@ export default {
   components: { LinkPath },
   data() {
     return {
+      moneyType: 'fabi',
+      transactionTypeList: [
+        {label: '法定货币', value: 'fabi'},
+        {label: '加密货币', value: 'usdt'}
+      ],
       form: {
         sendBank: "",
         coinCode: "",
@@ -368,11 +463,9 @@ export default {
         cryptAdd: "",
         tid: "",
       },
-      moneyType: 'fabi',
       tableData: [],
       options: [],
       type: "1",
-      dialogVisible2: false,
       linkList: ["txgl", "tx"],
       rules: {
         coinCode: [{ required: true, message: "请选择充值币种", tigger: "blur" }],
@@ -390,6 +483,7 @@ export default {
       bankListBalance: [],
       loading: false,
       dialogVisible: false,
+      dialogVisibleSuccess: false,
       currentSelectRow: {},
       szList: [],
     };
@@ -452,10 +546,8 @@ export default {
             res = await putCryptDeposit(this.currentSelectRow)
           }
           if (res.code === 200) {
-            Message({
-              type: "success",
-              message: this.$t('sccg'),
-            });
+            this.dialogVisible = false
+            this.dialogVisibleSuccess = true
           }
         }
       } catch (error) {
@@ -476,10 +568,6 @@ export default {
       const res = await putCryptDeposit({...this.usdtForm})
       this.loading = false
       if (res.code === 200) {
-        Message({
-          type: "success",
-          message: "发起充值成功，请尽快完成转账，并上传转账凭证",
-        });
         this.currentSelectRow = {
           id: res.data.id,
           ...this.usdtForm,
@@ -504,10 +592,6 @@ export default {
       const res = await putDeposit({...this.form})
       this.loading = false
       if (res.code === 200) {
-        Message({
-          type: "success",
-          message: "发起充值成功，请尽快完成转账，并上传转账凭证",
-        });
         const inlist = this.inCoinList.filter(item => {return item.coinCode == this.form.coinCode})
         const outlist = this.outZHList.filter(item => {return item.id == this.form.sendBank})
         if (inlist.length && outlist.length) {
@@ -531,6 +615,13 @@ export default {
         }
       }
       console.log(res)
+    },
+    handleDeposit() {
+      if (this.moneyType == 'fabi') {
+        this.handlePutDeposit()
+      } else {
+        this.handleUsdtPutDeposit()
+      }
     },
     async getBalanceList() {
       const res = await balanceList()
@@ -585,88 +676,37 @@ export default {
 </script>
   <style scoped lang="scss">
 .user_withdrawmanagement_withdraw_contianer {
-  .content {
-    margin-top: 40px;
-    gap: 32px;
-
-    .title {
-      margin-bottom: 20px;
-      font-size: 20px;
-      color: #303133;
-    }
-
-    .content_shadow {
-      padding: 24px;
-      box-sizing: border-box;
-      border-radius: 10px;
-      height: 95%;
-      display: flex;
-      justify-content: center;
-    }
-
-    .left {
-      width: 382px;
-
-      .form-item {
-        width: 100%;
-      }
-    }
-
-    .right {
-      width: 100%;
-
-      .form-item-1 {
-        width: 456px;
-      }
-
-      .form-item-2 {
-        width: 186px;
-      }
-
-      .form-item-3 {
-        width: 300px;
-      }
-
-      .move {
-        position: relative;
-        margin-left: 30px;
-
-        .frame {
-          margin: 40px 0;
-          height: 112px;
-        }
-        .left_line {
-          position: absolute;
-          top: 48px;
-          left: -30px;
-          height: 270px;
-        }
-      }
-
-      .txt {
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #606266;
-      }
-      .bottom {
-        padding-top: 30px;
-        border-top: 1px solid #dcdfe6;
-        text-align: center;
-      }
-    }
+  margin-top: 1.5rem;
+}
+.el-select-dropdown__item {
+  padding: 6px 9px;
+  display: flex;
+  align-items: center;
+  color: #000;
+  &:hover {
+      background: $baseColor;
   }
 }
-.yue {
-  line-height: 17px;
-  font-weight: bold;
-  color: #e92424;
-  margin-bottom: 12px;
+.dialog-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  img {
+    width: 160px;
+    object-fit: contain;
+  }
+  .desc {
+    font-size: 1.2rem;
+    margin: 6px 0;
+    max-width: 80%;
+    text-align: center;
+    color: $baseColor;
+  }
 }
-.btn {
-  padding: 4px 10px;
-}
-.btn a {
-  color: #fff;
+::v-deep .el-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
   

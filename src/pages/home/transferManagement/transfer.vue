@@ -12,7 +12,7 @@
             <div class="key">{{ $t("lyk1") }}：</div>
             <div class="value">{{ $t("lyv2") }}</div>
           </div>
-          <el-button type="primary" class="primary">{{ $t("kszz") }}</el-button>
+          <el-button type="primary" class="normal-btn">{{ $t("kszz") }}</el-button>
         </div>
         <div class="content_shadow">
           <img src="@/assets/images/transfer/right.png" alt="" />
@@ -23,7 +23,7 @@
             <div class="key">{{ $t("lyk1") }}：</div>
             <div class="value">{{ $t("ryv2") }}</div>
           </div>
-          <el-button type="primary" class="primary" @click="toTX">{{
+          <el-button type="primary" class="normal-btn" @click="toTX">{{
             $t("kszz")
           }}</el-button>
         </div>
@@ -69,11 +69,8 @@ export default {
     margin-top: 40px;
     padding: 40px 0;
     border-radius: 4px;
-    border: 1px solid var(--unnamed, #dcdfe6);
-    background: #fff;
-    gap: 59px;
-    justify-content: center;
-
+    background: $contentColor;
+    justify-content: space-around;
     .content_shadow {
       padding: 24px;
       text-align: center;
@@ -89,7 +86,7 @@ export default {
       .title {
         margin-top: 8px;
         font-size: 18px;
-        color: #303133;
+        color: #fff;
       }
 
       .info {
@@ -98,18 +95,18 @@ export default {
 
         .key {
           font-size: 16px;
-          color: #303133;
+          color: #fff;
         }
 
         .value {
           margin: 16px 0;
           font-size: 14px;
-          color: #909399;
+          color: #fff;
         }
       }
-      .primary {
-        margin-top: 56px;
-        width: 152px;
+      .normal-btn {
+        width: fit-content;
+        margin: 2rem auto 0 auto;
       }
     }
   }

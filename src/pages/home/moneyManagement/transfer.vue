@@ -1,12 +1,32 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
     <LinkPath :linkList="linkList" />
-    <el-tabs v-model="moneyType">
+    <el-tabs v-model="moneyType" class="mytab">
       <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
       <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
     </el-tabs>
     <div class="content">
-      <el-form ref="form2" :inline="true" class="mt12">
+      <el-form v-model="searchForm" :inline="true">
+        <el-form-item>
+          <el-date-picker
+            v-model="searchForm.startTime"
+            align="right"
+            type="datetime"
+            placeholder="开始时间"
+            value-format="timestamp"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="searchForm.endTime"
+            align="right"
+            type="datetime"
+            placeholder="结束时间"
+            value-format="timestamp"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
         <el-form-item>
           <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
             <el-option
@@ -20,12 +40,13 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleChangeSearch" class="primary">
+          <el-button type="primary" @click="handleChangeSearch" class="normal-btn" style="height: 40px">
             <i class="el-icon-search"></i>{{ $t("search") }}
           </el-button>
         </el-form-item>
       </el-form>
-      <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
+
+      <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
         <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" />
         <el-table-column prop="coinCode" :label="$t('币种')" width="200" />
         <el-table-column prop="reqValue" :label="$t('充值金额')" width="180" />
@@ -204,7 +225,7 @@
       </el-form>
     </el-dialog>
     <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow" class="formStyle">
+      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
         <el-form-item :label="$t('币种')" class="mb12">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>
@@ -279,6 +300,31 @@ export default {
       total: 0,
       searchForm: {},
       moneyType: 'fabi',
+      pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
     };
   },
   created() {
@@ -399,10 +445,9 @@ export default {
 <style scoped lang="scss">
 .user_moneymanagement_transfer_contianer {
   .content {
-    padding: 24px;
-    border-radius: 4px;
-    border: 1px solid var(--unnamed, #dcdfe6);
-    background: #fff;
+    background: $contentColor;
+    padding: 1rem;
+    border-radius: 0.5rem;
     // box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
 
     .empty_box {

@@ -13,7 +13,7 @@
                     <div class="btn normal-btn" @click="to('/user/register')">{{ $t('register') }}</div>
                 </div>
                 <div class="btn-group flex controlMenu" v-else>
-                    <div class="btn" @click="to('/home/index')">{{email}}</div>
+                    <div class="btn" @click="to('/admin/dashboard')">{{email}}</div>
                 </div>
                 <div class="language flex flex_align_center" @click="open">
                     <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
@@ -31,7 +31,7 @@
                         <div class="menus-item" @click="to('/index')">{{ $t('home') }}</div>
                         <div class="menus-item" @click="to('/user/login')" v-if="!email">{{ $t('login') }}</div>
                         <div class="menus-item" @click="to('/user/register')" v-if="!email">{{ $t('register') }}</div>
-                        <div class="menus-item" @click="to('/home/index')" v-if="email">{{$t('profile')}}</div>
+                        <div class="menus-item" @click="to('/admin/dashboard')" v-if="email">{{$t('profile')}}</div>
                         <div class="menus-item" @click="quit" v-if="email">{{$t('quitLogin')}}</div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@ header {
   height: 88px;
   display: flex;
   align-items: center;
-  background: #384d78;
+  background: $contentColor;
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
   color: #fff;
   &.headerShow {
@@ -255,7 +255,7 @@ header {
       text-align: center;
       &:hover {
           color: #0501fc;
-          background: rgba($color: #384d78, $alpha: 0.2);
+          background: rgba($color: $contentColor, $alpha: 0.2);
           font-weight: bold;
       }
   }

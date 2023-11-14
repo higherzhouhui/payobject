@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       normalList: [],
-      adminList: ['home', 'manage'],
+      adminList: ['admin', 'manage'],
       normalHeader: true,
       normalFooter: true,
     }

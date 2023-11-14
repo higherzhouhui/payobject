@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         toHome() {
-            this.$router.push('/home/index')
+            this.$router.push('/admin/dashboard')
         }
     },
 }
@@ -42,14 +42,10 @@ export default {
 <style lang="scss" scoped>
 .link_path_container {
     position: relative;
-    padding: 12px 22px;
-    color: #606266;
+    padding: 8px 0;
+    color: #fff;
     font-size: 14px;
-    background: #F4F4F4;
-    border-radius: 4px;
-    .flex{
-        // width: 100%;
-    }
+    border-bottom: 1px solid #9e9b9b;
     span {
      font-weight: bold;   
     }

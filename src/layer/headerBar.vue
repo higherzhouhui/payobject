@@ -97,7 +97,7 @@ export default {
     },
     handleDropCommand(command) {
       if (command == 'profile') {
-
+        this.$router.push("/admin/info")
       }
       if (command == 'logout') {
         this.quit()
@@ -109,8 +109,8 @@ export default {
           cancelButtonText: "取消",
           type: "warning",
       }).then(() => {
+        this.$store.commit("SET_Logout", {})
         this.$router.push("/index");
-        localStorage.clear()
         logout()
       }).catch(() => {
         console.log('取消')

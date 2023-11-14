@@ -111,8 +111,8 @@ export default {
           cancelButtonText: "取消",
           type: "warning",
       }).then(() => {
+        this.$store.commit("SET_Logout", {})
         this.$router.push("/index");
-        localStorage.clear()
         logout()
       }).catch(() => {
         console.log('取消')

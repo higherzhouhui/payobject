@@ -48,7 +48,7 @@
                 </el-date-picker>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="handleChangeSearch" class="primary">
+                <el-button type="primary" @click="handleChangeSearch" class="normal-btn">
                   <i class="el-icon-search"></i>{{ $t("search") }}
                 </el-button>
               </el-form-item>
@@ -182,14 +182,16 @@ export default {
 <style scoped lang="scss">
 .user_transactionInquiry_transactionDetails_contianer {
     .content {
-        margin-top: 40px;
-        padding: 24px;
+        margin-top: 1rem;
+        padding: 1.5rem;
         border-radius: 4px;
-        border: 1px solid var(--unnamed, #DCDFE6);
-        background: #FFF;
+        background: $contentColor;
 
         .form {
             margin-top: 40px;
+        }
+        .normal-btn {
+          height: 40px;
         }
     }
 }

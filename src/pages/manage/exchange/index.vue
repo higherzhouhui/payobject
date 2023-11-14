@@ -55,7 +55,6 @@
           class="tables"
           :data="tableData"
           style="width: 100%; margin-top: 16px"
-          stripe
           v-loading="loading"
         >
           <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
@@ -103,7 +102,6 @@
         <el-table
           class="tables"
           :data="tableData2"
-          stripe
           style="width: 100%; margin-top: 16px"
           v-loading="loading"
         >

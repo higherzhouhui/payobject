@@ -2,13 +2,13 @@
   <div class="user_transferAccountMangement_contianer">
     <LinkPath :linkList="linkList" />
     <div class="content">
-      <div class="s_title flex flex_align_center flex_jc_sb">
-        <div>{{ $t("zzzhgl") }}</div>
-        <el-button type="primary" @click="showAdd" class="primary"
+      <div class="s_title flex flex_align_center flex_jc_sb_end">
+        <!-- <div>{{ $t("zzzhgl") }}</div> -->
+        <el-button type="primary" @click="showAdd" class="normal-btn"
           ><i class="el-icon-plus"></i>{{ $t("zjzzzh") }}</el-button
         >
       </div>
-      <el-form ref="form2" :inline="true" class="mt40">
+      <el-form ref="form2" :inline="true" class="mt12">
         <el-form-item>
           <el-input
             :placeholder="$t('bankname')"
@@ -23,12 +23,6 @@
             clearable
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item>
-                    <el-select v-model="value" :placeholder="$t('yhzhlx')">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item> -->
         <el-form-item>
           <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')" clearable>
             <el-option
@@ -42,7 +36,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getlist" class="primary">
+          <el-button type="primary" @click="getlist" class="normal-btn primary">
             <i class="el-icon-search"></i>{{ $t("search") }}
           </el-button>
           <!-- <el-button class="primary">
@@ -50,11 +44,11 @@
           </el-button> -->
         </el-form-item>
       </el-form>
-      <el-table class="tables" :data="tableData" style="width: 100%" stripe>
+      <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
         <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip	/>
         <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
         <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip	/>
-        <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
+        <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip/>
         <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
@@ -62,11 +56,11 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" show-overflow-tooltip/>
+        <el-table-column prop="createTime" :label="$t('cjrq')" min-width="165" show-overflow-tooltip/>
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="180"
+          width="140"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -74,7 +68,7 @@
               @click="toDetail(scope.row)"
               class="baseColor cursor"
               style="cursor: pointer"
-              >查看详情</span
+              >详情</span
             >
             <span
               class="deleteColor cursor"
@@ -94,7 +88,7 @@
       </el-table>
     </div>
     <el-dialog
-      :title="bankForm.id ? `${$t('查看详情')}` : $t('zjzzzh')"
+      :title="bankForm.id ? `${$t('详情')}` : $t('zjzzzh')"
       :visible.sync="dialogVisible"
       width="636px"
       top="3%"
@@ -260,6 +254,7 @@ export default {
       languge: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
+      loading: true,
       tableData: [],
       status: ["审核中", "已通过", "驳回"],
       typeOption: ["warning", "success", "danger"],
@@ -386,9 +381,13 @@ export default {
     },
     async getlist() {
       try {
+        this.loading = true
         let req = await getBankList(this.form);
         this.tableData = req.data;
-      } catch (error) {}
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
     },
   },
 };
@@ -396,14 +395,18 @@ export default {
 <style scoped lang="scss">
 .user_transferAccountMangement_contianer {
   .content {
-    margin-top: 40px;
-    padding: 24px;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
     border-radius: 4px;
-    border: 1px solid var(--unnamed, #dcdfe6);
-    background: #fff;
-
+    background: $contentColor;
     .form {
       margin-top: 40px;
+    }
+    .normal-btn {
+      height: 40px;
+      i {
+        margin-right: 4px;
+      }
     }
   }
 }

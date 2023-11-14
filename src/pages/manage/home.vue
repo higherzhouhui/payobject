@@ -309,25 +309,6 @@ export default {
     }
 }
 
-::v-deep .el-table--fit,
-::v-deep .el-table__cell,
-::v-deep tr {
-    background-color: #F4F4F4 !important;
-
-    // .cell {
-    //     font-size: 16px;
-    //     color: #909399;
-    //     font-weight: 400;
-    // }
-
-    // .el-table__row {
-    //     .cell {
-    //         font-size: 14px;
-    //         color: #303133;
-    //     }
-    // }
-}
-
 ::v-deep .el-progress__text {
     font-size: 60px !important;
     font-weight: 600;

@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <div class="balance-wrapper">
+    <div class="balance-wrapper" :class="balanceLoading && 'loading'">
+      <h1>{{$t("我的钱包")}}</h1>
       <swiper ref="refSwiper"
         :options="swiperOption"
         class="content-swiper">
@@ -11,43 +12,50 @@
               </div>
           </swiper-slide>
       </swiper>
+      <div class="empty" v-if="!balanceLoading && !balanceArrapy.length">
+        <img src="@/assets/images/home/recharge.png" />
+        <span>{{$t("去充值")}}</span>
+      </div>
     </div>
     <div class="transaction-wrapper">
       <h1>{{$t('近期交易记录')}}</h1>
-      <div class="list-wrapper" v-for="(item, index) in billArray" :key="item.id" @click="handleShow(index)">
-        <div class="list-item">
-          <div class="left">
-            <i class="el-icon-top-right send" v-if="item.billType == 2"/>
-            <i class="el-icon-bottom-left recive" v-if="item.billType == 1"/>
-            <div class="type-wrapper">
-              <div class="type" v-if="item.billType == 2">{{$t("提现金额")}}</div>
-              <div class="type" v-else>{{$t("收到金额")}}</div>
-              <div class="desc">{{item.coinCode}}</div>
+      <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto" :class="billLoading && 'loading'">
+        <div class="list-wrapper" v-for="(item, index) in billArray" :key="item.id" @click="handleShow(index)">
+          <div class="list-item">
+            <div class="left">
+              <i class="el-icon-top-right send" v-if="item.billType == 2"/>
+              <i class="el-icon-bottom-left recive" v-if="item.billType == 1"/>
+              <div class="type-wrapper">
+                <div class="type" v-if="item.billType == 2">{{$t("提现金额")}}</div>
+                <div class="type" v-else>{{$t("收到金额")}}</div>
+                <div class="desc">{{item.coinCode}}</div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="type-wrapper">
+                <div class="desc">{{item.createTime}}</div>
+                <div class="type" :class="item.billType == 2 ? 'send' : 'recive'">${{item.billValue}}</div>
+              </div>
             </div>
           </div>
-          <div class="right">
-            <div class="type-wrapper">
-              <div class="desc">{{item.createTime}}</div>
-              <div class="type" :class="item.billType == 2 ? 'send' : 'recive'">${{item.billValue}}</div>
+          <div class="detail" :class="item.show ? 'expand' : 'scale'">
+            <div class="detail-item">
+              <div class="left">{{$t("交易ID")}}</div>
+              <div class="right">{{item.id}}</div>
+            </div>
+            <div class="detail-item">
+              <div class="left">{{$t("货币类型")}}</div>
+              <div class="right" v-if="item.cry">{{$t("加密货币")}}</div>
+              <div class="right" v-else>{{$t("法定货币")}}</div>
+            </div>
+            <div class="detail-item" v-if="item.commission">
+              <div class="left">{{$t("手续费")}}</div>
+              <div class="right">${{item.commission}}</div>
             </div>
           </div>
         </div>
-        <div class="detail" :class="item.show ? 'expand' : 'scale'">
-          <div class="detail-item">
-            <div class="left">{{$t("交易ID")}}</div>
-            <div class="right">{{item.id}}</div>
-          </div>
-          <div class="detail-item">
-            <div class="left">{{$t("货币类型")}}</div>
-            <div class="right" v-if="item.cry">{{$t("加密货币")}}</div>
-            <div class="right" v-else>{{$t("法定货币")}}</div>
-          </div>
-          <div class="detail-item" v-if="item.commission">
-            <div class="left">{{$t("手续费")}}</div>
-            <div class="right">${{item.commission}}</div>
-          </div>
-        </div>
-      </div>
+      </ul>
+      <el-empty :description="$t('暂无数据')" v-if="!billLoading && !billArray.length"></el-empty>
     </div>
   </div>
 </template>
@@ -65,6 +73,11 @@ export default {
     return {
       balanceArrapy: [],
       billArray: [],
+      current: 1,
+      size: 10,
+      noMore: false,
+      balanceLoading: false,
+      billLoading: false,
       swiperOption: {
         // 设置垂直轮播vertical,  水平轮播 horizontal
         direction: "horizontal", 
@@ -99,23 +112,53 @@ export default {
   },
   methods: {
     initData() {
-      try {
-        balanceList().then(res => {
-          if (res.code === 200) {
-            this.balanceArrapy = res.data
-          }
-        })
-        getBillDetails().then(res => {
-          console.log(res.data)
-          this.billArray = res.data.records
-        })
-      } catch(e) {
-        console.error(e)
+      this.getBalanceList()
+    },
+    getBalanceList() {
+      if (this.balanceLoading) {
+        return
       }
+      this.balanceLoading = true
+      balanceList().then(res => {
+        this.balanceLoading = false
+        if (res.code === 200) {
+          this.balanceArrapy = res.data
+        }
+      }).catch(() =>  {
+        this.balanceLoading = false
+      })
+    },
+    getBillList() {
+      if (this.billLoading) {
+        return
+      }
+      this.billLoading = true
+      if (this.noMore) {
+        this.billLoading = false
+        return
+      }
+      getBillDetails({current: this.current, size: this.size}).then(res => {
+          this.billLoading = false
+          const records = res.data.records
+          if (this.size * this.current > res.data.total) {
+            this.noMore = false
+          }
+          if (res.data.current == 1) {
+            this.billArray = records
+          } else {
+            this.billArray = this.billArray.concat(records)
+            this.current = this.current + 1
+          }
+        }).catch(() =>  {
+          this.billLoading = false
+        })
     },
     handleShow(index) {
       this.billArray[index].show = !this.billArray[index].show 
       this.$forceUpdate();  
+    },
+    load() {
+      this.getBillList()
     }
   }
 }
@@ -123,6 +166,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+h1 {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+}
+.balance-wrapper {
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba($color: #fff, $alpha: 0.88);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    &:hover {
+      color: #fff;
+    }
+    img {
+      margin-right: 0.5rem;
+      width: 2rem;
+      object-fit: contain;
+    }
+  }
+}
 .swiper {
   width: 100%;
   height: 100%;
@@ -143,7 +211,7 @@ export default {
 }
 .balance-item {
   word-wrap: break-word;
-  background: #384d78;
+  background: $contentColor;
   background-clip: border-box;
   border-left: 4px solid #2dbe60;
   position: relative;
@@ -176,14 +244,8 @@ export default {
   }
 }
 .transaction-wrapper {
-  h1 {
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.8rem;
-    margin: 1.5rem 0;
-  }
   .list-wrapper {
-    background: #384d78;
+    background: $contentColor;
     margin-bottom: 1rem;
     border-radius: 1rem;
   }

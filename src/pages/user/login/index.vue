@@ -124,7 +124,7 @@ export default {
         this.loading = false;
 
         if (!res.data.admin) {
-          return this.$router.push("/home");
+          return this.$router.push("/admin");
         }
         this.$router.push("/manage");
       } catch (error) {

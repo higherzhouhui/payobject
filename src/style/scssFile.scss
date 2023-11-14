@@ -8,10 +8,9 @@
 
 $baseColor: #2dbe60;
 $baseHover: #1be762;
-$contentColor: #F4F4F4;
 $bgColor: #455b86;
 $leftSideWidth: 220px;
-
+$contentColor: #384d78;
 html {
     font-size: 12px;
     @media screen and (min-width: 900px) {
@@ -124,7 +123,9 @@ html {
 .flex_jc_sb_center{
     justify-content: center;
 }
-
+.flex_jc_sb_end {
+    justify-content: flex-end;
+}
 .pointer {
     cursor: pointer;
 }
@@ -237,32 +238,44 @@ html {
 
 .el-table .el-table__header-wrapper,
 .el-table__fixed-right {
-    background-color: #F4F4F4 !important;
+    background-color: $contentColor !important;
 
     thead {
-        background-color: #F4F4F4 !important;
+        background-color: $contentColor !important;
 
         tr {
-            background-color: #F4F4F4 !important;
-
+            background-color: $contentColor !important;
+            .cell {
+                font-weight: 600;
+            }
             th {
-                background-color: #F4F4F4 !important;
+                background-color: $contentColor !important;
 
             }
         }
     }
 }
 
-.tables {
+.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+    border: none;
+}
+.el-loading-mask {
+    background-color: rgba($color: $bgColor, $alpha: 0.8);
+}
 
+.tables {
+    .el-table__row {
+        background: $contentColor;
+    }
+    .el-table__body tr.hover-row.current-row>td.el-table__cell, .el-table__body tr.hover-row.el-table__row--striped.current-row>td.el-table__cell, .el-table__body tr.hover-row.el-table__row--striped>td.el-table__cell, .el-table__body tr.hover-row>td.el-table__cell{
+        background: rgba(0, 0, 0, 0.075);
+    }
     .el-table--fit,
     .el-table__cell,
     tr {
-        // background-color: #F4F4F4 !important;
-
         .cell {
-            font-size: 14px;
-            color: #303133;
+            font-size: 0.8rem;
+            color: #fff;
             font-weight: 400;
         }
 
@@ -300,18 +313,30 @@ html {
     }
 }
 
-.s_title {
-    font-size: 24px;
-    color: #303133;
+.mytab {
+    margin-top: 0.6rem;
 }
-
+.el-tabs__nav-wrap {
+    background: $contentColor;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+.el-tabs__nav-wrap::after {
+    content: none;
+}
 .el-tabs__item.is-active {
-    color: $baseColor;
+    color: #fff;
 }
-
+.el-tabs__active-bar {
+    background-color: #fff;
+}
 .el-tabs__item {
-    color: #606266;
-    font-size: 16px;
+    color: rgba($color: #fff, $alpha: 0.7);
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    &:hover {
+        color: #fff;
+    }
 }
 
 .el-button.primary {
@@ -336,8 +361,7 @@ html {
     margin-bottom: 20px;
 }
 .content_shadow {
-    box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
-    border: 1px solid var(--unnamed, #DCDFE6);
+    background: $contentColor;
     border-radius: 4px;
 }
 
@@ -383,8 +407,8 @@ html::-webkit-scrollbar {
 }
 
 html::-webkit-scrollbar-thumb {
-    background: #384d78;
-    border-radius: 20px;
+    background: $bgColor;
+    
 }
 
 form::-webkit-scrollbar-track-piece {
@@ -397,8 +421,8 @@ form::-webkit-scrollbar {
 }
 
 form::-webkit-scrollbar-thumb {
-    background: #384d78;
-    border-radius: 20px;
+    background: $bgColor;
+    
 }
 div::-webkit-scrollbar-track-piece {
     background: #d3dce6;
@@ -410,8 +434,8 @@ div::-webkit-scrollbar {
 }
 
 div::-webkit-scrollbar-thumb {
-    background: #384d78;
-    border-radius: 20px;
+    background: $bgColor;
+    
 }
 ul::-webkit-scrollbar-track-piece {
     background: #d3dce6;
@@ -423,8 +447,8 @@ ul::-webkit-scrollbar {
 }
 
 ul::-webkit-scrollbar-thumb {
-    background: #384d78;
-    border-radius: 20px;
+    background: $bgColor;
+    
 }
 
 .elPagination {
@@ -432,3 +456,91 @@ ul::-webkit-scrollbar-thumb {
     margin-top: 10px;
     justify-content: flex-end;
 }
+.el-pagination__total, .el-pagination__jump {
+    color: #fff;
+}
+.money-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 8px;
+    @media screen and (max-width: 800px) {
+      grid-template-columns: 1fr;
+      row-gap: 2rem;
+    }
+    .money-left {
+      background-color: $contentColor;
+      border-radius: 0.6rem;
+      padding: 2rem;
+      .form-item {
+          margin-bottom: 1.2rem;
+          color: #fff;
+          .label {
+              margin-bottom: 0.5rem;
+          }
+          .input-with-select {
+              padding: 0;
+              display: flex;
+              ::v-deep .input-amount .el-input__inner {
+                  border: none;
+                  height: 50px;
+                  background: #fff;
+                  border-radius: 4px 0 0 4px;
+              }
+              .input-transaction {
+                  flex: 1;
+              }
+              ::v-deep .input-transaction .el-input__inner {
+                  border: none;
+                  height: 50px;
+                  background: #fff;
+                  width: 100%;
+                  border-radius: 4px;
+              }
+              ::v-deep .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+                  background: $baseColor;
+              }
+              ::v-deep .input-select .el-input__inner {
+                  width: 120px;
+                  border: none;
+                  height: 50px;
+                  color: #fff;
+                  background:  $baseColor;
+                  border-radius: 0 4px 4px 0;
+              }
+          }
+      }
+      .list {
+          font-size: 0.9rem;
+          margin: 1.25rem 0;
+          padding: 0 0 0 1.5rem;
+          color: #fff;
+          li {
+              line-height: 1.6rem;
+          }
+      }
+    }
+    .money-right {
+      background-color: $contentColor;
+      padding: 1.6rem;
+      border-radius: 0.5rem;
+      color: #fff;
+      h2 {
+        font-size: 1.1rem;
+      }
+      .divider {
+        margin: 1rem 0;
+        width: 100%;
+        height: 4px;
+        background: #a19b9b;
+      }
+      .column {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .column-left {
+          margin-right: 5px;
+        }
+      }
+    }
+  }

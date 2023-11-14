@@ -36,7 +36,7 @@
             </el-button> -->
           </el-form-item>
         </el-form>
-        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" stripe>
+        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
           <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
           <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
@@ -73,7 +73,7 @@
     </template>
     <template v-else>
       <div class="content">
-        <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading" stripe>
+        <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading">
           <el-table-column prop="companyName" :label="$t('qymc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="businessAdd" :label="$t('qyjydz')" width="200" show-overflow-tooltip/>
           <el-table-column prop="businessScenario" :label="$t('ywcjsm')" width="180" show-overflow-tooltip/>

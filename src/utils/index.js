@@ -12,3 +12,14 @@ export const Local = function (key, value) {
     }
 
 }
+
+export const getHashParams = () => {
+    const hash = location.hash
+    const search = hash.split('?')
+    if (search.length == 2) {
+      const params = new URLSearchParams('?' + search[1])
+       return params
+    }
+    const r = new Map()
+    return r
+}

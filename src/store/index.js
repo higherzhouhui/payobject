@@ -16,6 +16,10 @@ export default new Vuex.Store({
       state.userInfo = userInfo
       Local('userInfo', userInfo)
     },
+    SET_Logout: (state, userInfo) => {
+      state.userInfo = userInfo
+      Local('userInfo', userInfo)
+    },
   },
   actions: {
     //手机号登录

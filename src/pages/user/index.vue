@@ -20,7 +20,7 @@ export default {
     margin-top: 88px;
     width: 100%;
     padding: 5rem 0;
-    background: #384d78;
+    background: $contentColor;
     color: #fff;
 }
 </style>

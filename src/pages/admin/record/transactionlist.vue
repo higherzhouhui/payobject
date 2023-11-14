@@ -97,7 +97,7 @@ export default {
             options: [],
             type: '1',
             dialogVisible2: false,
-            linkList: ['jycx', '兑换记录'],
+            linkList: ['jycx', '交易明细'],
             form: {
                 name: ''
             },

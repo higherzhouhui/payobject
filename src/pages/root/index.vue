@@ -177,28 +177,21 @@
                     <h3>{{$t("commentsDesc")}}</h3>
                 </div>
                 <div class="container-auto comment-content">
-                    <el-carousel trigger="click">
-                        <el-carousel-item v-for="item in (Math.ceil(comments.length / 2))" :key="item" class="mycarousel">
-                          <div class="item">
-                            <div class="avatar">
-                                <img :src="comments[(item - 1) * 2].avatar" />
-                            </div>
-                            <div class="title">
-                                <h2>{{comments[(item - 1) * 2].name}}</h2>
-                                <h3>{{comments[(item - 1) * 2].content}}</h3>
-                            </div>
-                          </div>
-                          <div class="item" v-if="comments.length > (item - 1) * 2 + 1 ">
-                            <div class="avatar">
-                                <img :src="comments[(item - 1) * 2 + 1].avatar" />
-                            </div>
-                            <div class="title">
-                                <h2>{{comments[(item - 1) * 2 + 1].name}}</h2>
-                                <h3>{{comments[(item - 1) * 2 + 1].content}}</h3>
-                            </div>
-                          </div>
-                        </el-carousel-item>
-                      </el-carousel>
+                    <swiper ref="refSwiper"
+                    :options="commentsWiperOption"
+                        class="content-swiper">
+                        <swiper-slide v-for="item in comments" :key="item.name" class="mycarousel">
+                            <div class="item">
+                                <div class="avatar">
+                                    <img :src="item.avatar" />
+                                </div>
+                                <div class="title">
+                                    <h2>{{item.name}}</h2>
+                                    <h3>{{item.content}}</h3>
+                                </div>
+                              </div>
+                        </swiper-slide>
+                    </swiper>
                 </div>
             </div>
             <div class="animation-warapper have-bg">
@@ -236,11 +229,13 @@
                     <h3>{{$t("ourPowerPartnerDesc")}}</h3>
                 </div>
                 <div class="container-auto comment-content">
-                    <el-carousel trigger="click">
-                        <el-carousel-item v-for="item in 3" :key="item" class="company-carousel">
-                            <img class="band" :src="require('@/assets/images/index/p' + ((item - 1) * 3 + sitem) * 1 + '.png')" alt="band" v-for="sitem in 4" :key="sitem">
-                        </el-carousel-item>
-                      </el-carousel>
+                    <swiper ref="refSwiper"
+                    :options="partnerWiperOption"
+                        class="content-swiper">
+                        <swiper-slide v-for="item in 12" :key="item.id" class="company-swiper">
+                            <img class="band" :src="require('@/assets/images/index/p' + item + '.png')" alt="band">
+                        </swiper-slide>
+                    </swiper>
                 </div>
             </div>
         </div>
@@ -272,29 +267,29 @@ export default {
         return {
             comments: [
                 {
-                    avatar: require('@/assets/images/index/avatar-icon1.png'), 
-                    name: 'JustTin Bok', 
-                    content: `Odio expedita neque illo deserunt quasi consequatur tenetur fugiat deleniti nisiad dolores accusamus cumque sapiente sequi hic nam dolorum culpa laborum excepturi libero minima. Voluptas quas expedita quae quidem itaque facere non commodi ratione ea.`,
+                    avatar: require('@/assets/images/index/huawei.png'), 
+                    name: 'Huawei Technologies', 
+                    content: `“在全球运营中，资金的及时和安全转移至关重要。自从我们开始使用ReliancePay后，不仅汇款过程变得更加高效，而且由于他们出色的货币汇率，我们还节省了大量成本。ReliancePay已成为我们国际金融交易的可靠伙伴。”`,
                 },
                 {
-                    avatar: require('@/assets/images/index/avatar-icon2.png'), 
-                    name: 'JustTin Bok', 
-                    content: `Odio expedita neque illo deserunt quasi consequatur tenetur fugiat deleniti nisiad dolores accusamus cumque sapiente sequi hic nam dolorum culpa laborum excepturi libero minima. Voluptas quas expedita quae quidem itaque facere non commodi ratione ea.`,
+                    avatar: require('@/assets/images/index/zte.png'), 
+                    name: 'ZTE', 
+                    content: `ReliancePay的操作简易性和卓越的客户服务让我们的国际支付流程无比顺畅。实时的活动追踪功能让我们能够随时监控资金流向，确保每一笔交易都能快速且安全地完成。”`,
                 },
                 {
-                    avatar: require('@/assets/images/index/avatar-icon3.png'), 
-                    name: 'JustTin Bok', 
-                    content: `Odio expedita neque illo deserunt quasi consequatur tenetur fugiat deleniti nisiad dolores accusamus cumque sapiente sequi hic nam dolorum culpa laborum excepturi libero minima. Voluptas quas expedita quae quidem itaque facere non commodi ratione ea.`,
+                    avatar: require('@/assets/images/index/telling.png'), 
+                    name: 'Telling', 
+                    content: `“我们对ReliancePay的安全保障和全天候支持印象深刻。他们不仅保证了交易的安全性，还为我们提供了行业内最优惠的汇率，极大地提高了我们的工作效率。”`,
                 },
                 {
-                    avatar: require('@/assets/images/index/avatar-icon4.png'), 
-                    name: 'JustTin Bok', 
-                    content: `Odio expedita neque illo deserunt quasi consequatur tenetur fugiat deleniti nisiad dolores accusamus cumque sapiente sequi hic nam dolorum culpa laborum excepturi libero minima. Voluptas quas expedita quae quidem itaque facere non commodi ratione ea.`,
+                    avatar: require('@/assets/images/index/binance.png'), 
+                    name: 'Binance', 
+                    content: `优秀的产品思维以及高度前瞻性，为安全支付行业树立起了标杆,不亚于市面上的任一国际支付平台，相信不久将会闪闪发光`,
                 },
                 {
-                    avatar: require('@/assets/images/index/avatar-icon5.png'), 
-                    name: 'JustTin Bok', 
-                    content: `Odio expedita neque illo deserunt quasi consequatur tenetur fugiat deleniti nisiad dolores accusamus cumque sapiente sequi hic nam dolorum culpa laborum excepturi libero minima. Voluptas quas expedita quae quidem itaque facere non commodi ratione ea.`,
+                    avatar: require('@/assets/images/index/coinbase.png'), 
+                    name: 'CoinBase', 
+                    content: `很好的解决了国际支付行业痛点，为全球化贸易提供了较为便捷且安全的支付平台`,
                 },
             ],
             animationFlag: {
@@ -323,6 +318,69 @@ export default {
             sendTypeList: ['USA', 'EUR', 'GBP'],
             recipientsTypeList: ['AUD', 'PRI', 'CHN'],
             transactionTypeList: ['Bank Deposit', 'Pickup Point', 'Remesa Wallet'],
+            commentsWiperOption: {
+                // 设置垂直轮播vertical,  水平轮播 horizontal
+                direction: "horizontal", 
+                // 轮播图间距
+                spaceBetween: 18,
+                slidesPerView : 1,
+                // 循环模式选项
+                loop: true,
+                //  自动滑动
+                autoplay: {
+                    delay: 4000,
+                    // 如果设置为true，当切换到最后一个slide时停止自动切换。
+                    stopOnLastSlide: false,
+                    // 如果设置为false，用户操作swiper之后自动切换不会停止，每次都会重新启动autoplay
+                    disableOnInteraction: false,
+                },
+                breakpoints: { 
+                    //当宽度大于等于480
+                    580: { 
+                        slidesPerView: 2,
+                        spaceBetween: 20
+                    },
+                    //当宽度大于等于640
+                    840: {
+                        slidesPerView: 3,
+                        spaceBetween: 30
+                    }
+                }
+            },
+            partnerWiperOption: {
+                // 设置垂直轮播vertical,  水平轮播 horizontal
+                direction: "horizontal", 
+                // 轮播图间距
+                spaceBetween: 18,
+                slidesPerView : 1,
+                // 循环模式选项
+                loop: true,
+                //  自动滑动
+                autoplay: {
+                    delay: 2500,
+                    // 如果设置为true，当切换到最后一个slide时停止自动切换。
+                    stopOnLastSlide: false,
+                    // 如果设置为false，用户操作swiper之后自动切换不会停止，每次都会重新启动autoplay
+                    disableOnInteraction: false,
+                },
+                breakpoints: { 
+                    //当宽度大于等于320
+                    320: {
+                        slidesPerView: 2,
+                        spaceBetween: 10
+                    },
+                    //当宽度大于等于480
+                    580: { 
+                        slidesPerView: 3,
+                        spaceBetween: 20
+                    },
+                    //当宽度大于等于640
+                    840: {
+                        slidesPerView: 4,
+                        spaceBetween: 30
+                    }
+                }
+            },
             advantageData: [
                 { title: 'scdw', des: 'cpjs' },
                 {
@@ -1422,43 +1480,44 @@ export default {
     }
 }
 .mycarousel {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 1rem;
-    @media screen and (max-width: 500px) {
-        grid-template-columns: repeat(1, 1fr);
-        row-gap: 1rem;
+    background: rgba($color: #000000, $alpha: 0.1);
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 6px 0;
+    &:hover {
+        background: rgba($color: #000000, $alpha: 0.4);
+        box-shadow: 1px 5px 6px #5c5555;
+        .item {
+            color: #eee;
+        }
     }
     .item {
         display: flex;
         .avatar img {
-            width: 4rem;
+            width: 3.5rem;
             margin-right: 1rem;
         }
         h2 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             line-height: 2.4rem;
+            word-break: break-all;
         }
         h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 2rem;
         }
     }
 }
-.company-carousel {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 1rem;
-    @media screen and (max-width: 700px) {
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 1rem;
-    }
+.company-swiper {
     .band {
         width: 100%;
+        transition: all 0.5s;
+     
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
-::v-deep .el-carousel__button {
-    background-color: #222;
-    height: 3px;
-}
+
 </style>

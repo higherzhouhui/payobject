@@ -10,7 +10,7 @@
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
                 <span slot="title">{{ $t('home') }}</span>
             </el-menu-item>
-            <el-menu-item index="/manage/kfc">
+            <el-menu-item index="/manage/kyc">
                 <img class="icon" src="@/assets/images/manage/shgl.png" alt="">
                 <span slot="title">{{ $t('shgl') }}</span>
             </el-menu-item>
@@ -137,13 +137,15 @@ export default {
     },
     data() {
         return {
-            showMenu: true,
+            showMenu: false,
         }
     },
     methods: {
         select(path) {
-            console.log(path)
-            if (this.path == path) return
+            if (this.path == path) {
+                console.log(this.path, path)
+                return
+            }
             this.$router.push(path)
         },
         toggleMenuShow() {

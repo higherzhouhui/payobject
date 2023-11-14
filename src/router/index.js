@@ -51,7 +51,7 @@ const router = new VueRouter({
             path: '/manage', name: 'manage', redirect: '/manage/index', component: () => import('@/pages/admin/layout.vue'),
             children: [
                 { path: 'index', component: () => import('@/pages/manage/home.vue') },
-                { path: 'kfc', component: () => import('@/pages/manage/kfc/index.vue') },
+                { path: 'kyc', component: () => import('@/pages/manage/kyc/index.vue') },
                 { path: 'deposit', component: () => import('@/pages/manage/deposit/index.vue') },
                 { path: 'exchange', component: () => import('@/pages/manage/exchange/index.vue') },
                 { path: 'withdraw', component: () => import('@/pages/manage/withdraw/index.vue') },

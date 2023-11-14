@@ -1,5 +1,5 @@
 <template>
-    <div class="user_transactionInquiry_transactionDetails_contianer">
+    <div class="record-container">
         <LinkPath :linkList="linkList" />
         <div class="content">
             <el-form ref="form2" :inline="true" class="mt12">
@@ -53,14 +53,14 @@
                 </el-button>
               </el-form-item>
             </el-form>
-            <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading">
+            <el-table class="tables" size="small" :data="tableData" v-loading="loading">
               <el-table-column prop="depCoin" :label="$t('币种')" width="100" show-overflow-tooltip/>
               <el-table-column prop="targetCoin" :label="$t('兑换币种')" width="100" />
               <el-table-column prop="changeRate" :label="$t('汇率')" width="100" />
               <el-table-column prop="depValue" :label="$t('金额')" width="100" />
               <el-table-column prop="targetValue" :label="$t('到账金额')" width="130" />
-              <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" show-overflow-tooltip/>
-              <el-table-column prop="modifiedTime" :label="$t('更新时间')" minWidth="180" show-overflow-tooltip/>
+              <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" show-overflow-tooltip/>
+              <el-table-column prop="modifiedTime" :label="$t('更新时间')" min-width="180" show-overflow-tooltip/>
               <div slot="empty">
                 <el-empty
                   :description="$t('nodata')"
@@ -108,7 +108,7 @@ export default {
             searchForm: {},
             bizTypeList: [
               {label: '法币', value: 1},
-              {label: '数字货币', value: 2},
+              {label: '加密货币', value: 2},
             ],
             coinCodeList: [],
             pickerOptions: {
@@ -180,7 +180,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.user_transactionInquiry_transactionDetails_contianer {
+.record-container {
     .content {
         margin-top: 1rem;
         padding: 1.5rem;
@@ -195,8 +195,5 @@ export default {
         }
     }
 }
-.btn {
-    padding: 4px 6px;
-    color: #fff;
-}
+
 </style>

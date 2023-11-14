@@ -183,7 +183,7 @@
       <div class="right">
         <el-tabs v-model="moneyType">
           <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
-          <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
+          <el-tab-pane label="加密货币" name="usdt"></el-tab-pane>
         </el-tabs>
         <div class="content_shadow">
           <el-form :model="form" label-width="120px" v-if="moneyType == 'fabi'">

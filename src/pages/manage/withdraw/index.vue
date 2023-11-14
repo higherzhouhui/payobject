@@ -3,10 +3,30 @@
     <LinkPath :linkList="linkList" />
     <el-tabs v-model="moneyType">
       <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
-      <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
+      <el-tab-pane label="加密货币" name="usdt"></el-tab-pane>
     </el-tabs>
     <div class="content">
-      <el-form ref="form2" :inline="true" class="mt12">
+      <el-form v-model="searchForm" :inline="true">
+        <el-form-item>
+          <el-date-picker
+            v-model="searchForm.startTime"
+            align="right"
+            type="datetime"
+            placeholder="开始时间"
+            value-format="timestamp"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="searchForm.endTime"
+            align="right"
+            type="datetime"
+            placeholder="结束时间"
+            value-format="timestamp"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
         <el-form-item>
           <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
             <el-option
@@ -20,12 +40,12 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleChangeSearch" class="primary">
+          <el-button type="primary" @click="handleChangeSearch" class="normal-btn" style="height: 40px">
             <i class="el-icon-search"></i>{{ $t("search") }}
           </el-button>
         </el-form-item>
       </el-form>
-      <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
+      <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
         <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" show-overflow-tooltip/>
         <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
         <el-table-column prop="reqValue" :label="$t('出款金额')" width="100" />
@@ -80,7 +100,7 @@
           ></el-empty>
         </div>
       </el-table>
-      <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
+      <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
         <el-table-column prop="srcCode" :label="$t('币种')" width="200" />
         <el-table-column prop="cryptAdd" :label="$t('收款钱包地址')" width="180" />
         <el-table-column prop="coinCode" :label="$t('目标币种')" width="200" />
@@ -485,11 +505,9 @@ export default {
 <style scoped lang="scss">
 .user_moneymanagement_transfer_contianer {
   .content {
-    padding: 24px;
+    padding: 1.5rem;
     border-radius: 4px;
-    border: 1px solid var(--unnamed, #dcdfe6);
-    background: #fff;
-    // box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
+    background: $contentColor;
 
     .empty_box {
       margin-top: 40px;

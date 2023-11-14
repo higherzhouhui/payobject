@@ -7,7 +7,7 @@
     </el-tabs>
     <template v-if="type == 'first'">
       <div class="content">
-        <el-form ref="form2" :inline="true">
+        <el-form ref="form2" v-model="form" :inline="true">
           <el-form-item>
             <el-input
               :placeholder="$t('bankname')"
@@ -20,13 +20,6 @@
               v-model="form.bankAccount"
             ></el-input>
           </el-form-item>
-
-          <!-- <el-form-item>
-                      <el-select v-model="value" :placeholder="$t('yhzhlx')">
-                          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                          </el-option>
-                      </el-select>
-                  </el-form-item> -->
           <el-form-item>
             <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
               <el-option
@@ -40,7 +33,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getlist" class="primary">
+            <el-button type="primary" @click="getlist" class="primary normal-btn">
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
             <!-- <el-button class="primary">
@@ -48,7 +41,7 @@
               </el-button> -->
           </el-form-item>
         </el-form>
-        <el-button type="primary" @click="showAdd1" class="primary"
+        <el-button type="primary normal-btn" @click="showAdd1" class="primary"
           ><i class="el-icon-plus"></i>增加收款账户</el-button
         >
         <el-table
@@ -56,17 +49,18 @@
           :data="tableData"
           style="width: 100%; margin-top: 16px"
           v-loading="loading"
+          size="small"
         >
+          <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
           <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
           <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
-          <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
+          <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip/>
           <el-table-column prop="createTime" :label="$t('cjrq')" width="180" show-overflow-tooltip/>
           <el-table-column
             prop="name"
             :label="$t('cz')"
-            width="210"
+            width="130"
             fixed="right"
           >
             <template slot-scope="scope">
@@ -96,7 +90,7 @@
     </template>
     <template v-if="type == 'second'">
       <div class="content">
-        <el-button type="primary" @click="showAdd" class="primary"
+        <el-button type="primary" @click="showAdd" class="primary normal-btn"
           ><i class="el-icon-plus"></i>增加汇率</el-button
         >
         <el-table
@@ -104,15 +98,16 @@
           :data="tableData2"
           style="width: 100%; margin-top: 16px"
           v-loading="loading"
+          size="small"
         >
-          <el-table-column prop="exFrom" label="被兑换币种" width="100" />
-          <el-table-column prop="exTarget" label="兑换币种" width="100" />
+          <el-table-column prop="exFrom" label="被兑换币种" min-width="100" />
+          <el-table-column prop="exTarget" label="兑换币种" min-width="100" />
           <el-table-column prop="exRate" label="汇率" width="120" />
-          <el-table-column prop="createTime" :label="$t('cjrq')" minwidth="180" />
+          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" />
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
-            width="210"
+            width="130"
             fixed="right"
           >
             <template slot-scope="scope">
@@ -566,10 +561,12 @@ export default {
 <style scoped lang="scss">
 .user_transferAccountMangement_contianer {
   .content {
-    padding: 16px;
+    padding: 1rem;
+    background: $contentColor;
     border-radius: 4px;
-    border: 1px solid var(--unnamed, #dcdfe6);
-    background: #fff;
+  }
+  .normal-btn {
+    height: 40px;
   }
 }
 .duihuan {

@@ -35,7 +35,7 @@
             <el-dropdown-item icon="el-icon-user" command="profile">
               {{$t("profile")}}
             </el-dropdown-item>
-            <el-dropdown-item icon="el-icon-lock" command="resetPwd">
+            <el-dropdown-item icon="el-icon-lock" command="reset">
               {{$t("重置密码")}}
             </el-dropdown-item>
             <el-dropdown-item icon="el-icon-switch-button" command="logout">
@@ -98,6 +98,9 @@ export default {
     handleDropCommand(command) {
       if (command == 'profile') {
         this.$router.push("/admin/info")
+      }
+      if (command == 'reset') {
+        this.$router.push("/admin/reset")
       }
       if (command == 'logout') {
         this.quit()

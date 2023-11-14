@@ -44,6 +44,7 @@ export default {
         .index_content {
             margin: 0!important;
             min-height: calc(100vh - 124px)!important;
+            padding: 1.5rem 6px!important;
         }
     }
     .content {

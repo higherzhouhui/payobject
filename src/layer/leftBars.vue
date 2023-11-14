@@ -4,7 +4,43 @@
             <img alt="logo" class="logoImg" src="@/assets/images/index/logo.png" @click="routerTo('/index')" />
             <img alt="menu" class="menuImg" src="@/assets/images/home/menu.png" @click="toggleMenuShow"/>
         </div>
-        <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'">
+
+        <el-menu @select="select" :class="showMenu ? 'showMenu' : 'hideMenu'" :default-active="path" v-if="$store.state.userInfo.admin">
+            <el-menu-item index="/manage/index">
+                <img class="icon" src="@/assets/images/home/home.png" alt="">
+                <span slot="title">{{ $t('home') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/manage/kfc">
+                <img class="icon" src="@/assets/images/manage/shgl.png" alt="">
+                <span slot="title">{{ $t('shgl') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/manage/deposit">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('入金列表') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/manage/withdraw">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('出金列表') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/manage/bill">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('交易明细') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/manage/change">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('兑换明细') }}</span>
+            </el-menu-item>
+            <!-- <el-menu-item index="/manage/transactionDetails">
+                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <span slot="title">{{ $t('ddgl') }}</span>
+            </el-menu-item> -->
+            <el-menu-item index="/manage/exchange">
+                <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
+                <span slot="title">{{ $t('hlgl') }}</span>
+            </el-menu-item>
+        </el-menu>
+
+        <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-else>
             <el-menu-item index="/admin/dashboard">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
                 <span slot="title">{{ $t('home') }}</span>
@@ -88,6 +124,7 @@
                 </el-menu-item>
             </el-submenu> -->
         </el-menu>
+
     </div>
 </template>
 <script>

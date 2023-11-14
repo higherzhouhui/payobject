@@ -98,7 +98,7 @@ export const putDeposit = (data) => service({
     method: 'post'
 })
 
-// 出金列表（数字货币—）
+// 出金列表（加密货币—）
 export const cryptWithdrawList = (data) => service({
     url: '/cryptWithdrawList',
     data,
@@ -119,7 +119,7 @@ export const cryptDepositGet = (data) => service({
  *  tid  转账交易地址，入金时提交申请时填写，出金时审核出账时填写 
  *  reqType  申请类型 1 入金 2 出金，提交申请时无需填写，不同接口内确定申请的类型
  *  reqStatus 若是入金 1 已提交 2 已入账 若是出金 1 已提交 2 已出账  
- *  reqProof 数字货币申请时的转账凭证，若是出金，则是审批时可以上传的转账截图，可以传jpg,pdf
+ *  reqProof 加密货币申请时的转账凭证，若是出金，则是审批时可以上传的转账截图，可以传jpg,pdf
  *  userId
  *  recorded 用户名
  *  memo  如果驳回，可以在备注字段填写原因，用户查看详情是可以查看到
@@ -160,7 +160,7 @@ export const perWithdraw = (data) => service({
     method: 'post'
 })
 
-// admin 出金审核数字货币
+// admin 出金审核加密货币
 export const perCryptWithdraw = (data) => service({
     url: '/perCryptWithdraw',
     data,

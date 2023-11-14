@@ -14,7 +14,7 @@
       </swiper>
       <div class="empty" v-if="!balanceLoading && !balanceArrapy.length">
         <img src="@/assets/images/home/recharge.png" />
-        <span>{{$t("去充值")}}</span>
+        <span @click="$router.push('/admin/deposit/index')">{{$t("去充值")}}</span>
       </div>
     </div>
     <div class="transaction-wrapper">

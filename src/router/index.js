@@ -11,12 +11,12 @@ const router = new VueRouter({
     },
     routes: [
         { path: '/', redirect: 'index' },
-        { path: '/index', name: 'index', component: () => import('../pages/root/index.vue') },
+        { path: '/index', name: 'index', component: () => import('@/pages/root/index.vue') },
         {
-            path: '/admin', name: 'admin', redirect: '/admin/dashboard', component: () => import('../pages/admin/layout.vue'),
+            path: '/admin', name: 'admin', redirect: '/admin/dashboard', component: () => import('@/pages/admin/layout.vue'),
             children: [
-                { path: 'dashboard', component: () => import('../pages/admin/dashboard/index.vue') },
-                { path: 'detail', component: () => import('../pages/admin/dashboard/detail.vue') },
+                { path: 'dashboard', component: () => import('@/pages/admin/dashboard/index.vue') },
+                { path: 'detail', component: () => import('@/pages/admin/dashboard/detail.vue') },
                 { path: 'deposit', name: 'deposit', redirect: '/deposit/index',  component: () => import('@/pages/admin/deposit/layout.vue'),
                   children: [
                     { path: 'index', name: 'depositIndex', component: () => import('@/pages/admin/deposit/index.vue')},
@@ -44,46 +44,29 @@ const router = new VueRouter({
                 { path: 'kycverification', component: () => import('@/pages/admin/kycverification/index.vue') },
                 { path: 'referfriends', component: () => import('@/pages/admin/referfriends/index.vue') },
                 { path: 'info', component: () => import('@/pages/admin/info/index.vue') },
-
-
-
-                { path: 'account', component: () => import('../pages/home/account/index.vue') },
-                { path: 'user', component: () => import('../pages/home/user/index.vue') },
-                { path: 'collection', component: () => import('../pages/home/moneyManagement/collection.vue') },
-                { path: 'transfer', component: () => import('../pages/home/moneyManagement/transfer.vue') },
-                { path: 'withdraw', component: () => import('../pages/home/withdrawManagement/withdraw.vue') },
-                { path: 'withdrawAccountManage', component: () => import('../pages/home/withdrawManagement/withdrawAccountManage.vue') },
-                { path: 'transactionDetails', component: () => import('../pages/home/transactionInquiry/transactionDetails.vue') },
-                { path: 'fundingDetails', component: () => import('../pages/home/transactionInquiry/fundingDetails.vue') },
-                { path: 'transfers', component: () => import('../pages/home/transferManagement/transfer.vue') },
-                { path: 'transferAccountManagement', component: () => import('../pages/home/transferManagement/transferAccountManagement.vue') },
-                { path: 'verified', component: () => import('../pages/home/user/verified.vue') },
-                { path: 'formTable', component: () => import('../pages/home/user/formTable.vue') },
+                { path: 'reset', component: () => import('@/pages/admin/info/reset.vue') },
             ]
         },
         {
-            path: '/manage', name: 'manage', redirect: '/manage/index', component: () => import('../pages/manage/index.vue'),
+            path: '/manage', name: 'manage', redirect: '/manage/index', component: () => import('@/pages/admin/layout.vue'),
             children: [
-                { path: 'index', component: () => import('../pages/manage/home.vue') },
-                { path: 'kfc', component: () => import('../pages/manage/kfc/index.vue') },
-                { path: 'exchange', component: () => import('../pages/manage/exchange/index.vue') },
-                { path: 'deposit', component: () => import('../pages/manage/deposit/index.vue') },
-                { path: 'withdraw', component: () => import('../pages/manage/withdraw/index.vue') },
-                { path: 'change', component: () => import('../pages/manage/change/index.vue') },
-                { path: 'bill', component: () => import('../pages/manage/bill/index.vue') },
-                { path: 'transactionDetails', component: () => import('../pages/home/transactionInquiry/transactionDetails.vue') },
-                { path: 'fundingDetails', component: () => import('../pages/home/transactionInquiry/fundingDetails.vue') },
+                { path: 'index', component: () => import('@/pages/manage/home.vue') },
+                { path: 'kfc', component: () => import('@/pages/manage/kfc/index.vue') },
+                { path: 'deposit', component: () => import('@/pages/manage/deposit/index.vue') },
+                { path: 'exchange', component: () => import('@/pages/manage/exchange/index.vue') },
+                { path: 'withdraw', component: () => import('@/pages/manage/withdraw/index.vue') },
+                { path: 'change', component: () => import('@/pages/admin/record/transactionlist.vue') },
+                { path: 'bill', component: () => import('@/pages/admin/record/exchangelist.vue') },
             ]
         },
         {
-            path: '/user', name: 'userIndex', component: () => import('../pages/user/index.vue'),
+            path: '/user', name: 'userIndex', component: () => import('@/pages/user/index.vue'),
             children: [
-                { path: 'login', component: () => import('../pages/user/login/index.vue') },
-                { path: 'register', component: () => import('../pages/user/register/index.vue') },
-                { path: 'forget', component: () => import('../pages/user/forget/index.vue') }
+                { path: 'login', component: () => import('@/pages/user/login/index.vue') },
+                { path: 'register', component: () => import('@/pages/user/register/index.vue') },
+                { path: 'forget', component: () => import('@/pages/user/forget/index.vue') }
             ]
         },
-
     ]
 }
 )

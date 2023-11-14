@@ -1,26 +1,7 @@
 <template>
-  <div class="login_box container-auto normal-content">
-    <div class="left">
-      <img class="leftImg" alt="money" src="@/assets/images/register/left.png" />
-    </div>
+  <div class="login_box">
     <div class="form">
-      <h2>{{$t("createProfile")}}</h2>
-      <div class="flex tabs">
-        <div
-          class="item"
-          :class="type == 1 && 'baseColor active'"
-          @click="type = 1"
-        >
-          {{ $t("phone") }}
-        </div>
-        <div
-          class="item"
-          :class="type == 2 && 'baseColor active'"
-          @click="type = 2"
-        >
-          {{ $t("email") }}
-        </div>
-      </div>
+      <h2>{{$t("重置密码")}}</h2>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="" />
         <el-input
@@ -28,6 +9,7 @@
           :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
           v-model="form.phone"
           ref="myName"
+          disabled
         >
           <template v-if="type == 1" slot="prepend">
             <el-select
@@ -59,7 +41,15 @@
           {{ timer == 60 ? $t("send") : timer }}
         </el-button>
       </div>
-
+      <div class="line">
+        <img class="icon" src="@/assets/images/user/password.png" alt="" />
+        <el-input
+          class="input"
+          show-password
+          :placeholder="$t('请输入原密码')"
+          v-model="form.oldPass"
+        />
+      </div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/password.png" alt="" />
         <el-input
@@ -76,72 +66,23 @@
           show-password
           :placeholder="$t('qzcsrmm')"
           v-model="form.repassWord"
-        />
-      </div>
-      <div class="line">
-        <img class="icon" src="@/assets/images/user/tjr.png" alt="" />
-        <el-input
-          class="input"
-          :placeholder="$t('qsryqm')"
-          v-model="form.inviteCode"
-        />
-      </div>
-
-      <div class="line flex flex_jc_sb flex_align_center">
-        <img class="icon icon3" src="@/assets/images/user/txm.png" alt="" />
-        <el-input
-          class="input yzm"
-          :placeholder="$t('qsrtxm')"
           @keyup.enter.native="regester"
-          v-model="form.code"
         />
-        <div class="ecode pointer" :class="imgLoading && 'loading'">
-          <img
-            width="100%"
-            @load="() => (imgLoading = false)"
-            @error="
-              () => {
-                imgLoading = false;
-                randomT();
-              }
-            "
-            :src="'/api/assets/captcha?t=' + t"
-            @click="randomT"
-          />
-        </div>
       </div>
 
-      <div class="flex agree_txt flex_align_center">
-        <el-checkbox
-          v-model="checked"
-          style="margin-right: 5px"
-        ></el-checkbox>
-        <span @click="checked = !checked" style="cursor: pointer">{{ $t("tybzs") }}</span>
-        <span class="baseColor pointer">《{{ $t("wlptfwxy") }}》</span
-        >{{ $t("he")
-        }}<span class="baseColor pointer">《{{ $t("yszc") }}》</span>
-      </div>
       <el-button
         class="btn normal-btn"
         type="primary"
         :class="loading && 'loading'"
         @click="regester"
-        >{{ $t("register") }}</el-button
+        >{{ $t("确认") }}</el-button
       >
-
-      <div
-        class="flex register-line flex_align_center pointer flex_jc_sb_center"
-        @click="to('/user/login')"
-      >
-      {{$t("hadAccount")}}
-      <span class="register-btn">{{$t("login")}}</span>-
+    </div>
   </div>
-    </div>
-    </div>
 </template>
 <script>
 import { Local } from "@/utils/index";
-import { sendCheckCode, reg, countries } from "@/api/login";
+import { sendCheckCode, resetPwd, countries } from "@/api/login";
 import { Message } from "element-ui";
 
 export default {
@@ -158,7 +99,7 @@ export default {
       checked: true,
       aereList: [],
       form: {
-        phone: "",
+        phone: this.$store.state.userInfo.email,
         password: "",
         areaCode: "+86",
         repassWord: "",
@@ -173,19 +114,11 @@ export default {
   },
   created() {
     this.getAreaCode();
-    const hash = location.hash
-    const hashArray = hash.split("=")
-    if (hashArray.length == 2) {
-      this.form.inviteCode = hashArray[1]
-    }
   },
   mounted() {  
-    this.$refs.myName.focus();  
+    // this.$refs.myName.focus();  
   }, 
   methods: {
-    routerToIndex() {
-      this.$router.push('/index');
-    },
     async getAreaCode() {
       try {
         let list = Local("aereList");
@@ -200,11 +133,6 @@ export default {
     to(path) {
       this.$router.push(path);
     },
-    checkLang(lang) {
-      this.languge = lang;
-      Local("lang", lang);
-      this.$i18n.locale = lang;
-    },
     randomT() {
       if (this.imgLoading) return;
       this.imgLoading = true;
@@ -218,29 +146,19 @@ export default {
         repassWord,
         code,
         checkCode,
-        inviteCode,
+        oldPass,
       } = this.form;
       let msg = "";
-      if (!phone) {
-        if (this.type == 1) {
-          msg = "qsrsjhm";
-        } else {
-          msg = "qsryxhm";
-        }
-      } else if (!checkCode) {
+      if (!checkCode) {
         msg = "qsryzm";
+      } else if (!oldPass) {
+        msg = "请输入原密码";
       } else if (!password) {
         msg = "qsrmm";
       } else if (!repassWord) {
         msg = "qzcsrmm";
       } else if (password != repassWord) {
         msg = "repassError";
-      } else if (!inviteCode) {
-        msg = "qsryqm";
-      } else if (!code) {
-        msg = "qsrtxm";
-      } else if (!this.checked) {
-        msg = "qtyxy";
       }
       if (msg) {
         Message({
@@ -249,19 +167,7 @@ export default {
         });
         return false;
       }
-      let param = {
-        code,
-        checkCode,
-        password,
-        areaCode,
-        inviteCode,
-      };
-      if (this.type == 1) {
-        param.phone = phone;
-      } else {
-        param.email = phone;
-      }
-      return param;
+      return this.form;
     },
     async regester() {
       if (this.loading) return;
@@ -269,21 +175,19 @@ export default {
       if (!params) return;
       try {
         this.loading = true;
-        const res = await reg(params);
+        const res = await resetPwd({
+          email: params.phone,
+          checkCode: params.checkCode,
+          oldPass: params.oldPass,
+          newPass: params.password
+        });
         Message({
           type: "success",
           message: this.$t("zccg"),
         });
-        this.$store.commit('SET_USERINFO', res.data)
-        this.loading = false;
-        if (!res.data.admin) {
-          return this.$router.push("/home");
-        }
-        this.$router.push("/manage");
       } catch (error) {
         this.randomT();
         this.loading = false;
-        this.form.code = ''
       }
     },
     async sendSms() {
@@ -336,6 +240,18 @@ export default {
 @import "@/pages/user/common.scss";
 
 .login_box {
+  width: 700px;
+  margin: 0 auto;
+  h2 {
+    color: #fff;
+  }
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    padding: 0!important;
+    .form {
+      padding: 1rem 6px!important;
+    }
+  }
   .tabs {
     margin-bottom: 1.2rem;
     .item {

@@ -36,10 +36,10 @@
             </el-button> -->
           </el-form-item>
         </el-form>
-        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
+        <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading">
           <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="300" show-overflow-tooltip/>
           <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
@@ -47,13 +47,13 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjrq')" minWidth="180" show-overflow-tooltip/>
+          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" show-overflow-tooltip/>
           <el-table-column :label="$t('cz')" width="210" fixed="right">
             <template slot-scope="scope">
-              <span @click="toDetail(scope.row)" class="baseColor cursor" style="cursor: pointer">查看详情</span>
+              <span @click="toDetail(scope.row)" class="baseColor cursor" style="cursor: pointer">详情</span>
               <span v-if="scope.row.bankStatus == 1" class="cursor" style="cursor: pointer; margin-left: 10px; color: red"
                 @click="showUsdtForm(scope.row)">
-                数字货币地址
+                加密货币地址
               </span>
               <span v-if="scope.row.bankStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: green"
                 @click="sh(scope.row.id, true)">
@@ -76,7 +76,7 @@
         <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading">
           <el-table-column prop="companyName" :label="$t('qymc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="businessAdd" :label="$t('qyjydz')" width="200" show-overflow-tooltip/>
-          <el-table-column prop="businessScenario" :label="$t('ywcjsm')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="businessScenario" :label="$t('ywcjsm')" min-width="280" show-overflow-tooltip/>
           <el-table-column prop="kycStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.kycStatus]" class="elTag">
@@ -84,13 +84,13 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjrq')" minWidth="180" show-overflow-tooltip/>
+          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" show-overflow-tooltip/>
 
 
           <el-table-column :label="$t('cz')" width="210" fixed="right">
             <template slot-scope="scope">
               <div>
-                <span @click="toDetail2(scope.row)" class="baseColor cursor" style="cursor: pointer">查看详情</span>
+                <span @click="toDetail2(scope.row)" class="baseColor cursor" style="cursor: pointer">详情</span>
                 <span v-if="scope.row.kycStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: green"
                   @click="sh2(scope.row.id, true)">
                   通过
@@ -109,7 +109,7 @@
       </div>
     </template>
 
-    <el-dialog :title="'查看详情'" :visible.sync="dialogVisible" width="636px" :before-close="() => {
+    <el-dialog :title="'详情'" :visible.sync="dialogVisible" width="636px" :before-close="() => {
       dialogVisible = false;
     }
       ">
@@ -150,7 +150,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="'查看详情'" :visible.sync="dialogVisible2" width="636px" :before-close="() => {
+    <el-dialog :title="'详情'" :visible.sync="dialogVisible2" width="636px" :before-close="() => {
       dialogVisible2 = false;
     }
       ">
@@ -219,7 +219,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="'数字货币地址'" :visible.sync="dialogVisible3" width="636px" :before-close="() => {
+    <el-dialog :title="'加密货币地址'" :visible.sync="dialogVisible3" width="636px" :before-close="() => {
       dialogVisible2 = false;
     }
       ">
@@ -459,10 +459,9 @@ export default {
 <style scoped lang="scss">
 .user_transferAccountMangement_contianer {
   .content {
-    padding: 24px;
+    padding: 1rem;
     border-radius: 4px;
-    border: 1px solid var(--unnamed, #dcdfe6);
-    background: #fff;
+    background: $contentColor;
   }
 }
 

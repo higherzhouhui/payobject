@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-    name: 'userMoneyManagementCollection',
+    name: 'record',
 }
 </script>
 <style scoped lang="scss">

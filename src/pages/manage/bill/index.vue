@@ -121,7 +121,7 @@ export default {
             },
             bizTypeList: [
               {label: '法币', value: 1},
-              {label: '数字货币', value: 2},
+              {label: '加密货币', value: 2},
             ],
             coinCodeList: [],
             loading: true,

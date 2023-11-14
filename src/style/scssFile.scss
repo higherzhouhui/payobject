@@ -266,9 +266,12 @@ html {
 .tables {
     .el-table__row {
         background: $contentColor;
+        &:hover .el-table__cell{
+            background: rgba(0, 0, 0, 0.075)!important;
+        }
     }
     .el-table__body tr.hover-row.current-row>td.el-table__cell, .el-table__body tr.hover-row.el-table__row--striped.current-row>td.el-table__cell, .el-table__body tr.hover-row.el-table__row--striped>td.el-table__cell, .el-table__body tr.hover-row>td.el-table__cell{
-        background: rgba(0, 0, 0, 0.075);
+        background: rgba(0, 0, 0, 0.075)!important;
     }
     .el-table--fit,
     .el-table__cell,
@@ -282,7 +285,7 @@ html {
         .el-table__row {
             .cell {
                 font-size: 14px;
-                color: #303133;
+                color: #fff;
             }
         }
     }

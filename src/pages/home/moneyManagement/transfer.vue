@@ -3,7 +3,7 @@
     <LinkPath :linkList="linkList" />
     <el-tabs v-model="moneyType" class="mytab">
       <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
-      <el-tab-pane label="数字货币" name="usdt"></el-tab-pane>
+      <el-tab-pane label="加密货币" name="usdt"></el-tab-pane>
     </el-tabs>
     <div class="content">
       <el-form v-model="searchForm" :inline="true">

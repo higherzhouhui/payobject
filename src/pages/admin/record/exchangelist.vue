@@ -53,7 +53,7 @@
                 </el-button>
               </el-form-item>
             </el-form>
-            <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading">
+            <el-table class="tables" size="small" :data="tableData" v-loading="loading">
               <el-table-column prop="coinCode" :label="$t('币种')" width="100"/>
               <el-table-column prop="billValue" :label="$t('金额')" width="100"/>
               <el-table-column prop="billType" :label="$t('类型')" width="100">
@@ -73,18 +73,6 @@
               </el-table-column>
               <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" show-overflow-tooltip/>
               <el-table-column prop="modifiedTime" :label="$t('更新时间')" minWidth="180" show-overflow-tooltip/>
-              <!-- <el-table-column
-                prop="name"
-                :label="$t('cz')"
-                width="100"
-                fixed="right"
-              >
-                <template slot-scope="scope">
-                  <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
-                    {{ $t("详情") }}
-                  </el-button>
-                </template>
-              </el-table-column> -->
               <div slot="empty">
                 <el-empty
                   :description="$t('nodata')"

@@ -287,19 +287,22 @@
           <el-select v-model="bankForm2.exFrom" class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in getNewaereList(aereList)"
+              v-for="item in getAllCoin()"
               :key="item.id"
               :label="item.coinCode"
               :value="item.coinCode"
+              @change="getTargetCoin"
             />
           </el-select>
         </el-form-item>
-        <el-form-item class="mb24 duihuan">兑换</el-form-item>
+        <el-form-item class="mb24 duihuan"><i class="el-icon-sort" />兑换</el-form-item>
+      
+
         <el-form-item label="兑换币种" class="mb24">
           <el-select v-model="bankForm2.exTarget"  class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in getAllCoin(aereList, szList)"
+              v-for="item in targetCoinList"
               :key="item.id"
               :label="item.coinCode"
               :value="item.coinCode"
@@ -311,8 +314,9 @@
             v-model="bankForm2.exRate"
           ></el-input>
         </el-form-item>
-
-
+        <el-form-item class="preview" v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate">
+          {{ `1${bankForm2.exFrom} = ${bankForm2.exRate}${bankForm2.exTarget}` }}
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible2 = false">{{
@@ -375,6 +379,7 @@ export default {
         // bankStatus: "",
       },
       bankForm: {},
+      targetCoinList: [],
       options3: [
         {
           label: "gth",
@@ -439,15 +444,18 @@ export default {
       }
       return []
     },
-    getAllCoin(areaList, usdtLit) {
-      if (areaList.length) {
-        const arr = areaList.filter((obj, index, self) => {  
+    getAllCoin() {
+      if (this.aereList.length) {
+        let arr = this.aereList.filter((obj, index, self) => {  
           return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
         })
-        arr.concat(usdtLit)
+        arr = arr.concat(this.szList)
         return arr
       }
       return []
+    },
+    getTargetCoin(item) {
+      console.log(item, 222222222)
     },
     async getFbList() {
       try {
@@ -572,8 +580,11 @@ export default {
 .duihuan {
   text-align: center;
   font-weight: bold;
-  color: #000;
-  font-size: 15px;
+  color: $baseColor;
+  font-size: 1.3rem!important;
+}
+.preview {
+  color: #f99000;
 }
 .elSelect {
   width: 100%;

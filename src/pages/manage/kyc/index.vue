@@ -9,10 +9,18 @@
       <div class="content">
         <el-form ref="form2" :inline="true">
           <el-form-item>
-            <el-input :placeholder="$t('bankname')" v-model="form.bankName" clearable></el-input>
+            <el-input
+              :placeholder="$t('bankname')"
+              v-model="form.bankName"
+              clearable
+            ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input :placeholder="$t('yhzhh')" v-model="form.bankAccount" clearable></el-input>
+            <el-input
+              :placeholder="$t('yhzhh')"
+              v-model="form.bankAccount"
+              clearable
+            ></el-input>
           </el-form-item>
           <!-- <el-form-item>
                     <el-select v-model="value" :placeholder="$t('yhzhlx')">
@@ -21,9 +29,18 @@
                     </el-select>
                 </el-form-item> -->
           <el-form-item>
-            <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')" clearable>
-              <el-option style="padding: 0 20px" v-for="item in options" :key="item.value" :label="item.label"
-                :value="item.value">
+            <el-select
+              v-model="form.bankStatus"
+              :placeholder="$t('zhbdzt')"
+              clearable
+            >
+              <el-option
+                style="padding: 0 20px"
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
               </el-option>
             </el-select>
           </el-form-item>
@@ -36,10 +53,31 @@
             </el-button> -->
           </el-form-item>
         </el-form>
-        <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading">
-          <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
-          <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="300" show-overflow-tooltip/>
+        <el-table
+          class="tables"
+          size="small"
+          :data="tableData"
+          style="width: 100%"
+          v-loading="loading"
+        >
+          <el-table-column
+            prop="accountName"
+            :label="$t('zhmc')"
+            width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="bankAccount"
+            :label="$t('yhzh')"
+            width="200"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="accountAdd"
+            :label="$t('jzdz')"
+            min-width="300"
+            show-overflow-tooltip
+          />
           <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
@@ -47,36 +85,93 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" show-overflow-tooltip/>
-          <el-table-column :label="$t('cz')" width="210" fixed="right">
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjrq')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column :label="$t('cz')" width="180" fixed="right">
             <template slot-scope="scope">
-              <span @click="toDetail(scope.row)" class="baseColor cursor" style="cursor: pointer">详情</span>
-              <span v-if="scope.row.bankStatus == 1" class="cursor" style="cursor: pointer; margin-left: 10px; color: red"
-                @click="showUsdtForm(scope.row)">
+              <span
+                @click="toDetail(scope.row)"
+                class="baseColor cursor"
+                style="cursor: pointer"
+                >详情</span
+              >
+              <span
+                v-if="scope.row.bankStatus == 1"
+                class="cursor"
+                style="cursor: pointer; margin-left: 10px; color: rgb(179, 176, 194)"
+                @click="showUsdtForm(scope.row)"
+              >
+                <i class="el-icon-plus" />
                 加密货币地址
               </span>
-              <span v-if="scope.row.bankStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: green"
-                @click="sh(scope.row.id, true)">
+              <span
+                v-if="scope.row.bankStatus == 0"
+                class="cursor"
+                style="cursor: pointer; margin-left: 10px; color: green"
+                @click="sh(scope.row.id, true)"
+              >
                 审核通过
               </span>
-              <span v-if="scope.row.bankStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: red"
-                @click="sh(scope.row.id, false)">
+              <span
+                v-if="scope.row.bankStatus == 0"
+                class="cursor"
+                style="cursor: pointer; margin-left: 10px; color: red"
+                @click="sh(scope.row.id, false)"
+              >
                 驳回
               </span>
             </template>
           </el-table-column>
           <div slot="empty">
-            <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+            <el-empty
+              :description="$t('nodata')"
+              style="padding: 50px"
+            ></el-empty>
           </div>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          class="elPagination"
+        >
+        </el-pagination>
       </div>
     </template>
     <template v-else>
       <div class="content">
-        <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading">
-          <el-table-column prop="companyName" :label="$t('qymc')" width="180" show-overflow-tooltip/>
-          <el-table-column prop="businessAdd" :label="$t('qyjydz')" width="200" show-overflow-tooltip/>
-          <el-table-column prop="businessScenario" :label="$t('ywcjsm')" min-width="280" show-overflow-tooltip/>
+        <el-table
+          class="tables"
+          :data="tableData2"
+          style="width: 100%"
+          v-loading="loading"
+        >
+          <el-table-column
+            prop="companyName"
+            :label="$t('qymc')"
+            width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="businessAdd"
+            :label="$t('qyjydz')"
+            width="200"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="businessScenario"
+            :label="$t('ywcjsm')"
+            min-width="280"
+            show-overflow-tooltip
+          />
           <el-table-column prop="kycStatus" :label="$t('kzt')" width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.kycStatus]" class="elTag">
@@ -84,149 +179,320 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" show-overflow-tooltip/>
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjrq')"
+            min-width="180"
+            show-overflow-tooltip
+          />
 
-
-          <el-table-column :label="$t('cz')" width="210" fixed="right">
+          <el-table-column :label="$t('cz')" width="80" fixed="right">
             <template slot-scope="scope">
               <div>
-                <span @click="toDetail2(scope.row)" class="baseColor cursor" style="cursor: pointer">详情</span>
-                <span v-if="scope.row.kycStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: green"
-                  @click="sh2(scope.row.id, true)">
+                <span
+                  @click="toDetail2(scope.row)"
+                  class="baseColor cursor"
+                  style="cursor: pointer"
+                  >详情</span
+                >
+                <span
+                  v-if="scope.row.kycStatus == 0"
+                  class="cursor"
+                  style="cursor: pointer; margin-left: 10px; color: green"
+                  @click="sh2(scope.row.id, true)"
+                >
                   通过
                 </span>
-                <span v-if="scope.row.kycStatus == 0" class="cursor" style="cursor: pointer; margin-left: 10px; color: red"
-                  @click="rejectKyc(scope.row)">
+                <span
+                  v-if="scope.row.kycStatus == 0"
+                  class="cursor"
+                  style="cursor: pointer; margin-left: 10px; color: red"
+                  @click="rejectKyc(scope.row)"
+                >
                   驳回
                 </span>
               </div>
             </template>
           </el-table-column>
           <div slot="empty">
-            <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+            <el-empty
+              :description="$t('nodata')"
+              style="padding: 50px"
+            ></el-empty>
           </div>
         </el-table>
       </div>
     </template>
 
-    <el-dialog :title="'详情'" :visible.sync="dialogVisible" width="636px" :before-close="() => {
-      dialogVisible = false;
-    }
-      ">
-      <el-form label-width="160px" ref="formss" :model="bankForm" class="formStyle">
+    <el-dialog
+      :title="'详情'"
+      :visible.sync="dialogVisible"
+      width="636px"
+      :before-close="
+        () => {
+          dialogVisible = false;
+        }
+      "
+    >
+      <el-form
+        label-width="160px"
+        ref="formss"
+        :model="bankForm"
+        class="formStyle"
+      >
         <el-form-item :label="$t('zhmc')" class="mb24">
-          <el-input v-model="bankForm.accountName" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.accountName"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')" class="mb24">
-          <el-input v-model="bankForm.country" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.country"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('jzdz')" class="mb24">
-          <el-input type="textarea" v-model="bankForm.accountAdd" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            type="textarea"
+            v-model="bankForm.accountAdd"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')" class="mb24">
-          <el-input v-model="bankForm.bankName" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.bankName"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('swift')" class="mb24">
-          <el-input v-model="bankForm.swiftCode" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.swiftCode"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcode')" class="mb24">
-          <el-input v-model="bankForm.bankCode" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.bankCode"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcount')" class="mb24">
-          <el-input v-model="bankForm.bankAccount" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.bankAccount"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')" class="mb24">
-          <el-input v-model="bankForm.bankCountry" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            v-model="bankForm.bankCountry"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khdz')" class="mb24">
-          <el-input type="textarea" v-model="bankForm.bankAdd" :disabled="!!bankForm.id"></el-input>
+          <el-input
+            type="textarea"
+            v-model="bankForm.bankAdd"
+            :disabled="!!bankForm.id"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("zzd") }}
           </label>
-          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank">点击下载</a></el-button>
+          <el-button
+            style="padding: 4px 20px"
+            size="small"
+            type="primary"
+            class="btn"
+            ><a
+              :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+              target="_blank"
+              >点击下载</a
+            ></el-button
+          >
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="'详情'" :visible.sync="dialogVisible2" width="636px" :before-close="() => {
-      dialogVisible2 = false;
-    }
-      ">
-      <el-form label-width="160px" ref="formss" :model="bankForm2" class="formStyle">
+    <el-dialog
+      :title="'详情'"
+      :visible.sync="dialogVisible2"
+      width="636px"
+      :before-close="
+        () => {
+          dialogVisible2 = false;
+        }
+      "
+    >
+      <el-form
+        label-width="160px"
+        ref="formss"
+        :model="bankForm2"
+        class="formStyle"
+      >
         <el-form-item :label="$t('qymc')" class="mb24">
           <el-input v-model="bankForm2.companyName" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('qyjydz')" class="mb24">
-          <el-input type="textarea" v-model="bankForm2.businessAdd" :disabled="true"></el-input>
+          <el-input
+            type="textarea"
+            v-model="bankForm2.businessAdd"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('qylx')" class="mb24">
-          <el-select v-model="bankForm2.busType" :disabled="true" class="elSelect">
-            <el-option style="padding: 0 10px" v-for="item in options3" :key="item.value" :label="$t(item.label)"
-              :value="item.value" />
+          <el-select
+            v-model="bankForm2.busType"
+            :disabled="true"
+            class="elSelect"
+          >
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in options3"
+              :key="item.value"
+              :label="$t(item.label)"
+              :value="item.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('qyzcszgj')" class="mb24">
           <el-input v-model="bankForm2.country" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('zcrq')" class="mb24">
-          <el-date-picker style="width: 100%" size="small" :disabled="true" value-format="timestamp"
-            v-model="bankForm2.regDate" type="date" :placeholder="$t('xzsj')" />
+          <el-date-picker
+            style="width: 100%"
+            size="small"
+            :disabled="true"
+            value-format="timestamp"
+            v-model="bankForm2.regDate"
+            type="date"
+            :placeholder="$t('xzsj')"
+          />
         </el-form-item>
         <el-form-item :label="$t('qyyxq')" class="mb24">
-          <el-date-picker :disabled="true" style="width: 100%" value-format="timestamp" size="small"
-            v-model="bankForm2.period" type="date" :placeholder="$t('xzsj')" />
+          <el-date-picker
+            :disabled="true"
+            style="width: 100%"
+            value-format="timestamp"
+            size="small"
+            v-model="bankForm2.period"
+            type="date"
+            :placeholder="$t('xzsj')"
+          />
         </el-form-item>
         <el-form-item :label="$t('ygyhkje')" class="mb24">
-          <el-input v-model="bankForm2.monthlyRemittance" :disabled="true"></el-input>
+          <el-input
+            v-model="bankForm2.monthlyRemittance"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ygyjybs')" class="mb24">
-          <el-input v-model="bankForm2.transactionsMonth" :disabled="true"></el-input>
+          <el-input
+            v-model="bankForm2.transactionsMonth"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('dbjyed')" class="mb24">
-          <el-input v-model="bankForm2.transactionLimit" :disabled="true"></el-input>
+          <el-input
+            v-model="bankForm2.transactionLimit"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ywcjsm')" class="mb24">
-          <el-input type="textarea" v-model="bankForm2.businessScenario" :disabled="true"></el-input>
+          <el-input
+            type="textarea"
+            v-model="bankForm2.businessScenario"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('qygw')" class="mb24">
           <el-input v-model="bankForm2.webSite" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('驳回理由')" class="mb24" v-if="bankForm2.reason">
-          <el-input type="textarea" v-model="bankForm2.reason" :disabled="true"></el-input>
+        <el-form-item
+          :label="$t('驳回理由')"
+          class="mb24"
+          v-if="bankForm2.reason"
+        >
+          <el-input
+            type="textarea"
+            v-model="bankForm2.reason"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("t1") }}
           </label>
-          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm2.regCer" target="_blank">点击下载</a></el-button>
+          <el-button
+            style="padding: 4px 20px"
+            size="small"
+            type="primary"
+            class="btn"
+            ><a
+              :href="'/api/file/downLoad?url=' + bankForm2.regCer"
+              target="_blank"
+              >点击下载</a
+            ></el-button
+          >
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
             {{ $t("t2") }}
           </label>
-          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm2.legal" target="_blank">点击下载</a></el-button>
+          <el-button
+            style="padding: 4px 20px"
+            size="small"
+            type="primary"
+            class="btn"
+            ><a
+              :href="'/api/file/downLoad?url=' + bankForm2.legal"
+              target="_blank"
+              >点击下载</a
+            ></el-button
+          >
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24" v-if="bankForm2.busType != 1">
+        <el-form-item
+          :label="$t('scwj')"
+          class="mb24"
+          v-if="bankForm2.busType != 1"
+        >
           <label style="font-size: 12px">
             {{ $t("t3") }}
           </label>
-          <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-              :href="'/api/file/downLoad?url=' + bankForm2.shareholder" target="_blank">点击下载</a></el-button>
+          <el-button
+            style="padding: 4px 20px"
+            size="small"
+            type="primary"
+            class="btn"
+            ><a
+              :href="'/api/file/downLoad?url=' + bankForm2.shareholder"
+              target="_blank"
+              >点击下载</a
+            ></el-button
+          >
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="'加密货币地址'" :visible.sync="dialogVisible3" width="636px" :before-close="() => {
-      dialogVisible2 = false;
-    }
-      ">
+    <el-dialog
+      :title="'加密货币地址'"
+      :visible.sync="dialogVisible3"
+      width="636px"
+      :before-close="
+        () => {
+          dialogVisible2 = false;
+        }
+      "
+    >
       <el-form label-width="160px">
         <el-form-item label="币种" class="mb24">
           <el-select v-model="addressForm.cryCode" class="elSelect">
-            <el-option style="padding: 0 10px" v-for="item in szList" :key="item.id" :label="item.name" :value="item.coinCode" />
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in szList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.coinCode"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="地址" class="mb24">
@@ -234,30 +500,51 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible3 = false">{{ $t("cancel") }}</el-button>
-        <el-button type="primary" :class="bankloading && 'loading'" @click="addAddress">{{ $t("sure")
+        <el-button @click="dialogVisible3 = false">{{
+          $t("cancel")
         }}</el-button>
+        <el-button
+          type="primary"
+          :class="bankloading && 'loading'"
+          @click="addAddress"
+          >{{ $t("sure") }}</el-button
+        >
       </span>
     </el-dialog>
-    <el-dialog :title="'驳回'" :visible.sync="rejectdialogVisible" width="636px" :before-close="() => {
-      rejectdialogVisible = false;
-    }
-      ">
+    <el-dialog
+      :title="'驳回'"
+      :visible.sync="rejectdialogVisible"
+      width="636px"
+      :before-close="
+        () => {
+          rejectdialogVisible = false;
+        }
+      "
+    >
       <el-form label-width="160px">
         <el-form-item label="驳回理由" class="mb24">
-          <el-input type="textarea" v-model="currentSelectRow.reason"></el-input>
+          <el-input
+            type="textarea"
+            v-model="currentSelectRow.reason"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="rejectdialogVisible = false">{{ $t("cancel") }}</el-button>
-        <el-button type="primary" :class="bankloading && 'loading'" @click="rejectConfirm">{{ $t("sure")
+        <el-button @click="rejectdialogVisible = false">{{
+          $t("cancel")
         }}</el-button>
+        <el-button
+          type="primary"
+          :class="bankloading && 'loading'"
+          @click="rejectConfirm"
+          >{{ $t("sure") }}</el-button
+        >
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
-import { getBankList, perBank, kycList, perKyc } from "@/api/bank";
+import { getBankListPage, perBank, kycList, perKyc } from "@/api/bank";
 import { setCryAcc, getCryAdd } from "@/api/exchange";
 
 import { Message } from "element-ui";
@@ -302,6 +589,9 @@ export default {
       form: {
         bankStatus: "",
       },
+      current: 1,
+      size: 10,
+      total: 0,
       bankForm: {},
       options3: [
         {
@@ -322,68 +612,71 @@ export default {
   },
   watch: {
     type() {
+      this.getInitData()
+    },
+  },
+  methods: {
+    getInitData() {
       if (this.type == "first") {
         this.getlist();
       } else {
         this.getlist2();
       }
     },
-  },
-  methods: {
     rejectKyc(row) {
-      this.currentSelectRow = row
-      this.rejectdialogVisible = true
+      this.currentSelectRow = row;
+      this.rejectdialogVisible = true;
     },
     async rejectConfirm() {
       try {
-        this.bankloading = true
-        await perKyc({ id: this.currentSelectRow.id, pass: false, reason: this.currentSelectRow.reason });
+        this.bankloading = true;
+        await perKyc({
+          id: this.currentSelectRow.id,
+          pass: false,
+          reason: this.currentSelectRow.reason,
+        });
         Message({
           type: "success",
           message: "操作成功",
         });
         this.getlist2();
-        this.bankloading = false
-        this.rejectdialogVisible = false
+        this.bankloading = false;
+        this.rejectdialogVisible = false;
       } catch {
-        this.bankloading = false
+        this.bankloading = false;
       }
-
     },
     async addAddress() {
       try {
-        this.dialogVisible3Loading = true
-        const res = await setCryAcc(this.addressForm)
-        this.dialogVisible3Loading = false
+        this.dialogVisible3Loading = true;
+        const res = await setCryAcc(this.addressForm);
+        this.dialogVisible3Loading = false;
         if (res.code === 200) {
           Message({
             type: "success",
             message: "操作成功",
           });
-          this.dialogVisible3 = false
+          this.dialogVisible3 = false;
         }
-      } catch (error) {
-
-      }
-
+      } catch (error) {}
     },
     async showUsdtForm(list) {
       this.addressForm = {
-          userId: list.userId,
-          accountName: list.accountName,
-        }
-      this.dialogVisible3 = true
-      this.dialogVisible3Loading = true
-      const res = await getCryAdd({cryCode: 'USDT',  userId: list.userId})
-      this.dialogVisible3Loading = false
+        userId: list.userId,
+        accountName: list.accountName,
+      };
+      this.dialogVisible3 = true;
+      this.dialogVisible3Loading = true;
+      const res = await getCryAdd({ cryCode: "USDT", userId: list.userId });
+      this.dialogVisible3Loading = false;
       if (res.code === 200) {
         this.addressForm = {
           userId: list.userId,
           accountName: list.accountName,
           cryCode: res.data.cryCode,
           cryAdd: res.data.cryAdd,
-          id: res.data.id
-        }
+          id: res.data.id,
+        };
       }
     },
     async getSzList() {
@@ -395,7 +688,7 @@ export default {
         let res = await cryptocurrencies();
         this.szList = res.data;
         Local("szList", res.data);
-      } catch (error) { }
+      } catch (error) {}
     },
     sh2(id, type) {
       this.$confirm(type ? "确认通过？" : "确认驳回？")
@@ -407,9 +700,9 @@ export default {
               message: "操作成功",
             });
             this.getlist2();
-          } catch (error) { }
+          } catch (error) {}
         })
-        .catch((_) => { });
+        .catch((_) => {});
     },
     sh(id, type) {
       this.$confirm(type ? "确认通过？" : "确认驳回？")
@@ -421,9 +714,9 @@ export default {
               message: "操作成功",
             });
             this.getlist();
-          } catch (error) { }
+          } catch (error) {}
         })
-        .catch((_) => { });
+        .catch((_) => {});
     },
     toDetail(data) {
       this.dialogVisible = true;
@@ -435,19 +728,31 @@ export default {
     },
     async getlist() {
       try {
-        this.loading = true
-        let req = await getBankList(this.form);
-        this.tableData = req.data;
-        this.loading = false
-      } catch (error) { }
+        this.loading = true;
+        let req = await getBankListPage({...this.form, current: this.current, size: this.size});
+        this.tableData = req.data.records;
+        this.total = req.data.total
+        this.loading = false;
+      } catch (error) {}
     },
     async getlist2() {
       try {
-        this.loading = true
-        let req = await kycList();
+        this.loading = true;
+        let req = await kycList({current: this.current, size: this.size});
         this.tableData2 = req.data;
-        this.loading = false
-      } catch (error) { }
+        this.loading = false;
+      } catch (error) {}
+    },
+    handleSizeChange(val) {
+      this.size = val;
+      this.getInitData();
+    },
+    handleCurrentChange(val) {
+      this.current = val;
+      this.getInitData();
+    },
+    handleChangeSearch() {
+      this.getInitData();
     },
   },
   created() {
@@ -465,7 +770,7 @@ export default {
   }
 }
 
-.btn a{
+.btn a {
   color: #fff;
 }
 .elSelect {

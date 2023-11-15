@@ -11,23 +11,23 @@
                 <span slot="title">{{ $t('home') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/kyc">
-                <img class="icon" src="@/assets/images/manage/shgl.png" alt="">
+                <img class="icon" src="@/assets/images/home/grzx.png" alt="">
                 <span slot="title">{{ $t('shgl') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/deposit">
-                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
                 <span slot="title">{{ $t('入金列表') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/withdraw">
-                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
                 <span slot="title">{{ $t('出金列表') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/bill">
-                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
                 <span slot="title">{{ $t('交易明细') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/change">
-                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
+                <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
                 <span slot="title">{{ $t('兑换明细') }}</span>
             </el-menu-item>
             <!-- <el-menu-item index="/manage/transactionDetails">
@@ -73,7 +73,7 @@
                     <span slot="title">{{ $t('txzhgl') }}</span>
                 </el-menu-item>
             </el-submenu>
-            <el-submenu index="5">
+            <!-- <el-submenu index="5">
                 <template slot="title">
                     <img class="icon" src="@/assets/images/home/zzgl.png" alt="">
                     <span slot="title">{{ $t('zzgl') }}</span>
@@ -86,7 +86,7 @@
                     <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
                     <span slot="title">{{ $t('zzzhgl') }}</span>
                 </el-menu-item>
-            </el-submenu>
+            </el-submenu> -->
             <el-submenu index="6">
                 <template slot="title">
                     <img class="icon" src="@/assets/images/home/aqsz_icon.png" alt="">
@@ -101,6 +101,10 @@
                     <span slot="title">{{ $t('zjmx') }}</span>
                 </el-menu-item>
             </el-submenu>
+            <el-menu-item index="/admin/exchange/list">
+                <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
+                <span slot="title">{{ $t('银行卡管理') }}</span>
+            </el-menu-item>
             <el-menu-item index="/admin/kycverification">
                 <img class="icon" src="@/assets/images/home/grzx.png" alt="">
                 <span slot="title">{{ $t('KYC认证') }}</span>

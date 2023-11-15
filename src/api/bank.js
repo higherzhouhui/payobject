@@ -6,6 +6,13 @@ export const getBankList = (data) => service({
     data,
     method: 'post'
 })
+
+export const getBankListPage = (data) => service({
+    url: '/bankPage',
+    data,
+    method: 'post'
+})
+
 export const perBank = (data) => service({
     url: '/perBank',
     data,

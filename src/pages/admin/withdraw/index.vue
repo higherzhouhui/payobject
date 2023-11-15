@@ -84,7 +84,6 @@
           </div>
           <ul class="list">
               <li>{{$t('limitNum')}}</li>
-              <li>{{$t('charge')}}</li>
           </ul>
           <div class="form-item" v-if="moneyType == 'fabi'">
             <div class="label">{{$t("提现账号")}}</div>
@@ -93,7 +92,7 @@
               class="input-transaction"
               v-model="form.bankId"
               :placeholder="$t('请选择提现账号')"
-            >
+              >
               <el-option
                 v-for="item in outZHList"
                 :key="item.id"

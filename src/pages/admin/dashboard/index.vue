@@ -7,6 +7,7 @@
         class="content-swiper">
           <swiper-slide v-for="item in balanceArrapy" :key="item.id" class="item">
               <div class="balance-item" @click="routerToDetail(item)">
+                <span class="flag flag-icon" :class="`flag-icon-AL`"></span>
                 <h3>{{ item.balance.toFixed(2) }}</h3>
                 <h4>{{ item.coinCode }}</h4>
               </div>
@@ -233,6 +234,9 @@ h1 {
   &:hover {
     transform: translateY(-4px);
     box-shadow: 1px 5px 10px rgba(30, 32, 37, 1);
+  }
+  .flag {
+    font-size: 50px;
   }
   h3 {
     font-size: 1.5rem;

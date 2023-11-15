@@ -13,6 +13,7 @@ import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 import css from 'swiper/css/swiper.min.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'flag-icon-css/css/flag-icons.css'
 
 Vue.use(VueAwesomeSwiper, {
   css

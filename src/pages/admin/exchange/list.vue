@@ -117,7 +117,7 @@
           >
             <el-option
               style="padding: 0 10px"
-              v-for="item in aereList"
+              v-for="item in areaList"
               :key="item.id"
               :label="languge == 'zh' ? item.name : item.enName"
               :value="item.areaCode"
@@ -168,7 +168,7 @@
           >
             <el-option
               style="padding: 0 10px"
-              v-for="item in aereList"
+              v-for="item in areaList"
               :key="item.id"
               :label="languge == 'zh' ? item.name : item.enName"
               :value="item.areaCode"
@@ -305,7 +305,7 @@ export default {
         bankAdd: "",
         accountCer: null,
       },
-      aereList: [],
+      areaList: [],
     };
   },
   created() {
@@ -315,13 +315,13 @@ export default {
   methods: {
     async getAreaCode() {
       try {
-        let list = Local("aereList");
+        let list = Local("areaList");
         if (list && list.length) {
-          return (this.aereList = list);
+          return (this.areaList = list);
         }
         let res = await countries();
-        this.aereList = res.data;
-        Local("aereList", res.data);
+        this.areaList = res.data;
+        Local("areaList", res.data);
       } catch (error) {}
     },
     toDetail(data) {

@@ -19,7 +19,7 @@
             >
               <el-option
                 style="padding: 0 10px"
-                v-for="item in aereList"
+                v-for="item in areaList"
                 :key="item.id"
                 :label="item.areaCode"
                 :value="item.areaCode"
@@ -97,7 +97,7 @@ export default {
       timer: 60,
       type: 2,
       checked: true,
-      aereList: [],
+      areaList: [],
       form: {
         phone: this.$store.state.userInfo.email,
         password: "",
@@ -121,13 +121,13 @@ export default {
   methods: {
     async getAreaCode() {
       try {
-        let list = Local("aereList");
+        let list = Local("areaList");
         if (list && list.length) {
-          return (this.aereList = list);
+          return (this.areaList = list);
         }
         let res = await countries();
-        this.aereList = res.data;
-        Local("aereList", res.data);
+        this.areaList = res.data;
+        Local("areaList", res.data);
       } catch (error) {}
     },
     to(path) {

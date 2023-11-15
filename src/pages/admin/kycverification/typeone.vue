@@ -49,7 +49,7 @@
         >
           <el-option
             style="padding: 0 10px"
-            v-for="item in aereList"
+            v-for="item in areaList"
             :key="item.id"
             :label="languge == 'zh' ? item.name : item.enName"
             :value="item.areaCode"
@@ -215,7 +215,7 @@ export default {
           value: 3,
         },
       ],
-      aereList: []
+      areaList: []
     };
   },
   created() {
@@ -267,13 +267,13 @@ export default {
     },
     async getAreaCode() {
       try {
-        const list = Local("aereList");
+        const list = Local("areaList");
         if (list && list.length) {
-          return (this.aereList = list);
+          return (this.areaList = list);
         }
         const res = await countries();
-        this.aereList = res.data;
-        Local("aereList", res.data);
+        this.areaList = res.data;
+        Local("areaList", res.data);
       } catch (error) {}
     },
     getAccountKyc() {

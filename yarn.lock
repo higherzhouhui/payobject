@@ -3413,6 +3413,11 @@
     "locate-path" "^5.0.0"
     "path-exists" "^4.0.0"
 
+"flag-icon-css@^4.1.7":
+  "integrity" "sha512-AFjSU+fv98XbU0vnTQ32vcLj89UEr1MhwDFcooQv14qWJCjg9fGZzfh9BVyDhAhIOZW/pGmJmq38RqpgPaeybQ=="
+  "resolved" "https://registry.npmmirror.com/flag-icon-css/-/flag-icon-css-4.1.7.tgz"
+  "version" "4.1.7"
+
 "flat-cache@^3.0.4":
   "integrity" "sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg=="
   "resolved" "https://registry.npmmirror.com/flat-cache/-/flat-cache-3.0.4.tgz"

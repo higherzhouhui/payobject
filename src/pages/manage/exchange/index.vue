@@ -154,7 +154,7 @@
           <el-select v-model="bankForm.coinCode" class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in getNewaereList(aereList)"
+              v-for="item in getNewareaList(areaList)"
               :key="item.value"
               :label="item.coinCode"
               :value="item.coinCode"
@@ -174,7 +174,7 @@
           <el-select v-model="bankForm.country" class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in aereList"
+              v-for="item in areaList"
               :key="item.value"
               :label="language === 'zh' ? item.name : item.enName"
               :value="item.areaCode"
@@ -214,7 +214,7 @@
           <el-select v-model="bankForm.bankCountry" class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in aereList"
+              v-for="item in areaList"
               :key="item.value"
               :label="language === 'zh' ? item.name : item.enName"
               :value="item.areaCode"
@@ -273,7 +273,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="!bankForm2.id ? '新增汇率' : '修改'"
+      :title="bankForm2.id ? '修改' : '新增汇率'"
       :visible.sync="dialogVisible2"
       width="636px"
       :before-close="
@@ -284,20 +284,17 @@
     >
       <el-form label-width="160px" ref="formss" :model="bankForm2">
         <el-form-item label="被兑换币种" class="mb24">
-          <el-select v-model="bankForm2.exFrom" class="elSelect">
+          <el-select v-model="bankForm2.exFrom" class="elSelect" @change="changeExformCoin">
             <el-option
               style="padding: 0 10px"
               v-for="item in getAllCoin()"
               :key="item.id"
               :label="item.coinCode"
               :value="item.coinCode"
-              @change="getTargetCoin"
-            />
+              />
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan"><i class="el-icon-sort" />兑换</el-form-item>
-      
-
         <el-form-item label="兑换币种" class="mb24">
           <el-select v-model="bankForm2.exTarget"  class="elSelect">
             <el-option
@@ -351,14 +348,18 @@ export default {
       dialogVisible2: false,
       language: Local('lang') || 'zh',
       bankloading: false,
-      bankForm2: {},
+      bankForm2: {
+        exTarget: '',
+        exFrom: '',
+        exRate: ''
+      },
       options2: ["", "gth", "qy", "hwgs"],
       type: "first",
       dialogVisible: false,
       tableData: [],
       szList: [],
       tableData2: [],
-      aereList: [],
+      areaList: [],
       options: [
         {
           label: "审核中",
@@ -435,7 +436,7 @@ export default {
         })
         .catch((_) => {});
     },
-    getNewaereList(list) {
+    getNewareaList(list) {
       if (list.length) {
         const arr = list.filter((obj, index, self) => {  
           return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
@@ -445,8 +446,8 @@ export default {
       return []
     },
     getAllCoin() {
-      if (this.aereList.length) {
-        let arr = this.aereList.filter((obj, index, self) => {  
+      if (this.areaList.length) {
+        let arr = this.areaList.filter((obj, index, self) => {  
           return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
         })
         arr = arr.concat(this.szList)
@@ -454,18 +455,26 @@ export default {
       }
       return []
     },
-    getTargetCoin(item) {
-      console.log(item, 222222222)
+    changeExformCoin() {
+      if (this.bankForm2.exFrom == 'USDT') {
+        this.targetCoinList = this.szList
+      } else {
+        const all = this.getNewareaList(this.areaList)
+        this.targetCoinList = all.filter(item => {return item.coinCode !== this.bankForm2.exFrom})
+      }
+      if (this.bankForm2.exTarget) {
+        this.bankForm2.exTarget = ''
+      }
     },
     async getFbList() {
       try {
-        let list = Local("aereList");
+        let list = Local("areaList");
         if (list && list.length) {
-          return (this.aereList = list);
+          return (this.areaList = list);
         }
         let res = await countries();
-        this.aereList = res.data;
-        Local("aereList", res.data);
+        this.areaList = res.data;
+        Local("areaList", res.data);
       } catch (error) {}
     },
     async getSzList() {
@@ -584,7 +593,8 @@ export default {
   font-size: 1.3rem!important;
 }
 .preview {
-  color: #f99000;
+  color: #e21b1b;
+  letter-spacing: 2px;
 }
 .elSelect {
   width: 100%;

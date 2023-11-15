@@ -221,6 +221,17 @@
             ></el-empty>
           </div>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          class="elPagination"
+        >
+        </el-pagination>
       </div>
     </template>
 
@@ -612,6 +623,8 @@ export default {
   },
   watch: {
     type() {
+      this.current = 1
+      this.form = {}
       this.getInitData()
     },
   },
@@ -739,7 +752,8 @@ export default {
       try {
         this.loading = true;
         let req = await kycList({current: this.current, size: this.size});
-        this.tableData2 = req.data;
+        this.tableData2 = req.data.records;
+        this.total = req.data.total
         this.loading = false;
       } catch (error) {}
     },

@@ -324,7 +324,7 @@
     "enterAmount": "输入金额",
     "recipients": "收到人金额",
     "lastestRate": "最新汇率1 USD = 1.49 AUD",
-    "limitNum": "限制 1.00 - 100000 USD",
+    "limitNum": "限制 1.00 - 100000",
     "charge": "手续费 2.00 USD = 1%",
     "transoctionType": "交易类型",
     "proceed": "继续",

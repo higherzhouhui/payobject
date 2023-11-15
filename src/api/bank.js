@@ -34,7 +34,7 @@ export const getBank = (data) => service({
     method: 'get'
 })
 export const kycList = (data) => service({
-    url: '/kycList',
+    url: '/kycPage',
     data,
     method: 'post'
 })

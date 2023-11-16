@@ -1444,7 +1444,7 @@ export default {
             border: 1px solid #ccc;
             box-shadow: 2px 3px 5px rgba(0,0,0,.375);
             &:hover {
-                box-shadow: 2px 3px 10px rgba(46, 45, 45, 0.675);
+                box-shadow: 2px 6px 15px rgba(46, 45, 45, 0.675);
             }
         }
 

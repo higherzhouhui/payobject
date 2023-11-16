@@ -5,7 +5,7 @@
             <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
             <div class="flex flex_algin_center controlMenu">
                 <div class="item item-active" @click="to('/index')">{{ $t('home') }}</div>
-                <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div>
+                <!-- <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div> -->
             </div>
             <div class="info flex flex_align_center">
                 <div class="btn-group flex controlMenu" v-if="!email">
@@ -13,7 +13,7 @@
                     <div class="btn normal-btn" @click="to('/user/register')">{{ $t('register') }}</div>
                 </div>
                 <div class="btn-group flex controlMenu" v-else>
-                    <div class="btn" @click="to('/admin/dashboard')">{{email}}</div>
+                    <div class="btn" @click="handleTodashboard">{{email}}</div>
                 </div>
                 <div class="language flex flex_align_center" @click="open">
                     <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
@@ -98,11 +98,17 @@ export default {
       }).then(() => {
         this.$router.push("/index");
         localStorage.clear()
-        logout()
       }).catch(() => {
         console.log('取消')
       })
     },
+    handleTodashboard() {
+        if (this.$store.state.userInfo.admin) {
+            this.to('/manage/index')
+        } else {
+            this.to('/admin/dashboard')
+        }
+    }
   }
 }
 </script>

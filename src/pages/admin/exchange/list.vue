@@ -8,7 +8,7 @@
           ><i class="el-icon-plus"></i>{{ $t("zjzzzh") }}</el-button
         >
       </div>
-      <el-form ref="form2" :inline="true" class="mt12">
+      <el-form ref="form2" :inline="true" class="mt24">
         <el-form-item>
           <el-input
             :placeholder="$t('bankname')"
@@ -45,11 +45,11 @@
         </el-form-item>
       </el-form>
       <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading">
-        <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip	/>
-        <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
-        <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip	/>
+        <el-table-column prop="accountName" :label="$t('zhmc')" min-width="180" show-overflow-tooltip	/>
+        <el-table-column prop="bankName" :label="$t('bankname')" min-width="180" show-overflow-tooltip	/>
+        <el-table-column prop="bankAccount" :label="$t('yhzh')" min-width="200" show-overflow-tooltip	/>
         <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip/>
-        <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
+        <el-table-column prop="bankStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
               {{ status[scope.row.bankStatus] }}
@@ -119,9 +119,10 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
-              :label="languge == 'zh' ? item.name : item.enName"
               :value="item.areaCode"
             >
+            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+            {{ languge == 'zh' ? item.name : item.enName}}
             </el-option>
           </el-select>
         </el-form-item>
@@ -170,9 +171,10 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
-              :label="languge == 'zh' ? item.name : item.enName"
               :value="item.areaCode"
             >
+            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+            {{ languge == 'zh' ? item.name : item.enName}}
             </el-option>
           </el-select>
 
@@ -246,11 +248,14 @@ import { countries } from "@/api/login";
 import { Message } from "element-ui";
 import { upload, downLoad } from "@/api/file";
 import { Local } from "@/utils/index"
+import { getFlagIcon } from "@/utils/common"
+
 export default {
   name: "transferAccountMangement",
   components: { LinkPath },
   data() {
     return {
+      getFlagIcon: getFlagIcon,
       languge: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
@@ -396,7 +401,7 @@ export default {
 .user_transferAccountMangement_contianer {
   .content {
     margin-top: 1.5rem;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 4px;
     background: $contentColor;
     .form {

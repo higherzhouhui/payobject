@@ -7,9 +7,8 @@
         class="content-swiper">
           <swiper-slide v-for="item in balanceArrapy" :key="item.id" class="item">
               <div class="balance-item" @click="routerToDetail(item)">
-                <span class="flag flag-icon" :class="`flag-icon-AL`"></span>
-                <h3>{{ item.balance.toFixed(2) }}</h3>
-                <h4>{{ item.coinCode }}</h4>
+                <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+                <h3>{{ item.balance.toFixed(2) }}<span>{{ item.coinCode }}</span></h3>
               </div>
           </swiper-slide>
       </swiper>
@@ -64,7 +63,7 @@
 <script>
 import { balanceList } from "@/api/out"
 import { getBillDetails } from "@/api/manage"
-
+import { getFlagIcon } from "@/utils/common"
 export default {
   name: 'DashBoard',
   props: {
@@ -72,6 +71,7 @@ export default {
   },
   data() {
     return {
+      getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],
       current: 1,
@@ -83,8 +83,25 @@ export default {
         // 设置垂直轮播vertical,  水平轮播 horizontal
         direction: "horizontal", 
         // 轮播图间距
-        spaceBetween: 18,
-        slidesPerView : 3,
+        spaceBetween: 10,
+        slidesPerView : 1,
+        breakpoints: { 
+            //当宽度大于等于480
+            320: { 
+                slidesPerView: 2,
+                spaceBetween: 14
+            },
+            //当宽度大于等于640
+            900: {
+                slidesPerView: 3,
+                spaceBetween: 18
+            },
+            //当宽度大于等于640
+            1400: {
+                slidesPerView: 4,
+                spaceBetween: 26
+            }
+        },
         // 循环模式选项
         loop: false,
         //  自动滑动
@@ -105,6 +122,7 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
+
       },
     }
   },
@@ -201,11 +219,8 @@ h1 {
 }
 
 .swiper-slide {
-  text-align: center;
   font-size: 18px;
   background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -235,14 +250,18 @@ h1 {
     transform: translateY(-4px);
     box-shadow: 1px 5px 10px rgba(30, 32, 37, 1);
   }
-  .flag {
-    font-size: 50px;
+  .flag-icon {
+    font-size: 2.5rem;
+    margin-bottom: 6px;
   }
   h3 {
     font-size: 1.5rem;
     line-height: 2.2rem;
     font-weight: bold;
-    color: red;
+    color: #fff;
+    span {
+      margin-left: 0.5rem;
+    }
   }
   h4 {
     font-weight: normal;

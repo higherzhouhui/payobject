@@ -8,7 +8,7 @@
         <el-menu @select="select" :class="showMenu ? 'showMenu' : 'hideMenu'" :default-active="path" v-if="$store.state.userInfo.admin">
             <el-menu-item index="/manage/index">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
-                <span slot="title">{{ $t('home') }}</span>
+                <span slot="title">{{ $t('kztai') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/kyc">
                 <img class="icon" src="@/assets/images/home/grzx.png" alt="">

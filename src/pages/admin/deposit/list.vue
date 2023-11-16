@@ -28,7 +28,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
+          <el-select v-model="searchForm.status" :placeholder="$t('状态')" clearable>
             <el-option
               style="padding: 0 20px"
               v-for="(item, index) in status"
@@ -47,18 +47,18 @@
       </el-form>
 
       <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
-        <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" />
-        <el-table-column prop="coinCode" :label="$t('币种')" width="200" />
-        <el-table-column prop="reqValue" :label="$t('充值金额')" width="180" />
-        <el-table-column prop="sendAccount" :label="$t('汇款账户')" width="180" />
-        <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
+        <el-table-column prop="accountName" :label="$t('收款账户名称')" min-width="180" />
+        <el-table-column prop="coinCode" :label="$t('币种')" min-width="200" />
+        <el-table-column prop="reqValue" :label="$t('充值金额')" min-width="180" />
+        <el-table-column prop="sendAccount" :label="$t('汇款账户')" min-width="180" />
+        <el-table-column prop="reqStatus" :label="$t('状态')" min-width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
               {{ status[scope.row.reqStatus] }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" />
+        <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" />
         <el-table-column
           prop="name"
           :label="$t('cz')"
@@ -92,18 +92,18 @@
         </div>
       </el-table>
       <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
-        <el-table-column prop="cryptAdd" :label="$t('收款钱包地址')" width="180" />
-        <el-table-column prop="coinCode" :label="$t('币种')" width="200" />
-        <el-table-column prop="reqValue" :label="$t('充值金额')" width="180" />
-        <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" />
-        <el-table-column prop="reqStatus" :label="$t('状态')" width="180">
+        <el-table-column prop="cryptAdd" :label="$t('收款钱包地址')" min-width="180" />
+        <el-table-column prop="coinCode" :label="$t('币种')" min-width="200" />
+        <el-table-column prop="reqValue" :label="$t('充值金额')" min-width="180" />
+        <el-table-column prop="tid" :label="$t('汇款钱包地址')"min-width="180" />
+        <el-table-column prop="reqStatus" :label="$t('状态')" min-width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
               {{ usdtstatus[scope.row.reqStatus] }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" />
+        <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" />
         <el-table-column
           prop="name"
           :label="$t('cz')"
@@ -393,6 +393,9 @@ export default {
     async getInitData() {
       this.loading = true
       let res;
+      if (this.searchForm.status == 0) {
+        delete this.searchForm.status
+      }
       if (this.moneyType == 'fabi') {
         res = await depositList({...this.searchForm, current: this.current, size: this.size })
       } else if (this.moneyType == 'usdt') {

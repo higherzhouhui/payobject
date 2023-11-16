@@ -22,12 +22,6 @@
               clearable
             ></el-input>
           </el-form-item>
-          <!-- <el-form-item>
-                    <el-select v-model="value" :placeholder="$t('yhzhlx')">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item> -->
           <el-form-item>
             <el-select
               v-model="form.bankStatus"
@@ -48,9 +42,6 @@
             <el-button type="primary" @click="getlist" class="primary">
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
-            <!-- <el-button class="primary">
-              <i class="el-icon-refresh"></i>{{ $t("reset") }}
-            </el-button> -->
           </el-form-item>
         </el-form>
         <el-table
@@ -63,13 +54,13 @@
           <el-table-column
             prop="accountName"
             :label="$t('zhmc')"
-            width="180"
+            min-width="180"
             show-overflow-tooltip
           />
           <el-table-column
             prop="bankAccount"
             :label="$t('yhzh')"
-            width="200"
+            min-width="200"
             show-overflow-tooltip
           />
           <el-table-column
@@ -78,7 +69,7 @@
             min-width="300"
             show-overflow-tooltip
           />
-          <el-table-column prop="bankStatus" :label="$t('kzt')" width="120">
+          <el-table-column prop="bankStatus" :label="$t('kzt')" min-width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
                 {{ status[scope.row.bankStatus] }}
@@ -147,9 +138,33 @@
       </div>
     </template>
     <template v-else>
+      <el-form ref="form2" :inline="true">
+        <el-form-item>
+          <el-select
+            v-model="form.kycStatus"
+            :placeholder="$t('zhbdzt')"
+            clearable
+          >
+            <el-option
+              style="padding: 0 20px"
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="getInitData" class="primary">
+            <i class="el-icon-search"></i>{{ $t("search") }}
+          </el-button>
+        </el-form-item>
+      </el-form>
       <div class="content">
         <el-table
           class="tables"
+          size="small"
           :data="tableData2"
           style="width: 100%"
           v-loading="loading"
@@ -157,13 +172,13 @@
           <el-table-column
             prop="companyName"
             :label="$t('qymc')"
-            width="180"
+            min-width="180"
             show-overflow-tooltip
           />
           <el-table-column
             prop="businessAdd"
             :label="$t('qyjydz')"
-            width="200"
+            min-width="200"
             show-overflow-tooltip
           />
           <el-table-column
@@ -172,7 +187,7 @@
             min-width="280"
             show-overflow-tooltip
           />
-          <el-table-column prop="kycStatus" :label="$t('kzt')" width="120">
+          <el-table-column prop="kycStatus" :label="$t('kzt')" min-width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.kycStatus]" class="elTag">
                 {{ status[scope.row.kycStatus] }}
@@ -186,7 +201,7 @@
             show-overflow-tooltip
           />
 
-          <el-table-column :label="$t('cz')" width="80" fixed="right">
+          <el-table-column :label="$t('cz')" width="160" fixed="right">
             <template slot-scope="scope">
               <div>
                 <span
@@ -560,7 +575,7 @@ import { setCryAcc, getCryAdd } from "@/api/exchange";
 
 import { Message } from "element-ui";
 import { cryptocurrencies } from "@/api/login";
-import { Local } from "@/utils/index";
+import { Local, getHashParams } from "@/utils/index";
 
 export default {
   name: "KYCPage",
@@ -751,7 +766,7 @@ export default {
     async getlist2() {
       try {
         this.loading = true;
-        let req = await kycList({current: this.current, size: this.size});
+        let req = await kycList({...this.form, current: this.current, size: this.size});
         this.tableData2 = req.data.records;
         this.total = req.data.total
         this.loading = false;
@@ -770,6 +785,8 @@ export default {
     },
   },
   created() {
+    const params = getHashParams()
+    this.type = params.get('type') || 'first'
     this.getlist();
     this.getSzList();
   },

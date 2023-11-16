@@ -51,12 +51,12 @@
           v-loading="loading"
           size="small"
         >
-          <el-table-column prop="coinCode" :label="$t('币种')" width="100" />
-          <el-table-column prop="accountName" :label="$t('zhmc')" width="180" show-overflow-tooltip/>
-          <el-table-column prop="bankName" :label="$t('bankname')" width="180" show-overflow-tooltip	/>
-          <el-table-column prop="bankAccount" :label="$t('yhzh')" width="200" show-overflow-tooltip/>
+          <el-table-column prop="coinCode" :label="$t('币种')" min-width="100" />
+          <el-table-column prop="accountName" :label="$t('zhmc')" min-width="180" show-overflow-tooltip/>
+          <el-table-column prop="bankName" :label="$t('bankname')" min-width="180" show-overflow-tooltip	/>
+          <el-table-column prop="bankAccount" :label="$t('yhzh')" min-width="200" show-overflow-tooltip/>
           <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip/>
-          <el-table-column prop="createTime" :label="$t('cjrq')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" show-overflow-tooltip/>
           <el-table-column
             prop="name"
             :label="$t('cz')"
@@ -102,7 +102,7 @@
         >
           <el-table-column prop="exFrom" label="被兑换币种" min-width="100" />
           <el-table-column prop="exTarget" label="兑换币种" min-width="100" />
-          <el-table-column prop="exRate" label="汇率" width="120" />
+          <el-table-column prop="exRate" label="汇率" min-width="120" />
           <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" />
           <el-table-column
             prop="createTime"
@@ -154,11 +154,14 @@
           <el-select v-model="bankForm.coinCode" class="elSelect">
             <el-option
               style="padding: 0 10px"
-              v-for="item in getNewareaList(areaList)"
+              v-for="item in areaList"
               :key="item.value"
-              :label="item.coinCode"
               :value="item.coinCode"
-            />
+            >
+            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+            <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+            {{ lang == 'zh' ? item.name : item.enName }}
+            </el-option>
           </el-select>
         </el-form-item>
 
@@ -176,9 +179,12 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
-              :label="language === 'zh' ? item.name : item.enName"
               :value="item.areaCode"
-            />
+              >
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+              {{ lang == 'zh' ? item.name : item.enName }}
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')" class="mb24">
@@ -216,9 +222,12 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
-              :label="language === 'zh' ? item.name : item.enName"
               :value="item.areaCode"
-            />
+            >
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+              {{ lang == 'zh' ? item.name : item.enName }}
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')" class="mb24">
@@ -289,9 +298,12 @@
               style="padding: 0 10px"
               v-for="item in getAllCoin()"
               :key="item.id"
-              :label="item.coinCode"
               :value="item.coinCode"
-              />
+              >
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+              {{ lang == 'zh' ? item.name : item.enName }}
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan"><i class="el-icon-sort" />兑换</el-form-item>
@@ -301,9 +313,12 @@
               style="padding: 0 10px"
               v-for="item in targetCoinList"
               :key="item.id"
-              :label="item.coinCode"
               :value="item.coinCode"
-            />
+              >
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+              {{ lang == 'zh' ? item.name : item.enName }}
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="兑换汇率" class="mb24">
@@ -342,11 +357,13 @@ import { Message } from "element-ui";
 import { upload } from "@/api/file";
 import { Local } from "@/utils/index";
 import { countries, cryptocurrencies } from "@/api/login";
+import { getFlagIcon } from "@/utils/common"
 export default {
   data() {
     return {
+      getFlagIcon: getFlagIcon,
       dialogVisible2: false,
-      language: Local('lang') || 'zh',
+      lang: Local('lang') || 'zh',
       bankloading: false,
       bankForm2: {
         exTarget: '',

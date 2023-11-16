@@ -31,7 +31,6 @@
           </div>
         </div>
         <ul class="list">
-            <li>{{$t('lastestRate')}}</li>
             <li>{{$t('limitNum')}}</li>
         </ul>
         <div class="form-item" v-if="moneyType == 'fabi'">

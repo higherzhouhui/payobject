@@ -1,315 +1,369 @@
 <template>
-    <div class="home_index_container">
-        <div class="content">
-
-
-
-            <section class="box box_3 flex flex_nowrap">
-                <div class="left box_base has_bg_box_base content_shadow">
-                    <div class="s_title">{{ $t('shgl') }}</div>
-                </div>
-                <div class="left right_content box_base content_shadow">
-                    <div class="s_title">{{ $t('hlgl') }}</div>
-                    <div class="txt">仅供参考，交易时以实际成交价为准</div>
-                    <div class="box_content">
-                        <el-table :data="tableData">
-                            <el-table-column prop="name" label="账户姓名" width="180">
-                            </el-table-column>
-
-                            <el-table-column prop="name" label="账户姓名" width="180">
-                            </el-table-column>
-                            <el-table-column prop="address" width="220" label="账户用途">
-                            </el-table-column>
-                            <el-table-column prop="date" label="日期" width="120" fixed="right">
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </div>
-
-
-            </section>
-            <section class="box box_2 content_shadow box_base">
-                <div class="s_title">{{ $t('ddgl') }}</div>
-                <div class="box_content">
-                    <el-row :gutter="24">
-                        <el-col :span="6">
-                            <div class="item item-1">
-                                <div class="flex flex_align_center">
-                                    <img class="icon" src="@/assets/images/home/dh_fk_1.png" alt="">
-                                    <span>提现</span>
-                                </div>
-                                <div class="btn pointer">立即提现</div>
-                            </div>
-                        </el-col>
-                        <el-col :span="6">
-                            <div class="item item-2">
-                                <div class="flex flex_align_center">
-                                    <img class="icon" src="@/assets/images/home/dh_fk_2.png" alt="">
-                                    <span>付款</span>
-                                </div>
-                                <div class="btn pointer">立即提现</div>
-                            </div>
-                        </el-col>
-                        <el-col :span="6">
-                            <div class="item item-3">
-                                <div class="flex flex_align_center">
-                                    <img class="icon" src="@/assets/images/home/dh_fk_3.png" alt="">
-                                    <span>换汇</span>
-                                </div>
-                                <div class="btn pointer">立即提现</div>
-                            </div>
-                        </el-col>
-                        <el-col :span="6">
-                            <div class="item item-4">
-                                <div class="flex flex_align_center">
-                                    <img class="icon" src="@/assets/images/home/dh_fk_3.png" alt="">
-                                    <span>换汇</span>
-                                </div>
-                                <div class="btn pointer">立即提现</div>
-                            </div>
-                        </el-col>
-                    </el-row>
-                </div>
-            </section>
-        </div>
+  <div class="home_index_container">
+    <div class="label" v-if="kycTotal">
+      <div class="desc">
+        KYC待审核<span>{{ kycTotal }}</span>
+      </div>
+      <div @click="to('/manage/kyc?type=second')" class="normal-btn">
+        去审核
+      </div>
     </div>
+    <el-table
+      class="tables"
+      size="small"
+      :data="kycData"
+      style="width: 100%"
+      v-loading="kycLoading"
+      v-if="kycTotal"
+    >
+      <el-table-column
+        prop="companyName"
+        :label="$t('qymc')"
+        min- width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="businessAdd"
+        :label="$t('qyjydz')"
+        min-width="200"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="businessScenario"
+        :label="$t('ywcjsm')"
+        min-width="280"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="createTime"
+        :label="$t('cjrq')"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+    <div class="label" v-if="bankTotal">
+      <div class="desc">
+        银行卡待审核<span>{{ bankTotal }}</span>
+      </div>
+      <div @click="to('/manage/kyc?type=first')" class="normal-btn">去审核</div>
+    </div>
+    <el-table
+      class="tables"
+      size="small"
+      :data="bankData"
+      style="width: 100%"
+      v-loading="bankLoading"
+      v-if="bankTotal"
+    >
+      <el-table-column
+        prop="accountName"
+        :label="$t('zhmc')"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="bankAccount"
+        :label="$t('yhzh')"
+        min-width="200"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="accountAdd"
+        :label="$t('jzdz')"
+        min-width="300"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="createTime"
+        :label="$t('cjrq')"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+    <div class="label" v-if="depositTotal">
+      <div class="desc">
+        法定货币入金待审核<span>{{ depositTotal }}</span>
+      </div>
+      <div @click="to('/manage/deposit?type=fabi')" class="normal-btn">
+        去审核
+      </div>
+    </div>
+    <el-table
+      class="tables"
+      size="small"
+      :data="depositData"
+      style="width: 100%"
+      v-loading="depositLoading"
+      v-if="depositTotal"
+    >
+      <el-table-column
+        prop="accountName"
+        :label="$t('收款账户名称')"
+        min-width="180"
+      />
+      <el-table-column prop="coinCode" :label="$t('币种')" min-width="120" />
+      <el-table-column prop="reqValue" :label="$t('充值金额')" min-width="180" />
+      <el-table-column prop="sendAccount" :label="$t('汇款账户')" min-width="180" />
+      <el-table-column
+        prop="createTime"
+        :label="$t('创建时间')"
+        min-width="180"
+      />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+    <div class="label" v-if="cryptdepositTotal">
+      <div class="desc">
+        加密货币入金待审核<span>{{ cryptdepositTotal }}</span>
+      </div>
+      <div @click="to('/manage/deposit?type=usdt')" class="normal-btn">
+        去审核
+      </div>
+    </div>
+    <el-table
+      class="tables"
+      size="small"
+      :data="cryptdepositData"
+      style="width: 100%"
+      v-loading="cryptdepositLoading"
+      v-if="cryptdepositTotal"
+    >
+      <el-table-column
+        prop="cryptAdd"
+        :label="$t('收款钱包地址')"
+        min-width="180"
+      />
+      <el-table-column prop="coinCode" :label="$t('币种')" min-width="120" />
+      <el-table-column prop="reqValue" :label="$t('充值金额')" min-width="180" />
+      <el-table-column prop="tid" :label="$t('汇款钱包地址')" min-width="180" />
+      <el-table-column
+        prop="createTime"
+        :label="$t('创建时间')"
+        min-width="180"
+      />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+    <div class="label" v-if="withdrawTotal">
+      <div class="desc">
+        法定货币出金待审核<span>{{ withdrawTotal }}</span>
+      </div>
+      <div @click="to('/manage/withdraw?type=fabi')" class="normal-btn">
+        去审核
+      </div>
+    </div>
+    <el-table
+      class="tables"
+      size="small"
+      :data="withdrawData"
+      style="width: 100%"
+      v-loading="withdrawLoading"
+      v-if="withdrawTotal"
+    >
+      <el-table-column
+        prop="accountName"
+        :label="$t('收款账户名称')"
+        min-width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column prop="coinCode" :label="$t('币种')" min-width="100" />
+      <el-table-column prop="reqValue" :label="$t('出款金额')" min-width="100" />
+      <el-table-column prop="targetCode" :label="$t('目标币种')" min-width="100" />
+      <el-table-column
+        prop="changeValue"
+        :label="$t('预计到账金额')"
+        min-width="130"
+      />
+      <el-table-column
+        prop="createTime"
+        :label="$t('创建时间')"
+        min-width="180"
+      />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+    <div class="label" v-if="cryptwithdrawTotal">
+      <div class="desc">
+        加密货币出金待审核<span>{{ cryptwithdrawTotal }}</span>
+      </div>
+      <div @click="to('/manage/withdraw?type=usdt')" class="normal-btn">
+        去审核
+      </div>
+    </div>
+    <el-table
+      class="tables"
+      size="small"
+      :data="cryptwithdrawData"
+      style="width: 100%"
+      v-loading="cryptwithdrawLoading"
+      v-if="cryptwithdrawTotal"
+    >
+      <el-table-column prop="srcCode" :label="$t('币种')" width="100" />
+      <el-table-column
+        prop="cryptAdd"
+        :label="$t('收款钱包地址')"
+        min-width="180"
+      />
+      <el-table-column prop="coinCode" :label="$t('目标币种')" min-width="100" />
+      <el-table-column prop="reqValue" :label="$t('出款金额')" min-width="100" />
+      <el-table-column
+        prop="witValue"
+        :label="$t('预计到账金额')"
+        min-width="120"
+      />
+      <el-table-column
+        prop="createTime"
+        :label="$t('创建时间')"
+        min-width="180"
+      />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+  </div>
 </template>
 <script>
+import { getBankListPage, kycList } from "@/api/bank";
+import { depositList, cryptDepositList } from "@/api/out.js";
+import { withdrawList, cryptWithdrawList } from "@/api/out.js";
 
 export default {
-    name: 'homeHide',
-    data() {
-        return {
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }]
-        }
+  name: "homeHide",
+  data() {
+    return {
+      kycData: [],
+      kycLoading: true,
+      kycTotal: 0,
+      bankData: [],
+      bankLoading: true,
+      bankTotal: 0,
+      depositData: [],
+      depositLoading: true,
+      depositTotal: 0,
+      cryptdepositData: [],
+      cryptdepositLoading: true,
+      cryptdepositTotal: 0,
+      withdrawData: [],
+      withdrawLoading: true,
+      withdrawTotal: 0,
+      cryptwithdrawData: [],
+      cryptwithdrawLoading: true,
+      cryptwithdrawTotal: 0,
+    };
+  },
+  created() {
+    this.initData();
+  },
+  methods: {
+    to(path) {
+      this.$router.push(path);
     },
-    methods: {
-        to(path) {
-            this.$router.push(path)
-        }
-    }
-}
+    initData() {
+      this.getkycData();
+      this.getbankData();
+      this.getdepositData();
+      this.getcryptdepositData();
+      this.getwithdrawData();
+      this.getcryptwithdrawData();
+    },
+    async getkycData() {
+      try {
+        this.kycLoading = true;
+        let req = await kycList({ current: 1, size: 5, kycStatus: 0 });
+        this.kycData = req.data.records;
+        this.kycTotal = req.data.total;
+        this.kycLoading = false;
+      } catch (error) {
+        this.kycLoading = false;
+      }
+    },
+    async getbankData() {
+      try {
+        this.bankLoading = true;
+        let req = await getBankListPage({ current: 1, size: 5, bankStatus: 0 });
+        this.bankData = req.data.records;
+        this.bankTotal = req.data.total;
+        this.bankLoading = false;
+      } catch (error) {
+        this.bankLoading = false;
+      }
+    },
+    async getdepositData() {
+      try {
+        this.depositLoading = true;
+        let req = await depositList({ current: 1, size: 5, status: 2 });
+        this.depositData = req.data.records;
+        this.depositTotal = req.data.total;
+        this.depositLoading = false;
+      } catch (error) {
+        this.depositLoading = false;
+      }
+    },
+    async getcryptdepositData() {
+      try {
+        this.cryptdepositLoading = true;
+        let req = await cryptDepositList({ current: 1, size: 5, status: 2 });
+        this.cryptdepositData = req.data.records;
+        this.cryptdepositTotal = req.data.total;
+        this.cryptdepositLoading = false;
+      } catch (error) {
+        this.cryptdepositLoading = false;
+      }
+    },
+    async getwithdrawData() {
+      try {
+        this.withdrawLoading = true;
+        let req = await withdrawList({ current: 1, size: 5, status: 1 });
+        this.withdrawData = req.data.records;
+        this.withdrawTotal = req.data.total;
+        this.withdrawLoading = false;
+      } catch (error) {
+        this.withdrawLoading = false;
+      }
+    },
+    async getcryptwithdrawData() {
+      try {
+        this.cryptwithdrawLoading = true;
+        let req = await cryptWithdrawList({ current: 1, size: 5, status: 1 });
+        this.cryptwithdrawData = req.data.records;
+        this.cryptwithdrawTotal = req.data.total;
+        this.cryptwithdrawLoading = false;
+      } catch (error) {
+        this.cryptwithdrawLoading = false;
+      }
+    },
+  },
+};
 </script>
 <style scoped lang="scss">
 .home_index_container {
-    width: 100%;
-
-    .content_shadow {
-        border: unset;
+  width: 100%;
+  .label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    margin-bottom: 1rem;
+    .desc {
+      span {
+        font-size: 1.2rem;
+        margin-left: 4px;
+        font-weight: bold;
+        color: $baseColor;
+      }
     }
-
-    .title {
-        font-size: 24px;
-
-    }
-
-    .content {
-        // margin-top: 24px;
-
-        .box_base {
-            border-radius: 10px;
-            padding: 24px;
-        }
-
-        .has_bg_box_base {
-            background: url('@/assets/images/manage/bg2.png');
-            background-size: 100% 100%;
-            width: 760px;
-            height: 358px;
-        }
-
-        .box {
-            border-radius: 10px;
-            margin-bottom: 24px;
-
-
-            &.box_1 {
-                gap: 24px;
-
-                .left {
-                    padding: 41px 0;
-                    width: 480px;
-                    text-align: center;
-                    border-radius: 10px;
-
-                    .process {
-                        margin: auto;
-                        background: #F2F6FF;
-                        border-radius: 50%;
-                    }
-
-                    .txt {
-                        margin-top: 20px;
-                        font-size: 14px;
-                        color: #909399;
-
-                    }
-                }
-
-                .right {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 24px;
-                    width: calc(100% - 504px);
-
-                    .item {
-                        border-radius: 10px;
-                        height: 106px;
-                        box-sizing: border-box;
-                        padding: 0 24px;
-                        font-size: 14px;
-
-                        .txt {
-
-                            color: #303133;
-                        }
-
-                        .smrz {
-                            padding: 16px 0 16px;
-
-                        }
-
-                        .span {
-                            padding: 40px 0;
-                        }
-                    }
-                }
-            }
-
-            &.box_2 {
-                .box_content {
-                    margin-top: 38px;
-
-                    .item {
-                        padding: 24px;
-                        box-sizing: border-box;
-                        height: 144px;
-                        background-size: auto 100%;
-                        background-position: right center;
-                        background-color: #fff;
-                        background-repeat: no-repeat;
-                        font-size: 18px;
-                        filter: drop-shadow(0px 2px 4px rgba(52, 118, 255, 0.25));
-                        .icon {
-                            margin-right: 8px;
-                            height: 24px;
-                            width: 24px;
-                        }
-
-                        &.item-1 {
-                            color: #3476FF;
-                            background-image: url('@/assets/images/manage/dh_1.png');
-
-                            .btn {
-                                &:hover {
-                                    background: #3476FF;
-                                }
-                            }
-
-                        }
-
-                        &.item-2 {
-                            color: #09D268;
-                            background-image: url('@/assets/images/manage/dh_2.png');
-
-                            .btn {
-                                &:hover {
-                                    background: #09D268;
-                                }
-                            }
-                        }
-
-                        &.item-3 {
-                            color: #F5A836;
-                            background-image: url('@/assets/images/manage/dh_3.png');
-
-                            .btn {
-                                &:hover {
-                                    background: #F5A836;
-                                }
-                            }
-                        }
-
-                        &.item-4 {
-                            color: #FB6739;
-                            background-image: url('@/assets/images/manage/dh_4.png');
-
-                            .btn {
-                                &:hover {
-                                    background: #FB6739;
-                                }
-                            }
-                        }
-
-                        .btn {
-                            margin-top: 34px;
-                            width: fit-content;
-                            border: 1px solid;
-                            font-size: 14px;
-                            padding: 6px 24px;
-                            border-radius: 4px;
-
-                            &:hover {
-                                color: #fff;
-                            }
-                        }
-                    }
-                }
-            }
-
-            &.box_3 {
-                gap: 30px;
-                .txt {
-                    margin-top: 8px;
-                    font-size: 14px;
-                    color: #909399;
-                }
-
-                .box_content {
-                    margin-top: 20px;
-                }
-                .right_content{
-                    width: calc(100% - 885px)
-                }
-            }
-
-            &.box_4 {
-                .box_content {
-                    margin-top: 20px;
-                }
-            }
-        }
-    }
-
+  }
+  .tables {
+    margin-bottom: 2rem;
+  }
 }
-
-.btn {
-    padding: 8px 16px;
-
-    .icon {
-        margin-right: 4px;
-        height: 24px;
-        vertical-align: middle;
-    }
-}
-
-::v-deep .el-progress__text {
-    font-size: 60px !important;
-    font-weight: 600;
-}</style>
+</style>

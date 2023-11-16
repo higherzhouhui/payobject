@@ -28,11 +28,11 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
+          <el-select v-model="searchForm.status" :placeholder="$t('状态')" clearable>
             <el-option
               style="padding: 0 20px"
               v-for="(item, index) in status"
-              :key="item"
+              :key="index"
               :label="item"
               :value="index"
             >
@@ -316,6 +316,7 @@ import { withdrawList, cryptWithdrawList, perWithdraw, depCoins, perCryptWithdra
 import { getBankList } from "@/api/bank.js"
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
+import { getHashParams } from "@/utils/index"
 
 export default {
   name: "userMoneyManagementTransfer",
@@ -342,7 +343,9 @@ export default {
       current: 1,
       size: 10,
       total: 0,
-      searchForm: {},
+      searchForm: {
+        status: ''
+      },
       moneyType: 'fabi',
       passdialogVisible: false,
       rejectdialogVisible: false,
@@ -350,6 +353,8 @@ export default {
     };
   },
   created() {
+    const params = getHashParams()
+    this.moneyType = params.get('type') || 'fabi'
     this.getInitData()
     this.getRJBZ()
     this.getCJZH()
@@ -462,17 +467,25 @@ export default {
     },
     async getInitData() {
       this.loading = true
-      let res;
-      if (this.moneyType == 'fabi') {
-        res = await withdrawList({...this.searchForm, current: this.current, size: this.size })
-      } else if (this.moneyType == 'usdt') {
-        res = await cryptWithdrawList({...this.searchForm, current: this.current, size: this.size })
+      try {
+        let res;
+        if (this.searchForm.status == 0) {
+          delete this.searchForm.status
+        }
+        if (this.moneyType == 'fabi') {
+          res = await withdrawList({...this.searchForm, current: this.current, size: this.size })
+        } else if (this.moneyType == 'usdt') {
+          res = await cryptWithdrawList({...this.searchForm, current: this.current, size: this.size })
+        }
+        this.loading = false
+        if (res.code === 200) {
+          this.tableData = res.data.records
+          this.total = res.data.total
+        }
+      } catch(error) {
+        console.log(error)
       }
-      this.loading = false
-      if (res.code === 200) {
-        this.tableData = res.data.records
-        this.total = res.data.total
-      }
+
     },
     async handlesuccess(e) {
       const size = e.size

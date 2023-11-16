@@ -57,13 +57,13 @@
             </el-form-item>
           </el-form>
             <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading">
-              <el-table-column prop="depCoin" :label="$t('币种')" width="100" show-overflow-tooltip/>
-              <el-table-column prop="targetCoin" :label="$t('兑换币种')" width="100" />
-              <el-table-column prop="changeRate" :label="$t('汇率')" width="100" />
-              <el-table-column prop="depValue" :label="$t('金额')" width="100" />
-              <el-table-column prop="targetValue" :label="$t('到账金额')" width="130" />
-              <el-table-column prop="createTime" :label="$t('创建时间')" minWidth="180" show-overflow-tooltip/>
-              <el-table-column prop="modifiedTime" :label="$t('更新时间')" minWidth="180" show-overflow-tooltip/>
+              <el-table-column prop="depCoin" :label="$t('币种')" min-width="100" show-overflow-tooltip/>
+              <el-table-column prop="targetCoin" :label="$t('兑换币种')" min-width="100" />
+              <el-table-column prop="changeRate" :label="$t('汇率')" min-width="100" />
+              <el-table-column prop="depValue" :label="$t('金额')" min-width="100" />
+              <el-table-column prop="targetValue" :label="$t('到账金额')" min-width="130" />
+              <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" show-overflow-tooltip/>
+              <el-table-column prop="modifiedTime" :label="$t('更新时间')" min-width="180" show-overflow-tooltip/>
               <!-- <el-table-column
                 prop="name"
                 :label="$t('cz')"

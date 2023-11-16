@@ -144,7 +144,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 44px;
+    height: 2.6rem;
     &:hover {
         background: transparent;
         color: $baseColor;
@@ -512,6 +512,9 @@ ul::-webkit-scrollbar-thumb {
                   color: #fff;
                   background:  $baseColor;
                   border-radius: 0 4px 4px 0;
+                    &::placeholder {
+                        color: #fff;
+                    }
               }
           }
       }
@@ -548,5 +551,39 @@ ul::-webkit-scrollbar-thumb {
           margin-right: 5px;
         }
       }
+    }
+  }
+  .flag-icon {
+    margin-right: 6px;
+  }
+  .country-select {
+    position: relative;
+    .flag-icon {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        left: 6px;
+    }
+  }
+  .usdt-inner {
+    margin-right: 6px;
+    width: 20px;
+    height: 20px;
+  }
+  .usdt-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 6px;
+  }
+  .hadvalue .el-input__inner {
+    padding-left: 40px;
+  }
+  .el-table__empty-block {
+    background: $contentColor;
+    .el-empty__description p{
+        color: #fff;
     }
   }

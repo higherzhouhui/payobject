@@ -24,12 +24,15 @@
                                 <el-input :placeholder="$t('enterAmount')" v-model="form.sendersAmount" class="input-amount">
                                 </el-input>
                                 <el-select v-model="form.sendersType" class="input-select">
-                                    <el-option v-for="item in sendTypeList" :label="item" :value="item" :key="item"></el-option>
+                                    <el-option v-for="item in areaList" :key="item.code" :value="item.coinCode">
+                                        <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+                                        <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+                                        {{ lang == 'zh' ? item.name : item.enName }}
+                                    </el-option>
                                 </el-select>
                             </div>
                         </div>
                         <ul class="list">
-                            <li>{{$t('lastestRate')}}</li>
                             <li>{{$t('limitNum')}}</li>
                             <li>{{$t('charge')}}</li>
                         </ul>
@@ -51,31 +54,48 @@
                         <img class="left-img" src="@/assets/images/index/b1.png" />
                     </div>
                     <div class="right" :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'">
-                        <div class="right-item">
-                            <div class="right-left">
-                                <img class="rleft-img" src="@/assets/images/index/user.png" />
-                            </div>
-                            <div class="right-right">
-                                <div class="title">{{$t("createAccount")}}</div>
-                                <div class="desc">{{$t("createDesc")}}</div>
-                            </div>
+                        <div class="use">
+                            <h2>如何使用</h2>
+                            <h3>在现实时间内跨越全球转账</h3>
+                            <el-steps :active="1">
+                                <el-step title="联系客服" icon="el-icon-phone-outline"></el-step>
+                                <el-step title="创建账户" icon="el-icon-user"></el-step>
+                                <el-step title="开始使用" icon="el-icon-thumb"></el-step>
+                            </el-steps>
                         </div>
-                        <div class="right-item">
-                            <div class="right-left">
-                                <img class="rleft-img" src="@/assets/images/index/bank.png" />
-                            </div>
-                            <div class="right-right">
-                                <div class="title">{{$t("attachBank")}}</div>
-                                <div class="desc">{{$t("attachBankDesc")}}</div>
-                            </div>
+                        <div class="use">
+                            <h2>我们的资产</h2>
+                            <h3>快速、安全地发送全球资金</h3>
+                            <el-steps :active="1">
+                                <el-step title="联系客服" icon="el-icon-phone-outline"></el-step>
+                                <el-step title="创建账户" icon="el-icon-user"></el-step>
+                                <el-step title="开始使用" icon="el-icon-thumb"></el-step>
+                            </el-steps>
                         </div>
-                        <div class="right-item">
-                            <div class="right-left">
-                                <img class="rleft-img" src="@/assets/images/index/money.png" />
+                        <div class="use">
+                            <h2>现在 ReliancePay已在这些国家/地区提供服务</h2>
+                            <div class="country-select" :class="country && 'hadvalue'">
+                                <el-select class="use-select" v-model="country" @change="getTargetList">
+                                    <el-option v-for="item in areaList" :key="item.code" :value="lang == 'zh' ? item.name : item.enName">
+                                        <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+                                        <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+                                        {{ lang == 'zh' ? item.name : item.enName }}
+                                    </el-option>
+                                </el-select>
+                                <span v-if="country && country != 'USDT'" :class="`flag-icon ${getFlagIcon(country)}`"></span>
+                                <img v-if="country && country == 'USDT'" src="@/assets/images/usdt.png" class="usdt-icon"/>
                             </div>
-                            <div class="right-right">
-                                <div class="title">{{$t("sendMoney")}}</div>
-                                <div class="desc">{{$t("sendMoneyDesc")}}</div>
+                            <div class="label" v-if="country">可兑换国家</div>
+                            <div class="country-select" :class="targetCoin && 'hadvalue'"  v-if="country">
+                                <el-select class="use-select" v-model="targetCoin">
+                                    <el-option v-for="item in targetCoinList" :key="item.code" :value="lang == 'zh' ? item.name : item.enName">
+                                        <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+                                        <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
+                                        {{ lang == 'zh' ? item.name : item.enName }}
+                                    </el-option>
+                                </el-select>
+                                <span v-if="targetCoin && targetCoin != 'USDT'" :class="`flag-icon ${getFlagIcon(targetCoin)}`"></span>
+                                <img v-if="targetCoin && targetCoin == 'USDT'" src="@/assets/images/usdt.png" class="usdt-icon"/>
                             </div>
                         </div>
                     </div>
@@ -86,26 +106,21 @@
                     <h1>{{$t("whyChoose")}}</h1>
                     <h3>{{$t("Anmei")}}</h3>
                 </div>
-                <div class="container-auto section-column animation">
+                <div class="container-auto section-column  section-three  animation">
                     <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-                        <i class="el-icon-refresh"/>
+                        <i class="el-icon-time"/>
                         <h1>{{$t("szyw")}}</h1>
                         <p>{{$t("s1")}}</p>
                     </div>
                     <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-                        <i class="el-icon-money"/>
+                        <i class="el-icon-lock"/>
                         <h1>{{$t("qqsk")}}</h1>
                         <p>{{$t("s2")}}</p>
                     </div>
                     <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-                        <i class="el-icon-set-up"/>
+                        <i class="el-icon-sell"/>
                         <h1>{{$t("qqfk")}}</h1>
                         <p>{{$t("s3")}}</p>
-                    </div>
-                    <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-                        <i class="el-icon-lock"/>
-                        <h1>{{$t("FastPayment")}}</h1>
-                        <p>{{$t("FastPaymentDesc")}}</p>
                     </div>
                 </div>
             </div>
@@ -114,21 +129,36 @@
                     <h1>{{$t("fwys")}}</h1>
                     <h3>{{$t("remesaserviceDesc")}}</h3>
                 </div>
-                <div class="container-auto section-column section-fwys animation">
+                <div class="container-auto section-column section-three animation">
                     <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-                        <i class="el-icon-location-outline"/>
+                        <i class="el-icon-data-line"/>
                         <h1>{{$t("scdw")}}</h1>
                         <p>{{$t("cpjs")}}</p>
                     </div>
                     <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-                        <i class="el-icon-connection"/>
+                        <i class="el-icon-location-outline"/>
                         <h1>{{$t("cxjs")}}</h1>
                         <p>{{$t("cpjs2")}}</p>
                     </div>
                     <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-                        <i class="el-icon-cpu"/>
+                        <i class="el-icon-trophy"/>
                         <h1>{{$t("cpjz")}}</h1>
                         <p>{{$t("cpjs3")}}</p>
+                    </div>
+                    <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
+                        <i class="el-icon-folder-checked"/>
+                        <h1>{{$t("cpjz4")}}</h1>
+                        <p>{{$t("cpjs4")}}</p>
+                    </div>
+                    <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
+                        <i class="el-icon-shopping-cart-2"/>
+                        <h1>{{$t("cpjz5")}}</h1>
+                        <p>{{$t("cpjs5")}}</p>
+                    </div>
+                    <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
+                        <i class="el-icon-chat-dot-round"/>
+                        <h1>{{$t("cpjz6")}}</h1>
+                        <p>{{$t("cpjs6")}}</p>
                     </div>
                 </div>
             </div>
@@ -162,7 +192,13 @@
                             <div class="right-right">
                                 <div class="title" style="margin-bottom: 1.5rem">{{$t("manyPlant")}}</div>
                                 <div class="desc">{{$t("manyPlantDesc")}}</div>
+                                <el-steps direction="vertical" :active="1" class="down-step">
+                                    <el-step title="下载应用" icon="el-icon-download"></el-step>
+                                    <el-step title="创建账户" icon="el-icon-user"></el-step>
+                                    <el-step title="开始使用" icon="el-icon-thumb"></el-step>
+                                </el-steps>
                             </div>
+                        
                         </div>
                         <div class="normal-btn" @click="handleNext">{{$t("getStartNow")}}</div>
                     </div>
@@ -199,7 +235,7 @@
                     <h1>{{$t("lastnews")}}</h1>
                     <h3>{{$t("lastnewsDesc")}}</h3>
                 </div>
-                <div class="container-auto section-column section-fwys section-news animation">
+                <div class="container-auto section-column section-three section-news animation">
                     <div class="item" :class="animationFlag.c5 ? 'show' : 'hide'">
                         <img src="@/assets/images/index/news1.png" class="cover"/>
                         <div class="bottom">
@@ -261,10 +297,15 @@
 </template>
 <script>
 import { Local } from '@/utils/index'
+import { getSourceCoin, getTargetCoin } from '@/api/common'
+import { getFlagIcon } from '@/utils/common'
 export default {
     name: 'indexVue',
     data() {
         return {
+            lang: Local('lang') || 'zh',
+            country: '',
+            getFlagIcon: getFlagIcon,
             comments: [
                 {
                     avatar: require('@/assets/images/index/huawei.png'), 
@@ -311,13 +352,13 @@ export default {
                 { title: 'qqfk', des: 's3' }
             ],
             form: {
-                sendersType: 'USA',
+                sendersType: 'ALL',
                 recipientsType: 'AUD',
                 transactionType: 'Bank Deposit'
             },
             sendTypeList: ['USA', 'EUR', 'GBP'],
             recipientsTypeList: ['AUD', 'PRI', 'CHN'],
-            transactionTypeList: ['Bank Deposit', 'Pickup Point', 'Remesa Wallet'],
+            transactionTypeList: ['Bank Deposit', 'Pickup Point', 'Reliance Wallet'],
             commentsWiperOption: {
                 // 设置垂直轮播vertical,  水平轮播 horizontal
                 direction: "horizontal", 
@@ -388,12 +429,14 @@ export default {
                 },
                 { title: 'cpjz', desList: ['kj', 'xf', 'gycp', 'qc', 'jr', 'cm', 'fc'] }
             ],
-    
+            areaList: [],
+            targetCoinList: [],
+            targetCoin: [],
             showMenu: false,
         }
     },
     created() {
-
+        this.getAreaCode()
     },
     mounted() {
         this.onScroll()
@@ -404,6 +447,9 @@ export default {
     },
     methods: {
         handleNext() {
+            if (this.$store.state.userInfo.admin) {
+                return
+            }
             if (this.$store.state.userInfo.email) {
                 this.$router.push("/admin/withdraw/index")
             } else {
@@ -439,7 +485,29 @@ export default {
                 }
             }
         },
-
+        async getAreaCode() {
+            try {
+                let res = await getSourceCoin();
+                const arr = res.data.filter((obj, index, self) => {  
+                return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
+                })
+                this.areaList = arr;
+            } catch (error) {}
+        },
+        async getTargetList() {
+            this.targetCoin = ''
+            let cn = getFlagIcon(this.country)
+            if (cn) {
+                cn = cn.replace('flag-icon-', '').toLocaleUpperCase()
+            }
+            try {
+                let res = await getTargetCoin({source: cn});
+                const arr = res.data.filter((obj, index, self) => {  
+                return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
+                })
+                this.targetCoinList = arr;
+            } catch (error) {}
+        },
         cutOutNum(num) {
             let changeNum = (num + '').split('.')
             let decimal = ''
@@ -1118,16 +1186,17 @@ export default {
             justify-content: center;
         }
         h4 {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             line-height: 1.8rem;
         }
         .title-big {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            line-height: 5rem;
+            line-height: 4rem;
         }
         h3 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             padding-right: 3rem;
             line-height: 2rem;
             margin-bottom: 1.5rem;
@@ -1342,7 +1411,7 @@ export default {
                 margin-bottom: 1rem;
             }
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
                 line-height: 3rem;
             }
             p {
@@ -1357,10 +1426,11 @@ export default {
             }
         }
     }
-    .section-fwys {
+    .section-three {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         column-gap: 1rem;
+        row-gap: 1rem;
         overflow: hidden;
         padding-bottom: 5px;
         @media screen and (max-width: 800px) {
@@ -1429,7 +1499,24 @@ export default {
             grid-template-columns: repeat(1, 1fr);
             row-gap: 2rem;
         }
-      
+        .use {
+             h2 {
+                font-size: 1.6rem;
+                font-weight: bold;
+                margin-bottom: 0.6rem;
+             }
+             h3 {
+                font-size: 1.2rem;
+                margin-bottom: 0.6rem;
+                color: #333;
+             }
+             .use-select {
+                width: 100%;
+             }
+             .label {
+                margin: 1rem 0;
+             }
+        }
         .left {
             display: flex;
             align-items: center;
@@ -1465,6 +1552,10 @@ export default {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
+            .down-step {
+                height: 300px;
+                margin: 12px auto;
+            }
             .rleft-img {
                 width: 3rem;
                 margin-right: 1rem;

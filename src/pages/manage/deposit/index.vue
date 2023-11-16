@@ -27,7 +27,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="searchForm.reqStatus" :placeholder="$t('状态')" clearable>
+          <el-select v-model="searchForm.status" :placeholder="$t('状态')" clearable>
             <el-option
               style="padding: 0 20px"
               v-for="(item, index) in status"
@@ -268,7 +268,7 @@ import { depositList, cryptDepositList, putDeposit, putCryptDeposit, perDeposit,
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank";
-
+import { getHashParams } from "@/utils/index"
 export default {
   name: "userMoneyManagementTransfer",
   data() {
@@ -298,6 +298,8 @@ export default {
     };
   },
   created() {
+    const params = getHashParams()
+    this.moneyType = params.get('type') || 'fabi'
     this.getInitData()
     this.getRequestBankList()
   },
@@ -406,6 +408,9 @@ export default {
     async getInitData() {
       this.loading = true
       let res;
+      if (this.searchForm.status == 0) {
+        delete this.searchForm.status
+      }
       if (this.moneyType == 'fabi') {
         res = await depositList({...this.searchForm, current: this.current, size: this.size })
       } else if (this.moneyType == 'usdt') {

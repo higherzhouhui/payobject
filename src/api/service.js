@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 const whiteRetry = new Set(['ECONNABORTED', 'ERR_NETWORK', undefined, 0]);
-import { Local } from "@/utils/index";
+// import { Local } from "@/utils/index";
 import { Message } from 'element-ui';
 import router from '@/router/index.js'
 import store from '@/store'
@@ -15,7 +15,7 @@ const serviceAxios = axios.create({
     withCredentials: false, // 跨域请求是否需要携带 cookie
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Accept-Language': Local('lang')
+        // 'Accept-Language': Local('lang')
     },
     validateStatus() {
         // 使用async-await，处理reject情况较为繁琐，所以全部返回resolve，在业务代码中处理异常
@@ -42,7 +42,7 @@ serviceAxios.interceptors.request.use(
         else config.data = config.data || {};
         let params = { ...config.data };
 
-        let userInfo = Local('userInfo') || {}
+        // let userInfo = Local('userInfo') || {}
         // config.data.userId = params.userId = userInfo.id
         config.headers = Object.assign(config.headers, {
             'Content-Type':

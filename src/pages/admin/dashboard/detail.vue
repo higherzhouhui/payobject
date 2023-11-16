@@ -2,8 +2,8 @@
   <div class="dashboard-container">
     <div class="balance-wrapper">
       <div class="balance-item">
-        <h3>{{ balance }}</h3>
-        <h4>{{ coinCode }}</h4>
+        <span :class="`flag-icon ${getFlagIcon(coinCode)}`"></span>
+        <h3>{{ balance }}<span>{{ coinCode }}</span></h3>
       </div>
     </div>
     <div class="operation">
@@ -11,10 +11,10 @@
         <i class="el-icon-circle-plus-outline" />
         {{$t("充值")}}
       </div>
-      <div class="normal-btn" @click="routerToPath('/admin/exchange/index')">
+      <!-- <div class="normal-btn" @click="routerToPath('/admin/exchange/index')">
         <i class="el-icon-connection" />
         {{$t("转账")}}
-      </div>
+      </div> -->
       <div class="normal-btn" @click="routerToPath('/admin/withdraw/index')">
         <i class="el-icon-position" />
         {{$t("提现")}}
@@ -67,7 +67,7 @@
 import { balanceList } from "@/api/out"
 import { getBillDetails } from "@/api/manage"
 import { getHashParams } from "@/utils/index"
-
+import { getFlagIcon } from "@/utils/common"
 export default {
   name: 'DashBoard',
   props: {
@@ -75,6 +75,7 @@ export default {
   },
   data() {
     return {
+      getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],
       current: 1,
@@ -160,8 +161,8 @@ h1 {
 .operation {
   display: grid;
   margin-top: 2rem;
-  column-gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
 }
 .item {
   border-radius: 5px;
@@ -188,11 +189,18 @@ h1 {
     transform: translateY(-4px);
     box-shadow: 1px 5px 10px rgba(30, 32, 37, 1);
   }
+  .flag-icon {
+    font-size: 2.5rem;
+    margin-bottom: 6px;
+  }
   h3 {
     font-size: 1.5rem;
     line-height: 2.2rem;
     font-weight: bold;
-    color: red;
+    color: #fff;
+    span {
+      margin-left: 0.5rem;
+    }
   }
   h4 {
     font-weight: normal;

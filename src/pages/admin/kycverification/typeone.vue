@@ -51,9 +51,10 @@
             style="padding: 0 10px"
             v-for="item in areaList"
             :key="item.id"
-            :label="languge == 'zh' ? item.name : item.enName"
             :value="item.areaCode"
           >
+          <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+          {{ languge == 'zh' ? item.name : item.enName}}
           </el-option>
         </el-select>
       </div>
@@ -188,11 +189,13 @@ import { SubKyc } from "@/api/user";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { countries } from "@/api/login";
+import { getFlagIcon } from "@/utils/common"
 export default {
   name: "verifiedOne",
   props: ["type"],
   data() {
     return {
+      getFlagIcon: getFlagIcon,
       loading: false,
       languge: Local("lang") || "zh",
       form: {

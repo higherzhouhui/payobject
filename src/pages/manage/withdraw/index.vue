@@ -1,6 +1,6 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
-    <LinkPath :linkList="linkList" />
+    <!-- <LinkPath :linkList="linkList" /> -->
     <el-tabs v-model="moneyType">
       <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
       <el-tab-pane label="加密货币" name="usdt"></el-tab-pane>

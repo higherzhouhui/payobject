@@ -1,6 +1,6 @@
 <template>
     <div class="user_transactionInquiry_transactionDetails_contianer">
-        <LinkPath :linkList="linkList" />
+        <!-- <LinkPath :linkList="linkList" /> -->
         <div class="content">
           <el-form ref="form2" :inline="true" class="mt12">
             <el-form-item>

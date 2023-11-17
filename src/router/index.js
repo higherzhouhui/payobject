@@ -57,6 +57,7 @@ const router = new VueRouter({
                 { path: 'withdraw', component: () => import('@/pages/manage/withdraw/index.vue') },
                 { path: 'change', component: () => import('@/pages/admin/record/transactionlist.vue') },
                 { path: 'bill', component: () => import('@/pages/admin/record/exchangelist.vue') },
+                { path: 'blog', component: () => import('@/pages/manage/blog/index.vue') },
             ]
         },
         {

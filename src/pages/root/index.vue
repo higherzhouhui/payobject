@@ -1447,7 +1447,6 @@ export default {
                 box-shadow: 2px 6px 15px rgba(46, 45, 45, 0.675);
             }
         }
-
     }
     .section-news {
         .bottom {

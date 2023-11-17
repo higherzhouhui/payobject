@@ -1,15 +1,48 @@
 import service from './service';
 
-// 获取银行列表
 export const getSourceCoin = (data) => service({
     url: '/sourceCoin',
     data,
     method: 'get'
 })
 
-// 获取银行列表
 export const getTargetCoin = (data) => service({
   url: '/targetCoin',
+  data,
+  method: 'get'
+})
+
+export const homeBlogList = (data) => service({
+  url: '/cmdList',
+  data,
+  method: 'post'
+})
+
+export const cmsPageReq = (data) => service({
+  url: '/cmsPage',
+  data,
+  method: 'post'
+})
+export const cmsRecommend = (data) => service({
+  url: '/cmsRecommend',
+  data,
+  method: 'post'
+})
+
+export const cmsSaveReq = (data) => service({
+  url: '/cmsSave',
+  data,
+  method: 'post'
+})
+
+export const cmsDeleteReq = (data) => service({
+  url: '/cmsDelete',
+  data,
+  method: 'get'
+})
+
+export const cmsGetReq = (data) => service({
+  url: '/cmsGet',
   data,
   method: 'get'
 })

@@ -33,7 +33,11 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getlist" class="primary normal-btn">
+            <el-button
+              type="primary"
+              @click="getlist"
+              class="primary normal-btn"
+            >
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
             <!-- <el-button class="primary">
@@ -51,12 +55,41 @@
           v-loading="loading"
           size="small"
         >
-          <el-table-column prop="coinCode" :label="$t('币种')" min-width="100" />
-          <el-table-column prop="accountName" :label="$t('zhmc')" min-width="180" show-overflow-tooltip/>
-          <el-table-column prop="bankName" :label="$t('bankname')" min-width="180" show-overflow-tooltip	/>
-          <el-table-column prop="bankAccount" :label="$t('yhzh')" min-width="200" show-overflow-tooltip/>
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip/>
-          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" show-overflow-tooltip/>
+          <el-table-column
+            prop="coinCode"
+            :label="$t('币种')"
+            min-width="100"
+          />
+          <el-table-column
+            prop="accountName"
+            :label="$t('zhmc')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="bankName"
+            :label="$t('bankname')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="bankAccount"
+            :label="$t('yhzh')"
+            min-width="200"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="accountAdd"
+            :label="$t('jzdz')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjrq')"
+            min-width="180"
+            show-overflow-tooltip
+          />
           <el-table-column
             prop="name"
             :label="$t('cz')"
@@ -100,10 +133,36 @@
           v-loading="loading"
           size="small"
         >
-          <el-table-column prop="exFrom" label="被兑换币种" min-width="100" />
-          <el-table-column prop="exTarget" label="兑换币种" min-width="100" />
+          <el-table-column prop="exFrom" label="被兑换币种" min-width="100">
+            <template slot-scope="scope">
+              <div class="flag-warpper">
+                <span
+                  :class="`flag-icon flag-icon-${scope.row.fromCountry.toLocaleLowerCase()}`"
+                  v-if="scope.row.exFrom != 'USDT'"
+                ></span>
+                <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+                {{ scope.row.exFrom }}
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column prop="exRate" label="汇率" min-width="120" />
-          <el-table-column prop="createTime" :label="$t('cjrq')" min-width="180" />
+          <el-table-column prop="exTarget" label="兑换币种" min-width="100">
+            <template slot-scope="scope">
+              <div class="flag-warpper">
+                <span
+                  :class="`flag-icon flag-icon-${scope.row.targetCountry.toLocaleLowerCase()}`"
+                  v-if="scope.row.exTarget != 'USDT'"
+                ></span>
+                <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+                {{ scope.row.exTarget }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjrq')"
+            min-width="180"
+          />
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
@@ -149,7 +208,12 @@
         }
       "
     >
-      <el-form label-width="160px" ref="formss" :model="bankForm" class="formStyle">
+      <el-form
+        label-width="160px"
+        ref="formss"
+        :model="bankForm"
+        class="formStyle"
+      >
         <el-form-item :label="$t('币种')" class="mb24">
           <el-select v-model="bankForm.coinCode" class="elSelect">
             <el-option
@@ -158,17 +222,18 @@
               :key="item.value"
               :value="item.coinCode"
             >
-            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
-            <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
-            {{ lang == 'zh' ? item.name : item.enName }}
+              <span
+                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item :label="$t('zhmc')" class="mb24">
-          <el-input
-            v-model="bankForm.accountName"
-          ></el-input>
+          <el-input v-model="bankForm.accountName"></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')" class="mb24">
           <!-- <el-input
@@ -180,38 +245,30 @@
               v-for="item in areaList"
               :key="item.value"
               :value="item.areaCode"
-              >
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
-              {{ lang == 'zh' ? item.name : item.enName }}
+            >
+              <span
+                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')" class="mb24">
-          <el-input
-            v-model="bankForm.accountAdd"
-            type="textarea"
-          ></el-input>
+          <el-input v-model="bankForm.accountAdd" type="textarea"></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')" class="mb24">
-          <el-input
-            v-model="bankForm.bankName"
-          ></el-input>
+          <el-input v-model="bankForm.bankName"></el-input>
         </el-form-item>
         <el-form-item :label="$t('swift')" class="mb24">
-          <el-input
-            v-model="bankForm.swiftCode"
-          ></el-input>
+          <el-input v-model="bankForm.swiftCode"></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcode')" class="mb24">
-          <el-input
-            v-model="bankForm.bankCode"
-          ></el-input>
+          <el-input v-model="bankForm.bankCode"></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcount')" class="mb24">
-          <el-input
-            v-model="bankForm.bankAccount"
-          ></el-input>
+          <el-input v-model="bankForm.bankAccount"></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')" class="mb24">
           <!-- <el-input
@@ -224,17 +281,17 @@
               :key="item.value"
               :value="item.areaCode"
             >
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
-              {{ lang == 'zh' ? item.name : item.enName }}
+              <span
+                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')" class="mb24">
-          <el-input
-            v-model="bankForm.bankAdd"
-            type="textarea"
-          ></el-input>
+          <el-input v-model="bankForm.bankAdd" type="textarea"></el-input>
         </el-form-item>
         <el-form-item :label="$t('scwj')" class="mb24">
           <label style="font-size: 12px">
@@ -265,7 +322,9 @@
             size="small"
             type="primary"
             class="btn"
-            ><a :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank"
+            ><a
+              :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+              target="_blank"
               >点击下载</a
             ></el-button
           >
@@ -293,41 +352,56 @@
     >
       <el-form label-width="160px" ref="formss" :model="bankForm2">
         <el-form-item label="被兑换币种" class="mb24">
-          <el-select v-model="bankForm2.exFrom" class="elSelect" @change="changeExformCoin">
+          <el-select
+            v-model="bankForm2.exFrom"
+            class="elSelect"
+            @change="changeExformCoin"
+          >
             <el-option
               style="padding: 0 10px"
               v-for="item in getAllCoin()"
               :key="item.id"
               :value="item.coinCode"
-              >
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
-              {{ lang == 'zh' ? item.name : item.enName }}
+            >
+              <span
+                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item class="mb24 duihuan"><i class="el-icon-sort" />兑换</el-form-item>
+        <el-form-item class="mb24 duihuan"
+          ><i class="el-icon-sort" />兑换</el-form-item
+        >
         <el-form-item label="兑换币种" class="mb24">
-          <el-select v-model="bankForm2.exTarget"  class="elSelect">
+          <el-select v-model="bankForm2.exTarget" class="elSelect">
             <el-option
               style="padding: 0 10px"
               v-for="item in targetCoinList"
               :key="item.id"
               :value="item.coinCode"
-              >
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner"/>
-              {{ lang == 'zh' ? item.name : item.enName }}
+            >
+              <span
+                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="兑换汇率" class="mb24">
-          <el-input
-            v-model="bankForm2.exRate"
-          ></el-input>
+          <el-input v-model="bankForm2.exRate" type="number"></el-input>
         </el-form-item>
-        <el-form-item class="preview" v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate">
-          {{ `1${bankForm2.exFrom} = ${bankForm2.exRate}${bankForm2.exTarget}` }}
+        <el-form-item
+          class="preview"
+          v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate"
+        >
+          {{
+            `1${bankForm2.exFrom} = ${bankForm2.exRate}${bankForm2.exTarget}`
+          }}
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -357,18 +431,18 @@ import { Message } from "element-ui";
 import { upload } from "@/api/file";
 import { Local } from "@/utils/index";
 import { countries, cryptocurrencies } from "@/api/login";
-import { getFlagIcon } from "@/utils/common"
+import { getFlagIcon } from "@/utils/common";
 export default {
   data() {
     return {
       getFlagIcon: getFlagIcon,
       dialogVisible2: false,
-      lang: Local('lang') || 'zh',
+      lang: Local("lang") || "zh",
       bankloading: false,
       bankForm2: {
-        exTarget: '',
-        exFrom: '',
-        exRate: ''
+        exTarget: "",
+        exFrom: "",
+        exRate: "",
       },
       options2: ["", "gth", "qy", "hwgs"],
       type: "first",
@@ -447,7 +521,7 @@ export default {
               type: "success",
               message: "操作成功",
             });
-            this.dialogVisible2()
+            this.dialogVisible2();
             this.getlist2();
           } catch (error) {}
         })
@@ -455,32 +529,38 @@ export default {
     },
     getNewareaList(list) {
       if (list.length) {
-        const arr = list.filter((obj, index, self) => {  
-          return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
-        })
-        return arr
+        const arr = list.filter((obj, index, self) => {
+          return (
+            self.findIndex((obj1) => obj1.coinCode === obj.coinCode) === index
+          );
+        });
+        return arr;
       }
-      return []
+      return [];
     },
     getAllCoin() {
       if (this.areaList.length) {
-        let arr = this.areaList.filter((obj, index, self) => {  
-          return self.findIndex(obj1 => obj1.coinCode === obj.coinCode) === index;  
-        })
-        arr = arr.concat(this.szList)
-        return arr
+        let arr = this.areaList.filter((obj, index, self) => {
+          return (
+            self.findIndex((obj1) => obj1.coinCode === obj.coinCode) === index
+          );
+        });
+        arr = arr.concat(this.szList);
+        return arr;
       }
-      return []
+      return [];
     },
     changeExformCoin() {
-      if (this.bankForm2.exFrom == 'USDT') {
-        this.targetCoinList = this.szList
+      if (this.bankForm2.exFrom == "USDT") {
+        this.targetCoinList = this.szList;
       } else {
-        const all = this.getNewareaList(this.areaList)
-        this.targetCoinList = all.filter(item => {return item.coinCode !== this.bankForm2.exFrom})
+        const all = this.getNewareaList(this.areaList);
+        this.targetCoinList = all.filter((item) => {
+          return item.coinCode !== this.bankForm2.exFrom;
+        });
       }
       if (this.bankForm2.exTarget) {
-        this.bankForm2.exTarget = ''
+        this.bankForm2.exTarget = "";
       }
     },
     async getFbList() {
@@ -507,11 +587,11 @@ export default {
     },
     showAdd() {
       this.dialogVisible2 = true;
-      this.bankForm2 = {}
+      this.bankForm2 = {};
     },
     showAdd1() {
       this.dialogVisible = true;
-      this.bankForm = {}
+      this.bankForm = {};
     },
     async handlesuccess(e) {
       //   this.$refs["form"].resetFields();
@@ -531,7 +611,17 @@ export default {
     },
     async sh2() {
       try {
-        const res = await setExchange({ ...this.bankForm2 });
+        let fromCountry = getFlagIcon(this.bankForm2.exFrom);
+        let targetCountry = getFlagIcon(this.bankForm2.exTarget);
+        fromCountry = fromCountry.replace("flag-icon-", "").toLocaleUpperCase();
+        targetCountry = targetCountry
+          .replace("flag-icon-", "")
+          .toLocaleUpperCase();
+        const res = await setExchange({
+          ...this.bankForm2,
+          fromCountry,
+          targetCountry,
+        });
         this.dialogVisible2 = false;
         if (res.code === 200) {
           Message({
@@ -563,24 +653,24 @@ export default {
     },
     async getlist() {
       try {
-        this.loading = true
+        this.loading = true;
         let req = await getDeposits(this.form);
-        this.loading = false
-        req.data.forEach(item => {
-          Object.keys(item.bank).forEach(key => {
-            if (key !== 'coinCode') {
-              item[key] = item.bank[key]
+        this.loading = false;
+        req.data.forEach((item) => {
+          Object.keys(item.bank).forEach((key) => {
+            if (key !== "coinCode") {
+              item[key] = item.bank[key];
             }
-          })
-        })
+          });
+        });
         this.tableData = req.data;
       } catch (error) {}
     },
     async getlist2() {
       try {
-        this.loading = true
+        this.loading = true;
         let req = await getExchanges();
-        this.loading = false
+        this.loading = false;
         this.tableData2 = req.data;
       } catch (error) {}
     },
@@ -602,12 +692,16 @@ export default {
   .normal-btn {
     height: 40px;
   }
+  .flag-warpper {
+    display: flex;
+    align-content: center;
+  }
 }
 .duihuan {
   text-align: center;
   font-weight: bold;
   color: $baseColor;
-  font-size: 1.3rem!important;
+  font-size: 1.3rem !important;
 }
 .preview {
   color: #e21b1b;

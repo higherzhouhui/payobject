@@ -125,7 +125,7 @@ export default {
 }
 
 header {
-  position: fixed;
+  position: absolute;
   z-index: 1001;
   left: 0;
   top: 0;
@@ -137,7 +137,7 @@ header {
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
   color: #fff;
   &.headerShow {
-      animation: headerMove forwards 1s;
+      //animation: headerMove forwards 1s;
   }
 
   .logo {

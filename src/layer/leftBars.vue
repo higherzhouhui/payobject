@@ -38,6 +38,10 @@
                 <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
                 <span slot="title">{{ $t('hlgl') }}</span>
             </el-menu-item>
+            <el-menu-item index="/manage/blog">
+                <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
+                <span slot="title">{{ $t('博文列表') }}</span>
+            </el-menu-item>
         </el-menu>
 
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-else>

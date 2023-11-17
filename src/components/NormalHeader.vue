@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header :class="headerShow && 'headerShow'">
+    <header :class="headerShow ? 'headerShow' : 'headerHide'">
         <div class="inner container-auto">
             <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
             <div class="flex flex_algin_center controlMenu">
@@ -61,11 +61,10 @@ export default {
     }
   },
   mounted() {
-      this.onScroll()
-      window.addEventListener('scroll', this.onScroll)
+      window.addEventListener('wheel', this.onWheel)
   },
   beforeDestroy() {
-      window.removeEventListener('scroll', this.onScroll)
+      window.removeEventListener('wheel', this.onWheel)
   },
   methods: {
     handleShowMenu() {
@@ -83,11 +82,17 @@ export default {
         this.$i18n.locale = lang;
         this.dialogTableVisible = false
     },
-    onScroll() {
-        if (window.scrollY > 88) {
-            this.headerShow = true
-        } else {
+    onWheel(e) {
+        // if (window.scrollY > 88) {
+        //     this.headerShow = true
+        // } else {
+        //     this.headerShow = false
+        // }
+        const direction = e.deltaY > 0 ? "down" : "up";
+        if (direction == 'down') {
             this.headerShow = false
+        } else {
+            this.headerShow = true
         }
     },
     quit() {
@@ -123,7 +128,26 @@ export default {
       top: 0;
   }
 }
+@keyframes headerHide {
+    0% {
+        top: 0;
+    }
+    99% {
+        top: -88px;
+    }
+    100% {
+        position: absolute;
+    }
+}
 
+.headerShow {
+    position: fixed;
+    animation: headerMove forwards 0.5s;
+}
+.headerHide {
+    //position: fixed;
+    //animation: headerHide forwards 0.5s;
+}
 header {
   position: absolute;
   z-index: 1001;
@@ -136,10 +160,6 @@ header {
   background: $contentColor;
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
   color: #fff;
-  &.headerShow {
-      //animation: headerMove forwards 1s;
-  }
-
   .logo {
       height: 45px;
       cursor: pointer;

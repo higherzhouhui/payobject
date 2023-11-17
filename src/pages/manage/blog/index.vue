@@ -78,21 +78,44 @@
         :data="tableData"
         v-loading="loading"
       >
-        <el-table-column prop="title" :label="$t('标题')" min-width="100" show-overflow-tooltip/>
-        <el-table-column prop="mainPoint" :label="$t('摘要')" min-width="150" show-overflow-tooltip/>
-        <el-table-column prop="content" :label="$t('内容')" min-width="250" show-overflow-tooltip />
-          <el-table-column prop="recommend" :label="$t('是否推荐')" min-width="80" show-overflow-tooltip >
-          <template slot-scope="scope">
-            <el-switch v-model="scope.row.recommend" @change="changeSwitch(scope.row)"></el-switch>
-          </template>
-        </el-table-column>
         <el-table-column
-          prop="cover"
-          :label="$t('封面')"
-          min-width="120"
+          prop="title"
+          :label="$t('标题')"
+          min-width="100"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="mainPoint"
+          :label="$t('摘要')"
+          min-width="150"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="content"
+          :label="$t('内容')"
+          min-width="250"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="recommend"
+          :label="$t('是否推荐')"
+          min-width="80"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <el-image :src="`/api/file/downLoad?url=${scope.row.cover}`" class="cover" :previewSrcList="[`/api/file/downLoad?url=${scope.row.cover}`]"/>
+            <el-switch
+              v-model="scope.row.recommend"
+              @change="changeSwitch(scope.row)"
+            ></el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column prop="cover" :label="$t('封面')" min-width="120">
+          <template slot-scope="scope">
+            <el-image
+              :src="`/api/file/downLoad?url=${scope.row.cover}`"
+              class="cover"
+              :previewSrcList="[`/api/file/downLoad?url=${scope.row.cover}`]"
+            />
           </template>
         </el-table-column>
         <el-table-column
@@ -113,14 +136,26 @@
           width="120"
           fixed="right"
         >
-        <template slot-scope="scope">
-          <el-button  type="info" class="btn" size="small" @click="showDialog(scope.row)">
-            {{ $t("详情") }}
-          </el-button>
-          <el-button  type="danger" class="btn" size="small" @click="deleteCms(scope.row)">
-            {{ $t("删除") }}
-          </el-button>
-        </template>
+          <template slot-scope="scope">
+            <el-button
+              type="info"
+              class="btn detail-btn"
+              size="small"
+              @click="showDialog(scope.row)"
+            >
+              {{ $t("修改") }}
+            </el-button>
+            <el-popconfirm title="确定删除吗？" @confirm="deleteCms(scope.row)">
+              <el-button
+                slot="reference"
+                type="danger"
+                class="btn"
+                size="small"
+              >
+                {{ $t("删除") }}
+              </el-button>
+            </el-popconfirm>
+          </template>
         </el-table-column>
         <div slot="empty">
           <el-empty
@@ -140,41 +175,65 @@
         class="elPagination"
       >
       </el-pagination>
-      <el-dialog :title="blogForm.id ? '修改' : '新增'" :visible.sync="dialogVisible" width="636px" :before-close="() => {
-        dialogVisible = false;
-      }
-        ">
+      <el-dialog
+        :title="blogForm.id ? '修改' : '新增'"
+        :visible.sync="dialogVisible"
+        width="636px"
+        :before-close="
+          () => {
+            dialogVisible = false;
+          }
+        "
+      >
         <el-form label-width="120px" ref="formss" :model="blogForm">
           <el-form-item :label="$t('标题')" class="mb24">
-            <el-input v-model="blogForm.title" placeholder="请输入标题"></el-input>
+            <el-input
+              v-model="blogForm.title"
+              placeholder="请输入标题"
+            ></el-input>
           </el-form-item>
           <el-form-item :label="$t('摘要')" class="mb24">
-            <el-input type="textarea" v-model="blogForm.mainPoint" placeholder="请输入内容"></el-input>
+            <el-input
+              type="textarea"
+              v-model="blogForm.mainPoint"
+              placeholder="请输入内容"
+            ></el-input>
           </el-form-item>
           <el-form-item :label="$t('内容')" class="mb24">
-            <el-input type="textarea" v-model="blogForm.content" placeholder="请输入内容"></el-input>
+            <el-input
+              type="textarea"
+              v-model="blogForm.content"
+              placeholder="请输入内容"
+            ></el-input>
           </el-form-item>
           <el-form-item :label="$t('封面')" class="mb24">
             <el-upload
-            class="upload-demo"
-            action="null"
-            list-type="text"
-            accept="image/*"
-            :before-upload="(e) => handlesuccess(e)"
-            v-if="!blogForm.id"
-          >
-            <el-button size="small" type="primary" class="btn">{{
-              form.regCer ? $t("ysccxsc") : $t("djsc")
-            }}</el-button>
-          </el-upload>
-            <el-image v-if="blogForm.cover" :src="`/api/file/downLoad?url=${blogForm.cover}`" class="cover" :previewSrcList="[`/api/file/downLoad?url=${blogForm.cover}`]"/>
+              class="upload-demo"
+              action="null"
+              list-type="text"
+              accept="image/*"
+              :before-upload="(e) => handlesuccess(e)"
+              v-if="!blogForm.id"
+            >
+              <el-button size="small" type="primary" class="btn">{{
+                blogForm.cover ? $t("ysccxsc") : $t("djsc")
+              }}</el-button>
+            </el-upload>
+            <el-image
+              v-if="blogForm.cover"
+              :src="`/api/file/downLoad?url=${blogForm.cover}`"
+              class="cover"
+              :previewSrcList="[`/api/file/downLoad?url=${blogForm.cover}`]"
+            />
           </el-form-item>
           <el-form-item :label="$t('是否推荐')" class="mb24">
             <el-switch v-model="blogForm.recommend"></el-switch>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
+          <el-button @click="dialogVisible = false">{{
+            $t("cancel")
+          }}</el-button>
           <el-button
             type="primary"
             :class="loading && 'loading'"
@@ -187,7 +246,12 @@
   </div>
 </template>
 <script>
-import { cmsPageReq, cmsRecommend, cmsSaveReq, cmsDeleteReq, cmsGetReq } from "@/api/common"
+import {
+  cmsPageReq,
+  cmsRecommend,
+  cmsSaveReq,
+  cmsDeleteReq,
+} from "@/api/common";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
 export default {
@@ -199,7 +263,7 @@ export default {
       type: "1",
       dialogVisible: false,
       blogForm: {
-        recommend: false
+        recommend: false,
       },
       linkList: ["jycx", "兑换明细"],
       form: {
@@ -248,47 +312,47 @@ export default {
   methods: {
     async changeSwitch(row) {
       try {
-        this.loading = true
-        await cmsRecommend({id: row.id, act: row.recommend})
-        this.loading = false
-        this.getInitData()
+        this.loading = true;
+        await cmsRecommend({ id: row.id, act: row.recommend });
+        this.loading = false;
+        this.getInitData();
       } catch {
-        this.loading = false
+        this.loading = false;
       }
     },
     async deleteCms(row) {
       try {
-        this.loading = true
-        await cmsDeleteReq({id: row.id})
-        this.loading = false
-        this.getInitData()
+        this.loading = true;
+        await cmsDeleteReq({ id: row.id });
+        this.loading = false;
+        this.getInitData();
       } catch {
-        this.loading = false
+        this.loading = false;
       }
     },
     async addBlog() {
       if (this.loading) {
-        return
+        return;
       }
       try {
-        this.loading = true
-        await cmsSaveReq(this.blogForm)
-        this.loading = false
-        this.dialogVisible = false
-        this.getInitData()
-        this.$message.success('操作成功！')
+        this.loading = true;
+        await cmsSaveReq(this.blogForm);
+        this.loading = false;
+        this.dialogVisible = false;
+        this.getInitData();
+        this.$message.success("操作成功！");
       } catch (error) {
-        this.loading = false
+        this.loading = false;
       }
     },
     async handlesuccess(e) {
-      const size = e.size
+      const size = e.size;
       if (size > 20 * 1024 * 1024) {
         Message({
           type: "error",
-          message: this.$t('sizeOver'),
+          message: this.$t("sizeOver"),
         });
-        return
+        return;
       }
       const formData = new FormData();
       formData.append("file", e);
@@ -296,17 +360,18 @@ export default {
         const req = await upload(formData);
         if (req.code === 200) {
           this.blogForm.cover = req.data[0];
+          this.$forceUpdate();  
           Message({
             type: "success",
-            message: this.$t('sccg'),
+            message: this.$t("sccg"),
           });
         }
       } catch (error) {}
       return false;
     },
     showDialog(row) {
-      this.blogForm = row || {}
-      this.dialogVisible = true
+      this.blogForm = row || {recommend: false};
+      this.dialogVisible = true;
     },
     handleSizeChange(val) {
       this.size = val;
@@ -361,6 +426,9 @@ export default {
 .btn {
   padding: 4px 6px;
   color: #fff;
+}
+.detail-btn {
+  margin-right: 6px;
 }
 .cover {
   height: 80px;

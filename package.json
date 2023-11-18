@@ -18,6 +18,7 @@
     "sass-loader": "^8.0.2",
     "shifty": "^3.0.1",
     "svg-captcha": "^1.4.0",
+    "svg-sprite-loader": "^6.0.9",
     "swiper": "^5.2.0",
     "vue": "^2.6.14",
     "vue-awesome-swiper": "^4.1.1",

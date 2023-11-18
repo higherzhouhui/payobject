@@ -91,7 +91,8 @@
             :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'"
           >
             <div class="use">
-              <h2>如何使用</h2>
+              <h2>如何使用<svg-icon iconClass="user" />
+              </h2>
               <h3>在现实时间内跨越全球转账</h3>
               <el-steps :active="1">
                 <el-step

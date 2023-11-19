@@ -1633,7 +1633,7 @@ export default {
             color: #fff;
             background: $baseColor;
             border-radius: 0 4px 4px 0;
-            + &::placeholder {
+            &::placeholder {
               color: #fff !important;
             }
           }

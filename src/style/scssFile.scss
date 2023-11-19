@@ -12,16 +12,20 @@ $contentColor: #384d78;
 
 html {
     font-size: 12px;
-    font-family: "regularttf"!important;
+    font-family: "regularttf" !important;
+
     @media screen and (min-width: 1200px) {
-        font-size: 18px;
-    }
-    @media screen and (max-width: 1200px) {
         font-size: 16px;
     }
-    @media screen and (max-width: 900px) {
-        font-size: 14px;
+
+    @media screen and (max-width: 1200px) {
+        font-size: 15px;
     }
+
+    @media screen and (max-width: 900px) {
+        font-size: 13px;
+    }
+
     @media screen and (max-width: 500px) {
         font-size: 12px;
     }
@@ -29,13 +33,20 @@ html {
 
 .container-auto {
     margin: 0 auto;
+
     @media screen and (min-width: 1200px) {
         width: 1140px;
     }
+
     @media screen and (max-width: 1199px) {
         width: 100%;
         padding: 0 1.5rem;
     }
+
+    @media screen and (min-width: 1466px) {
+        width: 1300px;
+    }
+
     @media screen and (max-width: 500px) {
         width: 100%;
         padding: 0 1rem;
@@ -46,6 +57,7 @@ html {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 1rem;
+
     @media screen and (max-width: 800px) {
         grid-template-columns: repeat(1, 1fr);
         row-gap: 2rem;
@@ -57,7 +69,7 @@ html {
 }
 
 .mb12 {
-    margin-bottom: 12px!important;
+    margin-bottom: 12px !important;
 }
 
 .mt40 {
@@ -67,43 +79,50 @@ html {
 .mt30 {
     margin-top: 30px;
 }
+
 .mt24 {
     margin-top: 24px;
 }
-.mt16{
+
+.mt16 {
     margin-top: 16px;
 }
 
 @keyframes bounceln {
     0% {
         opacity: 0;
-        -webkit-transform: scale3d(.3,.3,.3);
-        transform: scale3d(.3,.3,.3);
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3);
     }
+
     20% {
-        -webkit-transform: scale3d(1.1,1.1,1.1);
-        transform: scale3d(1.1,1.1,1.1);
+        -webkit-transform: scale3d(1.1, 1.1, 1.1);
+        transform: scale3d(1.1, 1.1, 1.1);
     }
+
     40% {
-        -webkit-transform: scale3d(.9,.9,.9);
-        transform: scale3d(.9,.9,.9);
+        -webkit-transform: scale3d(.9, .9, .9);
+        transform: scale3d(.9, .9, .9);
     }
+
     60% {
         opacity: 1;
-        -webkit-transform: scale3d(1.03,1.03,1.03);
-        transform: scale3d(1.03,1.03,1.03);
+        -webkit-transform: scale3d(1.03, 1.03, 1.03);
+        transform: scale3d(1.03, 1.03, 1.03);
     }
+
     80% {
-        -webkit-transform: scale3d(.97,.97,.97);
-        transform: scale3d(.97,.97,.97);
+        -webkit-transform: scale3d(.97, .97, .97);
+        transform: scale3d(.97, .97, .97);
     }
+
     100% {
         opacity: 1;
         -webkit-transform: scaleX(1);
         transform: scaleX(1);
     }
-    
-  }
+
+}
 
 .flex {
     display: flex;
@@ -113,9 +132,11 @@ html {
 .flex_nowrap {
     flex-wrap: nowrap;
 }
+
 .nowrap {
     white-space: nowrap;
 }
+
 .flex_align_center {
     align-items: center;
 }
@@ -123,12 +144,15 @@ html {
 .flex_jc_sb {
     justify-content: space-between;
 }
-.flex_jc_sb_center{
+
+.flex_jc_sb_center {
     justify-content: center;
 }
+
 .flex_jc_sb_end {
     justify-content: flex-end;
 }
+
 .pointer {
     cursor: pointer;
 }
@@ -145,6 +169,7 @@ html {
     align-items: center;
     justify-content: center;
     border: 1px solid $baseColor;
+
     &:hover {
         background: transparent;
         color: $baseColor;
@@ -160,40 +185,49 @@ html {
 .baseColor {
     color: $baseColor !important;
 }
+
 .elTag {
     min-width: 80px;
     text-align: center;
 }
+
 .formStyle {
     height: 550px;
     overflow: auto;
     padding-right: 10px;
 }
+
 .moreDetail {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
 .contentBg {
     background: $contentColor;
 }
 
 .el-menu-item {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     background: #20304c;
+
     &:hover {
         color: #fff;
         background: rgba($color: #20304c, $alpha: 0.8);
+
         .icon {
             filter: grayscale(100%) brightness(200%)
         }
     }
+
     &.is-active {
         background: rgba($color: #20304c, $alpha: 0.8);
         color: #fff;
         font-weight: bold;
+
         .icon {
             filter: grayscale(100%) brightness(200%)
         }
+
         &::before {
             position: absolute;
             content: "";
@@ -212,6 +246,7 @@ html {
         overflow: hidden;
         color: #fff;
         font-weight: bold;
+
         .icon {
             transform: translateY(-100px);
             filter: drop-shadow(0 100px #fff);
@@ -236,7 +271,7 @@ html {
 .is-opened {}
 
 .el-submenu__title {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .el-table .el-table__header-wrapper,
@@ -248,9 +283,11 @@ html {
 
         tr {
             background-color: $contentColor !important;
+
             .cell {
                 font-weight: 600;
             }
+
             th {
                 background-color: $contentColor !important;
 
@@ -259,9 +296,11 @@ html {
     }
 }
 
-.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
     border: none;
 }
+
 .el-loading-mask {
     background-color: rgba($color: $bgColor, $alpha: 0.8);
 }
@@ -269,13 +308,19 @@ html {
 .tables {
     .el-table__row {
         background: $contentColor;
-        &:hover .el-table__cell{
-            background: rgba(0, 0, 0, 0.075)!important;
+
+        &:hover .el-table__cell {
+            background: rgba(0, 0, 0, 0.075) !important;
         }
     }
-    .el-table__body tr.hover-row.current-row>td.el-table__cell, .el-table__body tr.hover-row.el-table__row--striped.current-row>td.el-table__cell, .el-table__body tr.hover-row.el-table__row--striped>td.el-table__cell, .el-table__body tr.hover-row>td.el-table__cell{
-        background: rgba(0, 0, 0, 0.075)!important;
+
+    .el-table__body tr.hover-row.current-row>td.el-table__cell,
+    .el-table__body tr.hover-row.el-table__row--striped.current-row>td.el-table__cell,
+    .el-table__body tr.hover-row.el-table__row--striped>td.el-table__cell,
+    .el-table__body tr.hover-row>td.el-table__cell {
+        background: rgba(0, 0, 0, 0.075) !important;
     }
+
     .el-table--fit,
     .el-table__cell,
     tr {
@@ -322,24 +367,30 @@ html {
 .mytab {
     margin-top: 0.6rem;
 }
+
 .el-tabs__nav-wrap {
     background: $contentColor;
     padding: 1rem;
     border-radius: 0.5rem;
 }
+
 .el-tabs__nav-wrap::after {
     content: none;
 }
+
 .el-tabs__item.is-active {
     color: #fff;
 }
+
 .el-tabs__active-bar {
     background-color: #fff;
 }
+
 .el-tabs__item {
     color: rgba($color: #fff, $alpha: 0.7);
     font-size: 1.2rem;
     line-height: 1.8rem;
+
     &:hover {
         color: #fff;
     }
@@ -352,13 +403,15 @@ html {
     i {
         margin-right: 4px;
     }
-    img{
+
+    img {
         margin-right: 2px;
         height: 24px;
         width: 24px;
         vertical-align: middle;
     }
-    &.hui{
+
+    &.hui {
         background-color: #F4F4F4;
     }
 }
@@ -366,6 +419,7 @@ html {
 .el-form-item {
     margin-bottom: 20px;
 }
+
 .content_shadow {
     background: $contentColor;
     border-radius: 4px;
@@ -373,7 +427,7 @@ html {
 
 .loading {
     position: relative;
-    opacity: .4!important;
+    opacity: .4 !important;
 
     &::after {
         position: absolute;
@@ -414,7 +468,7 @@ html::-webkit-scrollbar {
 
 html::-webkit-scrollbar-thumb {
     background: $bgColor;
-    
+
 }
 
 form::-webkit-scrollbar-track-piece {
@@ -428,8 +482,9 @@ form::-webkit-scrollbar {
 
 form::-webkit-scrollbar-thumb {
     background: $bgColor;
-    
+
 }
+
 div::-webkit-scrollbar-track-piece {
     background: #d3dce6;
 }
@@ -441,8 +496,9 @@ div::-webkit-scrollbar {
 
 div::-webkit-scrollbar-thumb {
     background: $bgColor;
-    
+
 }
+
 ul::-webkit-scrollbar-track-piece {
     background: #d3dce6;
 }
@@ -454,7 +510,7 @@ ul::-webkit-scrollbar {
 
 ul::-webkit-scrollbar-thumb {
     background: $bgColor;
-    
+
 }
 
 .elPagination {
@@ -462,128 +518,163 @@ ul::-webkit-scrollbar-thumb {
     margin-top: 10px;
     justify-content: flex-end;
 }
-.el-pagination__total, .el-pagination__jump {
+
+.el-pagination__total,
+.el-pagination__jump {
     color: #fff;
 }
+
 .money-wrapper {
     display: grid;
     grid-template-columns: 2fr 1fr;
     column-gap: 8px;
+
     @media screen and (max-width: 800px) {
-      grid-template-columns: 1fr;
-      row-gap: 2rem;
+        grid-template-columns: 1fr;
+        row-gap: 2rem;
     }
+
     .money-left {
-      background-color: $contentColor;
-      border-radius: 0.6rem;
-      padding: 2rem;
-      .form-item {
-          margin-bottom: 1.2rem;
-          color: #fff;
-          .label {
-              margin-bottom: 0.5rem;
-          }
-          .input-with-select {
-              padding: 0;
-              display: flex;
-              ::v-deep .input-amount .el-input__inner {
-                  border: none;
-                  height: 50px;
-                  background: #fff;
-                  border-radius: 4px 0 0 4px;
-              }
-              .input-transaction {
-                  flex: 1;
-              }
-              ::v-deep .input-transaction .el-input__inner {
-                  border: none;
-                  height: 50px;
-                  background: #fff;
-                  width: 100%;
-                  border-radius: 4px;
-              }
-              ::v-deep .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
-                  background: $baseColor;
-              }
-              ::v-deep .input-select .el-input__inner {
-                  width: 120px;
-                  border: none;
-                  height: 50px;
-                  color: #fff;
-                  background:  $baseColor;
-                  border-radius: 0 4px 4px 0;
+        background-color: $contentColor;
+        border-radius: 0.6rem;
+        padding: 2rem;
+
+        .form-item {
+            margin-bottom: 1.2rem;
+            color: #fff;
+
+            .label {
+                margin-bottom: 0.5rem;
+            }
+
+            .input-with-select {
+                padding: 0;
+                display: flex;
+
+                ::v-deep .input-amount .el-input__inner {
+                    border: none;
+                    height: 3rem;
+                    background: #fff;
+                    border-radius: 4px 0 0 4px;
+                }
+
+                .input-transaction {
+                    flex: 1;
+                }
+
+                ::v-deep .input-transaction .el-input__inner {
+                    border: none;
+                    height: 3rem;
+                    background: #fff;
+                    width: 100%;
+                    border-radius: 4px;
+                }
+
+                ::v-deep .el-select-dropdown__item.hover,
+                .el-select-dropdown__item:hover {
+                    background: $baseColor;
+                }
+
+                ::v-deep .input-select .el-input__inner {
+                    width: 7rem;
+                    border: none;
+                    height: 3rem;
+                    color: #fff;
+                    background: $baseColor;
+                    border-radius: 0 4px 4px 0;
+
                     &::placeholder {
                         color: #fff;
                     }
-              }
-          }
-      }
-      .list {
-          font-size: 0.9rem;
-          margin: 1.25rem 0;
-          padding: 0 0 0 1.5rem;
-          color: #fff;
-          li {
-              line-height: 1.6rem;
-          }
-      }
-    }
-    .money-right {
-      background-color: $contentColor;
-      padding: 1.6rem;
-      border-radius: 0.5rem;
-      color: #fff;
-      h2 {
-        font-size: 1.1rem;
-      }
-      .divider {
-        margin: 1rem 0;
-        width: 100%;
-        height: 4px;
-        background: #a19b9b;
-      }
-      .column {
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .column-left {
-          margin-right: 5px;
+                }
+            }
         }
-      }
+
+        .list {
+            font-size: 0.9rem;
+            margin: 1.25rem 0;
+            padding: 0 0 0 1.5rem;
+            color: #fff;
+
+            li {
+                line-height: 1.6rem;
+            }
+        }
     }
-  }
-  .flag-icon {
+
+    .money-right {
+        background-color: $contentColor;
+        padding: 1.6rem;
+        border-radius: 0.5rem;
+        color: #fff;
+
+        h2 {
+            font-size: 1.1rem;
+        }
+
+        .divider {
+            margin: 1rem 0;
+            width: 100%;
+            height: 4px;
+            background: #a19b9b;
+        }
+
+        .column {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .column-left {
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.flag-icon {
     margin-right: 6px;
-  }
-  .country-select {
+}
+
+.country-select {
     position: relative;
+
     .flag-icon {
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);
         left: 6px;
     }
-  }
-  .usdt-inner {
+}
+
+.usdt-inner {
     margin-right: 6px;
     width: 20px;
     height: 20px;
-  }
-  .usdt-icon {
+}
+
+.usdt-icon {
     width: 20px;
     height: 20px;
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
     left: 6px;
-  }
-  .hadvalue .el-input__inner {
+}
+
+.hadvalue .el-input__inner {
     padding-left: 40px;
-  }
-  .el-table__empty-block {
+}
+
+.el-table__empty-block {
     background: $contentColor;
-    .el-empty__description p{
+
+    .el-empty__description p {
         color: #fff;
     }
-  }
+}
+
+.el-select .el-input .el-select__caret {
+    color: #000;
+    font-weight: bold;
+}

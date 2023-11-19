@@ -8,7 +8,7 @@
             <div class="title-big">
               {{ $t("moveMoney") }}
             </div>
-            <h3>{{ $t("fastEasy") }}</h3>
+            <h3 style="margin-top: 8px">{{ $t("fastEasy") }}</h3>
             <div class="btn-group">
               <div class="normal-btn start-btn" @click="handleNext">
                 {{ $t("start") }}
@@ -33,8 +33,11 @@
                   type="number"
                 >
                 </el-input>
-                <el-select v-model="form.exFrom" class="input-select" ref="exFromRef"
-                    @change="getTargetList"
+                <el-select
+                  v-model="form.exFrom"
+                  class="input-select"
+                  ref="exFromRef"
+                  @change="getTargetList"
                 >
                   <el-option
                     v-for="item in areaList"
@@ -56,46 +59,48 @@
               </div>
             </div>
             <div class="form-item">
-                <div class="label">{{ $t("到账额") }}</div>
-                <div class="input-with-select">
-                  <el-input
-                    :placeholder="$t('enterAmount')"
-                    v-model="exTargetValue"
-                    class="input-amount"
-                    type="number"
+              <div class="label">{{ $t("到账额") }}</div>
+              <div class="input-with-select">
+                <el-input
+                  :placeholder="$t('enterAmount')"
+                  v-model="exTargetValue"
+                  class="input-amount"
+                  type="number"
+                >
+                </el-input>
+                <el-select
+                  v-model="form.exTarget"
+                  class="input-select"
+                  ref="targetRef"
+                  @change="calculateMoney"
+                >
+                  <el-option
+                    v-for="item in targetCoinList"
+                    :key="item.code"
+                    :value="item.coinCode"
                   >
-                  </el-input>
-                  <el-select v-model="form.exTarget" class="input-select" ref="targetRef" @change="calculateMoney">
-                    <el-option
-                      v-for="item in targetCoinList"
-                      :key="item.code"
-                      :value="item.coinCode"
-                    >
-                      <span
-                        :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                        v-if="item.coinCode != 'USDT'"
-                      ></span>
-                      <img
-                        src="@/assets/images/usdt.png"
-                        v-else
-                        class="usdt-inner"
-                      />
-                      {{ lang == "zh" ? item.name : item.enName }}
-                    </el-option>
-                  </el-select>
-                </div>
+                    <span
+                      :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                      v-if="item.coinCode != 'USDT'"
+                    ></span>
+                    <img
+                      src="@/assets/images/usdt.png"
+                      v-else
+                      class="usdt-inner"
+                    />
+                    {{ lang == "zh" ? item.name : item.enName }}
+                  </el-option>
+                </el-select>
               </div>
+            </div>
             <ul class="list">
-              <li v-if="rateDetail">{{rateDetail}}</li>
+              <li v-if="rateDetail">{{ rateDetail }}</li>
               <li>{{ $t("limitNum") }}</li>
             </ul>
             <div class="form-item">
               <div class="label">{{ $t("收款账号") }}</div>
               <div class="input-with-select">
-                <el-select
-                  v-model="form.transactionType"
-                  class="input-transaction"
-                >
+                <el-select v-model="transactionType" class="input-transaction">
                   <el-option
                     v-for="item in transactionTypeList"
                     :label="item"
@@ -121,39 +126,41 @@
           </div>
           <div
             class="right"
-            :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'">
+            :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'"
+          >
             <div class="right-item">
-                <svg-icon iconClass="user" className="rleft-svg"/>
-                <div class="">
-                    <div class="title">
-                        创建账户
-                    </div>
-                    <div class="desc">
-                        我们将通过邮箱验证您的基础信息，创建并激活您的账户。
-                    </div>
+              <div class="svg-wrapper">
+                <svg-icon iconClass="user" className="rleft-svg" />
+              </div>
+              <div class="svg-conent">
+                <div class="title">创建账户</div>
+                <div class="desc">
+                  我们将通过邮箱验证您的基础信息，创建并激活您的账户。
                 </div>
+              </div>
             </div>
             <div class="right-item">
-                <svg-icon iconClass="building" className="rleft-svg"/>
-                <div class="">
-                    <div class="title">
-                        完成账户KYC认证
-                    </div>
-                    <div class="desc">
-                        我们需要您的企业资料和银行资料进行KYC资料核对，保障支付过程的安全。
-                    </div>
+              <div class="svg-wrapper">
+                <svg-icon iconClass="building" className="rleft-svg" />
+              </div>
+              <div class="svg-conent">
+                <div class="title">完成账户KYC认证</div>
+                <div class="desc">
+                  我们需要您的企业资料和银行资料进行KYC资料核对，保障支付过程的安全。
                 </div>
+              </div>
             </div>
             <div class="right-item">
-                <svg-icon iconClass="comments-dollar-solid" className="rleft-svg"/>
-                <div class="">
-                    <div class="title">
-                        发起转汇
-                    </div>
-                    <div class="desc">
-                        认证服务已完成，开启您的全球支付之旅！
-                    </div>
-                </div>
+              <div class="svg-wrapper">
+                <svg-icon
+                  iconClass="comments-dollar-solid"
+                  className="rleft-svg"
+                />
+              </div>
+              <div class="svg-conent">
+                <div class="title">发起转汇</div>
+                <div class="desc">认证服务，开启您的全球支付之旅！</div>
+              </div>
             </div>
           </div>
         </div>
@@ -167,30 +174,34 @@
         <div class="container-auto section-column animation">
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
             <div class="svgWrapper">
-                <svg-icon iconClass="circle-dollar-to-slot-solid" className="svgIcon" />
+              <svg-icon
+                iconClass="circle-dollar-to-slot-solid"
+                className="svgIcon"
+              />
             </div>
             <h1>{{ $t("szyw") }}</h1>
             <p>{{ $t("s1") }}</p>
           </div>
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
             <div class="svgWrapper">
-
-            <svg-icon iconClass="lock-solid" className="svgIcon" />
+              <svg-icon iconClass="lock-solid" className="svgIcon" />
             </div>
             <h1>{{ $t("qqsk") }}</h1>
             <p>{{ $t("s2") }}</p>
           </div>
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
             <div class="svgWrapper">
-
-            <svg-icon iconClass="headset-solid" className="svgIcon" />
+              <svg-icon iconClass="headset-solid" className="svgIcon" />
             </div>
             <h1>{{ $t("fwzc") }}</h1>
             <p>{{ $t("s3") }}</p>
           </div>
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
             <div class="svgWrapper">
-                <svg-icon iconClass="money-check-dollar-solid" className="svgIcon" />
+              <svg-icon
+                iconClass="money-check-dollar-solid"
+                className="svgIcon"
+              />
             </div>
             <h1>{{ $t("qqfk") }}</h1>
             <p>{{ $t("s4") }}</p>
@@ -202,31 +213,39 @@
           <h1>{{ $t("fwys") }}</h1>
           <h3>{{ $t("remesaserviceDesc") }}</h3>
         </div>
-        <div class="container-auto section-column section-column-feature animation">
+        <div
+          class="container-auto section-column section-column-feature animation"
+        >
           <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
             <svg-icon iconClass="money-bill-solid" className="feature-svg" />
-            <div class="feature-desc">{{$t("scdw")}}</div>
-        </div>
+            <div class="feature-desc">{{ $t("scdw") }}</div>
+          </div>
           <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
             <svg-icon iconClass="building" className="feature-svg" />
-            <div class="feature-desc">{{$t("cxjs")}}</div>
+            <div class="feature-desc">{{ $t("cxjs") }}</div>
           </div>
           <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
             <svg-icon iconClass="cart-shopping-solid" className="feature-svg" />
-            <div class="feature-desc">{{$t("cpjz")}}</div>
+            <div class="feature-desc">{{ $t("cpjz") }}</div>
           </div>
           <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <svg-icon iconClass="circle-dollar-to-slot-solid" className="feature-svg" />
-            <div class="feature-desc">{{$t("cpjz4")}}</div>
+            <svg-icon
+              iconClass="circle-dollar-to-slot-solid"
+              className="feature-svg"
+            />
+            <div class="feature-desc">{{ $t("cpjz4") }}</div>
           </div>
           <div></div>
           <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
             <svg-icon iconClass="credit-card-solid" className="feature-svg" />
-            <div class="feature-desc">{{$t("cpjz5")}}</div>
+            <div class="feature-desc">{{ $t("cpjz5") }}</div>
           </div>
           <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <svg-icon iconClass="file-invoice-dollar-solid" className="feature-svg" />
-            <div class="feature-desc">{{$t("cpjz6")}}</div>
+            <svg-icon
+              iconClass="file-invoice-dollar-solid"
+              className="feature-svg"
+            />
+            <div class="feature-desc">{{ $t("cpjz6") }}</div>
           </div>
         </div>
       </div>
@@ -244,15 +263,17 @@
           >
             <div class="right-item">
               <div class="right-right">
-                <div class="title" style="margin-bottom: 1.5rem">
+                <div class="alltitle">
                   {{ $t("moveMoneyFor") }}
                 </div>
-                <div class="desc mdesc">{{ $t("moveMoneyFor1") }}</div>
-                <div class="desc mdesc">{{ $t("moveMoneyFor2") }}</div>
-                <div class="desc mdesc">{{ $t("moveMoneyFor3") }}</div>
-                <div class="desc mdesc">{{ $t("moveMoneyFor4") }}</div>
-                <div class="desc mdesc">{{ $t("moveMoneyFor5") }}</div>
-                <div class="desc mdesc">{{ $t("moveMoneyFor6") }}</div>
+                <ul class="ul-desc">
+                  <li class="desc mdesc">{{ $t("moveMoneyFor1") }}</li>
+                  <li class="desc mdesc">{{ $t("moveMoneyFor2") }}</li>
+                  <li class="desc mdesc">{{ $t("moveMoneyFor3") }}</li>
+                  <li class="desc mdesc">{{ $t("moveMoneyFor4") }}</li>
+                  <li class="desc mdesc">{{ $t("moveMoneyFor5") }}</li>
+                  <li class="desc mdesc">{{ $t("moveMoneyFor6") }}</li>
+                </ul>
               </div>
             </div>
             <div class="normal-btn" @click="handleNext">
@@ -264,19 +285,18 @@
       <div class="allpayment-content">
         <div class="container-auto allpay-desc">
           <h1>{{ $t("allpayment") }}</h1>
+          <h1>{{ $t("allpayment1") }}</h1>
           <h3>{{ $t("allpaymentDesc") }}</h3>
           <div class="country">
             <div class="country-item" v-for="item in areaList" :key="item.id">
-                <span
+              <span
                 :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
                 v-if="item.coinCode != 'USDT'"
               ></span>
-              <img
-                src="@/assets/images/usdt.png"
-                v-else
-                class="usdt-inner"
-                />
-              <span class="country-name">{{ lang == "zh" ? item.name : item.enName }}</span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              <span class="country-name">{{
+                lang == "zh" ? item.name : item.enName
+              }}</span>
             </div>
           </div>
           <div
@@ -295,19 +315,27 @@
           >
             <div class="right-item">
               <div class="right-right">
-                <div class="title" style="margin-bottom: 1.5rem; color: #2dbe60; font-weight: bold; font-size: 1rem">
+                <div
+                  class="title"
+                  style="
+                    margin-bottom: 1.5rem;
+                    color: #2dbe60;
+                    font-weight: bold;
+                    font-size: 1rem;
+                  "
+                >
                   {{ $t("manyPlant") }}
                 </div>
                 <div class="title-big">{{ $t("manyPlantDesc") }}</div>
-                <div class="normal-btn">
-                    {{ $t("下载应用") }}
-                    </div>
-                <div class="normal-btn" @click="handleNext">
-                    {{ $t("创建账户") }}
-                    </div>
-                <div class="normal-btn" @click="handleNext">
-                {{ $t("开始使用") }}
-                </div>
+                <span class="normal-text">
+                  {{ $t("下载应用") }}
+                </span>
+                <span class="normal-text" @click="handleNext">
+                  {{ $t("创建账户") }}
+                </span>
+                <span class="normal-text" @click="handleNext">
+                  {{ $t("开始使用") }}
+                </span>
               </div>
             </div>
             <!-- <div class="normal-btn" @click="handleNext">
@@ -343,14 +371,18 @@
                   <img :src="item.avatar" />
                 </div>
                 <div class="title">
-                    <svg-icon iconClass="quote-left-solid" className="comment-svg"/>
-                    <h3>{{ item.content }}</h3>
-                    <h2>{{ item.name }}</h2>
-                    <p>co-{{ item.name }}</p>
+                  <svg-icon
+                    iconClass="quote-left-solid"
+                    className="comment-svg"
+                  />
+                  <h3>{{ item.content }}</h3>
+                  <h2>{{ item.name }}</h2>
+                  <p>co-{{ item.name }}</p>
                 </div>
               </div>
             </swiper-slide>
           </swiper>
+          <div class="swiper-pagination-commentsWiperOption"></div>
         </div>
       </div>
       <div class="animation-warapper have-bg">
@@ -370,11 +402,11 @@
             <div class="backgroundEffect"></div>
             <div class="cover">
               <img :src="`/api/file/downLoad?url=${item.cover}`" />
-            <div class="time">
-                <div class="date">{{item.date}}</div>
-                <div class="month">{{getMonth(item.month)}}</div>
-                <div class="year">{{item.year}}</div>
-            </div>
+              <div class="time">
+                <div class="date">{{ item.date }}</div>
+                <div class="month">{{ getMonth(item.month) }}</div>
+                <div class="year">{{ item.year }}</div>
+              </div>
             </div>
             <div class="bottom">
               <h1>{{ item.title }}</h1>
@@ -410,6 +442,7 @@
               />
             </swiper-slide>
           </swiper>
+          <div class="swiper-pagination-partnerWiperOption"></div>
         </div>
       </div>
     </div>
@@ -428,7 +461,12 @@
 </template>
 <script>
 import { Local } from "@/utils/index";
-import { getSourceCoin, getTargetCoin, homeBlogList, getCalculateRate } from "@/api/common";
+import {
+  getSourceCoin,
+  getTargetCoin,
+  homeBlogList,
+  getCalculateRate,
+} from "@/api/common";
 import { getFlagIcon } from "@/utils/common";
 export default {
   name: "indexVue",
@@ -483,15 +521,16 @@ export default {
         { title: "qqfk", des: "s3" },
       ],
       form: {
-        exFrom: '',
-        exTarget: '',
-        exValue: ''
+        exFrom: "",
+        exTarget: "",
+        exValue: "",
       },
-      exTargetValue: '',
-      rateDetail: '',
+      exTargetValue: "",
+      rateDetail: "",
       sendTypeList: ["USA", "EUR", "GBP"],
       recipientsTypeList: ["AUD", "PRI", "CHN"],
-      transactionTypeList: ["Bank Deposit", "Pickup Point", "Reliance Wallet"],
+      transactionType: "银行入账",
+      transactionTypeList: ["银行入账", "ReliancePay Wallet"],
       commentsWiperOption: {
         // 设置垂直轮播vertical,  水平轮播 horizontal
         direction: "horizontal",
@@ -515,13 +554,18 @@ export default {
             spaceBetween: 20,
           },
         },
+        // 分页器
+        pagination: {
+          el: ".swiper-pagination-commentsWiperOption",
+          clickable: true, // 设置小圆点可以切换
+        },
       },
       partnerWiperOption: {
         // 设置垂直轮播vertical,  水平轮播 horizontal
         direction: "horizontal",
         // 轮播图间距
         spaceBetween: 18,
-        slidesPerView: 1,
+        slidesPerView: 2,
         // 循环模式选项
         loop: true,
         //  自动滑动
@@ -539,15 +583,20 @@ export default {
             spaceBetween: 10,
           },
           //当宽度大于等于480
-          580: {
-            slidesPerView: 3,
+          680: {
+            slidesPerView: 4,
             spaceBetween: 20,
           },
           //当宽度大于等于640
-          840: {
-            slidesPerView: 4,
-            spaceBetween: 30,
+          940: {
+            slidesPerView: 5,
+            spaceBetween: 40,
           },
+        },
+        // 分页器
+        pagination: {
+          el: ".swiper-pagination-partnerWiperOption",
+          clickable: true, // 设置小圆点可以切换
         },
       },
       advantageData: [
@@ -579,39 +628,41 @@ export default {
       handler: function (newVal, oldVal) {
         if (this.form.exFrom && this.form.exTarget) {
           if (this.form.exValue) {
-            this.exTargetValue = this.rate * this.form.exValue
+            this.exTargetValue = this.rate * this.form.exValue;
           } else {
             if (this.exTargetValue) {
-                this.form.exValue =  this.exTargetValue / this.rate
+              this.form.exValue = this.exTargetValue / this.rate;
             }
           }
         }
       },
     },
-    rate: function() {
-        if (this.form.exFrom && this.form.exTarget) {
-          if (this.form.exValue) {
-            this.exTargetValue = this.rate * this.form.exValue
-          } else {
-            if (this.exTargetValue) {
-                this.form.exValue =  this.exTargetValue / this.rate
-            }
+    rate: function () {
+      if (this.form.exFrom && this.form.exTarget) {
+        if (this.form.exValue) {
+          this.exTargetValue = this.rate * this.form.exValue;
+        } else {
+          if (this.exTargetValue) {
+            this.form.exValue = this.exTargetValue / this.rate;
           }
         }
+      }
     },
     exTargetValue: function () {
-        if (this.form.exFrom && this.form.exTarget) {
-          if (this.exTargetValue && this.exValue) {
-            if (Math.abs(this.exTargetValue - this.rate * this.form.exValue) < 1) {
-                return
-            }
-          }
-          if (this.exTargetValue) {
-            this.form.exValue = this.exTargetValue / this.rate
-          } else {
-            this.form.exValue = ''
+      if (this.form.exFrom && this.form.exTarget) {
+        if (this.exTargetValue && this.exValue) {
+          if (
+            Math.abs(this.exTargetValue - this.rate * this.form.exValue) < 1
+          ) {
+            return;
           }
         }
+        if (this.exTargetValue) {
+          this.form.exValue = this.exTargetValue / this.rate;
+        } else {
+          this.form.exValue = "";
+        }
+      }
     },
   },
   mounted() {
@@ -624,29 +675,60 @@ export default {
   },
   methods: {
     getMonth(month) {
-        let monthStr = ''
-        const enmonthArray = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        const monthArray = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
-        if (this.lang == 'zh') {
-            monthStr = monthArray[month] + '月'
-        } else {
-            monthStr = enmonthArray[month]
-        }
-        return monthStr
+      let monthStr = "";
+      const enmonthArray = [
+        "",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      const monthArray = [
+        "",
+        "一",
+        "二",
+        "三",
+        "四",
+        "五",
+        "六",
+        "七",
+        "八",
+        "九",
+        "十",
+        "十一",
+        "十二",
+      ];
+      if (this.lang == "zh") {
+        monthStr = monthArray[month] + "月";
+      } else {
+        monthStr = enmonthArray[month];
+      }
+      return monthStr;
     },
     async calculateMoney() {
-        try {
-            if (this.form.exFrom && this.form.exTarget) {
-                const res = await getCalculateRate({exFrom: this.form.exFrom, exTarget: this.form.exTarget, exValue: 1})
-                this.rate = res.data.targetValue
-                this.rateDetail = `Latest Currancy Rate 1 ${this.form.exFrom} = ${this.rate} ${this.form.exTarget}`
-            } else {
-                this.rateDetail = ''
-            }
-        } catch {
-            console.log(111)
+      try {
+        if (this.form.exFrom && this.form.exTarget) {
+          const res = await getCalculateRate({
+            exFrom: this.form.exFrom,
+            exTarget: this.form.exTarget,
+            exValue: 1,
+          });
+          this.rate = res.data.targetValue;
+          this.rateDetail = `Latest Currancy Rate 1 ${this.form.exFrom} = ${this.rate} ${this.form.exTarget}`;
+        } else {
+          this.rateDetail = "";
         }
-
+      } catch {
+        console.log(111);
+      }
     },
     handleNext() {
       if (this.$store.state.userInfo.admin) {
@@ -733,7 +815,7 @@ export default {
     },
     async getTargetList() {
       if (this.form.exTarget) {
-        this.form.exTarget = ''
+        this.form.exTarget = "";
       }
       let cn = getFlagIcon(this.form.exFrom);
       if (cn) {
@@ -748,20 +830,19 @@ export default {
         });
         this.targetCoinList = arr;
         this.$refs.targetRef.toggleMenu();
-
       } catch (error) {}
     },
     async getBlogsList() {
       try {
         const res = await homeBlogList();
-        res.data.map(item => {
-            const time = item.createTime.split(' ')[0].split('-')
-            if (time.length == 3) {
-                item.date = time[2]
-                item.month = time[1]
-                item.year = time[0]
-            }
-        })
+        res.data.map((item) => {
+          const time = item.createTime.split(" ")[0].split("-");
+          if (time.length == 3) {
+            item.date = time[2];
+            item.month = time[1];
+            item.year = time[0];
+          }
+        });
         this.blogList = res.data;
       } catch {
         console.log("err");
@@ -1428,7 +1509,7 @@ export default {
     }
   }
   .title-big {
-    font-size: 60px;
+    font-size: 3.5rem;
     margin-bottom: 15px;
     line-height: 4rem;
   }
@@ -1441,7 +1522,7 @@ export default {
     .banner-content {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      column-gap: 1rem;
+      column-gap: 1.5rem;
       @media screen and (max-width: 800px) {
         grid-template-columns: repeat(1, 1fr);
         row-gap: 2rem;
@@ -1459,15 +1540,15 @@ export default {
       margin-bottom: 15px;
       line-height: 1.7rem;
       font-weight: normal;
+      font-size: 0.8rem;
     }
 
     h3 {
-      font-size: 1.25rem;
-      padding-right: 3rem;
+      font-size: 1.2rem;
       line-height: 1.8rem;
       margin-bottom: 1rem;
       font-weight: normal;
-      font-family: fangsong;
+      font-family: serif;
     }
     .btn-group {
       display: flex;
@@ -1527,7 +1608,7 @@ export default {
           display: flex;
           ::v-deep .input-amount .el-input__inner {
             border: none;
-            height: 50px;
+            height: 3rem;
             background: #fff;
             border-radius: 4px 0 0 4px;
           }
@@ -1536,25 +1617,24 @@ export default {
           }
           ::v-deep .input-transaction .el-input__inner {
             border: none;
-            height: 50px;
+            height: 3rem;
             background: #fff;
             width: 100%;
             border-radius: 4px;
-            
           }
           ::v-deep .el-select-dropdown__item.hover,
           .el-select-dropdown__item:hover {
             background: $baseColor;
           }
           ::v-deep .input-select .el-input__inner {
-            width: 120px;
+            width: 7rem;
             border: none;
-            height: 50px;
+            height: 3rem;
             color: #fff;
             background: $baseColor;
-            border-radius: 0 4px 4px 0;+
-            &::placeholder {
-                color: #fff!important;
+            border-radius: 0 4px 4px 0;
+            + &::placeholder {
+              color: #fff !important;
             }
           }
         }
@@ -1608,15 +1688,17 @@ export default {
     z-index: 2;
   }
   h1 {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     text-align: center;
-    line-height: 5rem;
+    line-height: 4.5rem;
+    font-weight: normal;
   }
   h3 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     text-align: center;
-    line-height: 2.5rem;
-    margin: 2rem 0;
+    line-height: 2.1rem;
+    margin: 1.5rem 0;
+    font-weight: normal;
   }
   .opennew-btn {
     width: fit-content;
@@ -1624,40 +1706,39 @@ export default {
   }
   .country {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     column-gap: 1rem;
     row-gap: 1rem;
     margin-bottom: 2rem;
     @media screen and (max-width: 800px) {
-        grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
     @media screen and (max-width: 500px) {
-        grid-template-columns: repeat(2, 1fr);
-            
+      grid-template-columns: repeat(2, 1fr);
     }
     .country-item {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        background: rgba($color: #000, $alpha: 0.1);
-        padding: 2rem 0;
-        border-radius: 6px;
-        cursor: pointer;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      background: rgba($color: #000, $alpha: 0.1);
+      padding: 1rem 0;
+      border-radius: 6px;
+      cursor: pointer;
 
-        .flag-icon {
-            width: 50px;
-            height: 50px;
-        }
-        .usdt-inner {
-            width: 50px;
-            height: 50px;
-        }
-        .country-name {
-            margin-top: 1rem;
-        }
-        &:hover {
-            box-shadow: 2px 3px 10px $contentColor;
-        }
+      .flag-icon {
+        width: 30px;
+        height: 30px;
+      }
+      .usdt-inner {
+        width: 30px;
+        height: 30px;
+      }
+      .country-name {
+        margin-top: 0.5rem;
+      }
+      &:hover {
+        box-shadow: 2px 3px 10px $contentColor;
+      }
     }
   }
 }
@@ -1725,7 +1806,7 @@ export default {
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background: rgb(242,242,242);
+        background: rgb(242, 242, 242);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1745,12 +1826,12 @@ export default {
         font-size: 1rem;
         line-height: 1.7rem;
         color: #6c757d;
-        text-align:justify;
+        text-align: justify;
       }
       &:hover {
         box-shadow: 0px 5px 25px #ccc9c9;
         .svgWrapper {
-            background: $baseColor;
+          background: $baseColor;
         }
         .svgIcon {
           color: #fff;
@@ -1758,35 +1839,35 @@ export default {
       }
     }
     .feature-item {
-        width: 100%;
-        padding: 50px 0;
-        border-radius: 10px;
-        box-shadow: 0 8px 10px rgba(0,0,0,.175)!important;
-        border: 1px solid rgba(0,0,0,.125);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: all 1s;
+      width: 100%;
+      padding: 50px 0;
+      border-radius: 10px;
+      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.175) !important;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 1s;
+      .feature-svg {
+        font-size: 80px;
+        transition: all 0.5s;
+      }
+      .feature-desc {
+        color: $bgColor;
+        margin-top: 1rem;
+        transition: all 0.5s;
+        font-size: 1.2rem;
+      }
+      &:hover {
+        background: $bgColor;
         .feature-svg {
-            font-size: 80px;
-            transition: all 0.5s;
+          color: #fff;
         }
         .feature-desc {
-            color: $bgColor;
-            margin-top: 1rem;
-            transition: all 0.5s;
-            font-size: 1.2rem;
+          color: #fff;
         }
-        &:hover {
-            background: $bgColor;
-            .feature-svg {
-                color: #fff;
-            }
-            .feature-desc {
-                color: #fff;
-            }
-        }
+      }
     }
   }
   .section-column-feature {
@@ -1907,15 +1988,15 @@ export default {
         color: #fff;
         padding: 5px 8px;
         text-align: center;
-        .date { 
-            font-weight: bold;
-            font-size: 0.9rem;
+        .date {
+          font-weight: bold;
+          font-size: 0.9rem;
         }
         .month {
-            font-size: 0.8rem;
+          font-size: 0.8rem;
         }
         .year {
-            font-size: 0.8rem;
+          font-size: 0.8rem;
         }
       }
     }
@@ -1999,7 +2080,7 @@ export default {
     .right-item {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
       .down-step {
         height: 300px;
         margin: 12px auto;
@@ -2008,32 +2089,40 @@ export default {
         width: 3rem;
         margin-right: 1rem;
       }
-      .rleft-svg {
-        font-size: 50px;
-        margin-right: 1rem;
+      .svg-wrapper {
+        width: 4rem;
+        min-width: 4rem;
       }
-      .normal-btn {
-        width: fit-content;
-        margin: 1.5rem auto 0 auto;
-
+      .rleft-svg {
+        font-size: 3rem;
+      }
+      .normal-text {
+        margin-right: 1rem;
+        margin-top: 1rem;
+      }
+      .alltitle {
+        font-size: 1.55rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1.4rem;
       }
       .title {
-        font-size: 1.5rem;
-        line-height: 1.9rem;
+        font-size: 1.35rem;
+        line-height: 1.8rem;
         margin-bottom: 10px;
         font-weight: normal;
       }
       .desc {
+        font-size: 0.9rem;
         line-height: 1.8rem;
       }
-      .mdesc {
-        font-family: fantasy;
-        color: #333;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #909399;
+      .ul-desc {
+        padding: 0 6px;
       }
-      .mdesc:last-child {
-        border: none;
+      .mdesc {
+        color: #666;
+        padding-bottom: 10px;
+        line-height: 1.7rem;
       }
     }
   }
@@ -2048,24 +2137,23 @@ export default {
       margin-right: 1rem;
     }
     .comment-svg {
-        font-size: 60px;
+      font-size: 3rem;
     }
     h2 {
-      font-size: 1rem;
+      font-size: 15px;
       line-height: 2rem;
       word-break: break-all;
       margin-top: 0.6rem;
     }
     h3 {
-      font-size: 0.9rem;
-      line-height: 1.5rem;
+      font-size: 13px;
       font-weight: normal;
       font-family: monospace;
       color: #222;
     }
     p {
-        font-size: 0.8rem;
-        font-style: italic;
+      font-size: 12px;
+      font-style: italic;
     }
   }
 }
@@ -2081,8 +2169,18 @@ export default {
 }
 
 ::v-deep .input-select .el-input__inner {
-    &::placeholder {
-        color: #fff!important;
+  &::placeholder {
+    color: #fff !important;
+  }
+}
+.swiper-pagination-partnerWiperOption, .swiper-pagination-commentsWiperOption {
+    text-align: center;
+    ::v-deep .swiper-pagination-bullet {
+        height: 3px;
+        width: 25px;
+        margin: 0 4px;
+        border-radius: 0;
+        background: $bgColor;
     }
 }
 </style>

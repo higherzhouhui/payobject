@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted() {
-      window.addEventListener('wheel', this.onWheel)
+    //   window.addEventListener('wheel', this.onWheel)
   },
   beforeDestroy() {
       window.removeEventListener('wheel', this.onWheel)
@@ -163,7 +163,7 @@ header {
   .logo {
       height: 45px;
       cursor: pointer;
-      animation: bounceln 1.5s forwards 1s;
+      animation: bounceln 0.8s forwards 0.75s;
       @media screen and (max-width: 800px) {
           height: 32px;
       }

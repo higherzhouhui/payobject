@@ -1,8 +1,6 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: PingFang SC;
-    font-weight: 400;
     box-sizing: border-box;
 }
 
@@ -11,8 +9,10 @@ $baseHover: #1be762;
 $bgColor: #455b86;
 $leftSideWidth: 220px;
 $contentColor: #384d78;
+
 html {
     font-size: 12px;
+    font-family: "regularttf"!important;
     @media screen and (min-width: 1200px) {
         font-size: 18px;
     }
@@ -134,8 +134,8 @@ html {
 }
 
 .normal-btn {
-    padding: 0 2rem;
-    border-radius: 4px;
+    padding: 8px 20px;
+    border-radius: 3px;
     cursor: pointer;
     transition: all 0.5s;
     background: $baseColor;
@@ -144,7 +144,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.6rem;
+    border: 1px solid $baseColor;
     &:hover {
         background: transparent;
         color: $baseColor;

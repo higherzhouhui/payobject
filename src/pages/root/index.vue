@@ -13,26 +13,29 @@
               <div class="normal-btn start-btn" @click="handleNext">
                 {{ $t("start") }}
               </div>
-              <div class="movie-btn" @click="showMovie = true">
+              <!-- <div class="movie-btn" @click="showMovie = true">
                 <img
                   class="arrow"
                   src="@/assets/images/index/arrow.png"
                   alt="arrow"
                 />
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="right">
             <div class="form-item">
-              <div class="label">{{ $t("提现金额") }}</div>
+              <div class="label">{{ $t("汇付总额") }}</div>
               <div class="input-with-select">
                 <el-input
                   :placeholder="$t('enterAmount')"
-                  v-model="form.sendersAmount"
+                  v-model="form.exValue"
                   class="input-amount"
+                  type="number"
                 >
                 </el-input>
-                <el-select v-model="form.sendersType" class="input-select">
+                <el-select v-model="form.exFrom" class="input-select" ref="exFromRef"
+                    @change="getTargetList"
+                >
                   <el-option
                     v-for="item in areaList"
                     :key="item.code"
@@ -52,9 +55,39 @@
                 </el-select>
               </div>
             </div>
+            <div class="form-item">
+                <div class="label">{{ $t("到账额") }}</div>
+                <div class="input-with-select">
+                  <el-input
+                    :placeholder="$t('enterAmount')"
+                    v-model="exTargetValue"
+                    class="input-amount"
+                    type="number"
+                  >
+                  </el-input>
+                  <el-select v-model="form.exTarget" class="input-select" ref="targetRef" @change="calculateMoney">
+                    <el-option
+                      v-for="item in targetCoinList"
+                      :key="item.code"
+                      :value="item.coinCode"
+                    >
+                      <span
+                        :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                        v-if="item.coinCode != 'USDT'"
+                      ></span>
+                      <img
+                        src="@/assets/images/usdt.png"
+                        v-else
+                        class="usdt-inner"
+                      />
+                      {{ lang == "zh" ? item.name : item.enName }}
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
             <ul class="list">
+              <li v-if="rateDetail">{{rateDetail}}</li>
               <li>{{ $t("limitNum") }}</li>
-              <li>{{ $t("charge") }}</li>
             </ul>
             <div class="form-item">
               <div class="label">{{ $t("收款账号") }}</div>
@@ -88,102 +121,39 @@
           </div>
           <div
             class="right"
-            :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'"
-          >
-            <div class="use">
-              <h2>如何使用<svg-icon iconClass="user" />
-              </h2>
-              <h3>在现实时间内跨越全球转账</h3>
-              <el-steps :active="1">
-                <el-step
-                  title="联系客服"
-                  icon="el-icon-phone-outline"
-                ></el-step>
-                <el-step title="创建账户" icon="el-icon-user"></el-step>
-                <el-step title="开始使用" icon="el-icon-thumb"></el-step>
-              </el-steps>
+            :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'">
+            <div class="right-item">
+                <svg-icon iconClass="user" className="rleft-svg"/>
+                <div class="">
+                    <div class="title">
+                        创建账户
+                    </div>
+                    <div class="desc">
+                        我们将通过邮箱验证您的基础信息，创建并激活您的账户。
+                    </div>
+                </div>
             </div>
-            <div class="use">
-              <h2>我们的资产</h2>
-              <h3>快速、安全地发送全球资金</h3>
-              <el-steps :active="1">
-                <el-step
-                  title="联系客服"
-                  icon="el-icon-phone-outline"
-                ></el-step>
-                <el-step title="创建账户" icon="el-icon-user"></el-step>
-                <el-step title="开始使用" icon="el-icon-thumb"></el-step>
-              </el-steps>
+            <div class="right-item">
+                <svg-icon iconClass="building" className="rleft-svg"/>
+                <div class="">
+                    <div class="title">
+                        完成账户KYC认证
+                    </div>
+                    <div class="desc">
+                        我们需要您的企业资料和银行资料进行KYC资料核对，保障支付过程的安全。
+                    </div>
+                </div>
             </div>
-            <div class="use">
-              <h2>现在 ReliancePay已在这些国家/地区提供服务</h2>
-              <div class="country-select" :class="country && 'hadvalue'">
-                <el-select
-                  class="use-select"
-                  v-model="country"
-                  @change="getTargetList"
-                >
-                  <el-option
-                    v-for="item in areaList"
-                    :key="item.code"
-                    :value="lang == 'zh' ? item.name : item.enName"
-                  >
-                    <span
-                      :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                      v-if="item.coinCode != 'USDT'"
-                    ></span>
-                    <img
-                      src="@/assets/images/usdt.png"
-                      v-else
-                      class="usdt-inner"
-                    />
-                    {{ lang == "zh" ? item.name : item.enName }}
-                  </el-option>
-                </el-select>
-                <span
-                  v-if="country && country != 'USDT'"
-                  :class="`flag-icon ${getFlagIcon(country)}`"
-                ></span>
-                <img
-                  v-if="country && country == 'USDT'"
-                  src="@/assets/images/usdt.png"
-                  class="usdt-icon"
-                />
-              </div>
-              <div class="label" v-if="country">可兑换国家</div>
-              <div
-                class="country-select"
-                :class="targetCoin && 'hadvalue'"
-                v-if="country"
-              >
-                <el-select class="use-select" v-model="targetCoin">
-                  <el-option
-                    v-for="item in targetCoinList"
-                    :key="item.code"
-                    :value="lang == 'zh' ? item.name : item.enName"
-                  >
-                    <span
-                      :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                      v-if="item.coinCode != 'USDT'"
-                    ></span>
-                    <img
-                      src="@/assets/images/usdt.png"
-                      v-else
-                      class="usdt-inner"
-                    />
-                    {{ lang == "zh" ? item.name : item.enName }}
-                  </el-option>
-                </el-select>
-                <span
-                  v-if="targetCoin && targetCoin != 'USDT'"
-                  :class="`flag-icon ${getFlagIcon(targetCoin)}`"
-                ></span>
-                <img
-                  v-if="targetCoin && targetCoin == 'USDT'"
-                  src="@/assets/images/usdt.png"
-                  class="usdt-icon"
-                />
-              </div>
+            <div class="right-item">
+                <svg-icon iconClass="comments-dollar-solid" className="rleft-svg"/>
+                <div class="">
+                    <div class="title">
+                        发起转汇
+                    </div>
+                    <div class="desc">
+                        认证服务已完成，开启您的全球支付之旅！
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -191,23 +161,39 @@
       <div class="animation-warapper have-bg">
         <div class="title-lg">
           <h1>{{ $t("whyChoose") }}</h1>
+          <h2>{{ $t("payService") }}</h2>
           <h3>{{ $t("Anmei") }}</h3>
         </div>
-        <div class="container-auto section-column section-three animation">
+        <div class="container-auto section-column animation">
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-            <i class="el-icon-time" />
+            <div class="svgWrapper">
+                <svg-icon iconClass="circle-dollar-to-slot-solid" className="svgIcon" />
+            </div>
             <h1>{{ $t("szyw") }}</h1>
             <p>{{ $t("s1") }}</p>
           </div>
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-            <i class="el-icon-lock" />
+            <div class="svgWrapper">
+
+            <svg-icon iconClass="lock-solid" className="svgIcon" />
+            </div>
             <h1>{{ $t("qqsk") }}</h1>
             <p>{{ $t("s2") }}</p>
           </div>
           <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
-            <i class="el-icon-sell" />
-            <h1>{{ $t("qqfk") }}</h1>
+            <div class="svgWrapper">
+
+            <svg-icon iconClass="headset-solid" className="svgIcon" />
+            </div>
+            <h1>{{ $t("fwzc") }}</h1>
             <p>{{ $t("s3") }}</p>
+          </div>
+          <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
+            <div class="svgWrapper">
+                <svg-icon iconClass="money-check-dollar-solid" className="svgIcon" />
+            </div>
+            <h1>{{ $t("qqfk") }}</h1>
+            <p>{{ $t("s4") }}</p>
           </div>
         </div>
       </div>
@@ -216,36 +202,31 @@
           <h1>{{ $t("fwys") }}</h1>
           <h3>{{ $t("remesaserviceDesc") }}</h3>
         </div>
-        <div class="container-auto section-column section-three animation">
-          <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <i class="el-icon-data-line" />
-            <h1>{{ $t("scdw") }}</h1>
-            <p>{{ $t("cpjs") }}</p>
+        <div class="container-auto section-column section-column-feature animation">
+          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+            <svg-icon iconClass="money-bill-solid" className="feature-svg" />
+            <div class="feature-desc">{{$t("scdw")}}</div>
+        </div>
+          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+            <svg-icon iconClass="building" className="feature-svg" />
+            <div class="feature-desc">{{$t("cxjs")}}</div>
           </div>
-          <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <i class="el-icon-location-outline" />
-            <h1>{{ $t("cxjs") }}</h1>
-            <p>{{ $t("cpjs2") }}</p>
+          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+            <svg-icon iconClass="cart-shopping-solid" className="feature-svg" />
+            <div class="feature-desc">{{$t("cpjz")}}</div>
           </div>
-          <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <i class="el-icon-trophy" />
-            <h1>{{ $t("cpjz") }}</h1>
-            <p>{{ $t("cpjs3") }}</p>
+          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+            <svg-icon iconClass="circle-dollar-to-slot-solid" className="feature-svg" />
+            <div class="feature-desc">{{$t("cpjz4")}}</div>
           </div>
-          <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <i class="el-icon-folder-checked" />
-            <h1>{{ $t("cpjz4") }}</h1>
-            <p>{{ $t("cpjs4") }}</p>
+          <div></div>
+          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+            <svg-icon iconClass="credit-card-solid" className="feature-svg" />
+            <div class="feature-desc">{{$t("cpjz5")}}</div>
           </div>
-          <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <i class="el-icon-shopping-cart-2" />
-            <h1>{{ $t("cpjz5") }}</h1>
-            <p>{{ $t("cpjs5") }}</p>
-          </div>
-          <div class="item" :class="animationFlag.c2 ? 'show' : 'hide'">
-            <i class="el-icon-chat-dot-round" />
-            <h1>{{ $t("cpjz6") }}</h1>
-            <p>{{ $t("cpjs6") }}</p>
+          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+            <svg-icon iconClass="file-invoice-dollar-solid" className="feature-svg" />
+            <div class="feature-desc">{{$t("cpjz6")}}</div>
           </div>
         </div>
       </div>
@@ -266,7 +247,12 @@
                 <div class="title" style="margin-bottom: 1.5rem">
                   {{ $t("moveMoneyFor") }}
                 </div>
-                <div class="desc">{{ $t("moveMoneyForDesc") }}</div>
+                <div class="desc mdesc">{{ $t("moveMoneyFor1") }}</div>
+                <div class="desc mdesc">{{ $t("moveMoneyFor2") }}</div>
+                <div class="desc mdesc">{{ $t("moveMoneyFor3") }}</div>
+                <div class="desc mdesc">{{ $t("moveMoneyFor4") }}</div>
+                <div class="desc mdesc">{{ $t("moveMoneyFor5") }}</div>
+                <div class="desc mdesc">{{ $t("moveMoneyFor6") }}</div>
               </div>
             </div>
             <div class="normal-btn" @click="handleNext">
@@ -279,6 +265,20 @@
         <div class="container-auto allpay-desc">
           <h1>{{ $t("allpayment") }}</h1>
           <h3>{{ $t("allpaymentDesc") }}</h3>
+          <div class="country">
+            <div class="country-item" v-for="item in areaList" :key="item.id">
+                <span
+                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img
+                src="@/assets/images/usdt.png"
+                v-else
+                class="usdt-inner"
+                />
+              <span class="country-name">{{ lang == "zh" ? item.name : item.enName }}</span>
+            </div>
+          </div>
           <div
             class="normal-btn opennew-btn"
             @click="$router.push('/user/register')"
@@ -295,20 +295,24 @@
           >
             <div class="right-item">
               <div class="right-right">
-                <div class="title" style="margin-bottom: 1.5rem">
+                <div class="title" style="margin-bottom: 1.5rem; color: #2dbe60; font-weight: bold; font-size: 1rem">
                   {{ $t("manyPlant") }}
                 </div>
-                <div class="desc">{{ $t("manyPlantDesc") }}</div>
-                <el-steps direction="vertical" :active="1" class="down-step">
-                  <el-step title="下载应用" icon="el-icon-download"></el-step>
-                  <el-step title="创建账户" icon="el-icon-user"></el-step>
-                  <el-step title="开始使用" icon="el-icon-thumb"></el-step>
-                </el-steps>
+                <div class="title-big">{{ $t("manyPlantDesc") }}</div>
+                <div class="normal-btn">
+                    {{ $t("下载应用") }}
+                    </div>
+                <div class="normal-btn" @click="handleNext">
+                    {{ $t("创建账户") }}
+                    </div>
+                <div class="normal-btn" @click="handleNext">
+                {{ $t("开始使用") }}
+                </div>
               </div>
             </div>
-            <div class="normal-btn" @click="handleNext">
+            <!-- <div class="normal-btn" @click="handleNext">
               {{ $t("getStartNow") }}
-            </div>
+            </div> -->
           </div>
           <div
             class="left"
@@ -339,8 +343,10 @@
                   <img :src="item.avatar" />
                 </div>
                 <div class="title">
-                  <h2>{{ item.name }}</h2>
-                  <h3>{{ item.content }}</h3>
+                    <svg-icon iconClass="quote-left-solid" className="comment-svg"/>
+                    <h3>{{ item.content }}</h3>
+                    <h2>{{ item.name }}</h2>
+                    <p>co-{{ item.name }}</p>
                 </div>
               </div>
             </swiper-slide>
@@ -364,6 +370,11 @@
             <div class="backgroundEffect"></div>
             <div class="cover">
               <img :src="`/api/file/downLoad?url=${item.cover}`" />
+            <div class="time">
+                <div class="date">{{item.date}}</div>
+                <div class="month">{{getMonth(item.month)}}</div>
+                <div class="year">{{item.year}}</div>
+            </div>
             </div>
             <div class="bottom">
               <h1>{{ item.title }}</h1>
@@ -388,13 +399,13 @@
             class="content-swiper"
           >
             <swiper-slide
-              v-for="item in 12"
+              v-for="item in 5"
               :key="item.id"
               class="company-swiper"
             >
               <img
                 class="band"
-                :src="require('@/assets/images/index/p' + item + '.png')"
+                :src="require('@/assets/images/index/company-' + item + '.png')"
                 alt="band"
               />
             </swiper-slide>
@@ -417,13 +428,12 @@
 </template>
 <script>
 import { Local } from "@/utils/index";
-import { getSourceCoin, getTargetCoin, homeBlogList } from "@/api/common";
+import { getSourceCoin, getTargetCoin, homeBlogList, getCalculateRate } from "@/api/common";
 import { getFlagIcon } from "@/utils/common";
 export default {
   name: "indexVue",
   data() {
     return {
-      lang: Local("lang") || "zh",
       country: "",
       getFlagIcon: getFlagIcon,
       comments: [
@@ -465,7 +475,7 @@ export default {
       movieSrc:
         "https://upload.wikimedia.org/wikipedia/commons/8/87/Schlossbergbahn.webm",
       type: 0,
-      languge: Local("lang") || "zh",
+      lang: Local("lang") || "zh",
       notice: "Reliance-Pay正式上线了",
       serviceLeftData: [
         { title: "szyw", des: "s1" },
@@ -473,10 +483,12 @@ export default {
         { title: "qqfk", des: "s3" },
       ],
       form: {
-        sendersType: "ALL",
-        recipientsType: "AUD",
-        transactionType: "Bank Deposit",
+        exFrom: '',
+        exTarget: '',
+        exValue: ''
       },
+      exTargetValue: '',
+      rateDetail: '',
       sendTypeList: ["USA", "EUR", "GBP"],
       recipientsTypeList: ["AUD", "PRI", "CHN"],
       transactionTypeList: ["Bank Deposit", "Pickup Point", "Reliance Wallet"],
@@ -554,11 +566,53 @@ export default {
       targetCoin: [],
       showMenu: false,
       blogList: [],
+      rate: 1,
     };
   },
   created() {
     this.getAreaCode();
     this.getBlogsList();
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler: function (newVal, oldVal) {
+        if (this.form.exFrom && this.form.exTarget) {
+          if (this.form.exValue) {
+            this.exTargetValue = this.rate * this.form.exValue
+          } else {
+            if (this.exTargetValue) {
+                this.form.exValue =  this.exTargetValue / this.rate
+            }
+          }
+        }
+      },
+    },
+    rate: function() {
+        if (this.form.exFrom && this.form.exTarget) {
+          if (this.form.exValue) {
+            this.exTargetValue = this.rate * this.form.exValue
+          } else {
+            if (this.exTargetValue) {
+                this.form.exValue =  this.exTargetValue / this.rate
+            }
+          }
+        }
+    },
+    exTargetValue: function () {
+        if (this.form.exFrom && this.form.exTarget) {
+          if (this.exTargetValue && this.exValue) {
+            if (Math.abs(this.exTargetValue - this.rate * this.form.exValue) < 1) {
+                return
+            }
+          }
+          if (this.exTargetValue) {
+            this.form.exValue = this.exTargetValue / this.rate
+          } else {
+            this.form.exValue = ''
+          }
+        }
+    },
   },
   mounted() {
     // window.addEventListener("scroll", this.onScroll);
@@ -569,6 +623,31 @@ export default {
     window.removeEventListener("wheel", this.onWheel);
   },
   methods: {
+    getMonth(month) {
+        let monthStr = ''
+        const enmonthArray = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        const monthArray = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+        if (this.lang == 'zh') {
+            monthStr = monthArray[month] + '月'
+        } else {
+            monthStr = enmonthArray[month]
+        }
+        return monthStr
+    },
+    async calculateMoney() {
+        try {
+            if (this.form.exFrom && this.form.exTarget) {
+                const res = await getCalculateRate({exFrom: this.form.exFrom, exTarget: this.form.exTarget, exValue: 1})
+                this.rate = res.data.targetValue
+                this.rateDetail = `Latest Currancy Rate 1 ${this.form.exFrom} = ${this.rate} ${this.form.exTarget}`
+            } else {
+                this.rateDetail = ''
+            }
+        } catch {
+            console.log(111)
+        }
+
+    },
     handleNext() {
       if (this.$store.state.userInfo.admin) {
         return;
@@ -653,8 +732,10 @@ export default {
       } catch (error) {}
     },
     async getTargetList() {
-      this.targetCoin = "";
-      let cn = getFlagIcon(this.country);
+      if (this.form.exTarget) {
+        this.form.exTarget = ''
+      }
+      let cn = getFlagIcon(this.form.exFrom);
       if (cn) {
         cn = cn.replace("flag-icon-", "").toLocaleUpperCase();
       }
@@ -666,11 +747,21 @@ export default {
           );
         });
         this.targetCoinList = arr;
+        this.$refs.targetRef.toggleMenu();
+
       } catch (error) {}
     },
     async getBlogsList() {
       try {
         const res = await homeBlogList();
+        res.data.map(item => {
+            const time = item.createTime.split(' ')[0].split('-')
+            if (time.length == 3) {
+                item.date = time[2]
+                item.month = time[1]
+                item.year = time[0]
+            }
+        })
         this.blogList = res.data;
       } catch {
         console.log("err");
@@ -1336,7 +1427,11 @@ export default {
       }
     }
   }
-
+  .title-big {
+    font-size: 60px;
+    margin-bottom: 15px;
+    line-height: 4rem;
+  }
   .banner {
     margin-top: 88px;
     width: 100%;
@@ -1353,7 +1448,7 @@ export default {
       }
     }
     .leftAni {
-      animation: bounceln 1.5s forwards 0.5s;
+      animation: bounceln 0.8s forwards 0.75s;
     }
     .left {
       display: flex;
@@ -1361,28 +1456,26 @@ export default {
       justify-content: center;
     }
     h4 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      line-height: 1.8rem;
+      margin-bottom: 15px;
+      line-height: 1.7rem;
+      font-weight: normal;
     }
-    .title-big {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      line-height: 4rem;
-    }
+
     h3 {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       padding-right: 3rem;
-      line-height: 2rem;
-      margin-bottom: 1.5rem;
+      line-height: 1.8rem;
+      margin-bottom: 1rem;
+      font-weight: normal;
+      font-family: fangsong;
     }
     .btn-group {
       display: flex;
       align-items: center;
+      margin-top: 1rem;
     }
     .start-btn {
       width: fit-content;
-      height: 44px;
       margin-right: 2.5rem;
     }
     .movie-btn {
@@ -1447,6 +1540,7 @@ export default {
             background: #fff;
             width: 100%;
             border-radius: 4px;
+            
           }
           ::v-deep .el-select-dropdown__item.hover,
           .el-select-dropdown__item:hover {
@@ -1458,7 +1552,10 @@ export default {
             height: 50px;
             color: #fff;
             background: $baseColor;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;+
+            &::placeholder {
+                color: #fff!important;
+            }
           }
         }
       }
@@ -1493,8 +1590,8 @@ export default {
   align-content: center;
   justify-content: center;
   position: relative;
-  padding-top: 120px;
-  padding-bottom: 100px;
+  padding-top: 80px;
+  padding-bottom: 60px;
   background-attachment: fixed;
   color: #fff;
   &::before {
@@ -1525,13 +1622,51 @@ export default {
     width: fit-content;
     margin: 0 auto;
   }
+  .country {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1rem;
+    row-gap: 1rem;
+    margin-bottom: 2rem;
+    @media screen and (max-width: 800px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 500px) {
+        grid-template-columns: repeat(2, 1fr);
+            
+    }
+    .country-item {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: rgba($color: #000, $alpha: 0.1);
+        padding: 2rem 0;
+        border-radius: 6px;
+        cursor: pointer;
+
+        .flag-icon {
+            width: 50px;
+            height: 50px;
+        }
+        .usdt-inner {
+            width: 50px;
+            height: 50px;
+        }
+        .country-name {
+            margin-top: 1rem;
+        }
+        &:hover {
+            box-shadow: 2px 3px 10px $contentColor;
+        }
+    }
+  }
 }
 
 .have-bg {
   background: #f3f6f8;
 }
 .animation-warapper {
-  padding: 3rem 0;
+  padding: 6rem 0;
   .title-lg {
     max-width: 600px;
     width: 60%;
@@ -1543,12 +1678,17 @@ export default {
     }
     h1 {
       font-size: 2rem;
-      line-height: 3rem;
+      font-weight: normal;
+    }
+    h2 {
+      font-weight: normal;
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
     h3 {
       font-size: 1.2rem;
       line-height: 2.1rem;
+      font-weight: normal;
     }
   }
   .show {
@@ -1563,6 +1703,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 1rem;
+    row-gap: 1rem;
     overflow: hidden;
     padding-bottom: 5px;
     @media screen and (max-width: 800px) {
@@ -1576,31 +1717,80 @@ export default {
     .item {
       position: relative;
       box-shadow: 1px 1px 2px #f5f5f5;
-      padding: 0.8rem 2rem;
+      padding: 0.8rem 1.6rem;
       background: #fff;
-      transition: all 0.5s;
+      transition: all 1s;
       cursor: pointer;
-      transition: all 1.5s;
-      i {
-        font-size: 4rem;
-        color: #666;
+      .svgWrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgb(242,242,242);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 1rem;
       }
+      .svgIcon {
+        font-size: 35px;
+        color: $baseColor;
+        transition: all 0.5s;
+      }
       h1 {
-        font-size: 1.5rem;
-        line-height: 3rem;
+        font-size: 1.3rem;
+        font-weight: normal;
+        margin-bottom: 0.8rem;
       }
       p {
         font-size: 1rem;
-        line-height: 1.8rem;
+        line-height: 1.7rem;
+        color: #6c757d;
+        text-align:justify;
       }
       &:hover {
         box-shadow: 0px 5px 25px #ccc9c9;
-        i {
-          color: $baseColor;
+        .svgWrapper {
+            background: $baseColor;
+        }
+        .svgIcon {
+          color: #fff;
         }
       }
     }
+    .feature-item {
+        width: 100%;
+        padding: 50px 0;
+        border-radius: 10px;
+        box-shadow: 0 8px 10px rgba(0,0,0,.175)!important;
+        border: 1px solid rgba(0,0,0,.125);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 1s;
+        .feature-svg {
+            font-size: 80px;
+            transition: all 0.5s;
+        }
+        .feature-desc {
+            color: $bgColor;
+            margin-top: 1rem;
+            transition: all 0.5s;
+            font-size: 1.2rem;
+        }
+        &:hover {
+            background: $bgColor;
+            .feature-svg {
+                color: #fff;
+            }
+            .feature-desc {
+                color: #fff;
+            }
+        }
+    }
+  }
+  .section-column-feature {
+    padding-bottom: 1rem;
   }
   .section-three {
     display: grid;
@@ -1665,6 +1855,8 @@ export default {
       h2 {
         text-align: justify;
         font-size: 0.9rem;
+        font-weight: normal;
+        color: #666;
       }
       &:hover {
         transform: scale(1.025);
@@ -1679,11 +1871,14 @@ export default {
           width: 100%;
           position: absolute;
           z-index: -1;
-          background: #455b86;
+          background: $bgColor;
           animation: popBackground 0.3s ease-in;
         }
         .bottom {
           color: #fff;
+          h2 {
+            color: #fff;
+          }
           .more-btn {
             background: #fff;
             span {
@@ -1698,10 +1893,30 @@ export default {
     }
     .cover {
       background: #fff;
+      position: relative;
       img {
         height: 200px;
         width: 100%;
         object-fit: contain;
+      }
+      .time {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: $bgColor;
+        color: #fff;
+        padding: 5px 8px;
+        text-align: center;
+        .date { 
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .month {
+            font-size: 0.8rem;
+        }
+        .year {
+            font-size: 0.8rem;
+        }
       }
     }
 
@@ -1753,7 +1968,7 @@ export default {
     .left {
       display: flex;
       align-items: center;
-      transition: all 2s;
+      transition: all 1.2s;
     }
     .left-img {
       width: 100%;
@@ -1762,8 +1977,8 @@ export default {
     .right {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: all 2s;
+      justify-content: center;
+      transition: all 1.2s;
     }
     .leftAnimation {
       opacity: 1;
@@ -1775,11 +1990,11 @@ export default {
     }
     .leaveLeft {
       opacity: 0;
-      transform: translateX(-50vw);
+      transform: translateX(-200px);
     }
     .leaveRight {
       opacity: 0;
-      transform: translateX(100vw);
+      transform: translateX(200px);
     }
     .right-item {
       display: flex;
@@ -1793,14 +2008,32 @@ export default {
         width: 3rem;
         margin-right: 1rem;
       }
+      .rleft-svg {
+        font-size: 50px;
+        margin-right: 1rem;
+      }
+      .normal-btn {
+        width: fit-content;
+        margin: 1.5rem auto 0 auto;
+
+      }
       .title {
-        font-size: 2rem;
-        line-height: 3rem;
-        font-weight: bold;
+        font-size: 1.5rem;
+        line-height: 1.9rem;
+        margin-bottom: 10px;
+        font-weight: normal;
       }
       .desc {
-        font-size: 1.2rem;
-        line-height: 1.7rem;
+        line-height: 1.8rem;
+      }
+      .mdesc {
+        font-family: fantasy;
+        color: #333;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #909399;
+      }
+      .mdesc:last-child {
+        border: none;
       }
     }
   }
@@ -1814,14 +2047,25 @@ export default {
       width: 3.5rem;
       margin-right: 1rem;
     }
+    .comment-svg {
+        font-size: 60px;
+    }
     h2 {
-      font-size: 1.4rem;
-      line-height: 2.4rem;
+      font-size: 1rem;
+      line-height: 2rem;
       word-break: break-all;
+      margin-top: 0.6rem;
     }
     h3 {
-      font-size: 1.1rem;
-      line-height: 2rem;
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+      font-weight: normal;
+      font-family: monospace;
+      color: #222;
+    }
+    p {
+        font-size: 0.8rem;
+        font-style: italic;
     }
   }
 }
@@ -1834,5 +2078,11 @@ export default {
       transform: scale(1.05);
     }
   }
+}
+
+::v-deep .input-select .el-input__inner {
+    &::placeholder {
+        color: #fff!important;
+    }
 }
 </style>

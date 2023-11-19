@@ -15,7 +15,7 @@ export default {
     className: {
       type: String,
       default: "",
-    },
+    }
   },
   computed: {
     iconName() {
@@ -32,13 +32,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .svg-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
-  color: #455b86;
+  color: $bgColor;
 }
+
 </style>

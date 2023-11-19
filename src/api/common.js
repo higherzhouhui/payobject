@@ -12,6 +12,12 @@ export const getTargetCoin = (data) => service({
   method: 'get'
 })
 
+export const getCalculateRate = (data) => service({
+  url: '/calculateRate',
+  data,
+  method: 'post'
+})
+
 export const homeBlogList = (data) => service({
   url: '/cmdList',
   data,

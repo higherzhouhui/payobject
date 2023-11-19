@@ -1627,7 +1627,7 @@ export default {
             background: $baseColor;
           }
           ::v-deep .input-select .el-input__inner {
-            width: 7rem;
+            width: 7.5rem;
             border: none;
             height: 3rem;
             color: #fff;

@@ -13,6 +13,7 @@
             class="item show"
             v-for="item in blogList"
             :key="item.id"
+            @click="routerToBlogDetail(item.id)"
           >
             <div class="backgroundEffect"></div>
             <div class="cover">
@@ -35,17 +36,6 @@
         </div>
       </div>
   
-    </div>
-    <div class="modal" v-if="showMovie">
-      <div class="mask" @click="showMovie = false"></div>
-      <div class="close" @click="showMovie = false">
-        <img src="@/assets/images/index/close.png" />
-      </div>
-      <div class="modal-content">
-        <video controls muted loop>
-          <source :src="movieSrc" type="video/webm" />
-        </video>
-      </div>
     </div>
   </div>
 </template>
@@ -121,7 +111,6 @@ export default {
   mounted() {
     // window.addEventListener("scroll", this.onScroll);
     window.addEventListener("wheel", this.onWheel);
-    this.initShowSection();
   },
   beforeDestroy() {
     // window.removeEventListener("scroll", this.onScroll);
@@ -170,7 +159,9 @@ export default {
     to(path) {
       this.$router.push(path);
     },
-  
+    routerToBlogDetail(id) {
+        this.$router.push(`/blog/detail?id=${id}`)
+    },
     async getBlogsList() {
       try {
         const res = await cmsPageReq({current: 1, size: 30});

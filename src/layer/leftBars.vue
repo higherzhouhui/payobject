@@ -44,7 +44,7 @@
             </el-menu-item>
         </el-menu>
 
-        <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-else>
+        <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && $store.state.userInfo.userStatus">
             <el-menu-item index="/admin/dashboard">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
                 <span slot="title">{{ $t('home') }}</span>
@@ -77,20 +77,6 @@
                     <span slot="title">{{ $t('txzhgl') }}</span>
                 </el-menu-item>
             </el-submenu>
-            <!-- <el-submenu index="5">
-                <template slot="title">
-                    <img class="icon" src="@/assets/images/home/zzgl.png" alt="">
-                    <span slot="title">{{ $t('zzgl') }}</span>
-                </template>
-                <el-menu-item index="/admin/exchange/index">
-                    <img class="icon" src="@/assets/images/home/zz_icon.png" alt="">
-                    <span slot="title">{{ $t('zz') }}</span>
-                </el-menu-item>
-                <el-menu-item index="/admin/exchange/list">
-                    <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
-                    <span slot="title">{{ $t('zzzhgl') }}</span>
-                </el-menu-item>
-            </el-submenu> -->
             <el-submenu index="6">
                 <template slot="title">
                     <img class="icon" src="@/assets/images/home/aqsz_icon.png" alt="">
@@ -117,21 +103,15 @@
                 <img class="icon" src="@/assets/images/home/jycx.png" alt="">
                 <span slot="title">{{ $t('推荐好友') }}</span>
             </el-menu-item>
-            <!-- <el-menu-item index="/home/account">
-                <img class="icon" src="@/assets/images/home/zhanghu.png" alt="">
-                <span slot="title">{{ $t('myaccount') }}</span>
-            </el-menu-item>
-            <el-submenu index="7">
-                <template slot="title">
-                    <img class="icon" src="@/assets/images/home/grzx.png" alt="">
-                    <span slot="title">{{ $t('grzx') }}</span>
-                </template>
-                <el-menu-item index="/home/user">
-                    <img class="icon" src="@/assets/images/home/aqsz_icon.png" alt="">
-                    <span slot="title">{{ $t('aqsz') }}</span>
-                </el-menu-item>
-            </el-submenu> -->
         </el-menu>
+
+        <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && !$store.state.userInfo.userStatus">
+            <el-menu-item index="/admin/kycverification">
+                <img class="icon" src="@/assets/images/home/grzx.png" alt="">
+                <span slot="title">{{ $t('KYC认证') }}</span>
+            </el-menu-item>
+        </el-menu>
+
 
     </div>
 </template>

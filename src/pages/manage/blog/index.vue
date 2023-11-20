@@ -185,7 +185,7 @@
           }
         "
       >
-        <el-form label-width="120px" ref="formss" :model="blogForm">
+        <el-form label-width="120px" ref="formss" :model="blogForm" label-position="top" class="formStyle">
           <el-form-item :label="$t('标题')" class="mb24">
             <el-input
               v-model="blogForm.title"
@@ -200,11 +200,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item :label="$t('内容')" class="mb24">
-            <el-input
-              type="textarea"
-              v-model="blogForm.content"
-              placeholder="请输入内容"
-            ></el-input>
+            <Editor :passSon="blogForm.content" @update:content="updateContent"/>
           </el-form-item>
           <el-form-item :label="$t('封面')" class="mb24">
             <el-upload
@@ -213,7 +209,6 @@
               list-type="text"
               accept="image/*"
               :before-upload="(e) => handlesuccess(e)"
-              v-if="!blogForm.id"
             >
               <el-button size="small" type="primary" class="btn">{{
                 blogForm.cover ? $t("ysccxsc") : $t("djsc")
@@ -243,6 +238,7 @@
         </div>
       </el-dialog>
     </div>
+    
   </div>
 </template>
 <script>
@@ -254,10 +250,13 @@ import {
 } from "@/api/common";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
-
+import Editor from "@/components/Editor"
 
 export default {
   name: "transactionInquiry",
+  components: {
+    Editor
+  },
   data() {
     return {
       tableData: [],
@@ -313,6 +312,9 @@ export default {
     this.getInitData();
   },
   methods: {
+    updateContent(e) {
+      this.blogForm.content = e
+    },
     async changeSwitch(row) {
       try {
         this.loading = true;

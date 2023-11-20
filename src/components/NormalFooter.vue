@@ -148,7 +148,6 @@ footer {
       padding: 6px 10px;
       border-radius: 6px;
       margin-top: 16px;
-      cursor: pointer;
       &:hover {
         background: #0501fc;
       }

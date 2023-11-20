@@ -200,6 +200,9 @@ html {
 .moreDetail {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    @media screen and (max-width: 1100px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .contentBg {
@@ -342,7 +345,10 @@ html {
 
 .el-dialog {
     padding: 0 24px;
-
+    @media screen and (max-width: 800px) {
+        width: 100%;
+        max-width: 100%;
+    }
     .el-dialog__footer {
         .el-button {
             padding: 12px 24px;

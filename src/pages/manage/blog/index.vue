@@ -200,11 +200,11 @@
             ></el-input>
           </el-form-item>
           <el-form-item :label="$t('内容')" class="mb24">
-            <!-- <el-input
+            <el-input
               type="textarea"
               v-model="blogForm.content"
               placeholder="请输入内容"
-            ></el-input> -->
+            ></el-input>
           </el-form-item>
           <el-form-item :label="$t('封面')" class="mb24">
             <el-upload

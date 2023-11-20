@@ -350,7 +350,7 @@
           </div>
         </div>
       </div>
-      <div class="animation-warapper">
+      <div class="animation-warapper" id="abountUs">
         <div class="title-lg">
           <h1>{{ $t("comments") }}</h1>
           <h3>{{ $t("commentsDesc") }}</h3>
@@ -383,7 +383,7 @@
           <div class="swiper-pagination-commentsWiperOption"></div>
         </div>
       </div>
-      <div class="animation-warapper have-bg">
+      <div class="animation-warapper have-bg" id="abstract">
         <div class="title-lg">
           <h1>{{ $t("lastnews") }}</h1>
           <h3>{{ $t("lastnewsDesc") }}</h3>

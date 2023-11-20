@@ -45,7 +45,8 @@
         <div class="footer-item">
           <div class="footer-title">订阅</div>
           <div class="item-desc">探索更多的解决方案，请与我们联系</div>
-          <div class="btn">{{ $t("lxwm") }}</div>
+          <!-- <div class="btn">{{ $t("lxwm") }}</div> -->
+          <div class="btn">Support@reliancepay.net</div>
         </div>
       </div>
     </div>
@@ -63,11 +64,11 @@ export default {
     return {
       links: [
         { name: "首页", url: "/index" },
-        { name: "关于我们", url: "/about" },
         { name: "登录", url: "/user/login" },
-        { name: "博客", url: "/blog" },
+        { name: "新闻", url: "/blog" },
         { name: "注册", url: "/user/register" },
-        { name: "隐私&政策", url: "/privacy" },
+        { name: "服务协议", url: "/service" },
+        { name: "隐私保护政策", url: "/privacy" },
       ],
     };
   },

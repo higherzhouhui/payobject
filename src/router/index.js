@@ -6,12 +6,15 @@ Vue.use(VueRouter)
 
 //3. 创建路由的实例对象
 const router = new VueRouter({
+    mode: 'hash',
     meta: {  
         duplicateNavigationPolicy: 'ignore' // Ignore the warning for redundant navigation  
     },
     routes: [
         { path: '/', redirect: 'index' },
         { path: '/index', name: 'index', component: () => import('@/pages/root/index.vue') },
+        { path: '/privacy', name: 'privacy', component: () => import('@/pages/office/privacy.vue') },
+        { path: '/service', name: 'service', component: () => import('@/pages/office/service.vue') },
         { path: '/blog', name: 'blog', component: () => import('@/pages/blog/list.vue') },
         { path: '/blog/detail', name: 'blog/detail', component: () => import('@/pages/blog/detail.vue') },
         {

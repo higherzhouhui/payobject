@@ -4,9 +4,10 @@
         <div class="inner container-auto">
             <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
             <div class="flex flex_algin_center controlMenu">
-                <div class="item" :class="item.active && 'item-active'" v-for="item in navList" :key="item.title" @click="to(item.path)">
+                <a class="item" :class="item.active && 'item-active'" v-for="item in navList" :key="item.title" @click="to(item.path)" >
                     {{ item.title }}
-                </div>
+                </a>
+
                 <!-- <div class="item item-active" @click="to('/index')">{{ $t('home') }}</div>
                 <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div> -->
             </div>
@@ -63,8 +64,10 @@ export default {
       email: this.$store.state.userInfo.email,
       navList: [
         {title: this.$t('home'), path: '/index', active: true},
-        {title: this.$t('blog'), path: '/blog', active: false},
+        {title: this.$t('关于我们'), path: '', active: false, mao: '#abountUs'},
+        {title: 'News', path: '/blog', active: false},
       ],
+      path: '',
     }
   },
   mounted() {
@@ -76,6 +79,7 @@ export default {
   watch: {
     $route(to, _from) {
       const path = to.path;
+      this.path = to.path
       this.navList.forEach(item => {
         if (item.path == path) {
             item.active = true
@@ -90,7 +94,27 @@ export default {
         this.showMenu = !this.showMenu
     },
     to(path) {
-        this.$router.push(path)
+        if (path) {
+            if (path == this.$store.state.path) {
+                return
+            }
+            this.$router.push(path)
+        } else {
+            if (this.path !== '/index') {
+                this.$router.push('/index')
+                setTimeout(() => {
+                    const elm = document.getElementById('abountUs');
+                    if (elm) {
+                        elm.scrollIntoView(true);
+                    }
+                }, 500);
+            } else {
+                const elm = document.getElementById('abountUs');
+                if (elm) {
+                    elm.scrollIntoView(true);
+                }
+            }
+        }
     },
     open() {
         this.dialogTableVisible = true
@@ -187,9 +211,7 @@ header {
           height: 32px;
       }
   }
-  .item-active {
-      color: $baseHover;
-  }
+
   .controlMenu {
     display: flex;
     @media screen and (max-width: 800px) {
@@ -209,9 +231,14 @@ header {
       .item {
           cursor: pointer;
           padding: 0 1rem;
+          color: #fff;
+          text-decoration: none;
           &:hover {
               color: $baseHover;
           }
+      }
+      .item-active {
+        color: $baseHover;
       }
       .info {
           font-size: 1rem;

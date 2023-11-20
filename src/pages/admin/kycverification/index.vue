@@ -27,7 +27,7 @@
             }}</el-button
           >
         </LinkPath> -->
-        <div class="mt40 choice_box" v-if="tips == 1">
+        <div class="choice_box" v-if="tips == 1">
           <div class="title flex flex_align_center">
             <img src="@/assets/images/user/head_icon.png" alt="" />
             <span>{{ $t("wysk") }}</span>
@@ -229,7 +229,7 @@ export default {
       width: 352px;
       border-radius: 4px;
       background: rgba($color: #000000, $alpha: 0.22);
-
+      margin: 36px auto 0 auto;
       .title {
         color: #fff;
         font-size: 1.2rem;
@@ -240,7 +240,9 @@ export default {
           width: 40px;
         }
       }
-
+      .primary {
+        margin: 0 auto;
+      }
       .txt {
         margin: 24px 0;
         color: rgba($color: #fff, $alpha: 0.8);

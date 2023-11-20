@@ -117,9 +117,9 @@
           style="margin-right: 5px"
         ></el-checkbox>
         <span @click="checked = !checked" style="cursor: pointer">{{ $t("tybzs") }}</span>
-        <span class="baseColor pointer">《{{ $t("wlptfwxy") }}》</span
+        <span class="baseColor pointer" @click="to('/privacy')">《{{ $t("wlptfwxy") }}》</span
         >{{ $t("he")
-        }}<span class="baseColor pointer">《{{ $t("yszc") }}》</span>
+        }}<span class="baseColor pointer" @click="to('/service')">《{{ $t("yszc") }}》</span>
       </div>
       <el-button
         class="btn normal-btn"
@@ -162,7 +162,7 @@ export default {
         password: "",
         areaCode: "+86",
         repassWord: "",
-        inviteCode: "SUPER-PAY",
+        inviteCode: "",
         checkCode: "",
         code: "",
       },
@@ -183,9 +183,6 @@ export default {
     this.$refs.myName.focus();  
   }, 
   methods: {
-    routerToIndex() {
-      this.$router.push('/index');
-    },
     async getAreaCode() {
       try {
         let list = Local("areaList");

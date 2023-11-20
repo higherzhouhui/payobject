@@ -12,6 +12,7 @@ const router = new VueRouter({
     routes: [
         { path: '/', redirect: 'index' },
         { path: '/index', name: 'index', component: () => import('@/pages/root/index.vue') },
+        { path: '/blog', name: 'blog', component: () => import('@/pages/blog/list.vue') },
         {
             path: '/admin', name: 'admin', redirect: '/admin/dashboard', component: () => import('@/pages/admin/layout.vue'),
             children: [

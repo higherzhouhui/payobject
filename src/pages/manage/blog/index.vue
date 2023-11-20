@@ -2,7 +2,7 @@
   <div class="user_transactionInquiry_transactionDetails_contianer">
     <div class="content">
       <div class="add-new">
-        <div class="normal-btn" @click="showDialog({})">
+        <div class="normal-btn" @click="showDialog()">
           <i class="el-icon-plus"></i>
           新增
         </div>
@@ -196,15 +196,15 @@
             <el-input
               type="textarea"
               v-model="blogForm.mainPoint"
-              placeholder="请输入内容"
+              placeholder="请输入摘要"
             ></el-input>
           </el-form-item>
           <el-form-item :label="$t('内容')" class="mb24">
-            <el-input
+            <!-- <el-input
               type="textarea"
               v-model="blogForm.content"
               placeholder="请输入内容"
-            ></el-input>
+            ></el-input> -->
           </el-form-item>
           <el-form-item :label="$t('封面')" class="mb24">
             <el-upload
@@ -254,6 +254,8 @@ import {
 } from "@/api/common";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
+
+
 export default {
   name: "transactionInquiry",
   data() {
@@ -264,6 +266,7 @@ export default {
       dialogVisible: false,
       blogForm: {
         recommend: false,
+        content: "",
       },
       linkList: ["jycx", "兑换明细"],
       form: {
@@ -360,7 +363,7 @@ export default {
         const req = await upload(formData);
         if (req.code === 200) {
           this.blogForm.cover = req.data[0];
-          this.$forceUpdate();  
+          this.$forceUpdate();
           Message({
             type: "success",
             message: this.$t("sccg"),
@@ -370,7 +373,7 @@ export default {
       return false;
     },
     showDialog(row) {
-      this.blogForm = row || {recommend: false};
+      this.blogForm = row || { recommend: false, content: "" };
       this.dialogVisible = true;
     },
     handleSizeChange(val) {

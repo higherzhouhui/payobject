@@ -4,8 +4,11 @@
         <div class="inner container-auto">
             <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
             <div class="flex flex_algin_center controlMenu">
-                <div class="item item-active" @click="to('/index')">{{ $t('home') }}</div>
-                <!-- <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div> -->
+                <div class="item" :class="item.active && 'item-active'" v-for="item in navList" :key="item.title" @click="to(item.path)">
+                    {{ item.title }}
+                </div>
+                <!-- <div class="item item-active" @click="to('/index')">{{ $t('home') }}</div>
+                <div class="item ">{{ $t('product') }}&{{ $t('serve') }}</div> -->
             </div>
             <div class="info flex flex_align_center">
                 <div class="btn-group flex controlMenu" v-if="!email">
@@ -57,7 +60,11 @@ export default {
       languge: Local('lang') || 'zh',
       dialogTableVisible: false,
       showMenu: false,
-      email: this.$store.state.userInfo.email
+      email: this.$store.state.userInfo.email,
+      navList: [
+        {title: this.$t('home'), path: '/index', active: true},
+        {title: this.$t('blog'), path: '/blog', active: false},
+      ],
     }
   },
   mounted() {
@@ -65,6 +72,18 @@ export default {
   },
   beforeDestroy() {
       window.removeEventListener('wheel', this.onWheel)
+  },
+  watch: {
+    $route(to, _from) {
+      const path = to.path;
+      this.navList.forEach(item => {
+        if (item.path == path) {
+            item.active = true
+        } else {
+            item.active = false
+        }
+      })
+    },
   },
   methods: {
     handleShowMenu() {

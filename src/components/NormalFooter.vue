@@ -7,26 +7,27 @@
             ReliancePay旨在为更多的跨境企业提供便利的服务于技术支持
           </p>
           <h3>关注我们</h3>
-          <img
-            class="footer-icon"
-            src="@/assets/images/index/facebook.png"
-            alt="facebook"
-          />
+          <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">
+            <img
+              class="footer-icon"
+              src="@/assets/images/index/facebook.png"
+              alt="facebook"
+            />
+          </a>
+         <a href="https://twitter.com/PayReliance" target="_blank">
           <img
             class="footer-icon"
             src="@/assets/images/index/twitter.png"
             alt="twitter"
           />
+         </a>
+         <a href="https://www.instagram.com/payreliance/" target="_blank">
           <img
             class="footer-icon"
-            src="@/assets/images/index/telegram.png"
-            alt="telegram"
+            src="@/assets/images/index/ins.png"
+            alt="twitter"
           />
-          <img
-            class="footer-icon"
-            src="@/assets/images/index/skype.png"
-            alt="skype"
-          />
+         </a>
         </div>
         <div class="footer-item">
           <div class="footer-title">有效链接</div>
@@ -47,8 +48,8 @@
           <div class="btn">{{ $t("lxwm") }}</div>
         </div>
       </div>
-      <div class="copyright">{{ $t("footer") }}</div>
     </div>
+    <div class="copyright">{{ $t("footer") }}</div>
   </footer>
 </template>
 
@@ -81,8 +82,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 footer {
-  padding: 50px 0 8px 0;
-  font-size: 14px;
+  padding: 50px 0 0 0;
+  font-size: 0.9rem;
   color: #fff;
   background: $bgColor;
   text-align: center;
@@ -91,11 +92,15 @@ footer {
   .footer-content {
     .footer-icon {
       height: 30px;
+      width: 30px;
+      object-fit: fill;
       margin-right: 9px;
     }
   }
   .copyright {
     text-align: center;
+    background: $contentColor;
+    padding: 1rem 0;
   }
   .footer-top {
     box-sizing: border-box;
@@ -115,7 +120,7 @@ footer {
       margin: 12px 0;
     }
     .footer-title {
-      font-size: 17px;
+      font-size: 1rem;
       &::after {
         content: "";
         width: 30px;

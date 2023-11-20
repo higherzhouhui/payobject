@@ -39,7 +39,7 @@
                 <span slot="title">{{ $t('hlgl') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/blog">
-                <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
+                <img class="icon" src="@/assets/images/home/zz_icon.png" alt="">
                 <span slot="title">{{ $t('博文列表') }}</span>
             </el-menu-item>
         </el-menu>
@@ -239,6 +239,7 @@ export default {
     .el-menu {
         background: #20304c;
         overflow: hidden;
+        border-right: none;
     }
     .icon {
         margin-right: 8px;

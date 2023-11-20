@@ -668,12 +668,26 @@ export default {
   mounted() {
     // window.addEventListener("scroll", this.onScroll);
     window.addEventListener("wheel", this.onWheel);
+    this.initShowSection();
   },
   beforeDestroy() {
     // window.removeEventListener("scroll", this.onScroll);
     window.removeEventListener("wheel", this.onWheel);
   },
   methods: {
+    initShowSection() {
+      const selectContent = document.getElementsByClassName("animation");
+      const avaheight = window.screen.availHeight;
+      if (selectContent && selectContent.length) {
+        const length = selectContent.length;
+        for (let i = 0; i < length; i++) {
+          const domRect = selectContent[i].getBoundingClientRect();
+          if (domRect.top < avaheight * 0.7 && domRect.top > 0) {
+            this.animationFlag[`c${i}`] = true;
+          }
+        }
+      }
+    },
     getMonth(month) {
       let monthStr = "";
       const enmonthArray = [
@@ -753,7 +767,6 @@ export default {
       const avaheight = window.screen.availHeight;
       if (selectContent && selectContent.length) {
         const length = selectContent.length;
-        console.log(selectContent[0].getBoundingClientRect());
         for (let i = 0; i < length; i++) {
           const domRect = selectContent[i].getBoundingClientRect();
           if (scrollY < 100) {
@@ -1876,7 +1889,7 @@ export default {
   .section-three {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    column-gap: 1rem;
+    column-gap: 1.5rem;
     row-gap: 1rem;
     overflow: hidden;
     padding-bottom: 5px;
@@ -1973,13 +1986,15 @@ export default {
       }
     }
     .cover {
-      background: #fff;
-      position: relative;
-      img {
-        height: 200px;
+        background: #fff;
+        position: relative;
+        height: 250px;
         width: 100%;
-        object-fit: contain;
-      }
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
       .time {
         position: absolute;
         bottom: 0;
@@ -2173,14 +2188,15 @@ export default {
     color: #fff !important;
   }
 }
-.swiper-pagination-partnerWiperOption, .swiper-pagination-commentsWiperOption {
-    text-align: center;
-    ::v-deep .swiper-pagination-bullet {
-        height: 3px;
-        width: 25px;
-        margin: 0 4px;
-        border-radius: 0;
-        background: $bgColor;
-    }
+.swiper-pagination-partnerWiperOption,
+.swiper-pagination-commentsWiperOption {
+  text-align: center;
+  ::v-deep .swiper-pagination-bullet {
+    height: 3px;
+    width: 25px;
+    margin: 0 4px;
+    border-radius: 0;
+    background: $bgColor;
+  }
 }
 </style>

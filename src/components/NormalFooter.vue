@@ -4,7 +4,9 @@
       <div class="footer-top">
         <div class="footer-item">
           <p class="desc">
-            ReliancePay旨在为更多的跨境企业提供便利的服务于技术支持
+            <h4>ReliancePay</h4>
+            <br/>
+            旨在为更多的跨境企业提供便利的金融服务
           </p>
           <h3>关注我们</h3>
           <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">

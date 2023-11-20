@@ -2161,9 +2161,12 @@ export default {
     box-shadow: 0px 0px 10px 0px rgba(42, 54, 13, 0.25);
     padding: 2rem 1rem;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 280px;
     .user-info {
         display: flex;
-        margin-top: 2.5rem;
         align-items: center;
     }
     .avatar img {
@@ -2171,10 +2174,14 @@ export default {
       margin-right: 1rem;
     }
     h3 {
-      font-size: 14px;
+      font-size: 0.9rem;
       font-weight: normal;
       font-family: monospace;
       color: #333;
+      line-height: 1.5rem;
+      height: 160px;
+      word-break: break-all;
+      overflow: hidden;
     }
     .user-name {
         font-size: 1rem;

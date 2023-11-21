@@ -144,7 +144,7 @@
           </div>
         </div>
         <div class="money-right" v-if="moneyType == 'fabi'">
-          <h2>{{ $t("提现申请") }}</h2>
+          <h2>{{ $t("提现预览") }}</h2>
           <div class="divider" />
           <div class="column">
             <div class="column-left">

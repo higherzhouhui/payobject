@@ -47,7 +47,7 @@
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && $store.state.userInfo.userStatus">
             <el-menu-item index="/admin/dashboard">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
-                <span slot="title">{{ $t('home') }}</span>
+                <span slot="title">{{ $t('kztai') }}</span>
             </el-menu-item>
             <el-submenu index="31">
                 <template slot="title">
@@ -135,6 +135,7 @@ export default {
                 return
             }
             this.$router.push(path)
+            this.showMenu = false
         },
         toggleMenuShow() {
             this.showMenu = !this.showMenu
@@ -167,11 +168,11 @@ export default {
     }
     @media screen and (min-width: 800px) {
         .showMenu {
-            height: auto!important;
+            max-height: auto!important;
             animation: none!important;  
         }
         .hideMenu {
-            height: auto!important;
+            max-height: auto!important;
             animation: none!important;
         }
     }

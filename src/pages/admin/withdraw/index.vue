@@ -417,7 +417,7 @@
         "
       >
         <el-form
-          label-width="160px"
+          label-position="top"
           ref="formss"
           :model="currentSelectRow"
           class="formStyle moreDetail"
@@ -513,7 +513,7 @@
         </el-form>
 
         <el-form
-          label-width="160px"
+          label-position="top"
           ref="formss"
           :model="currentSelectRow"
           class="formStyle"
@@ -567,8 +567,7 @@
         type="primary"
         class="normal-btn"
         @click="dialogVisibleSuccess = false"
-        >{{ $t("确定") }}</el-button
-      >
+        >{{ $t("完成") }}</el-button>
     </el-dialog>
   </div>
 </template>
@@ -915,9 +914,6 @@ export default {
     color: $baseColor;
   }
 }
-::v-deep .el-dialog__footer {
-  display: flex;
-  justify-content: flex-end;
-}
+
 </style>
   

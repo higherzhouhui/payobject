@@ -160,16 +160,16 @@ html {
 .normal-btn {
     padding: 8px 20px;
     border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.5s;
-    background: $baseColor;
+  
     color: #fff;
     border: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid $baseColor;
-
+    cursor: pointer;
+    transition: all 0.5s;
+    background: $baseColor;
     &:hover {
         background: transparent;
         color: $baseColor;
@@ -192,13 +192,17 @@ html {
 }
 
 .formStyle {
-    height: 550px;
+    max-height: 450px;
     overflow: auto;
     padding-right: 10px;
+    @media screen and (min-height: 800px) {
+        max-height: 650px;
+    }
 }
 
 .moreDetail {
     display: grid;
+    column-gap: 12px;
     grid-template-columns: 1fr 1fr;
     @media screen and (max-width: 1100px) {
         grid-template-columns: 1fr;
@@ -271,8 +275,6 @@ html {
     }
 }
 
-.is-opened {}
-
 .el-submenu__title {
     color: rgba(255, 255, 255, 0.7);
 }
@@ -342,31 +344,56 @@ html {
     }
 
 }
-
+.el-dialog__wrapper {
+    display: flex;
+    align-items: center;
+    .el-dialog__title {
+        font-size: 15px;
+    }
+}
+.el-form--label-top .el-form-item__label {
+    padding: 0;
+}
+.el-dialog__body {
+    padding: 1.5rem 1rem;
+}
 .el-dialog {
-    padding: 0 24px;
+    padding: 0 2rem;
+    margin-top: 0!important;
     @media screen and (max-width: 800px) {
         width: 100%;
         max-width: 100%;
+        padding: 0 8px;
     }
     .el-dialog__footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 0;
         .el-button {
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 400;
+            padding: 8px 18px;
+            font-size: 14px;
+        }
+        .qx {
+            margin-right: 12px;
+        }
+        .qd {
+            border: 1px solid $baseColor;
+            cursor: pointer;
+            transition: all 0.5s;
+            background: $baseColor;
+            color: #fff;
+            &:hover {
+                background: transparent;
+                color: $baseColor;
+                border: 1px solid $baseColor;
+            }
         }
 
     }
-
     .el-dialog__header,
     .el-dialog__body {
-        border-bottom: 1px solid var(--unnamed, #DCDFE6);
-
-    }
-
-    .el-dialog__header,
-    .el-dialog__footer {
-        padding: 20px 0;
+        border-bottom: 1px solid var(--unnamed, #f5f5f5);
+        padding: 1.3rem 0!important;
     }
 }
 
@@ -523,6 +550,7 @@ ul::-webkit-scrollbar-thumb {
     display: flex;
     margin-top: 10px;
     justify-content: flex-end;
+    background: $contentColor;
 }
 
 .el-pagination__total,
@@ -687,3 +715,14 @@ ul::-webkit-scrollbar-thumb {
 .el-tooltip__popper {
     width: 500px;
 }
+.down-a {
+    padding: 4px 10px;
+    color: #fff;
+    text-decoration: none;
+    background: $baseColor;
+    border: 1px solid $baseColor;
+    &:hover {
+      color: $baseColor;
+      background: #fff;
+    }
+  }

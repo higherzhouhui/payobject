@@ -387,7 +387,7 @@ export default {
     background: rgba($color: #000, $alpha: 0.22);
     color: #fff;
     .title {
-      font-size: 16px;
+      font-size: 15px;
     }
   }
   .content-form {
@@ -401,7 +401,7 @@ export default {
   }
   .nowrap {
     color: #fff;
-    font-size: 0.8rem;
+    font-size: 12px;
   }
   .down-btn {
     margin-top: 0.5rem;

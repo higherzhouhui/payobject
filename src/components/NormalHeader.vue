@@ -33,6 +33,8 @@
                     </div>
                     <div class="menus" :class="showMenu && 'showMenu'">
                         <div class="menus-item" @click="to('/index')">{{ $t('home') }}</div>
+                        <div class="menus-item" @click="to('/blog')">News</div>
+                        <div class="menus-item" @click="to('')">关于我们</div>
                         <div class="menus-item" @click="to('/user/login')" v-if="!email">{{ $t('login') }}</div>
                         <div class="menus-item" @click="to('/user/register')" v-if="!email">{{ $t('register') }}</div>
                         <div class="menus-item" @click="to('/admin/dashboard')" v-if="email">{{$t('profile')}}</div>
@@ -291,7 +293,7 @@ header {
   width: 36px;
   height: 36px;
   border-radius: 5px;
-  background-color: #723eeb;
+  background-color: $bgColor;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -311,31 +313,27 @@ header {
   top: 88px;
   width: 100%;
   left: 0;
-  background: rgba($color: #8eabe7, $alpha: 1);
+  background: $contentColor;
   z-index: 999;
   box-sizing: border-box;
   transition: all 0.5s;
   overflow: hidden;
-  box-shadow: 2px 2px 1px #cddbee;
-  height: 0;
+  max-height: 0;
   .menus-item {
-      color: #fff;
       font-size: 1.2rem;
-      line-height: 2.1rem;
-      color: #000000;
+      color: #fff;
       cursor: pointer;
       text-align: center;
+      padding: 6px 0;
       &:hover {
-          color: #0501fc;
-          background: rgba($color: $contentColor, $alpha: 0.2);
+          color: $baseColor;
           font-weight: bold;
       }
   }
 }
 
 .showMenu {
-  height: 9.3rem;
-  padding: 1.5rem 0;
+  max-height: 500px;
 }
 
 .lang_box {
@@ -350,8 +348,5 @@ header {
           color: #fff;
       }
   }
-}
-::v-deep .el-dialog .el-dialog__header, .el-dialog .el-dialog__footer {
-    padding: 0.8rem 0;
 }
 </style>

@@ -129,7 +129,7 @@
         dialogVisible = false;
       }
         ">
-        <el-form label-width="160px" ref="formss" :model="currentSelectRow" class=" moreDetail">
+        <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle moreDetail">
           <el-form-item :label="$t('币种')" class="mb12">
             <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
           </el-form-item>
@@ -172,9 +172,13 @@
                 :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
           </el-form-item>
         </el-form>
+        <div slot="footer">
+          <el-button class="qd" @click="dialogVisible = false"
+            >完成</el-button>
+        </div>
       </el-dialog>
       <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
-        <el-form label-width="160px" ref="formss" :model="currentSelectRow">
+        <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle">
           <el-form-item :label="$t('币种')" class="mb12">
             <el-input v-model="currentSelectRow.srcCode" :readOnly="true"></el-input>
           </el-form-item>
@@ -204,6 +208,10 @@
                 :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
           </el-form-item>
         </el-form>
+        <div slot="footer">
+          <el-button class="qd" @click="usdtdialogVisible = false"
+            >完成</el-button>
+        </div>
       </el-dialog>
     </div>
   </template>

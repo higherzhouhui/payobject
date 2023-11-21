@@ -211,7 +211,7 @@
     "enterAmount": "输入金额",
     "recipients": "收到人金额",
     "lastestRate": "最新汇率",
-    "limitNum": "限制 1.00 - 100000",
+    "limitNum": "限制 大于10",
     "transoctionType": "交易类型",
     "proceed": "执行",
     "createAccount": "创建一个账号",

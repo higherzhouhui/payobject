@@ -97,19 +97,12 @@
             fixed="right"
           >
             <template slot-scope="scope">
-              <span
-                @click="toDetail(scope.row)"
-                class="baseColor cursor"
-                style="cursor: pointer"
-                >修改</span
-              >
-              <span
-                class="cursor"
-                style="cursor: pointer; margin-left: 10px; color: red"
-                @click="del1(scope.row.id)"
-              >
+              <el-button type="primary" size="small" class="btn" @click="toDetail(scope.row)">
+                修改
+              </el-button>
+              <el-button type="danger" size="small" class="btn" @click="del1(scope.row.id)">
                 删除
-              </span>
+              </el-button>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -171,19 +164,12 @@
           >
             <template slot-scope="scope">
               <div>
-                <span
-                  @click="toDetail2(scope.row)"
-                  class="baseColor cursor"
-                  style="cursor: pointer"
-                  >修改</span
-                >
-                <span
-                  class="cursor"
-                  style="cursor: pointer; margin-left: 10px; color: red"
-                  @click="del2(scope.row.id)"
-                >
+                <el-button type="primary" size="small" class="btn" @click="toDetail2(scope.row)">
+                  修改
+                </el-button>
+                <el-button type="danger" size="small" class="btn" @click="del2(scope.row.id)">
                   删除
-                </span>
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -209,7 +195,7 @@
       "
     >
       <el-form
-        label-width="160px"
+        label-position="top"
         ref="formss"
         :model="bankForm"
         class="formStyle"
@@ -316,18 +302,13 @@
               {{ $t("scts") }}
             </div>
           </el-upload>
-          <el-button
-            v-else
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            ><a
+          <a
+          v-else
+          class="down-a"
+
               :href="'/api/file/downLoad?url=' + bankForm.accountCer"
               target="_blank"
-              >点击下载</a
-            ></el-button
-          >
+              >点击下载</a>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -350,7 +331,7 @@
         }
       "
     >
-      <el-form label-width="160px" ref="formss" :model="bankForm2">
+      <el-form label-position="top" ref="formss" :model="bankForm2">
         <el-form-item label="被兑换币种" class="mb24">
           <el-select
             v-model="bankForm2.exFrom"
@@ -709,5 +690,8 @@ export default {
 }
 .elSelect {
   width: 100%;
+}
+.btn {
+  padding: 4px 8px;
 }
 </style>

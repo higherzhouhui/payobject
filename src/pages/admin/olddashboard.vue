@@ -138,7 +138,7 @@
             dialogVisible = false;
           }
             ">
-            <el-form label-width="160px" ref="formss" :model="userInfo.kyc" class="formStyle" v-if="userInfo.kyc">
+            <el-form label-position="top" ref="formss" :model="userInfo.kyc" class="formStyle" v-if="userInfo.kyc">
               <el-form-item :label="$t('qymc')" class="mb24">
                 <el-input v-model="userInfo.kyc.companyName" :readOnly="true"></el-input>
               </el-form-item>

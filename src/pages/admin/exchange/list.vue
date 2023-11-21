@@ -24,7 +24,11 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')" clearable>
+          <el-select
+            v-model="form.bankStatus"
+            :placeholder="$t('zhbdzt')"
+            clearable
+          >
             <el-option
               style="padding: 0 20px"
               v-for="item in options"
@@ -44,11 +48,37 @@
           </el-button> -->
         </el-form-item>
       </el-form>
-      <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading">
-        <el-table-column prop="accountName" :label="$t('zhmc')" min-width="180" show-overflow-tooltip	/>
-        <el-table-column prop="bankName" :label="$t('bankname')" min-width="180" show-overflow-tooltip	/>
-        <el-table-column prop="bankAccount" :label="$t('yhzh')" min-width="200" show-overflow-tooltip	/>
-        <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip/>
+      <el-table
+        class="tables"
+        size="small"
+        :data="tableData"
+        style="width: 100%"
+        v-loading="loading"
+      >
+        <el-table-column
+          prop="accountName"
+          :label="$t('zhmc')"
+          min-width="180"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="bankName"
+          :label="$t('bankname')"
+          min-width="180"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="bankAccount"
+          :label="$t('yhzh')"
+          min-width="200"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="accountAdd"
+          :label="$t('jzdz')"
+          min-width="180"
+          show-overflow-tooltip
+        />
         <el-table-column prop="bankStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
@@ -56,7 +86,12 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" :label="$t('cjrq')" min-width="165" show-overflow-tooltip/>
+        <el-table-column
+          prop="createTime"
+          :label="$t('cjrq')"
+          min-width="165"
+          show-overflow-tooltip
+        />
         <el-table-column
           prop="name"
           :label="$t('cz')"
@@ -64,19 +99,22 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <span
+            <el-button
+              type="info"
+              class="btn"
+              size="small"
               @click="toDetail(scope.row)"
-              class="baseColor cursor"
-              style="cursor: pointer"
-              >详情</span
             >
-            <span
-              class="deleteColor cursor"
-              style="cursor: pointer; margin-left: 10px;"
+              {{ $t("详情") }}
+            </el-button>
+            <el-button
+              type="danger"
+              class="btn"
+              size="small"
               @click="delBank(scope.row.id)"
             >
-              删除
-            </span>
+              {{ $t("删除") }}
+            </el-button>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -98,7 +136,12 @@
         }
       "
     >
-      <el-form label-width="160px" ref="formss" :model="bankForm" class="formStyle">
+      <el-form
+        label-position="top"
+        ref="formss"
+        :model="bankForm"
+        class="formStyle"
+      >
         <el-form-item :label="$t('zhmc')" class="mb24">
           <el-input
             v-model="bankForm.accountName"
@@ -121,8 +164,8 @@
               :key="item.id"
               :value="item.areaCode"
             >
-            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-            {{ languge == 'zh' ? item.name : item.enName}}
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+              {{ languge == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
@@ -173,11 +216,10 @@
               :key="item.id"
               :value="item.areaCode"
             >
-            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-            {{ languge == 'zh' ? item.name : item.enName}}
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+              {{ languge == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
-
         </el-form-item>
         <el-form-item :label="$t('khdz')" class="mb24">
           <el-input
@@ -186,7 +228,11 @@
             type="textarea"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('驳回理由')" class="mb24" v-if="bankForm.bankStatus == 2">
+        <el-form-item
+          :label="$t('驳回理由')"
+          class="mb24"
+          v-if="bankForm.bankStatus == 2"
+        >
           <el-input
             v-model="bankForm.reason"
             :disabled="!!bankForm.id"
@@ -217,26 +263,28 @@
               {{ $t("scts") }}
             </div>
           </el-upload>
-          <el-button
-            v-else
-            style="padding: 4px 20px"
-            
-            size="small"
-            type="primary"
-            class="btn"
-            ><a :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank">点击下载</a></el-button
+          <a
+            v-if="bankForm.accountCer"
+            class="down-a"
+            :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+            target="_blank"
+            >点击下载</a
           >
         </el-form-item>
       </el-form>
-
       <span slot="footer" class="dialog-footer" v-if="!bankForm.id">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
         <el-button
-          type="primary"
+          class="qd"
           :class="bankloading && 'loading'"
           @click="addBank"
           >{{ $t("sure") }}</el-button
         >
+      </span>
+      <span slot="footer" class="dialog-footer" v-if="bankForm.id">
+        <el-button class="qd" @click="dialogVisible = false">{{
+          $t("sure")
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -247,8 +295,8 @@ import { getBankList, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
 import { upload, downLoad } from "@/api/file";
-import { Local } from "@/utils/index"
-import { getFlagIcon } from "@/utils/common"
+import { Local } from "@/utils/index";
+import { getFlagIcon } from "@/utils/common";
 
 export default {
   name: "transferAccountMangement",
@@ -315,7 +363,7 @@ export default {
   },
   created() {
     this.getlist();
-    this.getAreaCode()
+    this.getAreaCode();
   },
   methods: {
     async getAreaCode() {
@@ -355,7 +403,7 @@ export default {
       return false;
     },
     delBank(id) {
-      this.$confirm("确认删除？")
+      this.$confirm("确认删除？", "提示")
         .then(async (_) => {
           try {
             await bankDel({ bankId: id });
@@ -377,7 +425,7 @@ export default {
           type: "success",
           message: this.$t("fscg"),
         });
-        this.getlist()
+        this.getlist();
         this.dialogVisible = false;
         this.bankloading = false;
       } catch (error) {
@@ -386,12 +434,12 @@ export default {
     },
     async getlist() {
       try {
-        this.loading = true
+        this.loading = true;
         let req = await getBankList(this.form);
         this.tableData = req.data;
-        this.loading = false
+        this.loading = false;
       } catch (error) {
-        this.loading = false
+        this.loading = false;
       }
     },
   },
@@ -417,6 +465,10 @@ export default {
 }
 
 .deleteColor {
-  color: red
+  color: red;
+}
+
+.btn {
+  padding: 4px 10px;
 }
 </style>

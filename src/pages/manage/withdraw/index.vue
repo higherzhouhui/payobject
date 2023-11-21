@@ -170,51 +170,51 @@
       dialogVisible = false;
     }
       ">
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow" class="formStyle moreDetail">
-        <el-form-item :label="$t('币种')" class="mb12">
+      <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle moreDetail">
+        <el-form-item :label="$t('币种')">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('出款金额')" class="mb12">
+        <el-form-item :label="$t('出款金额')">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('实际到账金额')" class="mb12" v-if="currentSelectRow.withdrawValue">
+        <el-form-item :label="$t('实际到账金额')" v-if="currentSelectRow.withdrawValue">
           <el-input v-model="currentSelectRow.withdrawValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('手续费')" class="mb12" v-if="currentSelectRow.withdrawValue">
+        <el-form-item :label="$t('手续费')" v-if="currentSelectRow.withdrawValue">
           <el-input v-model="currentSelectRow.commission" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('收款账户名称')" class="mb12">
+        <el-form-item :label="$t('收款账户名称')">
           <el-input v-model="currentSelectRow.accountName" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('预计到账金额')" class="mb12">
+        <el-form-item :label="$t('预计到账金额')">
           <el-input v-model="currentSelectRow.changeValue" :readOnly="true"></el-input>
         </el-form-item>
 
-        <el-form-item :label="$t('收款账号')" class="mb12">
+        <el-form-item :label="$t('收款账号')">
           <el-input v-model="currentSelectRow.outbankAccount" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('代码')" class="mb12">
+        <el-form-item :label="$t('代码')">
           <el-input v-model="currentSelectRow.outbankCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('所属国家')" class="mb12">
+        <el-form-item :label="$t('所属国家')">
           <el-input v-model="currentSelectRow.outbankCountry" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('所在地址')" class="mb12">
+        <el-form-item :label="$t('所在地址')">
           <el-input type="textarea" v-model="currentSelectRow.outbankAdd" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('SWIFT')" class="mb12">
+        <el-form-item :label="$t('SWIFT')">
           <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+        <el-form-item :label="$t('驳回理由')" v-if="currentSelectRow.reqStatus == 5">
           <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('创建时间')" class="mb12">
+        <el-form-item :label="$t('创建时间')">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('修改时间')" class="mb12">
+        <el-form-item :label="$t('修改时间')">
           <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')" class="mb12">
+        <el-form-item :label="$t('汇款凭证')">
           <el-upload
               class="upload-demo"
               action="null"
@@ -232,49 +232,59 @@
               :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
+      <div slot="footer">
+        <el-button class="qd" size="small" @click="dialogVisible = false">
+          完成
+        </el-button>
+      </div>
     </el-dialog>
     <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('币种')" class="mb12">
+      <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle">
+        <el-form-item :label="$t('币种')">
           <el-input v-model="currentSelectRow.srcCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('收款钱包地址')" class="mb12">
+        <el-form-item :label="$t('收款钱包地址')">
           <el-input v-model="currentSelectRow.cryptAdd" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('目标币种')" class="mb12">
+        <el-form-item :label="$t('目标币种')">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('出款金额')" class="mb12">
+        <el-form-item :label="$t('出款金额')">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('预计到账金额')" class="mb12">
+        <el-form-item :label="$t('预计到账金额')">
           <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.memo">
+        <el-form-item :label="$t('驳回理由')" v-if="currentSelectRow.memo">
           <el-input type="textarea" v-model="currentSelectRow.memo" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('创建时间')" class="mb12">
+        <el-form-item :label="$t('创建时间')">
           <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('修改时间')" class="mb12">
+        <el-form-item :label="$t('修改时间')">
           <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')" class="mb12" v-if="current.reqProof">
+        <el-form-item :label="$t('汇款凭证')" v-if="current.reqProof">
           <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
         </el-form-item>
       </el-form>
+      <div slot="footer">
+        <el-button class="qd" size="small" @click="usdtdialogVisible = false">
+          完成
+        </el-button>
+      </div>
     </el-dialog>
 
     <el-dialog :title="`出金确认`" :visible.sync="passdialogVisible" width="650" :before-close="() => { passdialogVisible = false; }">
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('实际到账金额')" class="mb12" v-if="moneyType == 'fabi'">
+      <el-form label-position="top" ref="formss" :model="currentSelectRow">
+        <el-form-item :label="$t('实际到账金额')" v-if="moneyType == 'fabi'">
           <el-input type="number" v-model="currentSelectRow.withdrawValue"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('手续费')" class="mb12" v-if="moneyType == 'fabi'">
+        <el-form-item :label="$t('手续费')" v-if="moneyType == 'fabi'">
           <el-input type="number" v-model="currentSelectRow.commission"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')" class="mb12">
+        <el-form-item :label="$t('汇款凭证')">
           <el-upload
               class="upload-demo"
               action="null"
@@ -298,8 +308,8 @@
       </el-form>
     </el-dialog>
     <el-dialog :title="`驳回`" :visible.sync="rejectdialogVisible" width="650" :before-close="() => { rejectdialogVisible = false; }">
-      <el-form label-width="160px" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('驳回理由')" class="mb12">
+      <el-form label-position="top" ref="formss" :model="currentSelectRow">
+        <el-form-item :label="$t('驳回理由')">
           <el-input type="textarea" v-model="currentSelectRow.memo"></el-input>
         </el-form-item>
         <div class="operationBtn">

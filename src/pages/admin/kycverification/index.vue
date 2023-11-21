@@ -220,7 +220,7 @@ export default {
       color: #fff;
       font-size: 1.2rem;
       span {
-        font-size: 0.8rem;
+        font-size: 12px;
         color: rgb(201, 127, 127);
       }
     }

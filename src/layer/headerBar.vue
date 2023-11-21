@@ -213,6 +213,7 @@ header {
   }
   .nickName {
     color: #fff;
+    font-size: 14px;
   }
   .quite {
     font-size: 1rem;
@@ -233,8 +234,8 @@ header {
   }
 }
 ::v-deep .el-dropdown-menu__item {
-  padding: 0.2rem 1.5rem;
-  font-size: 0.8rem;
-  line-height: 1.2rem;
+  padding: 4px 10px;
+  font-size: 13px;
+  line-height: 18jpx;
 }
 </style>

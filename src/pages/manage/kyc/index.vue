@@ -82,39 +82,43 @@
             min-width="180"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="180" fixed="right">
+          <el-table-column :label="$t('cz')" width="190" fixed="right">
             <template slot-scope="scope">
-              <span
+              <el-button
+                type="info"
+                class="btn"
+                size="small"
                 @click="toDetail(scope.row)"
-                class="baseColor cursor"
-                style="cursor: pointer"
-                >详情</span
               >
-              <span
-                v-if="scope.row.bankStatus == 1"
-                class="cursor"
-                style="cursor: pointer; margin-left: 10px; color: rgb(179, 176, 194)"
+                详情
+              </el-button>
+              <el-button
+                type="primary"
+                class="btn"
+                size="small"
                 @click="showUsdtForm(scope.row)"
               >
                 <i class="el-icon-plus" />
                 加密货币地址
-              </span>
-              <span
+              </el-button>
+              <el-button
                 v-if="scope.row.bankStatus == 0"
-                class="cursor"
-                style="cursor: pointer; margin-left: 10px; color: green"
+                class="btn"
+                type="success"
+                size="small"
                 @click="sh(scope.row.id, true)"
               >
-                审核通过
-              </span>
-              <span
+                通过
+              </el-button>
+              <el-button
                 v-if="scope.row.bankStatus == 0"
-                class="cursor"
-                style="cursor: pointer; margin-left: 10px; color: red"
-                @click="sh(scope.row.id, false)"
+                class="btn"
+                type="danger"
+                size="small"
+                @click="rejectKyc(scope.row)"
               >
                 驳回
-              </span>
+              </el-button>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -197,35 +201,39 @@
           <el-table-column
             prop="createTime"
             :label="$t('cjrq')"
-            min-width="180"
+            min-width="160"
             show-overflow-tooltip
           />
 
-          <el-table-column :label="$t('cz')" width="160" fixed="right">
+          <el-table-column :label="$t('cz')" width="180" fixed="right">
             <template slot-scope="scope">
               <div>
-                <span
+                <el-button
+                  type="info"
+                  class="btn"
+                  size="small"
                   @click="toDetail2(scope.row)"
-                  class="baseColor cursor"
-                  style="cursor: pointer"
-                  >详情</span
                 >
-                <span
+                  详情
+                </el-button>
+                <el-button
                   v-if="scope.row.kycStatus == 0"
-                  class="cursor"
-                  style="cursor: pointer; margin-left: 10px; color: green"
+                  type="success"
+                  class="btn"
+                  size="small"
                   @click="sh2(scope.row.id, true)"
                 >
                   通过
-                </span>
-                <span
+                </el-button>
+                <el-button
                   v-if="scope.row.kycStatus == 0"
-                  class="cursor"
-                  style="cursor: pointer; margin-left: 10px; color: red"
+                  type="danger"
+                  class="btn"
+                  size="small"
                   @click="rejectKyc(scope.row)"
                 >
                   驳回
-                </span>
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -261,68 +269,68 @@
       "
     >
       <el-form
-        label-width="160px"
+        label-position="top"
         ref="formss"
         :model="bankForm"
         class="formStyle"
       >
-        <el-form-item :label="$t('zhmc')" class="mb24">
+        <el-form-item :label="$t('zhmc')">
           <el-input
             v-model="bankForm.accountName"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('ssgj')" class="mb24">
+        <el-form-item :label="$t('ssgj')">
           <el-input
             v-model="bankForm.country"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('jzdz')" class="mb24">
+        <el-form-item :label="$t('jzdz')">
           <el-input
             type="textarea"
             v-model="bankForm.accountAdd"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankname')" class="mb24">
+        <el-form-item :label="$t('bankname')">
           <el-input
             v-model="bankForm.bankName"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('swift')" class="mb24">
+        <el-form-item :label="$t('swift')">
           <el-input
             v-model="bankForm.swiftCode"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankcode')" class="mb24">
+        <el-form-item :label="$t('bankcode')">
           <el-input
             v-model="bankForm.bankCode"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankcount')" class="mb24">
+        <el-form-item :label="$t('bankcount')">
           <el-input
             v-model="bankForm.bankAccount"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('khgj')" class="mb24">
+        <el-form-item :label="$t('khgj')">
           <el-input
             v-model="bankForm.bankCountry"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('khdz')" class="mb24">
+        <el-form-item :label="$t('khdz')">
           <el-input
             type="textarea"
             v-model="bankForm.bankAdd"
             :disabled="!!bankForm.id"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24">
+        <el-form-item :label="$t('scwj')">
           <label style="font-size: 12px">
             {{ $t("zzd") }}
           </label>
@@ -339,6 +347,11 @@
           >
         </el-form-item>
       </el-form>
+      <div slot="footer">
+        <el-button class="qd" size="small" @click="dialogVisible = false">
+          完成
+        </el-button>
+      </div>
     </el-dialog>
     <el-dialog
       :title="'详情'"
@@ -351,22 +364,22 @@
       "
     >
       <el-form
-        label-width="160px"
         ref="formss"
         :model="bankForm2"
         class="formStyle"
+        label-position="top"
       >
-        <el-form-item :label="$t('qymc')" class="mb24">
+        <el-form-item :label="$t('qymc')">
           <el-input v-model="bankForm2.companyName" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('qyjydz')" class="mb24">
+        <el-form-item :label="$t('qyjydz')">
           <el-input
             type="textarea"
             v-model="bankForm2.businessAdd"
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('qylx')" class="mb24">
+        <el-form-item :label="$t('qylx')">
           <el-select
             v-model="bankForm2.busType"
             :disabled="true"
@@ -381,10 +394,10 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('qyzcszgj')" class="mb24">
+        <el-form-item :label="$t('qyzcszgj')">
           <el-input v-model="bankForm2.country" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('zcrq')" class="mb24">
+        <el-form-item :label="$t('zcrq')">
           <el-date-picker
             style="width: 100%"
             size="small"
@@ -395,7 +408,7 @@
             :placeholder="$t('xzsj')"
           />
         </el-form-item>
-        <el-form-item :label="$t('qyyxq')" class="mb24">
+        <el-form-item :label="$t('qyyxq')">
           <el-date-picker
             :disabled="true"
             style="width: 100%"
@@ -406,98 +419,80 @@
             :placeholder="$t('xzsj')"
           />
         </el-form-item>
-        <el-form-item :label="$t('ygyhkje')" class="mb24">
+        <el-form-item :label="$t('ygyhkje')">
           <el-input
             v-model="bankForm2.monthlyRemittance"
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('ygyjybs')" class="mb24">
+        <el-form-item :label="$t('ygyjybs')">
           <el-input
             v-model="bankForm2.transactionsMonth"
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('dbjyed')" class="mb24">
+        <el-form-item :label="$t('dbjyed')">
           <el-input
             v-model="bankForm2.transactionLimit"
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('ywcjsm')" class="mb24">
+        <el-form-item :label="$t('ywcjsm')">
           <el-input
             type="textarea"
             v-model="bankForm2.businessScenario"
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('qygw')" class="mb24">
+        <el-form-item :label="$t('qygw')">
           <el-input v-model="bankForm2.webSite" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item
-          :label="$t('驳回理由')"
-          class="mb24"
-          v-if="bankForm2.reason"
-        >
+        <el-form-item :label="$t('驳回理由')" v-if="bankForm2.reason">
           <el-input
             type="textarea"
             v-model="bankForm2.reason"
             :disabled="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24">
+        <el-form-item :label="$t('scwj')">
           <label style="font-size: 12px">
             {{ $t("t1") }}
           </label>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            ><a
-              :href="'/api/file/downLoad?url=' + bankForm2.regCer"
-              target="_blank"
-              >点击下载</a
-            ></el-button
+          <a
+            :href="'/api/file/downLoad?url=' + bankForm2.regCer"
+            target="_blank"
+            class="down-a"
+            >点击下载</a
           >
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24">
+        <el-form-item :label="$t('scwj')">
           <label style="font-size: 12px">
             {{ $t("t2") }}
           </label>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            ><a
-              :href="'/api/file/downLoad?url=' + bankForm2.legal"
-              target="_blank"
-              >点击下载</a
-            ></el-button
-          >
-        </el-form-item>
-        <el-form-item
-          :label="$t('scwj')"
-          class="mb24"
-          v-if="bankForm2.busType != 1"
+          <a
+          :href="'/api/file/downLoad?url=' + bankForm2.legal"
+          target="_blank"
+          class="down-a"
+          >点击下载</a
         >
+        </el-form-item>
+        <el-form-item :label="$t('scwj')" v-if="bankForm2.busType != 1">
           <label style="font-size: 12px">
             {{ $t("t3") }}
           </label>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            ><a
-              :href="'/api/file/downLoad?url=' + bankForm2.shareholder"
-              target="_blank"
-              >点击下载</a
-            ></el-button
+          <a
+            :href="'/api/file/downLoad?url=' + bankForm2.shareholder"
+            target="_blank"
+            class="down-a"
+            >点击下载</a
           >
         </el-form-item>
       </el-form>
+      <div slot="footer">
+        <el-button class="qd" size="small" @click="dialogVisible2 = false">
+          完成
+        </el-button>
+      </div>
     </el-dialog>
     <el-dialog
       :title="'加密货币地址'"
@@ -505,12 +500,12 @@
       width="636px"
       :before-close="
         () => {
-          dialogVisible2 = false;
+          dialogVisible3 = false;
         }
       "
     >
-      <el-form label-width="160px">
-        <el-form-item label="币种" class="mb24">
+      <el-form label-position="top">
+        <el-form-item label="币种">
           <el-select v-model="addressForm.cryCode" class="elSelect">
             <el-option
               style="padding: 0 10px"
@@ -521,7 +516,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="地址" class="mb24">
+        <el-form-item label="地址">
           <el-input v-model="addressForm.cryAdd"></el-input>
         </el-form-item>
       </el-form>
@@ -540,15 +535,14 @@
     <el-dialog
       :title="'驳回'"
       :visible.sync="rejectdialogVisible"
-      width="636px"
       :before-close="
         () => {
           rejectdialogVisible = false;
         }
       "
     >
-      <el-form label-width="160px">
-        <el-form-item label="驳回理由" class="mb24">
+      <el-form label-position="top">
+        <el-form-item label="驳回理由">
           <el-input
             type="textarea"
             v-model="currentSelectRow.reason"
@@ -638,9 +632,9 @@ export default {
   },
   watch: {
     type() {
-      this.current = 1
-      this.form = {}
-      this.getInitData()
+      this.current = 1;
+      this.form = {};
+      this.getInitData();
     },
   },
   methods: {
@@ -658,16 +652,24 @@ export default {
     async rejectConfirm() {
       try {
         this.bankloading = true;
-        await perKyc({
-          id: this.currentSelectRow.id,
-          pass: false,
-          reason: this.currentSelectRow.reason,
-        });
+        if (this.type == "first") {
+          await perBank({
+            id: this.currentSelectRow.id,
+            pass: false,
+            reason: this.currentSelectRow.reason,
+          });
+        } else {
+          await perKyc({
+            id: this.currentSelectRow.id,
+            pass: false,
+            reason: this.currentSelectRow.reason,
+          });
+        }
         Message({
           type: "success",
           message: "操作成功",
         });
-        this.getlist2();
+        this.getInitData();
         this.bankloading = false;
         this.rejectdialogVisible = false;
       } catch {
@@ -719,7 +721,7 @@ export default {
       } catch (error) {}
     },
     sh2(id, type) {
-      this.$confirm(type ? "确认通过？" : "确认驳回？")
+      this.$confirm(type ? "确认通过？" : "确认驳回？", "提示")
         .then(async (_) => {
           try {
             await perKyc({ id, pass: type, reason: "123" });
@@ -733,10 +735,10 @@ export default {
         .catch((_) => {});
     },
     sh(id, type) {
-      this.$confirm(type ? "确认通过？" : "确认驳回？")
+      this.$confirm(type ? "确认通过？" : "确认驳回？", "提示")
         .then(async (_) => {
           try {
-            await perBank({ id, pass: type, reason: "123" });
+            await perBank({ id, pass: type });
             Message({
               type: "success",
               message: "操作成功",
@@ -757,18 +759,26 @@ export default {
     async getlist() {
       try {
         this.loading = true;
-        let req = await getBankListPage({...this.form, current: this.current, size: this.size});
+        let req = await getBankListPage({
+          ...this.form,
+          current: this.current,
+          size: this.size,
+        });
         this.tableData = req.data.records;
-        this.total = req.data.total
+        this.total = req.data.total;
         this.loading = false;
       } catch (error) {}
     },
     async getlist2() {
       try {
         this.loading = true;
-        let req = await kycList({...this.form, current: this.current, size: this.size});
+        let req = await kycList({
+          ...this.form,
+          current: this.current,
+          size: this.size,
+        });
         this.tableData2 = req.data.records;
-        this.total = req.data.total
+        this.total = req.data.total;
         this.loading = false;
       } catch (error) {}
     },
@@ -785,8 +795,8 @@ export default {
     },
   },
   created() {
-    const params = getHashParams()
-    this.type = params.get('type') || 'first'
+    const params = getHashParams();
+    this.type = params.get("type") || "first";
     this.getlist();
     this.getSzList();
   },
@@ -800,8 +810,11 @@ export default {
     background: $contentColor;
   }
 }
-
+.btn {
+  padding: 4px 10px;
+}
 .btn a {
+  text-decoration: none;
   color: #fff;
 }
 .elSelect {

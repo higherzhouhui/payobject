@@ -25,12 +25,13 @@
                     <span class="txt">{{ $t('languageChange') }}</span>
                     <img class="xiala" src="@/assets/images/index/xiala.png" alt="down">
                 </div>
-                <div class="controlDrop" @click="handleShowMenu">
+                <div class="controlDrop" @click.stop="handleShowMenu">
                     <div class="menu-btn">
                         <div />
                         <div />
                         <div />
                     </div>
+                    <div class="full-screen" v-if="showMenu" @click.stop="showMenu = false"/>
                     <div class="menus" :class="showMenu && 'showMenu'">
                         <div class="menus-item" @click="to('/index')">{{ $t('home') }}</div>
                         <div class="menus-item" @click="to('/blog')">News</div>
@@ -336,6 +337,14 @@ header {
   max-height: 500px;
 }
 
+.full-screen {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
 .lang_box {
   .item {
       text-align: center;

@@ -674,13 +674,13 @@ export default {
     },
   },
   mounted() {
-    // window.addEventListener("scroll", this.onScroll);
-    window.addEventListener("wheel", this.onWheel);
+    window.addEventListener("scroll", this.debounce(this.onScroll, 50));
+    // window.addEventListener("wheel", this.onWheel);
     this.initShowSection();
   },
   beforeDestroy() {
-    // window.removeEventListener("scroll", this.onScroll);
-    window.removeEventListener("wheel", this.onWheel);
+    window.removeEventListener("scroll", this.debounce(this.onScroll, 50));
+    // window.removeEventListener("wheel", this.onWheel);
   },
   methods: {
     routerToBlogDetail(id) {
@@ -689,12 +689,14 @@ export default {
     initShowSection() {
       const selectContent = document.getElementsByClassName("animation");
       const avaheight = window.screen.availHeight;
-      if (selectContent && selectContent.length) {
-        const length = selectContent.length;
-        for (let i = 0; i < length; i++) {
-          const domRect = selectContent[i].getBoundingClientRect();
-          if (domRect.top < avaheight * 0.7 && domRect.top > 0) {
-            this.animationFlag[`c${i}`] = true;
+      if (window.screenY > 0) {
+        if (selectContent && selectContent.length) {
+          const length = selectContent.length;
+          for (let i = 0; i < length; i++) {
+            const domRect = selectContent[i].getBoundingClientRect();
+            if (domRect.top < avaheight * 0.5 && domRect.top > 0) {
+              this.animationFlag[`c${i}`] = true;
+            }
           }
         }
       }
@@ -806,24 +808,32 @@ export default {
       const selectContent = document.getElementsByClassName("animation");
       const avaheight = window.screen.availHeight;
       const scrollY = window.scrollY;
-      console.log(scrollY);
       if (selectContent && selectContent.length) {
         const length = selectContent.length;
         for (let i = 0; i < length; i++) {
           const domRect = selectContent[i].getBoundingClientRect();
+          this.top = domRect.top
           if (domRect.top > 0) {
-            if (avaheight - domRect.top > 0 && scrollY > 10) {
+            if (domRect.top < 0.5 * avaheight && scrollY > 20) {
               this.animationFlag[`c${i}`] = true;
             }
-          } else {
-            if (domRect.top + domRect.height < -100) {
-              this.animationFlag[`c${i}`] = false;
-            }
           }
-          if (scrollY < 10) {
+          if (domRect.bottom < 0) {
+            this.animationFlag[`c${i}`] = false;
+          }
+          if (scrollY < 20) {
             this.animationFlag[`c${i}`] = false;
           }
         }
+      }
+    },
+    debounce(fn, delay) {
+      let timer = null;
+      return function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, delay);
       }
     },
     async getAreaCode() {
@@ -2087,22 +2097,6 @@ export default {
       justify-content: center;
       transition: all 1.2s;
     }
-    .leftAnimation {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .rightAnimation {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    .leaveLeft {
-      opacity: 0;
-      transform: translateX(-200px);
-    }
-    .leaveRight {
-      opacity: 0;
-      transform: translateX(200px);
-    }
     .right-item {
       display: flex;
       align-items: center;
@@ -2221,5 +2215,21 @@ export default {
     border-radius: 0;
     background: $bgColor;
   }
+}
+.leftAnimation {
+  opacity: 1!important;
+  transform: translateX(0)!important;;
+}
+.rightAnimation {
+  transform: translateX(0)!important;;
+  opacity: 1!important;;
+}
+.leaveLeft {
+  opacity: 0!important;;
+  transform: translateX(-200px)!important;;
+}
+.leaveRight {
+  opacity: 0!important;;
+  transform: translateX(200px)!important;;
 }
 </style>

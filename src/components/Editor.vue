@@ -103,12 +103,12 @@ export default {
 
                           if (res.code === 200) {
                             Message.success({
-                                  message: "图片上传成功",
+                                  message: this.$t("sccg"),
                                   grouping: true,
                               });
                           } else {
                             Message.error({
-                                  message: "图片上传失败，请重新尝试",
+                                  message: "fail",
                                   grouping: true,
                               });
                           }

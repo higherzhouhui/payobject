@@ -7,7 +7,7 @@
           <h3>{{ $t("lastnewsDesc") }}</h3>
         </div>
         <div
-          class="container-auto section-column section-three section-news animation"
+          class="container-auto section-column section-three section-news"
         >
           <div
             class="item show"

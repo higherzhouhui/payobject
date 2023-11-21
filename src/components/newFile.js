@@ -15,7 +15,7 @@ links: [
 { name: '隐私&政策', url: '/privacy' },
 ],
 },
-        ;
+;
 },
 methods: {
 to(path) {

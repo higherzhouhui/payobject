@@ -139,9 +139,9 @@ export default {
         }
     },
     quit() {
-      this.$confirm("确认退出？", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+      this.$confirm(this.$t("confirmQuit"), this.$t("hint"), {
+          confirmButtonText: this.$t("queding"),
+          cancelButtonText: this.$t("cancel"),
           type: "warning",
       }).then(() => {
         this.$router.push("/index");

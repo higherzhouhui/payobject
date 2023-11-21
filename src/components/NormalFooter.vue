@@ -6,9 +6,9 @@
           <p class="desc">
             <h4>ReliancePay</h4>
             <br/>
-            旨在为更多的跨境企业提供便利的金融服务
+            {{ $t("zztgjrfw") }}
           </p>
-          <h3>关注我们</h3>
+          <h3>{{$t("gzwm")}}</h3>
           <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">
             <img
               class="footer-icon"
@@ -32,7 +32,7 @@
          </a>
         </div>
         <div class="footer-item">
-          <div class="footer-title">有效链接</div>
+          <div class="footer-title">{{$t("effectLink")}}</div>
           <div class="item-warppaer">
             <div
               class="item"
@@ -45,8 +45,8 @@
           </div>
         </div>
         <div class="footer-item">
-          <div class="footer-title">订阅</div>
-          <div class="item-desc">探索更多的解决方案，请与我们联系</div>
+          <div class="footer-title">{{$t('dingyue')}}</div>
+          <div class="item-desc">{{$t('jjfa')}}</div>
           <!-- <div class="btn">{{ $t("lxwm") }}</div> -->
           <div class="btn">Support@reliancepay.net</div>
         </div>
@@ -65,12 +65,12 @@ export default {
   data() {
     return {
       links: [
-        { name: "首页", url: "/index" },
-        { name: "登录", url: "/user/login" },
-        { name: "新闻", url: "/blog" },
-        { name: "注册", url: "/user/register" },
-        { name: "服务协议", url: "/service" },
-        { name: "隐私保护政策", url: "/privacy" },
+        { name: this.$t("home"), url: "/index" },
+        { name: this.$t("login"), url: "/user/login" },
+        { name: this.$t("News"), url: "/blog" },
+        { name: this.$t("register"), url: "/user/register" },
+        { name: this.$t("wlptfwxy"), url: "/service" },
+        { name: this.$t("yszc"), url: "/privacy" },
       ],
     };
   },

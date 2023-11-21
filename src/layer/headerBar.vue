@@ -36,7 +36,7 @@
               {{$t("profile")}}
             </el-dropdown-item>
             <el-dropdown-item icon="el-icon-lock" command="reset">
-              {{$t("重置密码")}}
+              {{$t("resetPwd")}}
             </el-dropdown-item>
             <el-dropdown-item icon="el-icon-switch-button" command="logout">
               {{$t("quitLogin")}}
@@ -107,9 +107,9 @@ export default {
       }
     },
     quit() {
-      this.$confirm("确认退出？", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+      this.$confirm(this.$t("confirmQuit"), this.$t("hint"), {
+          confirmButtonText: this.$t("queding"),
+          cancelButtonText: this.$t("cancel"),
           type: "warning",
       }).then(() => {
         this.$store.commit("SET_Logout", {})

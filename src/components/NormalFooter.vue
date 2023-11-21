@@ -3,12 +3,10 @@
     <div class="footer-content container-auto">
       <div class="footer-top">
         <div class="footer-item">
+          <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
           <p class="desc">
-            <h4>ReliancePay</h4>
-            <br/>
             {{ $t("zztgjrfw") }}
           </p>
-          <h3>{{$t("gzwm")}}</h3>
           <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">
             <img
               class="footer-icon"
@@ -32,7 +30,7 @@
          </a>
         </div>
         <div class="footer-item">
-          <div class="footer-title">{{$t("effectLink")}}</div>
+          <div class="footer-title">RELIANCEPAY</div>
           <div class="item-warppaer">
             <div
               class="item"
@@ -45,10 +43,24 @@
           </div>
         </div>
         <div class="footer-item">
-          <div class="footer-title">{{$t('dingyue')}}</div>
+          <div class="footer-title">服务支持</div>
+          <div class="item-warppaer">
+            <div
+              class="item"
+              v-for="item in slinks"
+              :key="item.name"
+              @click="to(item.url)"
+            >
+              {{ item.name }}
+            </div>
+          </div>
+        </div>
+        <div class="footer-item">
           <div class="item-desc">{{$t('jjfa')}}</div>
-          <!-- <div class="btn">{{ $t("lxwm") }}</div> -->
-          <div class="btn">Support@reliancepay.net</div>
+          <div class="btn">
+            <img src="@/assets/images/index/footer-email.png" alt="email" />
+            Support@reliancepay.net
+          </div>
         </div>
       </div>
     </div>
@@ -65,20 +77,68 @@ export default {
   data() {
     return {
       links: [
-        { name: this.$t("home"), url: "/index" },
+        { name: "News", url: "/blog" },
         { name: this.$t("login"), url: "/user/login" },
-        { name: this.$t("News"), url: "/blog" },
         { name: this.$t("register"), url: "/user/register" },
-        { name: this.$t("wlptfwxy"), url: "/service" },
-        { name: this.$t("yszc"), url: "/privacy" },
       ],
+      slinks: [
+        { name: "汇兑", url: "/admin/deposit/index" },
+        { name: this.$t("KYC验证"), url: "/admin/kycverification" },
+        { name: this.$t("推荐给朋友"), url: "/admin/referfriends" },
+        { name: this.$t('关于我们'), url: '', active: false, mao: '#abountUs'},
+      ],
+      path: ''
     };
   },
-  methods: {
-    to(path) {
-      this.$router.push(path);
+  watch: {
+    $route(to, _from) {
+      const path = to.path;
+      this.path = to.path
+      this.navList.forEach(item => {
+        if (item.path == path) {
+            item.active = true
+        } else {
+            item.active = false
+        }
+      })
     },
   },
+  methods: {
+    handleShowMenu() {
+        this.showMenu = !this.showMenu
+    },
+    to(path) {
+        if (path) {
+            if (path == this.$store.state.path) {
+                return
+            }
+            if (path.includes('admin')) {
+              if (this.$store.state.userInfo.email) {
+                this.$router.push(path)
+              } else {
+                this.$router.push('/user/login')
+              }
+            } else {
+              this.$router.push(path)
+            }
+        } else {
+            if (this.path !== '/index') {
+                this.$router.push('/index')
+                setTimeout(() => {
+                    const elm = document.getElementById('abountUs');
+                    if (elm) {
+                        elm.scrollIntoView(true);
+                    }
+                }, 500);
+            } else {
+                const elm = document.getElementById('abountUs');
+                if (elm) {
+                    elm.scrollIntoView(true);
+                }
+            }
+        }
+    },
+  }
 };
 </script>
 
@@ -94,8 +154,8 @@ footer {
   text-align: left;
   .footer-content {
     .footer-icon {
-      height: 30px;
-      width: 30px;
+      height: 20px;
+      width: 20px;
       object-fit: fill;
       margin-right: 9px;
     }
@@ -109,8 +169,9 @@ footer {
     box-sizing: border-box;
     margin-bottom: 28px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
     column-gap: 20px;
+    row-gap: 20px;
     @media screen and (max-width: 1200px) {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -124,36 +185,39 @@ footer {
     }
     .footer-title {
       font-size: 1rem;
-      &::after {
-        content: "";
-        width: 30px;
-        height: 1px;
-        background: #ddd6d6;
-        display: block;
-        margin: 12px 0;
-      }
+      margin-bottom: 24PX;
     }
     .item-warppaer {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(1, 1fr);
       row-gap: 12px;
       .item {
+        font-size: 13px;
         cursor: pointer;
+        text-decoration: underline;
         &:hover {
           font-weight: bold;
         }
       }
     }
     .btn {
-      background: #1916d6;
-      width: fit-content;
-      padding: 6px 10px;
-      border-radius: 6px;
+      display: flex;
+      align-items: center;
       margin-top: 16px;
-      &:hover {
-        background: #0501fc;
+      font-weight: bold;
+      font-size: 13px;
+      img {
+        width: 20px;
+        margin-right: 5px;
       }
     }
   }
+}
+.desc {
+  font-size: 13px;
+  margin: 1.5rem 0;
+}
+.logo {
+  width: 12rem;
 }
 </style>

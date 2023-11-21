@@ -117,16 +117,16 @@
         </div>
       </div>
       <div class="animation-warapper">
-        <div class="container-auto section-content animation">
+        <div class="container-auto section-content">
           <div
-            class="left"
+            class="left animation"
             :class="animationFlag.c0 ? 'leftAnimation' : 'leaveLeft'"
           >
             <img class="left-img" src="@/assets/images/index/b1.png" />
           </div>
           <div
-            class="right"
-            :class="animationFlag.c0 ? 'rightAnimation' : 'leaveRight'"
+            class="right animation"
+            :class="animationFlag.c1 ? 'rightAnimation' : 'leaveRight'"
           >
             <div class="right-item">
               <div class="svg-wrapper">
@@ -171,8 +171,8 @@
           <h2>{{ $t("payService") }}</h2>
           <h3>{{ $t("Anmei") }}</h3>
         </div>
-        <div class="container-auto section-column animation">
-          <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
+        <div class="container-auto section-column ">
+          <div class="item animation" :class="animationFlag.c2 ? 'show' : 'hide'">
             <div class="svgWrapper">
               <svg-icon
                 iconClass="circle-dollar-to-slot-solid"
@@ -182,21 +182,21 @@
             <h1>{{ $t("szyw") }}</h1>
             <p>{{ $t("s1") }}</p>
           </div>
-          <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
+          <div class="item animation" :class="animationFlag.c3 ? 'show' : 'hide'">
             <div class="svgWrapper">
               <svg-icon iconClass="lock-solid" className="svgIcon" />
             </div>
             <h1>{{ $t("qqsk") }}</h1>
             <p>{{ $t("s2") }}</p>
           </div>
-          <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
+          <div class="item animation" :class="animationFlag.c4 ? 'show' : 'hide'">
             <div class="svgWrapper">
               <svg-icon iconClass="headset-solid" className="svgIcon" />
             </div>
             <h1>{{ $t("fwzc") }}</h1>
             <p>{{ $t("s3") }}</p>
           </div>
-          <div class="item" :class="animationFlag.c1 ? 'show' : 'hide'">
+          <div class="item animation" :class="animationFlag.c5 ? 'show' : 'hide'">
             <div class="svgWrapper">
               <svg-icon
                 iconClass="money-check-dollar-solid"
@@ -214,33 +214,33 @@
           <h3>{{ $t("remesaserviceDesc") }}</h3>
         </div>
         <div
-          class="container-auto section-column section-column-feature animation"
+          class="container-auto section-column section-column-feature"
         >
-          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+          <div class="feature-item animation" :class="animationFlag.c6 ? 'show' : 'hide'">
             <svg-icon iconClass="money-bill-solid" className="feature-svg" />
             <div class="feature-desc">{{ $t("scdw") }}</div>
           </div>
-          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+          <div class="feature-item animation" :class="animationFlag.c7 ? 'show' : 'hide'">
             <svg-icon iconClass="building" className="feature-svg" />
             <div class="feature-desc">{{ $t("cxjs") }}</div>
           </div>
-          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+          <div class="feature-item animation" :class="animationFlag.c8 ? 'show' : 'hide'">
             <svg-icon iconClass="cart-shopping-solid" className="feature-svg" />
             <div class="feature-desc">{{ $t("cpjz") }}</div>
           </div>
-          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+          <div class="feature-item animation" :class="animationFlag.c9 ? 'show' : 'hide'">
             <svg-icon
               iconClass="circle-dollar-to-slot-solid"
               className="feature-svg"
             />
             <div class="feature-desc">{{ $t("cpjz4") }}</div>
           </div>
-          <div></div>
-          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+          <div class="empty-feature"></div>
+          <div class="feature-item animation" :class="animationFlag.c10 ? 'show' : 'hide'">
             <svg-icon iconClass="credit-card-solid" className="feature-svg" />
             <div class="feature-desc">{{ $t("cpjz5") }}</div>
           </div>
-          <div class="feature-item" :class="animationFlag.c2 ? 'show' : 'hide'">
+          <div class="feature-item animation" :class="animationFlag.c11 ? 'show' : 'hide'">
             <svg-icon
               iconClass="file-invoice-dollar-solid"
               className="feature-svg"
@@ -250,16 +250,16 @@
         </div>
       </div>
       <div class="animation-warapper have-bg">
-        <div class="container-auto section-content animation">
+        <div class="container-auto section-content">
           <div
-            class="left"
-            :class="animationFlag.c3 ? 'leftAnimation' : 'leaveLeft'"
+            class="left animation"
+            :class="animationFlag.c12 ? 'leftAnimation' : 'leaveLeft'"
           >
             <img class="left-img" src="@/assets/images/index/f1.png" />
           </div>
           <div
-            class="right"
-            :class="animationFlag.c3 ? 'rightAnimation' : 'leaveRight'"
+            class="right animation"
+            :class="animationFlag.c13 ? 'rightAnimation' : 'leaveRight'"
           >
             <div class="right-item">
               <div class="right-right">
@@ -308,10 +308,10 @@
         </div>
       </div>
       <div class="animation-warapper have-bg">
-        <div class="container-auto section-content animation">
+        <div class="container-auto section-content">
           <div
-            class="right"
-            :class="animationFlag.c4 ? 'leftAnimation' : 'leaveLeft'"
+            class="right animation"
+            :class="animationFlag.c14 ? 'leftAnimation' : 'leaveLeft'"
           >
             <div class="right-item">
               <div class="right-right">
@@ -343,8 +343,8 @@
             </div> -->
           </div>
           <div
-            class="left"
-            :class="animationFlag.c4 ? 'rightAnimation' : 'leaveRight'"
+            class="left animation"
+            :class="animationFlag.c15 ? 'rightAnimation' : 'leaveRight'"
           >
             <img class="left-img" src="@/assets/images/index/appdown.png" />
           </div>
@@ -389,12 +389,12 @@
           <h3>{{ $t("lastnewsDesc") }}</h3>
         </div>
         <div
-          class="container-auto section-column section-three section-news animation"
+          class="container-auto section-column section-three section-news"
         >
           <div
-            class="item"
-            :class="animationFlag.c5 ? 'show' : 'hide'"
-            v-for="item in blogList"
+            class="item animation"
+            :class="animationFlag[`c${16 + index}`] ? 'show' : 'hide'"
+            v-for="(item, index) in blogList"
             :key="item.id"
             @click="routerToBlogDetail(item.id)"
           >
@@ -512,6 +512,20 @@ export default {
         c3: false,
         c4: false,
         c5: false,
+        c6: false,
+        c7: false,
+        c8: false,
+        c9: false,
+        c10: false,
+        c11: false,
+        c12: false,
+        c13: false,
+        c14: false,
+        c15: false,
+        c16: false,
+        c17: false,
+        c18: false,
+        c19: false,
       },
       showMovie: false,
       movieSrc:
@@ -694,7 +708,7 @@ export default {
           const length = selectContent.length;
           for (let i = 0; i < length; i++) {
             const domRect = selectContent[i].getBoundingClientRect();
-            if (domRect.top < avaheight * 0.5 && domRect.top > 0) {
+            if (domRect.top < avaheight * 0.7 && domRect.top > 0) {
               this.animationFlag[`c${i}`] = true;
             }
           }
@@ -814,7 +828,7 @@ export default {
           const domRect = selectContent[i].getBoundingClientRect();
           this.top = domRect.top
           if (domRect.top > 0) {
-            if (domRect.top < 0.5 * avaheight && scrollY > 20) {
+            if (domRect.top < 0.7 * avaheight && scrollY > 20) {
               this.animationFlag[`c${i}`] = true;
             }
           }
@@ -1870,6 +1884,11 @@ export default {
         .svgIcon {
           color: #fff;
         }
+      }
+    }
+    .empty-feature {
+      @media screen and (max-width: 500) {
+        display: none;
       }
     }
     .feature-item {

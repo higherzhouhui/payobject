@@ -42,7 +42,7 @@
             </div>
         </div>
     </header>
-    <el-dialog class="lang_box" width="300px" :title="$t('choiceLanguage')" :visible.sync="dialogTableVisible">
+    <el-dialog class="lang_box" width="20rem" :title="$t('choiceLanguage')" :visible.sync="dialogTableVisible">
       <div class="item" :class="languge == 'zh' && 'active'" @click="checkLang('zh')">中文</div>
       <div class="item" :class="languge == 'en' && 'active'" @click="checkLang('en')">English</div>
     </el-dialog>
@@ -341,8 +341,8 @@ header {
 .lang_box {
   .item {
       text-align: center;
-      font-size: 18px;
-      padding: 10px 0;
+      font-size: 1rem;
+      padding: 0.8rem 0;
       cursor: pointer;
       color: $baseColor;
       &.active {
@@ -351,5 +351,7 @@ header {
       }
   }
 }
-
+::v-deep .el-dialog .el-dialog__header, .el-dialog .el-dialog__footer {
+    padding: 0.8rem 0;
+}
 </style>

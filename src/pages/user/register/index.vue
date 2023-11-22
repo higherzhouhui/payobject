@@ -210,7 +210,7 @@ export default {
       imgLoading: true,
       loading: false,
       timer: 60,
-      type: 1,
+      type: 2,
       checked: true,
       areaList: [],
       tempList: [],

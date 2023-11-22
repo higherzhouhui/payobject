@@ -1,10 +1,14 @@
 <template>
   <div class="login_box container-auto normal-content">
     <div class="left">
-      <img class="leftImg" alt="money" src="@/assets/images/register/left.png" />
+      <img
+        class="leftImg"
+        alt="money"
+        src="@/assets/images/register/left.png"
+      />
     </div>
     <div class="form">
-      <h2>{{$t("createProfile")}}</h2>
+      <h2>{{ $t("createProfile") }}</h2>
       <div class="flex tabs">
         <div
           class="item"
@@ -21,8 +25,54 @@
           {{ $t("email") }}
         </div>
       </div>
+      <div class="line" v-if="type == 1">
+        <img class="icon" src="@/assets/images/user/area.png" alt="user" />
+        <el-select
+        class="input"
+        v-model="form.areaCode"
+        :placeholder="$t('请选择国家')"
+        @change="changeAraeSelect"
+      >
+        <el-option
+          style="padding: 0 10px"
+          v-for="item in tempList"
+          :key="item.id"
+          :label="languge == 'zh' ? item.name : item.enName"
+          :value="item.areaCode"
+        >
+          <div class="country">
+            <div class="left">
+              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+              {{ languge == "zh" ? item.name : item.enName }}
+            </div>
+           <div class="right">{{item.areaCode}}</div>
+          </div>
+        </el-option>
+      </el-select>
+      </div>
+      <div class="area-wrapper">
+        <el-input
+          class="input-areacode"
+          :placeholder="$t('请输入')"
+          v-model="form.areaCode"
+          v-if="type == 1"
+          @change="changeAraeCode"
+        >
+      </el-input>
       <div class="line">
-        <img class="icon" src="@/assets/images/user/user.png" alt="" />
+        <img class="icon" src="@/assets/images/user/user.png" alt="user" />
+        <el-input
+          class="input"
+          :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
+          v-model="form.phone"
+          ref="myName"
+        >
+        </el-input>
+      </div>
+      </div>
+   
+      <!-- <div class="line">
+        <img class="icon" src="@/assets/images/user/user.png" alt="user" />
         <el-input
           class="input"
           :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
@@ -31,7 +81,7 @@
         >
           <template v-if="type == 1" slot="prepend">
             <el-select
-              style="width: 100px"
+              style="width: 90px"
               v-model="form.areaCode"
               :placeholder="$t('qsr')"
             >
@@ -42,12 +92,13 @@
                 :label="item.areaCode"
                 :value="item.areaCode"
               >
-                {{ languge == 'zh' ? item.name : item.enName}}
+                <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+                {{ languge == "zh" ? item.name : item.enName }}
               </el-option>
             </el-select>
           </template>
         </el-input>
-      </div>
+      </div> -->
       <div class="line flex flex_jc_sb flex_align_center">
         <img class="icon" src="@/assets/images/user/yzm.png" alt="" />
         <el-input
@@ -112,14 +163,16 @@
       </div>
 
       <div class="flex agree_txt flex_align_center">
-        <el-checkbox
-          v-model="checked"
-          style="margin-right: 5px"
-        ></el-checkbox>
-        <span @click="checked = !checked" style="cursor: pointer">{{ $t("tybzs") }}</span>
-        <span class="baseColor pointer" @click="to('/privacy')">《{{ $t("wlptfwxy") }}》</span
+        <el-checkbox v-model="checked" style="margin-right: 5px"></el-checkbox>
+        <span @click="checked = !checked" style="cursor: pointer">{{
+          $t("tybzs")
+        }}</span>
+        <span class="baseColor pointer" @click="to('/privacy')"
+          >《{{ $t("wlptfwxy") }}》</span
         >{{ $t("he")
-        }}<span class="baseColor pointer" @click="to('/service')">《{{ $t("yszc") }}》</span>
+        }}<span class="baseColor pointer" @click="to('/service')"
+          >《{{ $t("yszc") }}》</span
+        >
       </div>
       <el-button
         class="btn normal-btn"
@@ -133,30 +186,34 @@
         class="flex register-line flex_align_center pointer flex_jc_sb_center"
         @click="to('/user/login')"
       >
-      {{$t("hadAccount")}}
-      <span class="register-btn">{{$t("login")}}</span>-
+        {{ $t("hadAccount") }}
+        <span class="register-btn">{{ $t("login") }}</span
+        >-
+      </div>
+    </div>
   </div>
-    </div>
-    </div>
 </template>
 <script>
 import { Local } from "@/utils/index";
 import { sendCheckCode, reg, countries } from "@/api/login";
 import { Message } from "element-ui";
+import { getFlagIcon } from "@/utils/common";
 
 export default {
   name: "userRegister",
   data() {
     return {
+      getFlagIcon: getFlagIcon,
       input3: "",
       languge: Local("lang") || "zh",
       t: Math.random(),
       imgLoading: true,
       loading: false,
       timer: 60,
-      type: 2,
+      type: 1,
       checked: true,
       areaList: [],
+      tempList: [],
       form: {
         phone: "",
         password: "",
@@ -173,24 +230,38 @@ export default {
   },
   created() {
     this.getAreaCode();
-    const hash = location.hash
-    const hashArray = hash.split("=")
+    const hash = location.hash;
+    const hashArray = hash.split("=");
     if (hashArray.length == 2) {
-      this.form.inviteCode = hashArray[1]
+      this.form.inviteCode = hashArray[1];
     }
   },
-  mounted() {  
-    this.$refs.myName.focus();  
-  }, 
+  mounted() {
+    this.$refs.myName.focus();
+  },
   methods: {
+    changeAraeSelect() {
+      this.tempList = this.areaList
+    },
+    changeAraeCode(newValue) {
+      if (!newValue) {
+        this.form.areaCode = '+'
+      } else {
+        const newList = this.areaList.filter(item => {return item.areaCode.includes(newValue)})
+        this.tempList = newList
+      }
+    },
     async getAreaCode() {
       try {
         let list = Local("areaList");
         if (list && list.length) {
-          return (this.areaList = list);
+          this.areaList = list
+          this.tempList = list
+          return
         }
         let res = await countries();
         this.areaList = res.data;
+        this.tempList = res.data
         Local("areaList", res.data);
       } catch (error) {}
     },
@@ -271,7 +342,7 @@ export default {
           type: "success",
           message: this.$t("zccg"),
         });
-        this.$store.commit('SET_USERINFO', res.data)
+        this.$store.commit("SET_USERINFO", res.data);
         this.loading = false;
         if (!res.data.admin) {
           return this.$router.push("/home");
@@ -280,7 +351,7 @@ export default {
       } catch (error) {
         this.randomT();
         this.loading = false;
-        this.form.code = ''
+        this.form.code = "";
       }
     },
     async sendSms() {
@@ -296,7 +367,7 @@ export default {
           message: this.$t(msg),
         });
       }
-      
+
       try {
         let param = {
           areaCode,
@@ -317,14 +388,13 @@ export default {
             }
           }, 1000);
           Message({
-          type: "success",
-          message: this.$t("fscg"),
-        });
-        // eslint-disable-next-line no-empty
+            type: "success",
+            message: this.$t("fscg"),
+          });
+          // eslint-disable-next-line no-empty
         } else {
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
   },
 };
@@ -340,7 +410,7 @@ export default {
       font-size: 16px;
       cursor: pointer;
       margin-right: 20px;
-      
+
       &.active {
         border-bottom: 2px solid;
       }
@@ -382,7 +452,7 @@ export default {
 
       /* width: 30%!important; */
       ::v-deep input {
-        padding-left: 30px !important;
+        padding-left: 26px !important;
         height: 48px;
         line-height: 48px;
       }
@@ -391,7 +461,19 @@ export default {
         width: 60.56% !important;
       }
     }
-
+    .area-wrapper {
+      display: flex;
+      .input-areacode {
+        width: 70px;
+        min-width: 70px;
+        ::v-deep .el-input__inner {
+          height: 48px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border: none;
+        }
+      }
+    }
     .icon {
       position: absolute;
       width: 16px;
@@ -448,5 +530,16 @@ export default {
 .wd {
   font-size: 14px;
   color: #606266;
+}
+.country {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .left {
+    font-weight: bold;
+  }
+  .right {
+    color: $baseColor;
+  }
 }
 </style>

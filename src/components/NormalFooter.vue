@@ -85,23 +85,24 @@ export default {
         { name: "汇兑", url: "/admin/deposit/index" },
         { name: this.$t("KYC验证"), url: "/admin/kycverification" },
         { name: this.$t("推荐给朋友"), url: "/admin/referfriends" },
-        { name: this.$t('关于我们'), url: '', active: false, mao: '#abountUs'},
+        { name: this.$t('comments'), url: '', active: false, mao: '#abountUs'},
       ],
-      path: ''
+      path: '',
+      
     };
   },
   watch: {
     $route(to, _from) {
-      const path = to.path;
       this.path = to.path
-      this.navList.forEach(item => {
-        if (item.path == path) {
-            item.active = true
-        } else {
-            item.active = false
-        }
-      })
     },
+    '$i18n.locale'(newValue, oldValue) {
+      console.log('language switch from ' + oldValue + ' to ' + newValue + '')
+      this.links = [
+        { name: "News", url: "/blog" },
+        { name: this.$t("login"), url: "/user/login" },
+        { name: this.$t("register"), url: "/user/register" },
+      ]
+    }
   },
   methods: {
     handleShowMenu() {
@@ -116,6 +117,9 @@ export default {
               if (this.$store.state.userInfo.email) {
                 this.$router.push(path)
               } else {
+                if (this.$store.state.path == '/user/login') {
+                    return
+                }
                 this.$router.push('/user/login')
               }
             } else {

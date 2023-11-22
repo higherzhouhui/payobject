@@ -4,7 +4,7 @@
         <div class="inner container-auto">
             <img class="logo" src="@/assets/images/index/logo.png" alt="logo" @click="to('/index')">
             <div class="flex flex_algin_center controlMenu">
-                <a class="item" :class="item.active && 'item-active'" v-for="item in navList" :key="item.title" @click="to(item.path)" >
+                <a class="item" :class="item.active && 'item-active'" v-for="item in links" :key="item.title" @click="to(item.path)" >
                     {{ item.title }}
                 </a>
 
@@ -20,7 +20,7 @@
                     <div class="btn" @click="handleTodashboard">{{email}}</div>
                 </div>
                 <div class="language flex flex_align_center" @click="open">
-                    <img class="icon" v-if="languge == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
+                    <img class="icon" v-if="lang == 'zh'" src="@/assets/images/index/ch.png" alt="zh">
                     <img class="icon" v-else src="@/assets/images/index/en.png" alt="en">
                     <span class="txt">{{ $t('languageChange') }}</span>
                     <img class="xiala" src="@/assets/images/index/xiala.png" alt="down">
@@ -46,13 +46,15 @@
         </div>
     </header>
     <el-dialog class="lang_box" width="20rem" :title="$t('choiceLanguage')" :visible.sync="dialogTableVisible">
-      <div class="item" :class="languge == 'zh' && 'active'" @click="checkLang('zh')">中文</div>
-      <div class="item" :class="languge == 'en' && 'active'" @click="checkLang('en')">English</div>
+      <div class="item" :class="lang == 'zh' && 'active'" @click="checkLang('zh')">中文</div>
+      <div class="item" :class="lang == 'en' && 'active'" @click="checkLang('en')">English</div>
     </el-dialog>
   </div>
 </template>
 <script>
 import { Local } from '@/utils/index'
+import i18n from '@/lang/i18n'
+import { countries } from "@/api/login";
 
 export default {
   name: 'NormalHeader',
@@ -61,13 +63,13 @@ export default {
       headerShow: false,
       showMovie: false,
       movieSrc: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Schlossbergbahn.webm',
-      languge: Local('lang') || 'zh',
+      lang: i18n.locale,
       dialogTableVisible: false,
       showMenu: false,
       email: this.$store.state.userInfo.email,
-      navList: [
+      links: [
         {title: this.$t('home'), path: '/index', active: true},
-        {title: this.$t('关于我们'), path: '', active: false, mao: '#abountUs'},
+        {title: this.$t('comments'), path: '', active: false, mao: '#abountUs'},
         {title: 'News', path: '/blog', active: false},
       ],
       path: '',
@@ -75,15 +77,16 @@ export default {
   },
   mounted() {
     //   window.addEventListener('wheel', this.onWheel)
+    console.log()
   },
   beforeDestroy() {
-      window.removeEventListener('wheel', this.onWheel)
+    //   window.removeEventListener('wheel', this.onWheel)
   },
   watch: {
     $route(to, _from) {
       const path = to.path;
       this.path = to.path
-      this.navList.forEach(item => {
+      this.links.forEach(item => {
         if (item.path == path) {
             item.active = true
         } else {
@@ -91,10 +94,26 @@ export default {
         }
       })
     },
+    '$i18n.locale'(newValue, oldValue) {
+      console.log('language switch from ' + oldValue + ' to ' + newValue + '')
+      this.links =  [
+        {title: this.$t('home'), path: '/index', active: true},
+        {title: this.$t('comments'), path: '', active: false, mao: '#abountUs'},
+        {title: 'News', path: '/blog', active: false},
+      ]
+    }
   },
   methods: {
     handleShowMenu() {
         this.showMenu = !this.showMenu
+    },
+    changeLnagReq() {
+        const obj = {
+            zh: 'zh_CN',
+            en: 'en_US',
+            tw: 'zh_HK',
+        }
+        countries({_lang: obj[this.lang]})
     },
     to(path) {
         if (path) {
@@ -123,10 +142,11 @@ export default {
         this.dialogTableVisible = true
     },
     checkLang(lang) {
-        this.languge = lang
+        this.lang = lang
         Local('lang', lang)
         this.$i18n.locale = lang;
         this.dialogTableVisible = false
+        this.changeLnagReq()
     },
     onWheel(e) {
         // if (window.scrollY > 88) {

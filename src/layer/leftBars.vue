@@ -16,19 +16,19 @@
             </el-menu-item>
             <el-menu-item index="/manage/deposit">
                 <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
-                <span slot="title">{{ $t('入金列表') }}</span>
+                <span slot="title">{{ $t('rjlist') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/withdraw">
                 <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
-                <span slot="title">{{ $t('出金列表') }}</span>
+                <span slot="title">{{ $t('cjlist') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/bill">
                 <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
-                <span slot="title">{{ $t('交易明细') }}</span>
+                <span slot="title">{{ $t('jymx') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/change">
                 <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
-                <span slot="title">{{ $t('兑换明细') }}</span>
+                <span slot="title">{{ $t('zjmx') }}</span>
             </el-menu-item>
             <!-- <el-menu-item index="/manage/transactionDetails">
                 <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
@@ -40,7 +40,7 @@
             </el-menu-item>
             <el-menu-item index="/manage/blog">
                 <img class="icon" src="@/assets/images/home/zz_icon.png" alt="">
-                <span slot="title">{{ $t('新闻列表') }}</span>
+                <span slot="title">{{ $t('newslist') }}</span>
             </el-menu-item>
         </el-menu>
 
@@ -93,22 +93,22 @@
             </el-submenu>
             <el-menu-item index="/admin/exchange/list">
                 <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
-                <span slot="title">{{ $t('银行卡管理') }}</span>
+                <span slot="title">{{ $t('yhkgl') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/kycverification">
                 <img class="icon" src="@/assets/images/home/grzx.png" alt="">
-                <span slot="title">{{ $t('KYC认证') }}</span>
+                <span slot="title">{{ $t('kycyz') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/referfriends">
                 <img class="icon" src="@/assets/images/home/jycx.png" alt="">
-                <span slot="title">{{ $t('推荐好友') }}</span>
+                <span slot="title">{{ $t('tjgpy') }}</span>
             </el-menu-item>
         </el-menu>
 
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && !$store.state.userInfo.userStatus">
             <el-menu-item index="/admin/kycverification">
                 <img class="icon" src="@/assets/images/home/grzx.png" alt="">
-                <span slot="title">{{ $t('KYC认证') }}</span>
+                <span slot="title">{{ $t('kycyz') }}</span>
             </el-menu-item>
         </el-menu>
 

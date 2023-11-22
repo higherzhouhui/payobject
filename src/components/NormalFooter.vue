@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="footer-item">
-          <div class="footer-title">服务支持</div>
+          <div class="footer-title">{{$t('ffwzc')}}</div>
           <div class="item-warppaer">
             <div
               class="item"
@@ -82,9 +82,9 @@ export default {
         { name: this.$t("register"), url: "/user/register" },
       ],
       slinks: [
-        { name: "汇兑", url: "/admin/deposit/index" },
-        { name: this.$t("KYC验证"), url: "/admin/kycverification" },
-        { name: this.$t("推荐给朋友"), url: "/admin/referfriends" },
+        { name: this.$t("huidui"), url: "/admin/deposit/index" },
+        { name: this.$t("kycyz"), url: "/admin/kycverification" },
+        { name: this.$t("tjgpy"), url: "/admin/referfriends" },
         { name: this.$t('comments'), url: '', active: false, mao: '#abountUs'},
       ],
       path: '',
@@ -101,6 +101,12 @@ export default {
         { name: "News", url: "/blog" },
         { name: this.$t("login"), url: "/user/login" },
         { name: this.$t("register"), url: "/user/register" },
+      ];
+      this.slinks = [
+        { name: this.$t("huidui"), url: "/admin/deposit/index" },
+        { name: this.$t("kycyz"), url: "/admin/kycverification" },
+        { name: this.$t("tjgpy"), url: "/admin/referfriends" },
+        { name: this.$t('comments'), url: '', active: false, mao: '#abountUs'},
       ]
     }
   },

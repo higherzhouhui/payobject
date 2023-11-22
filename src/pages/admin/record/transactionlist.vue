@@ -6,7 +6,7 @@
         <el-form-item>
           <el-select
             v-model="searchForm.bizType"
-            :placeholder="$t('请选择业务类型')"
+            :placeholder="$t('qxzywlx')"
             clearable
           >
             <el-option
@@ -22,7 +22,7 @@
         <el-form-item>
           <el-select
             v-model="searchForm.coinCode"
-            :placeholder="$t('请选择货币种类')"
+            :placeholder="$t('qxzhbzl')"
             clearable
           >
             <el-option
@@ -40,7 +40,7 @@
             v-model="searchForm.startTime"
             align="right"
             type="datetime"
-            placeholder="开始时间"
+            :placeholder="$t('kssj')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
@@ -51,7 +51,7 @@
             v-model="searchForm.endTime"
             align="right"
             type="datetime"
-            placeholder="结束时间"
+            :placeholder="$t('jssj')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
@@ -75,35 +75,35 @@
       >
         <el-table-column
           prop="depCoin"
-          :label="$t('币种')"
+          :label="$t('bz')"
           min-width="100"
           show-overflow-tooltip
         />
         <el-table-column
           prop="targetCoin"
-          :label="$t('兑换币种')"
+          :label="$t('dhbz')"
           min-width="100"
         />
         <el-table-column
           prop="changeRate"
-          :label="$t('汇率')"
+          :label="$t('hl')"
           min-width="100"
         />
-        <el-table-column prop="depValue" :label="$t('金额')" min-width="100" />
+        <el-table-column prop="depValue" :label="$t('je')" min-width="100" />
         <el-table-column
           prop="targetValue"
-          :label="$t('到账金额')"
+          :label="$t('dzje')"
           width="130"
         />
         <el-table-column
           prop="createTime"
-          :label="$t('创建时间')"
+          :label="$t('cjsj')"
           min-width="180"
           show-overflow-tooltip
         />
         <el-table-column
           prop="modifiedTime"
-          :label="$t('更新时间')"
+          :label="$t('xgsj')"
           min-width="180"
           show-overflow-tooltip
         />
@@ -141,7 +141,7 @@ export default {
       options: [],
       type: "1",
       dialogVisible2: false,
-      linkList: ["jycx", "交易明细"],
+      linkList: ["jycx", "jymx"],
       form: {
         name: "",
       },
@@ -151,8 +151,8 @@ export default {
       total: 0,
       searchForm: {},
       bizTypeList: [
-        { label: "法币", value: 1 },
-        { label: "加密货币", value: 2 },
+        { label: this.$t("fdhb"), value: 1 },
+        { label: this.$t("jmhb"), value: 2 },
       ],
       coinCodeList: [],
       pickerOptions: {
@@ -161,13 +161,13 @@ export default {
         },
         shortcuts: [
           {
-            text: "今天",
+            text: this.$t("today"),
             onClick(picker) {
               picker.$emit("pick", new Date());
             },
           },
           {
-            text: "昨天",
+            text: this.$t("yestoday"),
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24);
@@ -175,7 +175,7 @@ export default {
             },
           },
           {
-            text: "一周前",
+            text: this.$t("yzq"),
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);

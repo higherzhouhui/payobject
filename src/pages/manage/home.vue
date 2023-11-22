@@ -2,10 +2,10 @@
   <div class="home_index_container">
     <div class="label" v-if="kycTotal">
       <div class="desc">
-        KYC待审核<span>{{ kycTotal }}</span>
+        {{$t('kycdsh')}}<span>{{ kycTotal }}</span>
       </div>
       <div @click="to('/manage/kyc?type=second')" class="normal-btn">
-        去审核
+        {{$t('qsh')}}
       </div>
     </div>
     <el-table
@@ -46,9 +46,9 @@
     </el-table>
     <div class="label" v-if="bankTotal">
       <div class="desc">
-        银行卡待审核<span>{{ bankTotal }}</span>
+        {{$t('yhkdsh')}}<span>{{ bankTotal }}</span>
       </div>
-      <div @click="to('/manage/kyc?type=first')" class="normal-btn">去审核</div>
+      <div @click="to('/manage/kyc?type=first')" class="normal-btn">{{$t('qsh')}}</div>
     </div>
     <el-table
       class="tables"
@@ -88,10 +88,10 @@
     </el-table>
     <div class="label" v-if="depositTotal">
       <div class="desc">
-        法定货币入金待审核<span>{{ depositTotal }}</span>
+        {{$t('fdhbrjdsh')}}<span>{{ depositTotal }}</span>
       </div>
       <div @click="to('/manage/deposit?type=fabi')" class="normal-btn">
-        去审核
+        {{$t('qsh')}}
       </div>
     </div>
     <el-table
@@ -104,15 +104,15 @@
     >
       <el-table-column
         prop="accountName"
-        :label="$t('收款账户名称')"
+        :label="$t('skzhmc')"
         min-width="180"
       />
-      <el-table-column prop="coinCode" :label="$t('币种')" min-width="120" />
-      <el-table-column prop="reqValue" :label="$t('充值金额')" min-width="180" />
-      <el-table-column prop="sendAccount" :label="$t('汇款账户')" min-width="180" />
+      <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
+      <el-table-column prop="reqValue" :label="$t('czjh')" min-width="180" />
+      <el-table-column prop="sendAccount" :label="$t('hkzh')" min-width="180" />
       <el-table-column
         prop="createTime"
-        :label="$t('创建时间')"
+        :label="$t('cjsj')"
         min-width="180"
       />
       <div slot="empty">
@@ -121,10 +121,10 @@
     </el-table>
     <div class="label" v-if="cryptdepositTotal">
       <div class="desc">
-        加密货币入金待审核<span>{{ cryptdepositTotal }}</span>
+        {{$t('jmhbrjdsh')}}<span>{{ cryptdepositTotal }}</span>
       </div>
       <div @click="to('/manage/deposit?type=usdt')" class="normal-btn">
-        去审核
+        {{$t('qsh')}}
       </div>
     </div>
     <el-table
@@ -137,15 +137,15 @@
     >
       <el-table-column
         prop="cryptAdd"
-        :label="$t('收款钱包地址')"
+        :label="$t('skqbdz')"
         min-width="180"
       />
-      <el-table-column prop="coinCode" :label="$t('币种')" min-width="120" />
-      <el-table-column prop="reqValue" :label="$t('充值金额')" min-width="180" />
-      <el-table-column prop="tid" :label="$t('汇款钱包地址')" min-width="180" />
+      <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
+      <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
+      <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
       <el-table-column
         prop="createTime"
-        :label="$t('创建时间')"
+        :label="$t('cjsj')"
         min-width="180"
       />
       <div slot="empty">
@@ -154,10 +154,10 @@
     </el-table>
     <div class="label" v-if="withdrawTotal">
       <div class="desc">
-        法定货币出金待审核<span>{{ withdrawTotal }}</span>
+        {{$t('fdhbcjdsh')}}<span>{{ withdrawTotal }}</span>
       </div>
       <div @click="to('/manage/withdraw?type=fabi')" class="normal-btn">
-        去审核
+        {{$t('qsh')}}
       </div>
     </div>
     <el-table
@@ -170,21 +170,21 @@
     >
       <el-table-column
         prop="accountName"
-        :label="$t('收款账户名称')"
+        :label="$t('skzhmc')"
         min-width="180"
         show-overflow-tooltip
       />
-      <el-table-column prop="coinCode" :label="$t('币种')" min-width="100" />
-      <el-table-column prop="reqValue" :label="$t('出款金额')" min-width="100" />
-      <el-table-column prop="targetCode" :label="$t('目标币种')" min-width="100" />
+      <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
+      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+      <el-table-column prop="targetCode" :label="$t('mbbz')" min-width="100" />
       <el-table-column
         prop="changeValue"
-        :label="$t('预计到账金额')"
+        :label="$t('yjdzje')"
         min-width="130"
       />
       <el-table-column
         prop="createTime"
-        :label="$t('创建时间')"
+        :label="$t('cjsj')"
         min-width="180"
       />
       <div slot="empty">
@@ -193,10 +193,10 @@
     </el-table>
     <div class="label" v-if="cryptwithdrawTotal">
       <div class="desc">
-        加密货币出金待审核<span>{{ cryptwithdrawTotal }}</span>
+        {{$t('jmhbcjdsh')}}<span>{{ cryptwithdrawTotal }}</span>
       </div>
       <div @click="to('/manage/withdraw?type=usdt')" class="normal-btn">
-        去审核
+        {{$t('qsh')}}
       </div>
     </div>
     <el-table
@@ -207,22 +207,22 @@
       v-loading="cryptwithdrawLoading"
       v-if="cryptwithdrawTotal"
     >
-      <el-table-column prop="srcCode" :label="$t('币种')" width="100" />
+      <el-table-column prop="srcCode" :label="$t('bz')" width="100" />
       <el-table-column
         prop="cryptAdd"
-        :label="$t('收款钱包地址')"
+        :label="$t('skqbdz')"
         min-width="180"
       />
-      <el-table-column prop="coinCode" :label="$t('目标币种')" min-width="100" />
-      <el-table-column prop="reqValue" :label="$t('出款金额')" min-width="100" />
+      <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
+      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
       <el-table-column
         prop="witValue"
-        :label="$t('预计到账金额')"
+        :label="$t('yjdzje')"
         min-width="120"
       />
       <el-table-column
         prop="createTime"
-        :label="$t('创建时间')"
+        :label="$t('cjsj')"
         min-width="180"
       />
       <div slot="empty">

@@ -1,7 +1,7 @@
 <template>
   <div class="login_box">
     <div class="form">
-      <h2>{{$t("重置密码")}}</h2>
+      <h2>{{$t("resetPwd")}}</h2>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="" />
         <el-input
@@ -46,7 +46,7 @@
         <el-input
           class="input"
           show-password
-          :placeholder="$t('请输入原密码')"
+          :placeholder="$t('qsrymm')"
           v-model="form.oldPass"
         />
       </div>
@@ -75,7 +75,7 @@
         type="primary"
         :class="loading && 'loading'"
         @click="regester"
-        >{{ $t("确认") }}</el-button
+        >{{ $t("queding") }}</el-button
       >
     </div>
   </div>
@@ -152,7 +152,7 @@ export default {
       if (!checkCode) {
         msg = "qsryzm";
       } else if (!oldPass) {
-        msg = "请输入原密码";
+        msg = "qsrymm";
       } else if (!password) {
         msg = "qsrmm";
       } else if (!repassWord) {

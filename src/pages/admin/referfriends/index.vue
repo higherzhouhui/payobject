@@ -1,12 +1,12 @@
 <template>
   <div class="refer-container">
-    <h1>{{$t("推荐好友")}}</h1>
-    <div class="label">{{$t("邀请码")}}</div>
+    <h1>{{$t("tjgpy")}}</h1>
+    <div class="label">{{$t("wdyqm")}}</div>
     <div class="code" @click="copyText2(userInfo.providerId)">
       <div class="number">{{userInfo.providerId}}</div>
       <img src="@/assets/images/home/copy.png"/>
     </div>
-    <div class="label">{{$t("邀请链接")}}</div>
+    <div class="label">{{$t("yqlj")}}</div>
     <div class="code"  @click="copyText2(shareLink)">
       <div class="number">{{shareLink}}</div>
       <img src="@/assets/images/home/copy.png"/>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'refer',
+  name: 'referMfrend',
   props: {
     msg: String
   },

@@ -6,7 +6,7 @@
         <el-form-item>
           <el-select
             v-model="searchForm.fromCode"
-            :placeholder="$t('请选择源货币种类')"
+            :placeholder="$t('qszyhbzl')"
             clearable
           >
             <el-option
@@ -22,7 +22,7 @@
         <el-form-item>
           <el-select
             v-model="searchForm.targetCode"
-            :placeholder="$t('请选择兑换货币种类')"
+            :placeholder="$t('qxzdhhbzl')"
             clearable
           >
             <el-option
@@ -40,7 +40,7 @@
             v-model="searchForm.startTime"
             align="right"
             type="datetime"
-            placeholder="开始时间"
+            :placeholder="$t('kssj')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
@@ -51,7 +51,7 @@
             v-model="searchForm.endTime"
             align="right"
             type="datetime"
-            placeholder="结束时间"
+            :placeholder="$t('jssj')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
@@ -73,19 +73,19 @@
         :data="tableData"
         v-loading="loading"
       >
-        <el-table-column prop="coinCode" :label="$t('币种')" min-width="100" />
-        <el-table-column prop="billValue" :label="$t('金额')" min-width="100" />
-        <el-table-column prop="billType" :label="$t('类型')" min-width="100">
+        <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
+        <el-table-column prop="billValue" :label="$t('je')" min-width="100" />
+        <el-table-column prop="billType" :label="$t('lx')" min-width="100">
           <template slot-scope="scope">
             <el-tag class="elTag" type="success" v-if="scope.row.billType == 1">
-              充值
+              {{$t('chongzhi')}}
             </el-tag>
-            <el-tag class="elTag" type="danger" v-else> 提现 </el-tag>
+            <el-tag class="elTag" type="danger" v-else> {{$t('tx')}} </el-tag>
           </template>
         </el-table-column>
         <el-table-column
           prop="commission"
-          :label="$t('手续费')"
+          :label="$t('sxfei')"
           min-width="100"
         >
           <template slot-scope="scope">
@@ -94,13 +94,13 @@
         </el-table-column>
         <el-table-column
           prop="createTime"
-          :label="$t('创建时间')"
+          :label="$t('cjsj')"
           min-width="180"
           show-overflow-tooltip
         />
         <el-table-column
           prop="modifiedTime"
-          :label="$t('更新时间')"
+          :label="$t('xgsj')"
           min-width="180"
           show-overflow-tooltip
         />
@@ -138,7 +138,7 @@ export default {
       options: [],
       type: "1",
       dialogVisible2: false,
-      linkList: ["jycx", "兑换明细"],
+      linkList: ["jycx", "zjmx"],
       form: {
         name: "",
       },
@@ -154,13 +154,13 @@ export default {
         },
         shortcuts: [
           {
-            text: "今天",
+            text: this.$t('today'),
             onClick(picker) {
               picker.$emit("pick", new Date());
             },
           },
           {
-            text: "昨天",
+            text: this.$t('yestoday'),
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24);
@@ -168,7 +168,7 @@ export default {
             },
           },
           {
-            text: "一周前",
+            text: this.$t('yzq'),
             onClick(picker) {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);

@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="balance-wrapper" :class="balanceLoading && 'loading'">
-      <h1>{{$t("我的钱包")}}</h1>
+      <h1>{{$t("wdqb")}}</h1>
       <swiper ref="refSwiper"
         :options="swiperOption"
         class="content-swiper">
@@ -14,7 +14,7 @@
       </swiper>
       <div class="empty" v-if="!balanceLoading && !balanceArrapy.length">
         <img src="@/assets/images/home/recharge.png" />
-        <span @click="$router.push('/admin/deposit/index')">{{$t("去充值")}}</span>
+        <span @click="$router.push('/admin/deposit/index')">{{$t("qcz")}}</span>
       </div>
     </div>
     <div class="transaction-wrapper">
@@ -26,8 +26,8 @@
               <i class="el-icon-top-right send" v-if="item.billType == 2"/>
               <i class="el-icon-bottom-left recive" v-if="item.billType == 1"/>
               <div class="type-wrapper">
-                <div class="type" v-if="item.billType == 2">{{$t("提现金额")}}</div>
-                <div class="type" v-else>{{$t("收到金额")}}</div>
+                <div class="type" v-if="item.billType == 2">{{$t("txje")}}</div>
+                <div class="type" v-else>{{$t("sdje")}}</div>
                 <div class="desc">{{item.coinCode}}</div>
               </div>
             </div>
@@ -40,22 +40,22 @@
           </div>
           <div class="detail" :class="item.show ? 'expand' : 'scale'">
             <div class="detail-item">
-              <div class="left">{{$t("交易ID")}}</div>
+              <div class="left">{{$t("jyid")}}</div>
               <div class="right">{{item.id}}</div>
             </div>
             <div class="detail-item">
-              <div class="left">{{$t("货币类型")}}</div>
-              <div class="right" v-if="item.cry">{{$t("加密货币")}}</div>
-              <div class="right" v-else>{{$t("法定货币")}}</div>
+              <div class="left">{{$t("hblx")}}</div>
+              <div class="right" v-if="item.cry">{{$t("jmhb")}}</div>
+              <div class="right" v-else>{{$t("fdhb")}}</div>
             </div>
             <div class="detail-item" v-if="item.commission">
-              <div class="left">{{$t("手续费")}}</div>
+              <div class="left">{{$t("sxfei")}}</div>
               <div class="right">${{item.commission}}</div>
             </div>
           </div>
         </div>
       </ul>
-      <el-empty :description="$t('暂无数据')" v-if="!billLoading && !billArray.length"></el-empty>
+      <el-empty :description="$t('nodata')" v-if="!billLoading && !billArray.length"></el-empty>
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
     <div class="money-wrapper">
       <div class="money-left">
         <div class="form-item">
-          <div class="label">{{$t("货币类型")}}</div>
+          <div class="label">{{$t("hblx")}}</div>
           <div class="input-with-select">
               <el-select v-model="moneyType" class="input-transaction">
                   <el-option v-for="item in transactionTypeList" :label="item.label" :value="item.value" :key="item.value"></el-option>
@@ -13,12 +13,12 @@
           </div>
         </div>
         <div class="form-item" v-if="moneyType == 'fabi'">
-          <div class="label">{{$t("汇款账户")}}</div>
+          <div class="label">{{$t("hkzh")}}</div>
           <div class="input-with-select">
             <el-select
             class="input-transaction"
             v-model="form.sendBank"
-            :placeholder="$t('请选择汇款账户')"
+            :placeholder="$t('qszhkzh')"
           >
             <el-option
               v-for="item in outZHList"
@@ -34,7 +34,7 @@
             <li>{{$t('limitNum')}}</li>
         </ul>
         <div class="form-item" v-if="moneyType == 'fabi'">
-          <div class="label">{{$t("充值金额")}}</div>
+          <div class="label">{{$t("czje")}}</div>
           <div class="input-with-select">
               <el-input type="number" :placeholder="$t('enterAmount')" v-model="form.reqValue" class="input-amount">
               </el-input>
@@ -44,14 +44,14 @@
           </div>
         </div>
         <div class="form-item" v-else>
-          <div class="label">{{$t("充值金额")}}</div>
+          <div class="label">{{$t("czje")}}</div>
           <div class="input-with-select">
               <el-input type="number" :placeholder="$t('enterAmount')" v-model="usdtForm.reqValue" class="input-amount">
               </el-input>
               <el-select
                 class="input-select"
                 v-model="usdtForm.coinCode"
-                :placeholder="$t('请选择')"
+                :placeholder="$t('qsz')"
                 @change="getUsdtAddress"
               >
                 <el-option
@@ -66,36 +66,36 @@
           </div>
         </div>
         <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
-          <div class="label">{{$t("收款钱包地址")}}</div>
+          <div class="label">{{$t("skqbdz")}}</div>
           <div class="input-with-select">
             <el-input :value="usdtForm.cryptAdd" class="input-amount"/>
           </div>
         </div>
         <div class="form-item" v-if="moneyType == 'usdt'">
-          <div class="label">{{$t("汇款钱包地址")}}</div>
+          <div class="label">{{$t("hkqbdz")}}</div>
           <div class="input-with-select">
             <el-input v-model="usdtForm.tid" class="input-amount"/>
           </div>
         </div>
         <div class="normal-btn" @click="handleDeposit" v-loading="loading">
-          {{$t("发起充值")}}
+          {{$t("fqtx3")}}
         </div>
       </div>
       <div class="money-right" v-if="moneyType == 'fabi'">
-          <h2>{{$t("充值预览")}}</h2>
+          <h2>{{$t("czyl")}}</h2>
           <div class="divider"/>
           <div class="column">
             <div class="column-left">
-              {{$t("货币类型")}}
+              {{$t("hblx")}}
             </div>
             <div class="column-right">
-              {{moneyType == 'fabi' ? '法定货币' : '加密货币'}}
+               {{$t('fdhb')}}
             </div>
           </div>
           <div class="divider"/>
           <div class="column">
             <div class="column-left">
-              {{$t("充值金额")}}
+              {{$t("czje")}}
             </div>
             <div class="column-right">
               {{form.reqValue || 0}}
@@ -104,7 +104,7 @@
           <div class="divider" v-if="form.sendBank"/>
           <div class="column" v-if="form.sendBank">
             <div class="column-left">
-              {{$t("汇款账号")}}
+              {{$t("hkzhao")}}
             </div>
             <div class="column-right">
               {{getBankInfo(form.sendBank, 'bankCode')}}
@@ -113,7 +113,7 @@
           <div class="divider" v-if="form.sendBank"/>
           <div class="column" v-if="form.sendBank">
             <div class="column-left">
-              {{$t("汇款银行")}}
+              {{$t("hkyh")}}
             </div>
             <div class="column-right">
               {{getBankInfo(form.sendBank, 'accountAdd')}}
@@ -122,28 +122,28 @@
           <div class="divider"/>
           <div class="column">
             <div class="column-left">
-              {{$t("手续费")}}
+              {{$t("sxfei")}}
             </div>
             <div class="column-right">
-              {{$t("待确认")}}
+              {{$t("dqr")}}
             </div>
           </div>
       </div>
       <div class="money-right" v-else>
-        <h2>{{$t("充值预览")}}</h2>
+        <h2>{{$t("czyl")}}</h2>
         <div class="divider"/>
         <div class="column">
           <div class="column-left">
-            {{$t("货币类型")}}
+            {{$t("hblx")}}
           </div>
           <div class="column-right">
-            {{moneyType == 'fabi' ? '法定货币' : '加密货币'}}
+            {{$t('jmhb')}}
           </div>
         </div>
         <div class="divider"/>
         <div class="column">
           <div class="column-left">
-            {{$t("充值金额")}}
+            {{$t("czje")}}
           </div>
           <div class="column-right">
             {{usdtForm.reqValue || 0}}
@@ -152,7 +152,7 @@
         <div class="divider" v-if="usdtForm.cryptAdd"/>
         <div class="column" v-if="usdtForm.cryptAdd">
           <div class="column-left">
-            {{$t("收款钱包地址")}}
+            {{$t("skqbdz")}}
           </div>
           <div class="column-right">
             {{usdtForm.cryptAdd}}
@@ -161,7 +161,7 @@
         <div class="divider" v-if="usdtForm.tid"/>
         <div class="column" v-if="usdtForm.tid">
           <div class="column-left">
-            {{$t("汇款钱包地址")}}
+            {{$t("hkqbdz")}}
           </div>
           <div class="column-right">
             {{usdtForm.tid}}
@@ -170,10 +170,10 @@
         <div class="divider"/>
         <div class="column">
           <div class="column-left">
-            {{$t("手续费")}}
+            {{$t("sxfei")}}
           </div>
           <div class="column-right">
-            {{$t("待确认")}}
+            {{$t("dqr")}}
           </div>
         </div>
     </div>
@@ -311,15 +311,15 @@
         </div>
       </div>
     </div> -->
-    <el-dialog :title="`详情`" :visible.sync="dialogVisible" :width="moneyType === 'fabi' ? '1000px' : '600px'" :before-close="() => {
+    <el-dialog :title="$t('learnmore')" :visible.sync="dialogVisible" :width="moneyType === 'fabi' ? '1000px' : '600px'" :before-close="() => {
       dialogVisible = false;
     }
       ">
       <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle moreDetail" v-if="moneyType == 'fabi'">
-        <el-form-item :label="$t('币种')" class="mb12">
+        <el-form-item :label="$t('bz')" class="mb12">
           <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('充值金额')" class="mb12">
+        <el-form-item :label="$t('czje')" class="mb12">
           <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('收款账户名称')" class="mb12">
@@ -410,17 +410,17 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog :title="$t('完成')" :visible.sync="dialogVisibleSuccess" width="500px" :before-close="() => {
+    <el-dialog :title="$t('done')" :visible.sync="dialogVisibleSuccess" width="500px" :before-close="() => {
       dialogVisibleSuccess = false;
     }
       ">
       <div class="dialog-content">
         <img src="@/assets/images/moneyManage/success.png" />
         <div class="desc">
-          {{$t("发起充值成功")}}
+          {{$t("fqczcg")}}
         </div>
       </div>
-      <el-button slot="footer" type="primary" class="normal-btn" @click="dialogVisibleSuccess = false">{{$t("确定")}}</el-button>
+      <el-button slot="footer" type="primary" class="normal-btn" @click="dialogVisibleSuccess = false">{{$t("queding")}}</el-button>
     </el-dialog>
   </div>
 </template>
@@ -450,8 +450,8 @@ export default {
       moneyType: 'fabi',
       linkList: ['zjgl', 'chongzhi'],
       transactionTypeList: [
-        {label: '法定货币', value: 'fabi'},
-        {label: '加密货币', value: 'usdt'}
+        {label: this.$t('fdhb'), value: 'fabi'},
+        {label: this.$t('jmhb'), value: 'usdt'}
       ],
       form: {
         sendBank: "",
@@ -559,7 +559,7 @@ export default {
       if (!this.usdtForm.coinCode || !this.usdtForm.reqValue || !this.usdtForm.tid) {
         Message({
           type: "warning",
-          message: "请完善输入信息",
+          message: this.$t('qwsxx'),
         });
         return
       }
@@ -579,7 +579,7 @@ export default {
       if (!this.form.coinCode || !this.form.reqValue || !this.form.sendBank) {
         Message({
           type: "warning",
-          message: "请完善输入信息",
+          message: this.$t('qwsxx'),
         });
         return
       }

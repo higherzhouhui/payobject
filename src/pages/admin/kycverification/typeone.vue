@@ -110,7 +110,7 @@
       <div class="mb10">
         <label>{{ $t("t1") }}</label>
         <el-button style="padding: 4px 20px" size="small" type="primary" class="btn down-btn" v-if="form.kycStatus == 1"><a
-          :href="'/api/file/downLoad?url=' + form.regCer" target="_blank">点击下载</a></el-button>
+          :href="'/api/file/downLoad?url=' + form.regCer" target="_blank">{{$t('djxz')}}</a></el-button>
         <el-upload
           v-else
           class="upload-demo"
@@ -132,7 +132,7 @@
       <div class="mb10">
         <label>{{ $t("t2") }}</label>
         <el-button style="padding: 4px 20px" size="small" type="primary" class="btn down-btn" v-if="form.kycStatus == 1"><a
-          :href="'/api/file/downLoad?url=' + form.legal" target="_blank">点击下载</a></el-button>
+          :href="'/api/file/downLoad?url=' + form.legal" target="_blank">{{$t('djxz')}}</a></el-button>
         <el-upload
           v-else
           class="upload-demo"
@@ -178,7 +178,7 @@
         :class="loading && 'loading'"
         type="primary"
         @click="sendForm"
-        >{{ $t("完成") }}</el-button
+        >{{ $t("done") }}</el-button
       >
     </div>
   </div>

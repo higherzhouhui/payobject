@@ -2,8 +2,8 @@
     <div class="user_moneymanagement_transfer_contianer">
       <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem"/>
       <el-tabs v-model="moneyType">
-        <el-tab-pane label="法定货币" name="fabi"></el-tab-pane>
-        <el-tab-pane label="加密货币" name="usdt"></el-tab-pane>
+        <el-tab-pane :label="$t('fdhb')" name="fabi"></el-tab-pane>
+        <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
       </el-tabs>
       <div class="content">
         <el-form v-model="searchForm" :inline="true">
@@ -12,7 +12,7 @@
               v-model="searchForm.startTime"
               align="right"
               type="datetime"
-              placeholder="开始时间"
+              :placeholder="$t('kssj')"
               value-format="timestamp"
               :picker-options="pickerOptions">
             </el-date-picker>
@@ -22,13 +22,13 @@
               v-model="searchForm.endTime"
               align="right"
               type="datetime"
-              placeholder="结束时间"
+              :placeholder="$t('jssj')"
               value-format="timestamp"
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchForm.status" :placeholder="$t('状态')" clearable>
+            <el-select v-model="searchForm.status" :placeholder="$t('kzt')" clearable>
               <el-option
                 style="padding: 0 20px"
                 v-for="(item, index) in status"
@@ -46,19 +46,19 @@
           </el-form-item>
         </el-form>
         <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'fabi'">
-          <el-table-column prop="accountName" :label="$t('收款账户名称')" width="180" show-overflow-tooltip/>
-          <el-table-column prop="coinCode" :label="$t('币种')" min-width="100" />
-          <el-table-column prop="reqValue" :label="$t('出款金额')" min-width="100" />
-          <el-table-column prop="targetCode" :label="$t('目标币种')" min-width="100" />
-          <el-table-column prop="changeValue" :label="$t('预计到账金额')" min-width="130" />
-          <el-table-column prop="reqStatus" :label="$t('状态')" min-width="120">
+          <el-table-column prop="accountName" :label="$t('skzhmc')" width="180" show-overflow-tooltip/>
+          <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
+          <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+          <el-table-column prop="targetCode" :label="$t('mbbz')" min-width="100" />
+          <el-table-column prop="changeValue" :label="$t('yjdzje')" min-width="130" />
+          <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
                 {{ status[scope.row.reqStatus] }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" />
+          <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
           <el-table-column
             prop="name"
             :label="$t('cz')"
@@ -67,7 +67,7 @@
           >
             <template slot-scope="scope">
               <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
-                {{ $t("详情") }}
+                {{ $t("xq") }}
               </el-button>
             </template>
           </el-table-column>
@@ -79,20 +79,20 @@
           </div>
         </el-table>
         <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
-          <el-table-column prop="srcCode" :label="$t('币种')" min-width="100" />
-          <el-table-column prop="cryptAdd" :label="$t('收款钱包地址')" min-width="180" />
-          <el-table-column prop="coinCode" :label="$t('目标币种')" min-width="100" />
-          <el-table-column prop="reqValue" :label="$t('出款金额')" min-width="100" />
-          <el-table-column prop="witValue" :label="$t('预计到账金额')" min-width="120" />
+          <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" />
+          <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
+          <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
+          <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+          <el-table-column prop="witValue" :label="$t('yjdzje')" min-width="120" />
           <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
-          <el-table-column prop="reqStatus" :label="$t('状态')" min-width="100">
+          <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
             <template slot-scope="scope">
               <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
                 {{ usdtstatus[scope.row.reqStatus] }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('创建时间')" min-width="180" />
+          <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
           <el-table-column
             prop="name"
             :label="$t('cz')"
@@ -101,7 +101,7 @@
           >
             <template slot-scope="scope">
               <el-button  type="info" class="btn" size="small" @click="handleShowDetail(scope.row)">
-                {{ $t("详情") }}
+                {{ $t("xq") }}
               </el-button>
             </template>
           </el-table-column>
@@ -125,92 +125,92 @@
         </el-pagination>
       </div>
   
-      <el-dialog :title="`详情`" :visible.sync="dialogVisible" width="1000px" :before-close="() => {
+      <el-dialog :title="$t('xq')" :visible.sync="dialogVisible" width="1000px" :before-close="() => {
         dialogVisible = false;
       }
         ">
         <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle moreDetail">
-          <el-form-item :label="$t('币种')" class="mb12">
+          <el-form-item :label="$t('bz')">
             <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('出款金额')" class="mb12">
+          <el-form-item :label="$t('ckje')">
             <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('收款账户名称')" class="mb12">
+          <el-form-item :label="$t('skzhmc')">
             <el-input v-model="currentSelectRow.accountName" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('预计到账金额')" class="mb12">
+          <el-form-item :label="$t('yjdzje')">
             <el-input v-model="currentSelectRow.changeValue" :readOnly="true"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('收款账号')" class="mb12">
+          <el-form-item :label="$t('skzh')">
             <el-input v-model="currentSelectRow.outbankAccount" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('代码')" class="mb12">
+          <el-form-item :label="$t('bankcode')">
             <el-input v-model="currentSelectRow.outbankCode" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('所属国家')" class="mb12">
+          <el-form-item :label="$t('khgj')">
             <el-input v-model="currentSelectRow.outbankCountry" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('所在地址')" class="mb12">
+          <el-form-item :label="$t('skyhszdz')">
             <el-input type="textarea" v-model="currentSelectRow.outbankAdd" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('SWIFT')" class="mb12">
+          <el-form-item :label="$t('sksdm')">
             <el-input v-model="currentSelectRow.outswiftCode" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.memo">
+          <el-form-item :label="$t('bhly')" v-if="currentSelectRow.memo">
             <el-input type="textarea" v-model="currentSelectRow.memo" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('创建时间')" class="mb12">
+          <el-form-item :label="$t('cjsj')">
             <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('修改时间')" class="mb12">
+          <el-form-item :label="$t('xgsj')">
             <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('汇款凭证')" class="mb12" v-if="currentSelectRow.reqProof">
+          <el-form-item :label="$t('hkpz')" v-if="currentSelectRow.reqProof">
             <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">{{$t('djxz')}}</a></el-button>
           </el-form-item>
         </el-form>
         <div slot="footer">
           <el-button class="qd" @click="dialogVisible = false"
-            >完成</el-button>
+            >{{$t('done')}}</el-button>
         </div>
       </el-dialog>
-      <el-dialog :title="`详情`" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
+      <el-dialog :title="$t('xq')" :visible.sync="usdtdialogVisible" width="650" :before-close="() => { usdtdialogVisible = false; }">
         <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle">
-          <el-form-item :label="$t('币种')" class="mb12">
+          <el-form-item :label="$t('bz')">
             <el-input v-model="currentSelectRow.srcCode" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('收款钱包地址')" class="mb12">
+          <el-form-item :label="$t('skqbdz')">
             <el-input v-model="currentSelectRow.cryptAdd" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('目标币种')" class="mb12">
+          <el-form-item :label="$t('mbbz')">
             <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('出款金额')" class="mb12">
+          <el-form-item :label="$t('ckje')">
             <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('预计到账金额')" class="mb12">
+          <el-form-item :label="$t('yjdzje')">
             <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('驳回理由')" class="mb12" v-if="currentSelectRow.reqStatus == 5">
+          <el-form-item :label="$t('bhly')" v-if="currentSelectRow.reqStatus == 5">
             <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('创建时间')" class="mb12">
+          <el-form-item :label="$t('cjsj')">
             <el-input v-model="currentSelectRow.createTime" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('修改时间')" class="mb12">
+          <el-form-item :label="$t('xgsj')">
             <el-input v-model="currentSelectRow.modifiedTime" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('汇款凭证')" class="mb12" v-if="currentSelectRow.reqProof">
+          <el-form-item :label="$t('hkpz')" v-if="currentSelectRow.reqProof">
             <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">点击下载</a></el-button>
+                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof" target="_blank">{{$t('djxz')}}</a></el-button>
           </el-form-item>
         </el-form>
         <div slot="footer">
           <el-button class="qd" @click="usdtdialogVisible = false"
-            >完成</el-button>
+            >{{$t('done')}}</el-button>
         </div>
       </el-dialog>
     </div>
@@ -230,14 +230,14 @@
         options: [],
         type: "1",
         usdtdialogVisible: false,
-        linkList: ["txgl", "出款申请查询"],
+        linkList: ["txgl", "txzhgl"],
         form: {
           name: "", 
         },
         loading: true,
-        usdtstatus: ['全部', '审核中', '完成', '驳回'],
+        usdtstatus: [this.$t('all'), this.$t('shz'), this.$t('done'), this.$t('bh')],
         usdttypeOption: ['', 'info','success','danger','danger', 'danger'],
-        status: ['全部', '审核中', '处理中', '完成', '完成', '驳回'],
+        status: [this.$t('all'), this.$t('shz'), this.$t('clz'), this.$t('done'), this.$t('done'), this.$t('bh')],
         typeOption: ['', 'info','warning','success','danger', 'danger'],
         dialogVisible: false,
         currentSelectRow: {},

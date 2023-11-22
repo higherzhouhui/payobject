@@ -35,7 +35,7 @@
                     <div class="menus" :class="showMenu && 'showMenu'">
                         <div class="menus-item" @click="to('/index')">{{ $t('home') }}</div>
                         <div class="menus-item" @click="to('/blog')">News</div>
-                        <div class="menus-item" @click="to('')">关于我们</div>
+                        <div class="menus-item" @click="to('')">{{$t('comments')}}</div>
                         <div class="menus-item" @click="to('/user/login')" v-if="!email">{{ $t('login') }}</div>
                         <div class="menus-item" @click="to('/user/register')" v-if="!email">{{ $t('register') }}</div>
                         <div class="menus-item" @click="to('/admin/dashboard')" v-if="email">{{$t('profile')}}</div>

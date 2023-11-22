@@ -105,7 +105,7 @@
               size="small"
               @click="toDetail(scope.row)"
             >
-              {{ $t("详情") }}
+              {{ $t("xq") }}
             </el-button>
             <el-button
               type="danger"
@@ -113,7 +113,7 @@
               size="small"
               @click="delBank(scope.row.id)"
             >
-              {{ $t("删除") }}
+              {{ $t("del") }}
             </el-button>
           </template>
         </el-table-column>
@@ -126,7 +126,7 @@
       </el-table>
     </div>
     <el-dialog
-      :title="bankForm.id ? `${$t('详情')}` : $t('zjzzzh')"
+      :title="bankForm.id ? `${$t('xq')}` : $t('zjzzzh')"
       :visible.sync="dialogVisible"
       width="636px"
       top="3%"
@@ -229,7 +229,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item
-          :label="$t('驳回理由')"
+          :label="$t('bhly')"
           class="mb24"
           v-if="bankForm.bankStatus == 2"
         >
@@ -268,7 +268,7 @@
             class="down-a"
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
-            >点击下载</a
+            >{{$t('djxz')}}</a
           >
         </el-form-item>
       </el-form>
@@ -309,19 +309,19 @@ export default {
       bankloading: false,
       loading: true,
       tableData: [],
-      status: ["审核中", "已通过", "驳回"],
+      status: [this.$t("shz"), this.$t("ytg"), this.$t("bh")],
       typeOption: ["warning", "success", "danger"],
       options: [
         {
-          label: "审核中",
+          label: this.$t("shz"),
           value: 0,
         },
         {
-          label: "已通过",
+          label: this.$t("ytg"),
           value: 1,
         },
         {
-          label: "驳回",
+          label: this.$t("bh"),
           value: 2,
         },
       ],
@@ -397,19 +397,19 @@ export default {
         this.bankForm.accountCer = req.data[0];
         Message({
           type: "success",
-          message: this.$t("sccg"),
+          message: this.$t("czcg"),
         });
       } catch (error) {}
       return false;
     },
     delBank(id) {
-      this.$confirm("确认删除？", "提示")
+      this.$confirm(this.$t("qrsc"), this.$t("hint"))
         .then(async (_) => {
           try {
             await bankDel({ bankId: id });
             Message({
               type: "success",
-              message: "删除成功",
+              message: this.$t("czcg"),
             });
             this.getlist();
           } catch (error) {}
@@ -423,7 +423,7 @@ export default {
         await subBank(this.bankForm);
         Message({
           type: "success",
-          message: this.$t("fscg"),
+          message: this.$t("czcg"),
         });
         this.getlist();
         this.dialogVisible = false;

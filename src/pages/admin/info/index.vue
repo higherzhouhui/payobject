@@ -1,30 +1,30 @@
 <template>
   <div class="refer-container">
-    <h1>{{$t("个人资料")}}</h1>
-    <div class="label">{{$t("邮箱")}}</div>
+    <h1>{{$t("grzl")}}</h1>
+    <div class="label">{{$t("email")}}</div>
     <div class="code" @click="copyText2(userInfo.email)">
       <div class="number">{{userInfo.email}}</div>
       <img src="@/assets/images/home/copy.png"/>
     </div>
-    <div class="label">{{$t("上级邀请码")}}</div>
+    <div class="label">{{$t("sjyqm")}}</div>
     <div class="code" @click="copyText2(userInfo.inviteCode)">
       <div class="number">{{userInfo.inviteCode}}</div>
       <img src="@/assets/images/home/copy.png"/>
     </div>
-    <div class="label">{{$t("我的邀请码")}}</div>
+    <div class="label">{{$t("wdyqm")}}</div>
     <div class="code" @click="copyText2(userInfo.providerId)">
       <div class="number">{{userInfo.providerId}}</div>
       <img src="@/assets/images/home/copy.png"/>
     </div>
-    <div class="label">{{$t("账号类型")}}</div>
+    <div class="label">{{$t("zhlx")}}</div>
     <div class="code">
-      <div class="number">{{userInfo.admin ? "管理员" : "普通用户"}}</div>
+      <div class="number">{{userInfo.admin ? $t("gly") : $t("ptyh")}}</div>
     </div>
-    <div class="label">{{$t("创建时间")}}</div>
+    <div class="label">{{$t("cjsj")}}</div>
     <div class="code">
       <div class="number">{{userInfo.createTime}}</div>
     </div>
-    <div class="label">{{$t("更新时间")}}</div>
+    <div class="label">{{$t("xgsj")}}</div>
     <div class="code">
       <div class="number">{{userInfo.modifiedTime}}</div>
     </div>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'refer',
+  name: 'referFriend',
   props: {
     msg: String
   },

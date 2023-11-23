@@ -450,7 +450,7 @@ html {
 }
 
 .el-form-item {
-    margin-bottom: 20px;
+    margin-bottom: 3px;
 }
 
 .content_shadow {
@@ -658,9 +658,10 @@ ul::-webkit-scrollbar-thumb {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
+            font-size: 13px;
             .column-left {
-                margin-right: 5px;
+                font-weight: bold;
+                min-width: 60px;
             }
         }
     }
@@ -726,3 +727,8 @@ ul::-webkit-scrollbar-thumb {
       background: #fff;
     }
   }
+.unit {
+    margin-left: 4px;
+    font-size: 12px;
+    color: red;
+}

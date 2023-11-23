@@ -22,6 +22,10 @@
                 <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
                 <span slot="title">{{ $t('cjlist') }}</span>
             </el-menu-item>
+            <el-menu-item index="/manage/convert">
+                <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
+                <span slot="title">{{ $t('兑换列表') }}</span>
+            </el-menu-item>
             <el-menu-item index="/manage/bill">
                 <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
                 <span slot="title">{{ $t('jymx') }}</span>
@@ -75,6 +79,20 @@
                 <el-menu-item index="/admin/withdraw/list">
                     <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
                     <span slot="title">{{ $t('txzhgl') }}</span>
+                </el-menu-item>
+            </el-submenu>
+            <el-submenu index="convert">
+                <template slot="title">
+                    <img class="icon" src="@/assets/images/home/txgl.png" alt="">
+                    <span slot="title">{{ $t('兑换管理') }}</span>
+                </template>
+                <el-menu-item index="/admin/convert/index">
+                    <img class="icon" src="@/assets/images/home/tx_icon.png" alt="">
+                    <span slot="title">{{ $t('兑换') }}</span>
+                </el-menu-item>
+                <el-menu-item index="/admin/convert/list">
+                    <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
+                    <span slot="title">{{ $t('兑换列表') }}</span>
                 </el-menu-item>
             </el-submenu>
             <el-submenu index="6">

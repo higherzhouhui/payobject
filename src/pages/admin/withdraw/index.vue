@@ -42,6 +42,9 @@
                 ></el-option>
               </el-select>
             </div>
+            <div class="remain" v-if="form.coinCode">
+              余额：<span>{{getReamin()}}</span>
+            </div>
           </div>
           <div class="form-item" v-else>
             <div class="label">{{ $t("txje") }}</div>
@@ -69,7 +72,7 @@
               </el-select>
             </div>
           </div>
-          <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
+          <!-- <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
             <div class="label">{{ $t("txmbbz") }}</div>
             <div class="input-with-select">
               <el-select
@@ -88,8 +91,8 @@
                 </el-option>
               </el-select>
             </div>
-          </div>
-          <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.srcCode">
+          </div> -->
+          <!-- <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.srcCode">
             <div class="label">{{ $t("txmbbz") }}</div>
             <div class="input-with-select">
               <el-select
@@ -107,7 +110,7 @@
                 </el-option>
               </el-select>
             </div>
-          </div>
+          </div> -->
           <ul class="list">
             <li>{{ $t("limitNum") }}</li>
           </ul>
@@ -137,6 +140,20 @@
                 class="input-amount"
                 :placeholder="$t('qsrtxdqbdz')"
               />
+              <el-select
+              class="input-select"
+              v-model="usdtForm.agreement"
+              :placeholder="$t('qsz')"
+            >
+              <el-option
+                style="padding: 0 20px"
+                v-for="item in agreementList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
             </div>
           </div>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
@@ -592,6 +609,10 @@ export default {
   components: { LinkPath },
   data() {
     return {
+      agreementList: [
+        {label: 'TRC', value: 'TRC'},
+        {label: 'ERC', value: 'ERC'},
+      ],
       dialogVisibleSuccess: false,
       form: {
         coinCode: "",
@@ -604,6 +625,7 @@ export default {
         cryptAdd: "",
         srcCode: "",
         tid: "default",
+        agreement: 'TRC'
       },
       moneyType: "fabi",
       transactionTypeList: [
@@ -659,6 +681,10 @@ export default {
     //   })
   },
   watch: {
+    "form.coinCode": function () {
+      this.form.targetCode = "";
+      this.getCJBZ();
+    },
     form: {
       deep: true,
       handler: function (newVal, oldVal) {
@@ -667,15 +693,17 @@ export default {
         }
       },
     },
-    "form.coinCode": function () {
-      this.form.targetCode = "";
-      this.getCJBZ();
-    },
     moneyType() {
       this.getCJBZ();
     },
   },
   methods: {
+    getReamin() {
+      const rarr = this.bankListBalance.filter(item => {
+        return item.coinCode == this.form.coinCode
+      })
+      return rarr[0].balance
+    },
     async calculateRateMoney() {
       try {
         const res = await calculateRate({
@@ -705,7 +733,6 @@ export default {
 
     async handleUsdtPutDeposit() {
       if (
-        !this.usdtForm.coinCode ||
         !this.usdtForm.reqValue ||
         !this.usdtForm.cryptAdd ||
         !this.usdtForm.srcCode
@@ -729,7 +756,6 @@ export default {
       if (
         !this.form.coinCode ||
         !this.form.reqValue ||
-        !this.form.targetCode ||
         !this.form.bankId
       ) {
         Message({
@@ -800,7 +826,7 @@ export default {
           res = await withdrawCoins({ code: this.usdtForm.srcCode });
         }
         this.outCoinList = res.data;
-        this.$refs.targetselectRef.toggleMenu();
+        // this.$refs.targetselectRef.toggleMenu();
       } catch (error) {}
     },
     // 获取入金币种
@@ -914,6 +940,12 @@ export default {
     color: $baseColor;
   }
 }
-
+.remain {
+  margin-top: 6px;
+  span {
+    font-weight: bold;
+    color: $baseColor;
+  }
+}
 </style>
   

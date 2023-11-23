@@ -312,11 +312,11 @@
         <el-form-item :label="$t('驳回理由')">
           <el-input type="textarea" v-model="currentSelectRow.memo"></el-input>
         </el-form-item>
-        <div class="operationBtn">
-          <el-button type="info" size="large" class="mbtn" @click="rejectdialogVisible = false">取消</el-button>
-          <el-button type="primary" size="large" class="mbtn" @click="rejectConfirm" v-loading="operationLoading">确认</el-button>
-        </div>
       </el-form>
+      <div slot="footer">
+        <el-button type="info" size="large" class="qx" @click="rejectdialogVisible = false">取消</el-button>
+        <el-button type="primary" size="large" class="qd" @click="rejectConfirm" v-loading="operationLoading">确认</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -333,6 +333,35 @@ export default {
   components: { LinkPath },
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: this.$t("today"),
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: this.$t("yestoday"),
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+          {
+            text: this.$t("yzq"),
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
+      },
       tableData: [],
       options: [],
       type: "1",

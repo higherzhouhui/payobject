@@ -49,8 +49,8 @@
           <el-table-column prop="accountName" :label="$t('skzhmc')" width="180" show-overflow-tooltip/>
           <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
           <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-          <el-table-column prop="targetCode" :label="$t('mbbz')" min-width="100" />
-          <el-table-column prop="changeValue" :label="$t('yjdzje')" min-width="130" />
+          <!-- <el-table-column prop="targetCode" :label="$t('mbbz')" min-width="100" /> -->
+          <!-- <el-table-column prop="changeValue" :label="$t('yjdzje')" min-width="130" /> -->
           <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
             <template slot-scope="scope">
               <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
@@ -81,9 +81,10 @@
         <el-table class="tables" size="small" :data="tableData" style="width: 100%" v-loading="loading" v-if="moneyType == 'usdt'">
           <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" />
           <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
-          <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
+          <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
+          <!-- <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" /> -->
           <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-          <el-table-column prop="witValue" :label="$t('yjdzje')" min-width="120" />
+          <!-- <el-table-column prop="witValue" :label="$t('yjdzje')" min-width="120" /> -->
           <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
           <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
             <template slot-scope="scope">
@@ -139,10 +140,9 @@
           <el-form-item :label="$t('skzhmc')">
             <el-input v-model="currentSelectRow.accountName" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('yjdzje')">
+          <!-- <el-form-item :label="$t('yjdzje')">
             <el-input v-model="currentSelectRow.changeValue" :readOnly="true"></el-input>
-          </el-form-item>
-
+          </el-form-item> -->
           <el-form-item :label="$t('skzh')">
             <el-input v-model="currentSelectRow.outbankAccount" :readOnly="true"></el-input>
           </el-form-item>
@@ -185,15 +185,15 @@
           <el-form-item :label="$t('skqbdz')">
             <el-input v-model="currentSelectRow.cryptAdd" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('mbbz')">
+          <!-- <el-form-item :label="$t('mbbz')">
             <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item :label="$t('ckje')">
             <el-input v-model="currentSelectRow.reqValue" :readOnly="true"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('yjdzje')">
+          <!-- <el-form-item :label="$t('yjdzje')">
             <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item :label="$t('bhly')" v-if="currentSelectRow.reqStatus == 5">
             <el-input v-model="currentSelectRow.memo" :readOnly="true"></el-input>
           </el-form-item>
@@ -226,6 +226,35 @@
     components: { LinkPath },
     data() {
       return {
+        pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: this.$t("today"),
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: this.$t("yestoday"),
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+          {
+            text: this.$t("yzq"),
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
+      },
         tableData: [],
         options: [],
         type: "1",

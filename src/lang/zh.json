@@ -371,5 +371,8 @@
     "fdhbrjdsh": "法定货币入金待审核",
     "jmhbrjdsh": "加密货币入金待审核",
     "fdhbcjdsh": "法定货币出金待审核",
-    "jmhbcjdsh": "加密货币出金待审核"
+    "jmhbcjdsh": "加密货币出金待审核",
+    "jmxy": "加密协议",
+    "duihuan": "兑换",
+    "duihuanls": "兑换列表"
 }

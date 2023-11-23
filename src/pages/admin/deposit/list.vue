@@ -154,6 +154,11 @@
           :label="$t('hkqbdz')"
           min-width="180"
         />
+        <el-table-column
+          prop="agreement"
+          :label="$t('jmxy')"
+          min-width="80"
+        />
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">

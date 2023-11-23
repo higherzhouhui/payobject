@@ -34,6 +34,12 @@ const router = new VueRouter({
                     { path: 'list', name: 'withdrawList', component: () => import('@/pages/admin/withdraw/list.vue')},
                     ]
                 },
+                { path: 'convert', name: 'convert', redirect: '/convert/index',  component: () => import('@/pages/admin/convert/layout.vue'),
+                    children: [
+                    { path: 'index', name: 'convertIndex', component: () => import('@/pages/admin/convert/index.vue')},
+                    { path: 'list', name: 'convertList', component: () => import('@/pages/admin/convert/list.vue')},
+                    ]
+                },
                 { path: 'exchange', name: 'exchange', redirect: '/exchange/index',  component: () => import('@/pages/admin/exchange/layout.vue'),
                     children: [
                     { path: 'index', name: 'exchangeIndex', component: () => import('@/pages/admin/exchange/index.vue')},
@@ -59,6 +65,7 @@ const router = new VueRouter({
                 { path: 'kyc', component: () => import('@/pages/manage/kyc/index.vue') },
                 { path: 'deposit', component: () => import('@/pages/manage/deposit/index.vue') },
                 { path: 'exchange', component: () => import('@/pages/manage/exchange/index.vue') },
+                { path: 'convert', component: () => import('@/pages/admin/convert/list.vue') },
                 { path: 'withdraw', component: () => import('@/pages/manage/withdraw/index.vue') },
                 { path: 'change', component: () => import('@/pages/admin/record/transactionlist.vue') },
                 { path: 'bill', component: () => import('@/pages/admin/record/exchangelist.vue') },

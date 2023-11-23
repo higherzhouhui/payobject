@@ -77,10 +77,10 @@
         <el-table-column prop="billValue" :label="$t('je')" min-width="100" />
         <el-table-column prop="billType" :label="$t('lx')" min-width="100">
           <template slot-scope="scope">
-            <el-tag class="elTag" type="success" v-if="scope.row.billType == 1">
-              {{$t('chongzhi')}}
-            </el-tag>
-            <el-tag class="elTag" type="danger" v-else> {{$t('tx')}} </el-tag>
+
+      
+            <el-tag class="elTag" :type="typeStyle[scope.row.billType]"> {{typeOption[scope.row.billType]}} </el-tag>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -142,6 +142,8 @@ export default {
       form: {
         name: "",
       },
+      typeOption: ['', '入账', '出账', '换汇', '换汇的入账'],
+      typeStyle: ['', 'success', 'danger', 'info', 'warning'],
       loading: true,
       current: 1,
       size: 10,

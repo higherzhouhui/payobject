@@ -38,7 +38,7 @@
             <div class="right">
               <div class="type-wrapper">
                 <div class="desc">{{item.createTime}}</div>
-                <div class="type" :class="item.billType == 2 ? 'send' : 'recive'">${{item.billValue}}</div>
+                <div class="type" :class="item.billType == 2 || item.billType == 3 ? 'send' : 'recive'">${{item.billValue}}</div>
               </div>
             </div>
           </div>
@@ -249,6 +249,9 @@ h1 {
     .left {
       display: flex;
       align-items: center;
+      i {
+        font-size: 1.5rem;
+      }
     }
     .type-wrapper {
       margin-left: 0.8rem;
@@ -261,19 +264,11 @@ h1 {
         font-weight: 1rem;
       }
     }
-    .el-icon-top-right {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
     .send {
       color: #ff0000;
     }
     .recive {
       color: #2dbe60;
-    }
-    .el-icon-bottom-left {
-      font-size: 1.5rem;
-      font-weight: bold;
     }
     &:hover {
       transform: translateY(-4px);

@@ -309,6 +309,9 @@ h1 {
     .left {
       display: flex;
       align-items: center;
+      i {
+        font-size: 1.5rem;
+      }
     }
     .type-wrapper {
       margin-left: 0.8rem;
@@ -321,19 +324,11 @@ h1 {
         font-weight: 1rem;
       }
     }
-    .el-icon-top-right {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
     .send {
       color: #ff0000;
     }
     .recive {
       color: #2dbe60;
-    }
-    .el-icon-bottom-left {
-      font-size: 1.5rem;
-      font-weight: bold;
     }
     &:hover {
       transform: translateY(-4px);

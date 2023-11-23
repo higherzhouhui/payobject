@@ -90,7 +90,6 @@
     <el-dialog
       :title="$t('done')"
       :visible.sync="dialogVisibleSuccess"
-      width="500px"
       :before-close="
         () => {
           dialogVisibleSuccess = false;

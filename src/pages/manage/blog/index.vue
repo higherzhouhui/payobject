@@ -73,7 +73,7 @@
         >
           <template slot-scope="scope">
             <el-button
-              type="info"
+              type="primary"
               class="btn detail-btn"
               size="small"
               @click="showDialog(scope.row)"
@@ -113,7 +113,7 @@
       <el-dialog
         :title="blogForm.id ? '修改' : '新增'"
         :visible.sync="dialogVisible"
-        width="636px"
+        width="800px"
         :before-close="
           () => {
             dialogVisible = false;
@@ -321,6 +321,7 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
+      this.current = 1
       this.getInitData();
     },
     async getInitData() {

@@ -357,6 +357,7 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
+      this.current = 1
       this.getInitData();
     },
     async getRJBZ() {
@@ -423,9 +424,6 @@ export default {
     async getInitData() {
       this.loading = true;
       let res;
-      if (this.searchForm.changeStatus == 0) {
-        delete this.searchForm.changeStatus;
-      }
       res = await changeDetails({
         ...this.searchForm,
         current: this.current,

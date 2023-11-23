@@ -17,7 +17,7 @@
           </el-form-item>
           <el-form-item>
             <el-input
-              :placeholder="$t('yhzhh')"
+              :placeholder="$t('yhzh')"
               v-model="form.bankAccount"
               clearable
             ></el-input>
@@ -234,6 +234,15 @@
                 >
                   驳回
                 </el-button>
+                <el-button
+                v-if="scope.row.kycStatus == 1"
+                class="btn"
+                type="primary"
+                size="small"
+                @click="showUserBalance(scope.row)"
+              >
+                余额
+              </el-button>
               </div>
             </template>
           </el-table-column>
@@ -334,16 +343,11 @@
           <label style="font-size: 12px">
             {{ $t("zzd") }}
           </label>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            ><a
-              :href="'/api/file/downLoad?url=' + bankForm.accountCer"
-              target="_blank"
-              >点击下载</a
-            ></el-button
+          <a
+            :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+            target="_blank"
+            class="down-a"
+            >预览</a
           >
         </el-form-item>
       </el-form>
@@ -462,7 +466,7 @@
             :href="'/api/file/downLoad?url=' + bankForm2.regCer"
             target="_blank"
             class="down-a"
-            >点击下载</a
+            >预览</a
           >
         </el-form-item>
         <el-form-item :label="$t('scwj')">
@@ -470,11 +474,11 @@
             {{ $t("t2") }}
           </label>
           <a
-          :href="'/api/file/downLoad?url=' + bankForm2.legal"
-          target="_blank"
-          class="down-a"
-          >点击下载</a
-        >
+            :href="'/api/file/downLoad?url=' + bankForm2.legal"
+            target="_blank"
+            class="down-a"
+            >预览</a
+          >
         </el-form-item>
         <el-form-item :label="$t('scwj')" v-if="bankForm2.busType != 1">
           <label style="font-size: 12px">
@@ -484,7 +488,7 @@
             :href="'/api/file/downLoad?url=' + bankForm2.shareholder"
             target="_blank"
             class="down-a"
-            >点击下载</a
+            >预览</a
           >
         </el-form-item>
       </el-form>
@@ -497,7 +501,6 @@
     <el-dialog
       :title="'加密货币地址'"
       :visible.sync="dialogVisible3"
-      width="636px"
       :before-close="
         () => {
           dialogVisible3 = false;
@@ -561,15 +564,45 @@
         >
       </span>
     </el-dialog>
+    <el-dialog
+      :title="'用户余额'"
+      :visible.sync="userBalanceDialog"
+      :before-close="
+        () => {
+          userBalanceDialog = false;
+        }
+      "
+    >
+    <div class="formStyle">
+      <div class="dialog-input" v-for="item in userBalanceDetail" :key="item.coinCode">
+          <el-input
+            :value="item.balance"
+          >
+          <template slot="append">{{ item.coinCode }}</template>
+        </el-input>
+      </div>
+      <el-empty v-if="!userBalanceDetail.length"/>
+    </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button class="qd" @click="userBalanceDialog = false">{{
+          $t("sure")
+        }}</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { getBankListPage, perBank, kycList, perKyc } from "@/api/bank";
+import {
+  getBankListPage,
+  perBank,
+  kycList,
+  perKyc,
+  userBalanceList,
+} from "@/api/bank";
 import { setCryAcc, getCryAdd } from "@/api/exchange";
-
-import { Message } from "element-ui";
 import { cryptocurrencies } from "@/api/login";
 import { Local, getHashParams } from "@/utils/index";
+import { Message } from "element-ui";
 
 export default {
   name: "KYCPage",
@@ -590,6 +623,7 @@ export default {
       bankloading: false,
       currentSelectRow: false,
       rejectdialogVisible: false,
+      userBalanceDialog: false,
       options: [
         {
           label: "审核中",
@@ -628,6 +662,7 @@ export default {
         },
       ],
       dialogVisible3Loading: false,
+      userBalanceDetail: [],
     };
   },
   watch: {
@@ -638,6 +673,19 @@ export default {
     },
   },
   methods: {
+    async showUserBalance(row) {
+      try {
+        this.loading = true
+        const res = await userBalanceList({id: row.id})
+        this.loading = false
+        this.userBalanceDetail = res.data
+        this.userBalanceDialog = true
+      } catch {
+      this.loading = false
+
+      }
+
+    },
     getInitData() {
       if (this.type == "first") {
         this.getlist();
@@ -819,5 +867,8 @@ export default {
 }
 .elSelect {
   width: 100%;
+}
+.dialog-input {
+  margin-bottom: 12px;
 }
 </style>

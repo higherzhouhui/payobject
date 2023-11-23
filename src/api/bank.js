@@ -43,3 +43,8 @@ export const perKyc = (data) => service({
     data,
     method: 'post'
 })
+export const userBalanceList = (data) => service({
+    url: '/userBalanceList',
+    data,
+    method: 'get'
+})

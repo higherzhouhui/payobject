@@ -3,7 +3,7 @@
     <div class="content" :class="tips == 4 ? 'content_hui' : 'content_shadow'">
       <div class="s_title">
         {{ status }}
-        <span>{{reason}}</span>
+        <span class="hint_title">{{reason}}</span>
       </div>
       <template v-if="tips == 4">
         <TypeOne @to="tips = 1" :type="qyType" />
@@ -144,9 +144,9 @@ export default {
   methods: {
     calcCurrentStep() {
       const accountKyc = this.$store.state.userInfo || {}
-      if (accountKyc.kyc && accountKyc.kyc.kycStatus == 1) {
+      if (accountKyc.kyc) {
         this.tips = 4
-      } 
+      }
     },
     checkTips(index, type, qytype) {
       if (index == 2) {
@@ -172,7 +172,7 @@ export default {
         let reason = ''
         if (this.userInfo.kyc) {
           if (this.userInfo.kyc.kycStatus === 0) {
-                reason = '审核中，请等待审核完成'
+                reason = '正在审核中，请等待...'
             }
             if (this.userInfo.kyc.kycStatus === 1) {
                 reason = '如需修改请联系工作人员'
@@ -219,11 +219,12 @@ export default {
     .s_title {
       color: #fff;
       font-size: 1.2rem;
-      span {
-        font-size: 12px;
+      animation: bounceln 0.8s forwards 0.75s;
+    }
+    .hint_title {
+        font-size: 15px;
         color: rgb(201, 127, 127);
       }
-    }
     .choice_box {
       padding: 24px;
       width: 352px;

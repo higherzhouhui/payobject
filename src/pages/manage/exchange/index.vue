@@ -308,7 +308,7 @@
 
               :href="'/api/file/downLoad?url=' + bankForm.accountCer"
               target="_blank"
-              >点击下载</a>
+              >预览</a>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">

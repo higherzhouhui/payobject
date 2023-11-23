@@ -1,6 +1,6 @@
 <template>
   <div class="verified_type_1_contarner">
-    <div class="process_box2 mt40"  v-if="form.kycStatus !== 1">
+    <div class="process_box2 mt40" v-if="form.kycStatus !== 1">
       <el-steps :active="1" align-center>
         <el-step :title="$t('qyxx')"></el-step>
         <!-- <el-step :title="$t('frxx')"></el-step> -->
@@ -10,23 +10,32 @@
     <div class="content content-form">
       <div class="flex flex_align_center flex_nowrap">
         <span class="nowrap">{{ $t("qymc") }}：</span>
-        <el-input size="small" v-model="form.companyName" :placeholder="$t('qsrqymc')"></el-input>
+        <el-input
+          size="small"
+          v-model="form.companyName"
+          :placeholder="$t('qsrqymc')"
+        ></el-input>
       </div>
       <div class="flex flex_align_center flex_nowrap">
-        <span class="nowrap">{{ $t("qygw") }}({{ $t("fbt")}})：</span>
-        <el-input size="small" v-model="form.webSite" :placeholder="$t('qsrqygw')"></el-input>
+        <span class="nowrap">{{ $t("qygw") }}({{ $t("fbt") }})：</span>
+        <el-input
+          size="small"
+          v-model="form.webSite"
+          :placeholder="$t('qsrqygw')"
+        ></el-input>
       </div>
       <div class="flex flex_align_center flex_nowrap">
         <span class="nowrap">{{ $t("qyjydz") }}：</span>
-        <el-input type="textarea" size="small" v-model="form.businessAdd" :placeholder="$t('qsrqyjydz')"></el-input>
+        <el-input
+          type="textarea"
+          size="small"
+          v-model="form.businessAdd"
+          :placeholder="$t('qsrqyjydz')"
+        ></el-input>
       </div>
       <div class="flex flex_align_center flex_nowrap">
         <span class="nowrap">{{ $t("qylx") }}：</span>
-        <el-select
-          size="small"
-          v-model="form.busType"
-          style="width: 100%"
-        >
+        <el-select size="small" v-model="form.busType" style="width: 100%">
           <el-option
             style="padding: 0 10px"
             v-for="item in options"
@@ -53,8 +62,8 @@
             :key="item.id"
             :value="item.areaCode"
           >
-          <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-          {{ languge == 'zh' ? item.name : item.enName}}
+            <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+            {{ languge == "zh" ? item.name : item.enName }}
           </el-option>
         </el-select>
       </div>
@@ -98,21 +107,37 @@
       </div>
       <div class="flex flex_align_center flex_nowrap">
         <span class="nowrap">{{ $t("dbjyed") }}：</span>
-        <el-input size="small" v-model="form.transactionLimit" :placeholder="$t('qsrdbjyed')"></el-input>
+        <el-input
+          size="small"
+          v-model="form.transactionLimit"
+          :placeholder="$t('qsrdbjyed')"
+        ></el-input>
       </div>
       <div class="flex flex_align_center flex_nowrap">
         <span class="nowrap">{{ $t("ywcjsm") }}：</span>
-        <el-input type="textarea" size="small" v-model="form.businessScenario" :placeholder="$t('qsrywcjsm')"></el-input>
+        <el-input
+          type="textarea"
+          size="small"
+          v-model="form.businessScenario"
+          :placeholder="$t('qsrywcjsm')"
+        ></el-input>
       </div>
     </div>
     <div class="content">
       <div class="title">{{ $t("qtcl") }}</div>
       <div class="mb10">
-        <label>{{ $t("t1") }}</label>
-        <el-button style="padding: 4px 20px" size="small" type="primary" class="btn down-btn" v-if="form.kycStatus == 1"><a
-          :href="'/api/file/downLoad?url=' + form.regCer" target="_blank">{{$t('djxz')}}</a></el-button>
+        <label>
+          {{ $t("t1") }}
+          <a
+            :href="'/api/file/downLoad?url=' + form.regCer"
+            target="_blank"
+            class="down-a"
+            v-if="form.regCer"
+            >{{ $t("预览") }}</a
+          >
+        </label>
         <el-upload
-          v-else
+          v-if="form.kycStatus != 1"
           class="upload-demo"
           action="null"
           list-type="text"
@@ -128,13 +153,20 @@
           </div>
         </el-upload>
       </div>
-      
+
       <div class="mb10">
-        <label>{{ $t("t2") }}</label>
-        <el-button style="padding: 4px 20px" size="small" type="primary" class="btn down-btn" v-if="form.kycStatus == 1"><a
-          :href="'/api/file/downLoad?url=' + form.legal" target="_blank">{{$t('djxz')}}</a></el-button>
+        <label>
+          {{ $t("t2") }}
+          <a
+            :href="'/api/file/downLoad?url=' + form.legal"
+            target="_blank"
+            class="down-a"
+            v-if="form.legal"
+            >{{ $t("预览") }}</a
+          >
+        </label>
         <el-upload
-          v-else
+          v-if="form.kycStatus != 1"
           class="upload-demo"
           action="null"
           list-type="text"
@@ -151,8 +183,18 @@
         </el-upload>
       </div>
       <div class="mb10" v-if="form.busType != 1">
-        <label>{{ $t("t3") }}</label>
+        <label>
+          {{ $t("t3") }}
+          <a
+            :href="'/api/file/downLoad?url=' + form.shareholder"
+            target="_blank"
+            class="down-a"
+            v-if="form.shareholder"
+            >{{ $t("预览") }}</a
+          >
+        </label>
         <el-upload
+          v-if="form.kycStatus != 1"
           class="upload-demo"
           action="null"
           list-type="text"
@@ -170,9 +212,7 @@
       </div>
     </div>
     <div class="mt16 flex flex_jc_sb_center" v-if="form.kycStatus !== 1">
-      <el-button class="primary" @click="to('/home/verified')">{{
-        $t("cxxz")
-      }}</el-button>
+      <el-button class="primary" @click="to()">{{ $t("cxxz") }}</el-button>
       <el-button
         class="primary normal-btn"
         :class="loading && 'loading'"
@@ -181,6 +221,29 @@
         >{{ $t("done") }}</el-button
       >
     </div>
+    <el-dialog
+      :title="$t('done')"
+      :visible.sync="dialogVisibleSuccess"
+      :before-close="
+        () => {
+          dialogVisibleSuccess = false;
+        }
+      "
+    >
+      <div class="dialog-content">
+        <img src="@/assets/images/moneyManage/success.png" />
+        <div class="desc">
+          {{ $t("申请成功，请等待...") }}
+        </div>
+      </div>
+      <el-button
+        slot="footer"
+        type="primary"
+        class="normal-btn"
+        @click="dialogVisibleSuccess = false"
+        >{{ $t("done") }}</el-button
+      >
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -189,12 +252,13 @@ import { SubKyc } from "@/api/user";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { countries } from "@/api/login";
-import { getFlagIcon } from "@/utils/common"
+import { getFlagIcon } from "@/utils/common";
 export default {
   name: "verifiedOne",
   props: ["type"],
   data() {
     return {
+      dialogVisibleSuccess: false,
       getFlagIcon: getFlagIcon,
       loading: false,
       languge: Local("lang") || "zh",
@@ -218,13 +282,13 @@ export default {
           value: 3,
         },
       ],
-      areaList: []
+      areaList: [],
     };
   },
   created() {
     this.form.busType = this.type;
     this.getAreaCode();
-    this.getAccountKyc()
+    this.getAccountKyc();
   },
   methods: {
     async sendForm() {
@@ -232,24 +296,20 @@ export default {
       try {
         this.loading = true;
         await SubKyc(this.form);
-        Message({
-          type: "success",
-          message: this.$t('tjcg'),
-        });
-        this.$router.push("/home");
+        this.dialogVisibleSuccess = true;
         this.loading = false;
       } catch (error) {
         this.loading = false;
       }
     },
     async handlesuccess(e, type) {
-      const size = e.size
+      const size = e.size;
       if (size > 20 * 1024 * 1024) {
         Message({
           type: "error",
-          message: this.$t('sizeOver'),
+          message: this.$t("sizeOver"),
         });
-        return
+        return;
       }
       const formData = new FormData();
       formData.append("file", e);
@@ -259,7 +319,7 @@ export default {
           this.form[type] = req.data[0];
           Message({
             type: "success",
-            message: this.$t('sccg'),
+            message: this.$t("sccg"),
           });
         }
       } catch (error) {}
@@ -280,11 +340,11 @@ export default {
       } catch (error) {}
     },
     getAccountKyc() {
-      const accountKyc = this.$store.state.userInfo || {}
+      const accountKyc = this.$store.state.userInfo || {};
       if (accountKyc.kyc && accountKyc.kyc.kycStatus) {
-        this.form = accountKyc.kyc
+        this.form = accountKyc.kyc;
       }
-    }
+    },
   },
 };
 </script>
@@ -422,5 +482,21 @@ export default {
   color: #fff;
   opacity: 0.8;
 }
-
+.dialog-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  img {
+    width: 160px;
+    object-fit: contain;
+  }
+  .desc {
+    font-size: 1.2rem;
+    margin: 6px 0;
+    max-width: 80%;
+    text-align: center;
+    color: $baseColor;
+  }
+}
 </style>

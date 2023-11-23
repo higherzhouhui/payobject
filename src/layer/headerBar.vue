@@ -1,33 +1,9 @@
 <template>
   <div class="headerWrapper">
     <header>
-        <!-- <div
-          class="language flex flex_align_center"
-          @click="open"
-        >
-          <img
-            class="icon"
-            v-if="languge == 'zh'"
-            src="@/assets/images/index/ch.png"
-            alt=""
-          />
-          <img class="icon" v-else src="@/assets/images/index/en.png" alt="" />
-          <span class="txt">{{ $t("languageChange") }}</span>
-          <img class="xiala" src="@/assets/images/index/xiala.png" alt="arrow" />
-        </div> -->
-        <!-- <div class="user_info flex flex_align_center">
-          <img
-            class="avatar pointer"
-            src="@/assets/images/home/user.png"
-            alt="header"
-          />
-          <span class="nickName">{{
-            userInfo.nickName || userInfo.phone || userInfo.email
-          }}</span>
-        </div> -->
-
         <el-dropdown trigger="click" @command="handleDropCommand">
           <span class="el-dropdown-link">
+            <svg-icon iconClass="user" className="svg" />
             <span class="nickName">{{userInfo.nickName || userInfo.phone || userInfo.email}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -214,6 +190,10 @@ header {
   .nickName {
     color: #fff;
     font-size: 14px;
+  }
+  .svg {
+    color: #fff;
+    margin-right: 4px;
   }
   .quite {
     font-size: 1rem;

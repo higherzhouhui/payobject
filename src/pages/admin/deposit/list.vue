@@ -37,7 +37,7 @@
           >
             <el-option
               style="padding: 0 20px"
-              v-for="(item, index) in status"
+              v-for="(item, index) in slectOption"
               :key="item"
               :label="item"
               :value="index"
@@ -71,11 +71,7 @@
           min-width="180"
         />
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="200" />
-        <el-table-column
-          prop="reqValue"
-          :label="$t('czje')"
-          min-width="180"
-        />
+        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
         <el-table-column
           prop="sendAccount"
           :label="$t('hkzh')"
@@ -107,7 +103,7 @@
               accept=".pdf, .zip, .rar, image/*"
               :before-upload="(e) => handlesuccess(e, scope.row)"
               multiple
-              v-if="scope.row.reqStatus == 1"
+              v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
             >
               <el-button size="small" type="primary" class="btn">
                 {{ $t("schkpz") }}
@@ -120,6 +116,30 @@
               @click="handleShowDetail(scope.row)"
             >
               {{ $t("xq") }}
+            </el-button>
+            <el-popconfirm
+              v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
+              title="确认通过？"
+              @confirm="passDeposit(scope.row)"
+            >
+              <el-button
+                slot="reference"
+                type="success"
+                class="btn"
+                size="small"
+                style="margin: 0 5px"
+              >
+                {{ $t("通过") }}
+              </el-button>
+            </el-popconfirm>
+            <el-button
+              type="danger"
+              class="btn"
+              size="small"
+              @click="rejectDeposit(scope.row)"
+              v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
+            >
+              {{ $t("驳回") }}
             </el-button>
           </template>
         </el-table-column>
@@ -143,25 +163,13 @@
           :label="$t('skqbdz')"
           min-width="180"
         />
-        <el-table-column prop="coinCode" :label="$t('bz')" min-width="200" />
-        <el-table-column
-          prop="reqValue"
-          :label="$t('czje')"
-          min-width="180"
-        />
-        <el-table-column
-          prop="tid"
-          :label="$t('hkqbdz')"
-          min-width="180"
-        />
-        <el-table-column
-          prop="agreement"
-          :label="$t('jmxy')"
-          min-width="80"
-        />
+        <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
+        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
+        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
+        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="180">
           <template slot-scope="scope">
-            <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
+            <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
               {{ usdtstatus[scope.row.reqStatus] }}
             </el-tag>
           </template>
@@ -185,7 +193,7 @@
               accept=".pdf, .zip, .rar, image/*"
               :before-upload="(e) => handlesuccess(e, scope.row)"
               multiple
-              v-if="scope.row.reqStatus == 1"
+              v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
             >
               <el-button size="small" type="primary" class="btn">
                 {{ $t("schkpz") }}
@@ -199,6 +207,30 @@
             >
               {{ $t("xq") }}
             </el-button>
+            <el-popconfirm
+            v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
+            title="确认通过？"
+            @confirm="passDeposit(scope.row)"
+          >
+            <el-button
+              slot="reference"
+              type="success"
+              class="btn"
+              size="small"
+              style="margin: 0 5px"
+            >
+              {{ $t("通过") }}
+            </el-button>
+          </el-popconfirm>
+          <el-button
+            type="danger"
+            class="btn"
+            size="small"
+            @click="rejectDeposit(scope.row)"
+            v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
+          >
+            {{ $t("驳回") }}
+          </el-button>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -341,7 +373,7 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('hkpz')">
+        <el-form-item :label="$t('hkpz')" v-if="!$store.state.userInfo.admin">
           <el-upload
             class="upload-demo"
             action="null"
@@ -349,28 +381,36 @@
             accept=".pdf, .zip, .rar, image/*"
             :before-upload="(e) => handlesuccess(e, currentSelectRow)"
             multiple
-            v-if="currentSelectRow.reqStatus == 1"
+            v-if="!currentSelectRow.reqProof"
           >
             <el-button size="small" type="primary" class="btn">
               {{ $t("schkpz") }}
             </el-button>
           </el-upload>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            v-else
-            ><a
-              :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
-              target="_blank"
-              >{{$t('djxz')}}</a
-            ></el-button
-          >
+          <a
+          :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+          target="_blank"
+          class="down-a"
+          v-else
+          >{{ $t("djxz") }}</a
+        >
+        </el-form-item>
+        <el-form-item
+          :label="$t('hkpz')"
+          v-if="$store.state.userInfo.admin && currentSelectRow.reqProof"
+        >
+        <a
+        :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+        target="_blank"
+        class="down-a"
+        >{{ $t("djxz") }}</a
+      >
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button class="qd" @click="dialogVisible = false">{{$t('queding')}}</el-button>
+        <el-button class="qd" @click="dialogVisible = false">{{
+          $t("queding")
+        }}</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -382,7 +422,12 @@
         }
       "
     >
-      <el-form label-position="top" ref="formss" :model="currentSelectRow" class="formStyle">
+      <el-form
+        label-position="top"
+        ref="formss"
+        :model="currentSelectRow"
+        class="formStyle"
+      >
         <el-form-item :label="$t('bz')">
           <el-input
             v-model="currentSelectRow.coinCode"
@@ -422,7 +467,7 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('hkpz')">
+        <el-form-item :label="$t('hkpz')" v-if="!$store.state.userInfo.admin">
           <el-upload
             class="upload-demo"
             action="null"
@@ -430,29 +475,47 @@
             accept=".pdf, .zip, .rar, image/*"
             :before-upload="(e) => handlesuccess(e, currentSelectRow)"
             multiple
-            v-if="currentSelectRow.reqStatus == 1"
+            v-if="!currentSelectRow.reqProof"
           >
             <el-button size="small" type="primary" class="btn">
               {{ $t("schkpz") }}
             </el-button>
           </el-upload>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="btn"
-            v-else
-            ><a
-              :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
-              target="_blank"
-              >{{$t('djxz')}}</a
-            ></el-button
-          >
+          <a
+          :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+          target="_blank"
+          class="down-a"
+          v-else
+          >{{ $t("djxz") }}</a
+        >
+        </el-form-item>
+        <el-form-item
+          :label="$t('hkpz')"
+          v-if="$store.state.userInfo.admin && currentSelectRow.reqProof"
+        >
+        <a
+        :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+        target="_blank"
+        class="down-a"
+        >{{ $t("djxz") }}</a
+      >
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button class="qd" @click="usdtdialogVisible = false"
-          >{{$t('queding')}}</el-button>
+        <el-button class="qd" @click="usdtdialogVisible = false">{{
+          $t("queding")
+        }}</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :title="$t('bh')" :visible.sync="rejectdialogVisible" width="650" :before-close="() => { rejectdialogVisible = false; }">
+      <el-form label-position="top" ref="formss">
+        <el-form-item :label="$t('bhly')">
+          <el-input type="textarea" v-model="memo"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer">
+        <el-button type="info" class="qx" @click="rejectdialogVisible = false">取消</el-button>
+        <el-button type="primary" class="qr" @click="rejectConfirm">确认</el-button>
       </div>
     </el-dialog>
   </div>
@@ -466,15 +529,19 @@ import {
   depCoins,
   withdrawAccounts,
   putCryptDeposit,
+  perDeposit,
+  perCryptDeposit,
 } from "@/api/out.js";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
+import { getBankList } from "@/api/bank";
 
 export default {
   name: "userMoneyManagementTransfer",
   components: { LinkPath },
   data() {
     return {
+      rejectdialogVisible: false,
       tableData: [],
       options: [],
       type: "1",
@@ -484,9 +551,11 @@ export default {
         name: "",
       },
       loading: true,
-      usdtstatus: [this.$t("all"), this.$t("tjsq"), this.$t("done")],
-      status: [this.$t("all"), this.$t("tjsq"), this.$t("qrhk"), this.$t("cwsh"), this.$t("done"), this.$t("bh")],
-      typeOption: ["", "info", "warning", "", "success", "danger"],
+      slectOption: [],
+      status: ['全部', '提交申请', '确认汇款', '财务审核', '完成', '驳回'],
+      typeOption: ['', 'info','warning','','success','danger'],
+      usdtstatus: ['全部', '提交申请', '完成', '驳回'],
+      usdttypeOption: ['', 'info','success','danger'],
       dialogVisible: false,
       currentSelectRow: {},
       inCoinList: [],
@@ -496,6 +565,8 @@ export default {
       total: 0,
       searchForm: {},
       moneyType: "fabi",
+      bankList: [],
+      memo: '',
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -529,8 +600,12 @@ export default {
   },
   created() {
     this.getInitData();
-    this.getRJBZ();
-    this.getCJZH();
+    if (this.$store.state.userInfo.admin) {
+      this.getRequestBankList();
+    } else {
+      this.getRJBZ();
+      this.getCJZH();
+    }
   },
   watch: {
     moneyType() {
@@ -539,6 +614,59 @@ export default {
     },
   },
   methods: {
+    rejectDeposit(row) {
+      this.currentSelectRow = row
+      this.memo = ''
+      this.rejectdialogVisible = true
+    },
+    async rejectConfirm() {
+      let res;
+      const param = {
+        id: this.currentSelectRow.id,
+        pass: false,
+        depValue: this.currentSelectRow.reqValue,
+        memo: this.memo
+      }
+      if (this.moneyType == 'fabi') {
+        res = await perDeposit(param);
+      } else {
+        res = await perCryptDeposit(param)
+      }
+      if (res.code == 200) {
+        Message({
+          type: "success",
+          message: "操作成功",
+        });
+        this.getInitData()
+        this.rejectdialogVisible = false
+      }
+    },
+    async passDeposit(row) {
+      try {
+        let res;
+        const param = {
+          id: row.id,
+          pass: true,
+          depValue: row.reqValue,
+        };
+        if (this.moneyType == "fabi") {
+          res = await perDeposit(param);
+        } else {
+          res = await perCryptDeposit(param);
+        }
+        if (res.code == 200) {
+          Message({
+            type: "success",
+            message: "操作成功",
+          });
+          this.getInitData();
+        }
+      } catch (error) {}
+    },
+    async getRequestBankList() {
+      const res = await getBankList();
+      this.bankList = res.data;
+    },
     handleSizeChange(val) {
       this.size = val;
       this.getInitData();
@@ -548,6 +676,7 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
+      this.current = 1
       this.getInitData();
     },
     async getRJBZ() {
@@ -566,27 +695,52 @@ export default {
     handleShowDetail(row) {
       this.currentSelectRow = row;
       if (this.moneyType == "fabi") {
-        const inlist = this.inCoinList.filter((item) => {
-          return item.coinCode == row.coinCode;
-        });
-        const outlist = this.outCoinList.filter((item) => {
-          return item.id == row.sendBank;
-        });
-        if (inlist.length && outlist.length) {
-          this.currentSelectRow = {
-            ...this.currentSelectRow,
-            inbankAccount: inlist[0].bank.bankAccount,
-            inbankCode: inlist[0].bank.bankCode,
-            inbankCountry: inlist[0].bank.bankCountry,
-            inbankAdd: inlist[0].bank.bankAdd,
-            inswiftCode: inlist[0].bank.swiftCode,
-            outbankAccount: outlist[0].bankAccount,
-            outbankCode: outlist[0].bankCode,
-            outbankCountry: outlist[0].bankCountry,
-            outbankAdd: outlist[0].bankAdd,
-            outswiftCode: outlist[0].swiftCode,
-          };
+        if (this.$store.state.userInfo.admin) {
+          const inlist = this.bankList.filter((item) => {
+            return item.id == row.bankId;
+          });
+          const outlist = this.bankList.filter((item) => {
+            return item.id == row.sendBank;
+          });
+          if (inlist.length && outlist.length) {
+            this.currentSelectRow = {
+              ...this.currentSelectRow,
+              inbankAccount: inlist[0].bankAccount,
+              inbankCode: inlist[0].bankCode,
+              inbankCountry: inlist[0].bankCountry,
+              inbankAdd: inlist[0].bankAdd,
+              inswiftCode: inlist[0].swiftCode,
+              outbankAccount: outlist[0].bankAccount,
+              outbankCode: outlist[0].bankCode,
+              outbankCountry: outlist[0].bankCountry,
+              outbankAdd: outlist[0].bankAdd,
+              outswiftCode: outlist[0].swiftCode,
+            };
+          }
+        } else {
+          const inlist = this.inCoinList.filter((item) => {
+            return item.coinCode == row.coinCode;
+          });
+          const outlist = this.outCoinList.filter((item) => {
+            return item.id == row.sendBank;
+          });
+          if (inlist.length && outlist.length) {
+            this.currentSelectRow = {
+              ...this.currentSelectRow,
+              inbankAccount: inlist[0].bank.bankAccount,
+              inbankCode: inlist[0].bank.bankCode,
+              inbankCountry: inlist[0].bank.bankCountry,
+              inbankAdd: inlist[0].bank.bankAdd,
+              inswiftCode: inlist[0].bank.swiftCode,
+              outbankAccount: outlist[0].bankAccount,
+              outbankCode: outlist[0].bankCode,
+              outbankCountry: outlist[0].bankCountry,
+              outbankAdd: outlist[0].bankAdd,
+              outswiftCode: outlist[0].swiftCode,
+            };
+          }
         }
+
         this.dialogVisible = true;
       }
       if (this.moneyType == "usdt") {
@@ -605,12 +759,14 @@ export default {
           current: this.current,
           size: this.size,
         });
+        this.slectOption = this.status
       } else if (this.moneyType == "usdt") {
         res = await cryptDepositList({
           ...this.searchForm,
           current: this.current,
           size: this.size,
         });
+        this.slectOption = this.usdtstatus
       }
       this.loading = false;
       if (res.code === 200) {

@@ -26,7 +26,8 @@ export default {
     }
   },
   watch: {
-    $route(to, _from) {
+    $route(to) {
+      // 根据路由判断是否展示header和footer
       const path = to.path;
       this.normalHeader = true
       this.normalFooter = true

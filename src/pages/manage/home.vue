@@ -108,7 +108,7 @@
         min-width="180"
       />
       <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
-      <el-table-column prop="reqValue" :label="$t('czjh')" min-width="180" />
+      <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
       <el-table-column prop="sendAccount" :label="$t('hkzh')" min-width="180" />
       <el-table-column
         prop="createTime"
@@ -176,12 +176,6 @@
       />
       <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
       <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-      <el-table-column prop="targetCode" :label="$t('mbbz')" min-width="100" />
-      <el-table-column
-        prop="changeValue"
-        :label="$t('yjdzje')"
-        min-width="130"
-      />
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
@@ -215,11 +209,6 @@
       />
       <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
       <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-      <el-table-column
-        prop="witValue"
-        :label="$t('yjdzje')"
-        min-width="120"
-      />
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"

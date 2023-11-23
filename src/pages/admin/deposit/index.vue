@@ -477,7 +477,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >点击下载</a
+              >预览</a
             ></el-button
           >
         </el-form-item>
@@ -537,7 +537,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >点击下载</a
+              >预览</a
             ></el-button
           >
         </el-form-item>

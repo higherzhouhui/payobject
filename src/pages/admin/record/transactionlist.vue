@@ -206,7 +206,8 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
-      this.getInitData();
+      this.current = 1
+    this.getInitData();
     },
     async getInitData() {
       this.loading = true;

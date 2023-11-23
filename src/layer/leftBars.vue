@@ -30,14 +30,6 @@
                 <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
                 <span slot="title">{{ $t('jymx') }}</span>
             </el-menu-item>
-            <el-menu-item index="/manage/change">
-                <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
-                <span slot="title">{{ $t('zjmx') }}</span>
-            </el-menu-item>
-            <!-- <el-menu-item index="/manage/transactionDetails">
-                <img class="icon" src="@/assets/images/manage/ddgl.png" alt="">
-                <span slot="title">{{ $t('ddgl') }}</span>
-            </el-menu-item> -->
             <el-menu-item index="/manage/exchange">
                 <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
                 <span slot="title">{{ $t('hlgl') }}</span>
@@ -95,20 +87,10 @@
                     <span slot="title">{{ $t('兑换列表') }}</span>
                 </el-menu-item>
             </el-submenu>
-            <el-submenu index="6">
-                <template slot="title">
-                    <img class="icon" src="@/assets/images/home/aqsz_icon.png" alt="">
-                    <span slot="title">{{ $t('jycx') }}</span>
-                </template>
-                <el-menu-item index="/admin/record/transactionlist">
-                    <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
-                    <span slot="title">{{ $t('jymx') }}</span>
-                </el-menu-item>
-                <el-menu-item index="/admin/record/exchangelist">
-                    <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
-                    <span slot="title">{{ $t('zjmx') }}</span>
-                </el-menu-item>
-            </el-submenu>
+            <el-menu-item index="/admin/record/exchangelist">
+                <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
+                <span slot="title">{{ $t('交易记录') }}</span>
+            </el-menu-item>
             <el-menu-item index="/admin/exchange/list">
                 <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
                 <span slot="title">{{ $t('yhkgl') }}</span>

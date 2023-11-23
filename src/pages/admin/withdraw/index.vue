@@ -43,7 +43,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              余额：<span>{{getReamin()}}</span>
+              余额：<span>{{getReamin(form.coinCode)}}</span>
             </div>
           </div>
           <div class="form-item" v-else>
@@ -70,6 +70,9 @@
                 >
                 </el-option>
               </el-select>
+            </div>
+            <div class="remain" v-if="usdtForm.srcCode">
+              余额：<span>{{getReamin(usdtForm.srcCode)}}</span>
             </div>
           </div>
           <!-- <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
@@ -620,7 +623,7 @@ export default {
         targetCode: "",
       },
       usdtForm: {
-        coinCode: "",
+        coinCode: "USDT",
         reqValue: "",
         cryptAdd: "",
         srcCode: "",
@@ -698,9 +701,9 @@ export default {
     },
   },
   methods: {
-    getReamin() {
+    getReamin(coinCode) {
       const rarr = this.bankListBalance.filter(item => {
-        return item.coinCode == this.form.coinCode
+        return item.coinCode == coinCode
       })
       return rarr[0].balance
     },

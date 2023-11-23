@@ -182,21 +182,21 @@
                   {{ $t("t1") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + userInfo.kyc.regCer" target="_blank">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + userInfo.kyc.regCer" target="_blank">预览</a></el-button>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24">
                 <label style="font-size: 12px">
                   {{ $t("t2") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + userInfo.kyc.legal" target="_blank">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + userInfo.kyc.legal" target="_blank">预览</a></el-button>
               </el-form-item>
               <el-form-item :label="$t('scwj')" class="mb24" v-if="userInfo.kyc.busType != 1">
                 <label style="font-size: 12px">
                   {{ $t("t3") }}
                 </label>
                 <el-button style="padding: 4px 20px" size="small" type="primary" class="btn"><a
-                    :href="'/api/file/downLoad?url=' + userInfo.kyc.shareholder" target="_blank">点击下载</a></el-button>
+                    :href="'/api/file/downLoad?url=' + userInfo.kyc.shareholder" target="_blank">预览</a></el-button>
               </el-form-item>
             </el-form>
           </el-dialog>

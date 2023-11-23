@@ -26,11 +26,12 @@
         <div class="list-wrapper" v-for="(item, index) in billArray" :key="item.id" @click="handleShow(index)">
           <div class="list-item">
             <div class="left">
-              <i class="el-icon-top-right send" v-if="item.billType == 2"/>
               <i class="el-icon-bottom-left recive" v-if="item.billType == 1"/>
+              <i class="el-icon-top-right send" v-if="item.billType == 2"/>
+              <i class="el-icon-refresh send" v-if="item.billType == 3"/>
+              <i class="el-icon-sort recive" v-if="item.billType == 4"/>
               <div class="type-wrapper">
-                <div class="type" v-if="item.billType == 2">{{$t("txje")}}</div>
-                <div class="type" v-else>{{$t("sdje")}}</div>
+                <div class="type">{{typeOption[item.billType]}}</div>
                 <div class="desc">{{item.coinCode}}</div>
               </div>
             </div>
@@ -75,6 +76,7 @@ export default {
   },
   data() {
     return {
+      typeOption: ['', '入账', '出账', '换汇', '换汇的入账'],
       getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container" ref="container">
+    <div class="container" ref="container" v-loading="loading">
       <div class="animation-warapper">
         <div class="title-lg">
           <h1>{{ $t("lastnews") }}</h1>
@@ -48,16 +48,7 @@ export default {
   name: "indexVue",
   data() {
     return {
-    
-      animationFlag: {
-        c0: false,
-        c1: false,
-        c2: false,
-        c3: false,
-        c4: false,
-        c5: false,
-      },
-      type: 0,
+      loading: true,
       lang: Local("lang") || "zh",
       blogList: [],
     };
@@ -164,6 +155,7 @@ export default {
     },
     async getBlogsList() {
       try {
+        this.loading = true
         const res = await cmsPageReq({current: 1, size: 30});
         res.data.records.map((item) => {
           const time = item.createTime.split(" ")[0].split("-");
@@ -174,8 +166,10 @@ export default {
           }
         });
         this.blogList = res.data.records;
+        this.loading = false
       } catch {
         console.log("err");
+        this.loading = false
       }
     },
   },

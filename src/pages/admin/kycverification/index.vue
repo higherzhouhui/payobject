@@ -1,5 +1,5 @@
 <template>
-  <div class="verified_container" :class="loading && 'loading'">
+  <div class="verified_container" v-loading="loading">
     <div class="content" :class="tips == 4 ? 'content_hui' : 'content_shadow'">
       <div class="s_title">
         {{ status }}
@@ -215,7 +215,7 @@ export default {
   }
 
   .content {
-    padding: 1.5rem;
+    padding: 1rem;
     .s_title {
       color: #fff;
       font-size: 1.2rem;

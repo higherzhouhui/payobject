@@ -1,6 +1,5 @@
 <template>
   <div class="user_transactionInquiry_transactionDetails_contianer">
-    <LinkPath :linkList="linkList" v-if="!$store.state.userInfo.admin" />
     <div class="content">
       <el-form ref="form2" :inline="true" class="mt12">
         <el-form-item>
@@ -138,7 +137,6 @@ export default {
       options: [],
       type: "1",
       dialogVisible2: false,
-      linkList: ["jycx", "zjmx"],
       form: {
         name: "",
       },
@@ -225,8 +223,7 @@ export default {
 <style scoped lang="scss">
 .user_transactionInquiry_transactionDetails_contianer {
   .content {
-    margin-top: 1.5rem;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 4px;
     background: $contentColor;
 

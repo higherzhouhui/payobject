@@ -90,6 +90,7 @@
     <el-dialog
       :title="$t('done')"
       :visible.sync="dialogVisibleSuccess"
+      width="500px"
       :before-close="
         () => {
           dialogVisibleSuccess = false;
@@ -104,8 +105,7 @@
       </div>
       <el-button
         slot="footer"
-        type="primary"
-        class="normal-btn"
+        class="qd"
         @click="dialogVisibleSuccess = false"
         >{{ $t("done") }}</el-button
       >

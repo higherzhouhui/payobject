@@ -19,15 +19,6 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-
-        <!-- <div @click="quit" class="quite pointer flex flex_align_center">
-          <img
-            class="notice pointer"
-            src="@/assets/images/home/exit.png"
-            alt="quit"
-          />
-          <span>{{$t('quitLogin')}}</span>
-        </div> -->
     </header>
     <el-dialog
       class="lang_box"

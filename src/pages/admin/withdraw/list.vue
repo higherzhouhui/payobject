@@ -1,6 +1,6 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
-    <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" />
+    <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" v-if="!$store.state.userInfo.admin"/>
     <el-tabs v-model="moneyType">
       <el-tab-pane :label="$t('fdhb')" name="fabi"></el-tab-pane>
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
@@ -754,7 +754,7 @@ export default {
   .content {
     background: $contentColor;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 4px;
     .empty_box {
       margin-top: 40px;
       padding: 56px 0;

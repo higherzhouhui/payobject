@@ -1,7 +1,7 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
-    <LinkPath :linkList="linkList" />
-    <el-tabs v-model="moneyType" class="mytab">
+    <LinkPath :linkList="linkList" v-if="!$store.state.userInfo.admin" style="margin-bottom: 1.5rem"/>
+    <el-tabs v-model="moneyType">
       <el-tab-pane :label="$t('fdhb')" name="fabi"></el-tab-pane>
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
     </el-tabs>
@@ -817,7 +817,7 @@ export default {
   .content {
     background: $contentColor;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 4px;
     // box-shadow: 0px 0px 10px 0px rgba(52, 118, 255, 0.25);
 
     .empty_box {

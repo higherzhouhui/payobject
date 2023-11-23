@@ -35,7 +35,7 @@
             <div class="right">
               <div class="type-wrapper">
                 <div class="desc">{{item.createTime}}</div>
-                <div class="type" :class="item.billType == 2 ? 'send' : 'recive'">${{item.billValue}}</div>
+                <div class="type" :class="item.billType == 2 || item.billType == 3 ? 'send' : 'recive'">${{item.billValue}}</div>
               </div>
             </div>
           </div>

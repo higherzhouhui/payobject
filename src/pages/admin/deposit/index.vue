@@ -1,7 +1,7 @@
 
 <template>
   <div class="user_withdrawmanagement_withdraw_contianer">
-    <LinkPath :linkList="linkList" style="margin-bottom: 1rem" />
+    <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" />
     <div class="money-wrapper">
       <div class="money-left">
         <div class="form-item">

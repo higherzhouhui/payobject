@@ -1,6 +1,5 @@
 <template>
   <div class="user_transferAccountMangement_contianer">
-    <LinkPath :linkList="linkList" />
     <div class="content">
       <div class="s_title flex flex_align_center flex_jc_sb_end">
         <!-- <div>{{ $t("zzzhgl") }}</div> -->
@@ -18,7 +17,7 @@
         </el-form-item>
         <el-form-item>
           <el-input
-            :placeholder="$t('yhzhh')"
+            :placeholder="$t('yhzh')"
             v-model="form.bankAccount"
             clearable
           ></el-input>
@@ -448,7 +447,6 @@ export default {
 <style scoped lang="scss">
 .user_transferAccountMangement_contianer {
   .content {
-    margin-top: 1.5rem;
     padding: 1rem;
     border-radius: 4px;
     background: $contentColor;

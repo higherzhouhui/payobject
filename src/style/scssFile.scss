@@ -160,7 +160,6 @@ html {
 .normal-btn {
     padding: 8px 20px;
     border-radius: 3px;
-  
     color: #fff;
     border: 1px solid transparent;
     display: flex;
@@ -212,7 +211,9 @@ html {
 .contentBg {
     background: $contentColor;
 }
-
+.el-menu {
+    background: #20304c;
+}
 .el-menu-item {
     color: rgba(255, 255, 255, 0.7);
     background: #20304c;
@@ -227,7 +228,7 @@ html {
     }
 
     &.is-active {
-        background: rgba($color: #20304c, $alpha: 0.8);
+        background: rgba($color: #fff, $alpha: 0.1);
         color: #fff;
         font-weight: bold;
 
@@ -397,14 +398,10 @@ html {
     }
 }
 
-.mytab {
-    margin-top: 0.6rem;
-}
-
 .el-tabs__nav-wrap {
     background: $contentColor;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 4px;
 }
 
 .el-tabs__nav-wrap::after {
@@ -639,7 +636,7 @@ ul::-webkit-scrollbar-thumb {
     .money-right {
         background-color: $contentColor;
         padding: 1.6rem;
-        border-radius: 0.5rem;
+        border-radius: 4px;
         color: #fff;
 
         h2 {

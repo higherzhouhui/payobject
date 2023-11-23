@@ -51,14 +51,14 @@ export default {
 <style scoped lang="scss">
 .refer-container {
   margin: 2rem auto;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem;
   width: fit-content;
   background: $contentColor;
   border-radius: 8px;
   @media screen and (max-width: 800px) {
     padding: 1rem;
     .code {
-      width: 300px!important;
+      width: 330px!important;
     }
   }
   h1 {
@@ -75,7 +75,7 @@ export default {
     background: #fff;
     align-items: center;
     justify-content: space-between;
-    width: 500px;
+    width: 550px;
     padding: 4px 8px;
     border-radius: 6px;
     margin-bottom: 1rem;

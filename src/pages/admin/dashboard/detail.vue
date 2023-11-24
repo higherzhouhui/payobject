@@ -12,10 +12,10 @@
         <i class="el-icon-circle-plus-outline" />
         {{$t("chongzhi")}}
       </div>
-      <!-- <div class="normal-btn" @click="routerToPath('/admin/exchange/index')">
+      <div class="normal-btn" @click="routerToPath('/admin/convert/index')">
         <i class="el-icon-connection" />
-        {{$t("转账")}}
-      </div> -->
+        {{$t("兑换")}}
+      </div>
       <div class="normal-btn" @click="routerToPath('/admin/withdraw/index')">
         <i class="el-icon-position" />
         {{$t("tx")}}
@@ -98,7 +98,6 @@ export default {
       this.$router.push(path)
     },
     initData() {
-      const hash = location.hash
       const params = getHashParams()
       this.coinCode = params.get('coinCode') || 'CNY'
       this.balance = params.get('balance') || '9999'
@@ -162,10 +161,22 @@ h1 {
   margin: 1.5rem 0;
 }
 .operation {
-  display: grid;
-  margin-top: 2rem;
-  column-gap: 2rem;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  margin: 50px 0 0 30px;
+  @media screen and (max-width: 500px) {
+    margin: 50px 0 0 10px;
+    .normal-btn {
+      margin-right: 15px!important;
+    }
+  }
+  .normal-btn {
+    min-width: fit-content;
+    max-width: 200px;
+    margin-right: 50px;
+    i {
+      margin-right: 6px;
+    }
+  }
 }
 .item {
   border-radius: 5px;

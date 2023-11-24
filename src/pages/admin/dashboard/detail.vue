@@ -2,7 +2,8 @@
   <div class="dashboard-container">
     <div class="balance-wrapper">
       <div class="balance-item">
-        <span :class="`flag-icon ${getFlagIcon(coinCode)}`"></span>
+        <span :class="`flag-icon ${getFlagIcon(coinCode)}`" v-if="coinCode != 'USDT'"></span>
+        <img src="@/assets/images/usdt.png" v-else class="usdt-pic" />
         <h3>{{ balance }}<span>{{ coinCode }}</span></h3>
       </div>
     </div>
@@ -125,7 +126,7 @@ export default {
         this.billLoading = false
         return
       }
-      getBillDetails({current: this.current, size: this.size, fromCode: this.coinCode}).then(res => {
+      getBillDetails({current: this.current, size: this.size, coinCode: this.coinCode}).then(res => {
           this.billLoading = false
           const records = res.data.records
           if (this.size * this.current > res.data.total) {
@@ -176,6 +177,9 @@ h1 {
   border-left: 4px solid #2dbe60;
   position: relative;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   overflow: hidden;
   z-index: 2;
@@ -192,7 +196,13 @@ h1 {
     box-shadow: 1px 5px 10px rgba(30, 32, 37, 1);
   }
   .flag-icon {
-    font-size: 2.5rem;
+    font-size: 36px;
+    margin-bottom: 6px;
+    height: 30px;
+  }
+  .usdt-pic {
+    width: 30px;
+    height: 30px;
     margin-bottom: 6px;
   }
   h3 {

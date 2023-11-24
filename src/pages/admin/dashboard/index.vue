@@ -7,7 +7,8 @@
         class="content-swiper">
           <swiper-slide v-for="item in balanceArrapy" :key="item.id" class="item">
               <div class="balance-item" @click="routerToDetail(item)">
-                <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+                <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
+                <img src="@/assets/images/usdt.png" v-else class="usdt-pic" />
                 <h3>{{ item.balance.toFixed(2) }}<span>{{ item.coinCode }}</span></h3>
               </div>
           </swiper-slide>
@@ -236,6 +237,9 @@ h1 {
   border-left: 4px solid #2dbe60;
   position: relative;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   overflow: hidden;
   z-index: 2;
@@ -252,7 +256,13 @@ h1 {
     box-shadow: 1px 5px 10px rgba(30, 32, 37, 1);
   }
   .flag-icon {
-    font-size: 2.5rem;
+    font-size: 36px;
+    margin-bottom: 6px;
+    height: 30px;
+  }
+  .usdt-pic {
+    width: 30px;
+    height: 30px;
     margin-bottom: 6px;
   }
   h3 {

@@ -494,6 +494,7 @@ import {
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank.js";
+import { getHashParams } from "@/utils/index"
 
 export default {
   name: "userMoneyManagementTransfer",
@@ -570,6 +571,11 @@ export default {
     };
   },
   created() {
+    const params = getHashParams()
+    if (params && params.get('type')) {
+      const mt = params.get('type')
+      this.moneyType = mt
+    }
     this.getInitData();
     this.getRJBZ();
     this.getCJZH();

@@ -89,6 +89,21 @@
           <div class="label">{{ $t("skqbdz") }}</div>
           <div class="input-with-select">
             <el-input :value="usdtForm.cryptAdd" class="input-amount" />
+            <el-select
+            class="input-select"
+            v-model="usdtForm.hkAgreement"
+            :placeholder="$t('qsz')"
+            disabled
+          >
+            <el-option
+              style="padding: 0 20px"
+              v-for="item in []"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
           </div>
         </div>
         <div class="form-item" v-if="moneyType == 'usdt'">
@@ -618,6 +633,7 @@ export default {
         cryptAdd: "",
         tid: "",
         agreement: "TRC",
+        hkAgreement: ""
       },
       tableData: [],
       options: [],
@@ -681,6 +697,7 @@ export default {
       const res = await getCryAdd({ cryCode: this.usdtForm.coinCode });
       this.usdtForm.cryptAdd = res.data.cryAdd;
       this.usdtForm.userId = res.data.userId;
+      this.usdtForm.hkAgreement = res.data.agreement
     },
     async handlesuccess(e) {
       const size = e.size;

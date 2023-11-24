@@ -81,7 +81,7 @@ export default {
       }).then(() => {
         this.$store.commit("SET_Logout", {})
         this.$router.push("/index");
-        logout()
+        // logout()
       }).catch(() => {
         console.log('取消')
       })

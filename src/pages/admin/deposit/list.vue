@@ -193,7 +193,7 @@
               accept=".pdf, .zip, .rar, image/*"
               :before-upload="(e) => handlesuccess(e, scope.row)"
               multiple
-              v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
+              v-if="!scope.row.reqProof && !$store.state.userInfo.admin && scope.row.reqStatus == 1"
             >
               <el-button size="small" type="primary" class="btn">
                 {{ $t("schkpz") }}
@@ -208,7 +208,7 @@
               {{ $t("xq") }}
             </el-button>
             <el-popconfirm
-            v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
+            v-if="scope.row.reqProof && $store.state.userInfo.admin && scope.row.reqStatus == 1"
             title="确认通过？"
             @confirm="passDeposit(scope.row)"
           >
@@ -475,19 +475,22 @@
             accept=".pdf, .zip, .rar, image/*"
             :before-upload="(e) => handlesuccess(e, currentSelectRow)"
             multiple
-            v-if="!currentSelectRow.reqProof"
+            v-if="!currentSelectRow.reqProof && currentSelectRow.reqStatus == 1"
           >
             <el-button size="small" type="primary" class="btn">
               {{ $t("schkpz") }}
             </el-button>
           </el-upload>
           <a
-          :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
-          target="_blank"
-          class="down-a"
-          v-else
-          >{{ $t("djxz") }}</a
-        >
+            :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+            target="_blank"
+            class="down-a"
+            v-if="currentSelectRow.reqProof"
+            >{{ $t("djxz") }}</a
+          >
+          <span v-else>
+            {{$t('未上传')}}
+          </span>
         </el-form-item>
         <el-form-item
           :label="$t('hkpz')"
@@ -535,7 +538,7 @@ import {
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank";
-
+import { getHashParams } from "@/utils/index"
 export default {
   name: "userMoneyManagementTransfer",
   components: { LinkPath },
@@ -599,6 +602,11 @@ export default {
     };
   },
   created() {
+    const params = getHashParams()
+    if (params && params.get('type')) {
+      const mt = params.get('type')
+      this.moneyType = mt
+    }
     this.getInitData();
     if (this.$store.state.userInfo.admin) {
       this.getRequestBankList();

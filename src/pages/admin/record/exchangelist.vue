@@ -4,7 +4,7 @@
       <el-form ref="form2" :inline="true" class="mt12">
         <el-form-item>
           <el-select
-            v-model="searchForm.fromCode"
+            v-model="searchForm.coinCode"
             :placeholder="$t('qszyhbzl')"
             clearable
           >
@@ -18,7 +18,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-select
             v-model="searchForm.targetCode"
             :placeholder="$t('qxzdhhbzl')"
@@ -33,7 +33,7 @@
             >
             </el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-date-picker
             v-model="searchForm.startTime"

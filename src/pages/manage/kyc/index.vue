@@ -519,8 +519,24 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="addressForm.cryAdd"></el-input>
+        <el-form-item label="加密协议">
+          <el-select
+          class="elSelect"
+          v-model="addressForm.agreement"
+          :placeholder="$t('qsz')"
+        >
+          <el-option
+            style="padding: 0 20px"
+            v-for="item in agreementList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+        </el-form-item>
+        <el-form-item label="钱包地址">
+          <el-input v-model="addressForm.cryAdd" placeholder="请输入钱包地址"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -608,6 +624,10 @@ export default {
   name: "KYCPage",
   data() {
     return {
+      agreementList: [
+        { label: "TRC", value: "TRC" },
+        { label: "ERC", value: "ERC" },
+      ],
       typeOption: ["warning", "success", "danger"],
       szList: [],
       dialogVisible3: false,
@@ -754,6 +774,7 @@ export default {
           cryCode: res.data.cryCode,
           cryAdd: res.data.cryAdd,
           id: res.data.id,
+          agreement: res.data.agreement,
         };
       }
     },

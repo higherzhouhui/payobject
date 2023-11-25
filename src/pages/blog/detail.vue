@@ -1,5 +1,5 @@
 <template>
-  <div class="container" ref="container">
+  <div class="container" ref="container" v-loading="loading">
     <div class="container-auto">
       <div class="title">{{detail.title}}</div>
       <img :src="`/api/file/downLoad?url=${detail.cover}`" class="cover" alt="cover" />
@@ -20,6 +20,7 @@ export default {
       lang: Local("lang") || "zh",
       detail: [],
       id: '',
+      loading: true,
     };
   },
   created() {
@@ -28,13 +29,16 @@ export default {
 
   methods: {
     async getBlogsList() {
+      this.loading = true
       const params = getHashParams()
       this.id = params.get('id') || '1'
       try {
         const res = await cmsGetReq({id: this.id});
         this.detail = res.data;
+        this.loading = false
       } catch {
         console.log("err");
+        this.loading = false
       }
     },
   },

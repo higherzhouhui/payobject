@@ -1797,7 +1797,7 @@ export default {
 .animation-warapper {
   padding: 6rem 0;
   .title-lg {
-    max-width: 600px;
+    max-width: 620px;
     width: 60%;
     margin: 0 auto;
     text-align: center;

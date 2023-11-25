@@ -1,8 +1,11 @@
 <template>
   <div class="headerWrapper">
     <header>
-        <div class="backWrapper" @click="backPage">
-          <svg-icon iconClass="arrow-left-solid" className="back"/>
+        <div class="arrow" @click="backPage">
+          <svg-icon iconClass="arrow-left-solid" className="back" />
+        </div>
+        <div class="rotate" @click="reload">
+          <svg-icon iconClass="rotate-solid" className="back" />
         </div>
         <el-dropdown trigger="click" @command="handleDropCommand">
           <span class="el-dropdown-link">
@@ -141,6 +144,12 @@ header {
       width: 100vw;
       position: relative;
       padding: 0 1rem;
+      .arrow {
+        display: inline-block!important;
+      }
+      .rotate {
+        display: none!important;
+      }
   }
   .notice {
     width: 32px;
@@ -215,6 +224,12 @@ header {
     color: #fff;
     font-weight: bold;
   }
+}
+.arrow {
+  display: none;
+}
+.rotate {
+  display: inline;
 }
 ::v-deep .el-dropdown-menu__item {
   padding: 4px 10px;

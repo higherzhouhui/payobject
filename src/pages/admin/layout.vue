@@ -32,7 +32,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .container {
-    padding: 62px 0 0 0;
+    padding: $adminHeaderHeight 0 0 0;
     display: flex;
     min-height: calc(100vh - 108px);
     width: 100%;
@@ -48,15 +48,15 @@ export default {
         }
     }
     .content {
-        width: calc(100% - 220px);
+        width: calc(100% - $leftSideWidth);
     }
 
     .index_content {
-        margin: 0 0 0 220px;
+        margin: 0 0 0 $leftSideWidth;
         padding: 1.5rem;
         background: $bgColor;
         width: 100%;
-        min-height: calc(100vh - 62px);
+        min-height: calc(100vh - $adminHeaderHeight);
     }
 }
 </style>

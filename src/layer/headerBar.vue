@@ -1,6 +1,9 @@
 <template>
   <div class="headerWrapper">
     <header>
+        <div class="backWrapper" @click="backPage">
+          <svg-icon iconClass="arrow-left-solid" className="back"/>
+        </div>
         <el-dropdown trigger="click" @command="handleDropCommand">
           <span class="el-dropdown-link">
             <svg-icon iconClass="user" className="svg" />
@@ -45,7 +48,6 @@
 </template>
 <script>
 import { Local } from "@/utils/index";
-import { logout } from "@/api/login";
 export default {
   name: "headerIndex",
   data() {
@@ -59,8 +61,8 @@ export default {
     reload() {
       window.location.reload();
     },
-    changeLanguge() {
-      this.$i18n.locale = "en";
+    backPage() {
+      this.$router.go(-1)
     },
     handleDropCommand(command) {
       if (command == 'profile') {
@@ -127,14 +129,14 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  height: 62px;
+  height: $adminHeaderHeight;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
   z-index: 99;
-  padding: 0 1rem 0 $leftSideWidth;
+  padding: 0 1rem 0 calc($leftSideWidth + 1rem);
   background: $bgColor;  
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   @media screen and (max-width: 800px) {
       width: 100vw;
       position: relative;
@@ -202,6 +204,16 @@ header {
       font-size: 1rem;
       margin-left: 4px;
     }
+  }
+}
+
+.back {
+  color: #f5f5f5;
+  cursor: pointer;
+  font-size: 18px;
+  &:hover {
+    color: #fff;
+    font-weight: bold;
   }
 }
 ::v-deep .el-dropdown-menu__item {

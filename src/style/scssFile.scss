@@ -9,6 +9,7 @@ $baseHover: #1be762;
 $bgColor: #455b86;
 $leftSideWidth: 220px;
 $contentColor: #384d78;
+$adminHeaderHeight: 62px;
 
 html {
     font-size: 12px;
@@ -544,10 +545,15 @@ ul::-webkit-scrollbar-thumb {
 }
 
 .elPagination {
-    display: flex;
     margin-top: 10px;
-    justify-content: flex-end;
     background: $contentColor;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    @media screen and (max-width: 800px) {
+        display: contents;
+    }
 }
 
 .el-pagination__total,

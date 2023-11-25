@@ -594,7 +594,9 @@
           <el-input
             :value="item.balance"
           >
-          <template slot="append">{{ item.coinCode }}</template>
+          <template slot="append">
+            {{ item.coinCode }}
+          </template>
         </el-input>
       </div>
       <el-empty v-if="!userBalanceDetail.length"/>

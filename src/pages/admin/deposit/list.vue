@@ -92,7 +92,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="175"
+          width="185"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -127,7 +127,7 @@
                 type="success"
                 class="btn"
                 size="small"
-                style="margin: 0 5px"
+                style="margin: 0 10px"
               >
                 {{ $t("tg") }}
               </el-button>
@@ -182,7 +182,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="175"
+          width="185"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -217,7 +217,7 @@
               type="success"
               class="btn"
               size="small"
-              style="margin: 0 5px"
+              style="margin: 0 10px"
             >
               {{ $t("tg") }}
             </el-button>

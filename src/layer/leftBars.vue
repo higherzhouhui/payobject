@@ -4,7 +4,6 @@
             <img alt="logo" class="logoImg" src="@/assets/images/index/logo.png" @click="routerTo('/index')" />
             <img alt="menu" class="menuImg" src="@/assets/images/home/menu.png" @click="toggleMenuShow"/>
         </div>
-
         <el-menu @select="select" :class="showMenu ? 'showMenu' : 'hideMenu'" :default-active="path" v-if="$store.state.userInfo.admin">
             <el-menu-item index="/manage/index">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
@@ -39,7 +38,6 @@
                 <span slot="title">{{ $t('newslist') }}</span>
             </el-menu-item>
         </el-menu>
-
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && $store.state.userInfo.userStatus">
             <el-menu-item index="/admin/dashboard">
                 <img class="icon" src="@/assets/images/home/home.png" alt="">
@@ -104,15 +102,23 @@
                 <span slot="title">{{ $t('tjgpy') }}</span>
             </el-menu-item>
         </el-menu>
-
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && !$store.state.userInfo.userStatus">
             <el-menu-item index="/admin/kycverification">
                 <img class="icon" src="@/assets/images/home/grzx.png" alt="">
                 <span slot="title">{{ $t('kycyz') }}</span>
             </el-menu-item>
         </el-menu>
-
-
+        <div class="footer">
+            <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">
+                <svg-icon iconClass="facebook" className="footer-icon" />
+              </a>
+             <a href="https://twitter.com/PayReliance" target="_blank">
+              <svg-icon iconClass="twitter" className="footer-icon" />
+             </a>
+             <a href="https://www.instagram.com/payreliance/" target="_blank">
+              <svg-icon iconClass="instagram" className="footer-icon" />
+             </a>
+        </div>
     </div>
 </template>
 <script>
@@ -219,15 +225,37 @@ export default {
     }
     .el-menu {
         background: #20304c;
-        overflow: hidden;
         border-right: none;
+        height: calc(100vh - 112px);
+        overflow-y: auto;
+        @media screen and (max-width: 800px) {
+            height: auto;
+            overflow-y: hidden;
+        }
     }
     .icon {
         margin-right: 8px;
         width: 18px;
         height: 18px;
     }
-
+    .footer {
+        height: 50px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        @media screen and (max-width: 800px) {
+            display: none;
+        }
+        .footer-icon {
+            font-size: 25px;
+            color: #fff;
+            &:hover {
+                color: $baseColor;
+            }
+        }
+    }
 }
 ::v-deep .el-submenu__title:hover {
     background: #20304c;

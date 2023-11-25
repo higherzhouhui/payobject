@@ -8,31 +8,13 @@
             {{ $t("zztgjrfw") }}
           </p>
           <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">
-            <!-- <img
-              class="footer-icon"
-              src="@/assets/images/index/facebook.png"
-              alt="facebook"
-            /> -->
             <svg-icon iconClass="square-facebook" className="footer-icon" />
-
           </a>
          <a href="https://twitter.com/PayReliance" target="_blank">
-          <!-- <img
-            class="footer-icon"
-            src="@/assets/images/index/twitter.png"
-            alt="twitter"
-          /> -->
           <svg-icon iconClass="square-twitter" className="footer-icon" />
-
          </a>
          <a href="https://www.instagram.com/payreliance/" target="_blank">
-          <!-- <img
-            class="footer-icon"
-            src="@/assets/images/index/ins.png"
-            alt="twitter"
-          /> -->
           <svg-icon iconClass="square-instagram" className="footer-icon" />
-
          </a>
         </div>
         <div class="footer-item">

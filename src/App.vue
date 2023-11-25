@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-loading="loading">
     <NormalHeader v-if="normalHeader"/>
     <router-view></router-view>
     <el-backtop class="elbacktop" v-if="normalHeader"></el-backtop>
@@ -23,7 +23,11 @@ export default {
       adminList: ['admin', 'manage'],
       normalHeader: true,
       normalFooter: true,
+      loading: true,
     }
+  },
+  mounted() {
+    this.loading = false
   },
   watch: {
     $route(to) {

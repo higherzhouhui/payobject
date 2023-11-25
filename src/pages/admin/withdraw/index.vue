@@ -43,7 +43,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              余额：<span>{{getReamin(form.coinCode)}}</span>
+              {{ $t("ye") }}<span>{{ getReamin(form.coinCode) }}</span>
             </div>
           </div>
           <div class="form-item" v-else>
@@ -72,7 +72,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="usdtForm.srcCode">
-              余额：<span>{{getReamin(usdtForm.srcCode)}}</span>
+              {{ $t("ye") }}<span>{{ getReamin(usdtForm.srcCode) }}</span>
             </div>
           </div>
           <!-- <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
@@ -144,19 +144,19 @@
                 :placeholder="$t('qsrtxdqbdz')"
               />
               <el-select
-              class="input-select"
-              v-model="usdtForm.agreement"
-              :placeholder="$t('qsz')"
-            >
-              <el-option
-                style="padding: 0 20px"
-                v-for="item in agreementList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                class="input-select"
+                v-model="usdtForm.agreement"
+                :placeholder="$t('qsz')"
               >
-              </el-option>
-            </el-select>
+                <el-option
+                  style="padding: 0 20px"
+                  v-for="item in agreementList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
@@ -587,7 +587,8 @@
         type="primary"
         class="normal-btn"
         @click="dialogVisibleSuccess = false"
-        >{{ $t("done") }}</el-button>
+        >{{ $t("done") }}</el-button
+      >
     </el-dialog>
   </div>
 </template>
@@ -613,8 +614,8 @@ export default {
   data() {
     return {
       agreementList: [
-        {label: 'TRC', value: 'TRC'},
-        {label: 'ERC', value: 'ERC'},
+        { label: "TRC", value: "TRC" },
+        { label: "ERC", value: "ERC" },
       ],
       dialogVisibleSuccess: false,
       form: {
@@ -628,7 +629,7 @@ export default {
         cryptAdd: "",
         srcCode: "",
         tid: "default",
-        agreement: 'TRC'
+        agreement: "TRC",
       },
       moneyType: "fabi",
       transactionTypeList: [
@@ -640,26 +641,6 @@ export default {
       type: "1",
       dialogVisible2: false,
       linkList: ["txgl", "tx"],
-      rules: {
-        coinCode: [
-          { required: true, message: "请选择充值币种", tigger: "blur" },
-        ],
-        reqValue: [
-          { required: true, message: "请输入提现金额", tigger: "blur" },
-        ],
-        sendBank: [
-          { required: true, message: "请选择提现账号", tigger: "blur" },
-        ],
-      },
-      usdtRules: {
-        coinCode: [
-          { required: true, message: "请选择充值币种", tigger: "blur" },
-        ],
-        tid: [{ required: true, message: "请输入提现地址", tigger: "blur" }],
-        reqValue: [
-          { required: true, message: "请输入提现金额", tigger: "blur" },
-        ],
-      },
       outCoinList: [],
       inCoinList: [],
       outZHList: [],
@@ -702,10 +683,10 @@ export default {
   },
   methods: {
     getReamin(coinCode) {
-      const rarr = this.bankListBalance.filter(item => {
-        return item.coinCode == coinCode
-      })
-      return rarr[0].balance
+      const rarr = this.bankListBalance.filter((item) => {
+        return item.coinCode == coinCode;
+      });
+      return rarr[0].balance;
     },
     async calculateRateMoney() {
       try {
@@ -756,11 +737,7 @@ export default {
       }
     },
     async handlePutWithDraw() {
-      if (
-        !this.form.coinCode ||
-        !this.form.reqValue ||
-        !this.form.bankId
-      ) {
+      if (!this.form.coinCode || !this.form.reqValue || !this.form.bankId) {
         Message({
           type: "warning",
           message: this.$t("qwsxx"),

@@ -6,7 +6,7 @@
       <div class="money-wrapper">
         <div class="money-left">
           <div class="form-item">
-            <div class="label">{{ $t("兑换金额") }}</div>
+            <div class="label">{{ $t("dhje") }}</div>
             <div class="input-with-select">
               <el-input
                 type="number"
@@ -30,17 +30,17 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              余额：<span>{{getReamin()}}</span>
+              {{$t('ye')}}：<span>{{getReamin()}}</span>
             </div>
           </div>
 
           <div class="form-item" v-if="form.coinCode">
-            <div class="label">{{ $t("兑换目标币种") }}</div>
+            <div class="label">{{ $t("dhmbbz") }}</div>
             <div class="input-with-select">
               <el-select
                 class="input-transaction"
                 v-model="form.targetCode"
-                :placeholder="$t('请选择兑换目标币种')"
+                :placeholder="$t('qxzdhmbbz')"
                 ref="targetselectRef"
               >
                 <el-option
@@ -59,15 +59,15 @@
             <li>{{ $t("limitNum") }}</li>
           </ul>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
-            {{ $t("立即兑换") }}
+            {{ $t("ljdh") }}
           </div>
         </div>
         <div class="money-right">
-          <h2>{{ $t("兑换预览") }}</h2>
+          <h2>{{ $t("dhyl") }}</h2>
           <div class="divider" />
           <div class="column">
             <div class="column-left">
-              {{ $t("兑换金额") }}
+              {{ $t("dhje") }}
             </div>
             <div class="column-right">
               {{ form.reqValue || 0
@@ -100,7 +100,7 @@
       <div class="dialog-content">
         <img src="@/assets/images/moneyManage/success.png" />
         <div class="desc">
-          {{ $t("发起兑换成功") }}
+          {{ $t("fqdhcg") }}
         </div>
       </div>
       <el-button
@@ -153,26 +153,6 @@ export default {
       type: "1",
       dialogVisible2: false,
       linkList: ["txgl", "duihuan"],
-      rules: {
-        coinCode: [
-          { required: true, message: "请选择充值币种", tigger: "blur" },
-        ],
-        reqValue: [
-          { required: true, message: "请输入提现金额", tigger: "blur" },
-        ],
-        sendBank: [
-          { required: true, message: "请选择提现账号", tigger: "blur" },
-        ],
-      },
-      usdtRules: {
-        coinCode: [
-          { required: true, message: "请选择充值币种", tigger: "blur" },
-        ],
-        tid: [{ required: true, message: "请输入提现地址", tigger: "blur" }],
-        reqValue: [
-          { required: true, message: "请输入提现金额", tigger: "blur" },
-        ],
-      },
       outCoinList: [],
       inCoinList: [],
       outZHList: [],

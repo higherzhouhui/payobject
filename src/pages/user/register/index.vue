@@ -30,7 +30,7 @@
         <el-select
         class="input"
         v-model="form.areaCode"
-        :placeholder="$t('请选择国家')"
+        :placeholder="$t('qxzgj')"
         @change="changeAraeSelect"
       >
         <el-option
@@ -53,7 +53,7 @@
       <div class="area-wrapper">
         <el-input
           class="input-areacode"
-          :placeholder="$t('请输入')"
+          :placeholder="$t('qsr')"
           v-model="form.areaCode"
           v-if="type == 1"
           @change="changeAraeCode"

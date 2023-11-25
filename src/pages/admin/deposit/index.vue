@@ -112,7 +112,7 @@
             <el-input
               v-model="usdtForm.tid"
               class="input-amount"
-              :placeholder="$t('请输入汇款钱包地址')"
+              :placeholder="$t('qsrhkzbdz')"
             />
             <el-select
               class="input-select"
@@ -393,81 +393,81 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('收款账户名称')">
+        <el-form-item :label="$t('skzhmc')">
           <el-input
             v-model="currentSelectRow.accountName"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款账号名称')">
+        <el-form-item :label="$t('hkzhmc')">
           <el-input
             v-model="currentSelectRow.sendAccount"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('收款账号')">
+        <el-form-item :label="$t('skzh')">
           <el-input
             v-model="currentSelectRow.inbankAccount"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款账号')">
+        <el-form-item :label="$t('hkzhao')">
           <el-input
             v-model="currentSelectRow.outbankAccount"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('代码')">
+        <el-form-item :label="$t('skbankcode')">
           <el-input
             v-model="currentSelectRow.inbankCode"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('代码')">
+        <el-form-item :label="$t('hkbankcode')">
           <el-input
             v-model="currentSelectRow.outbankCode"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('所属国家')">
+        <el-form-item :label="$t('skyhssgj')">
           <el-input
             v-model="currentSelectRow.inbankCountry"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('所属国家')">
+        <el-form-item :label="$t('hkyhssgj')">
           <el-input
             v-model="currentSelectRow.outbankCountry"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('所在地址')">
+        <el-form-item :label="$t('skyhszdz')">
           <el-input
             type="textarea"
             v-model="currentSelectRow.inbankAdd"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('所在地址')">
+        <el-form-item :label="$t('hkyhssdz')">
           <el-input
             type="textarea"
             v-model="currentSelectRow.outbankAdd"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('SWIFT')">
+        <el-form-item :label="$t('sksdm')">
           <el-input
             v-model="currentSelectRow.inswiftCode"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('SWIFT')">
+        <el-form-item :label="$t('hksdm')">
           <el-input
             v-model="currentSelectRow.outswiftCode"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')">
+        <el-form-item :label="$t('hkpz')">
           <el-upload
             class="upload-demo"
             action="null"
@@ -480,7 +480,7 @@
             "
           >
             <el-button size="small" type="primary" class="normal-btn">
-              {{ $t("上传汇款凭证") }}
+              {{ $t("schkpz") }}
             </el-button>
           </el-upload>
           <el-button
@@ -492,7 +492,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >预览</a
+              >{{$t('yulan')}}</a
             ></el-button
           >
         </el-form-item>
@@ -503,31 +503,31 @@
         :model="currentSelectRow"
         v-if="moneyType == 'usdt'"
       >
-        <el-form-item :label="$t('币种')">
+        <el-form-item :label="$t('bz')">
           <el-input
             v-model="currentSelectRow.coinCode"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('收款钱包地址')">
+        <el-form-item :label="$t('skqbdz')">
           <el-input
             v-model="currentSelectRow.cryptAdd"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('金额')">
+        <el-form-item :label="$t('je')">
           <el-input
             v-model="currentSelectRow.reqValue"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款钱包地址')">
+        <el-form-item :label="$t('hkqbdz')">
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('jmxy')">
           <el-input v-model="currentSelectRow.agreement" :readOnly="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')">
+        <el-form-item :label="$t('hkpz')">
           <el-upload
             class="upload-demo"
             action="null"
@@ -540,7 +540,7 @@
             "
           >
             <el-button size="small" type="primary" class="normal-btn">
-              {{ $t("上传汇款凭证") }}
+              {{ $t("schkpz") }}
             </el-button>
           </el-upload>
           <el-button
@@ -552,7 +552,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >预览</a
+              >{{$t('yulan')}}</a
             ></el-button
           >
         </el-form-item>
@@ -638,26 +638,6 @@ export default {
       tableData: [],
       options: [],
       type: "1",
-      rules: {
-        coinCode: [
-          { required: true, message: "请选择充值币种", tigger: "blur" },
-        ],
-        reqValue: [
-          { required: true, message: "请输入充值金额", tigger: "blur" },
-        ],
-        sendBank: [
-          { required: true, message: "请选择汇款账号", tigger: "blur" },
-        ],
-      },
-      usdtRules: {
-        coinCode: [
-          { required: true, message: "请选择充值币种", tigger: "blur" },
-        ],
-        tid: [{ required: true, message: "请输入汇款地址", tigger: "blur" }],
-        reqValue: [
-          { required: true, message: "请输入充值金额", tigger: "blur" },
-        ],
-      },
       outCoinList: [],
       inCoinList: [],
       outZHList: [],

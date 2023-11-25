@@ -109,7 +109,7 @@
               "
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
-              {{ $t("确认申请") }}
+              {{ $t("qrsq") }}
             </el-button>
             <el-button
               type="danger"
@@ -118,7 +118,7 @@
               @click="rejectWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
-              {{ $t("驳回") }}
+              {{ $t("bh") }}
             </el-button>
             <el-button
               type="success"
@@ -127,7 +127,7 @@
               @click="passWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
-              {{ $t("通过") }}
+              {{ $t("tg") }}
             </el-button>
           </template>
         </el-table-column>
@@ -185,10 +185,10 @@
               {{ $t("xq") }}
             </el-button>
             <el-button type="success" class="btn" size="small" @click="passWithdraw(scope.row)" v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin">
-              {{ $t("通过") }}
+              {{ $t("tg") }}
             </el-button>
             <el-button type="danger" class="btn" size="small" @click="rejectWithdraw(scope.row)"  v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin">
-              {{ $t("驳回") }}
+              {{ $t("bh") }}
             </el-button>
           </template>
         </el-table-column>
@@ -304,7 +304,7 @@
           :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
           target="_blank"
           class="down-a"
-          >{{ $t("djxz") }}</a
+          >{{ $t("yulan") }}</a
         >
         </el-form-item>
       </el-form>
@@ -377,7 +377,7 @@
           :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
           target="_blank"
           class="down-a"
-          >{{ $t("djxz") }}</a
+          >{{ $t("yulan") }}</a
         >
         </el-form-item>
       </el-form>
@@ -388,7 +388,7 @@
       </div>
     </el-dialog>
     <el-dialog
-      :title="`出金确认`"
+      :title="$t('cjqr')"
       :visible.sync="passdialogVisible"
       width="650"
       :before-close="
@@ -398,19 +398,19 @@
       "
     >
       <el-form label-position="top" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('实际到账金额')" v-if="moneyType == 'fabi'">
+        <el-form-item :label="$t('sjdzje')" v-if="moneyType == 'fabi'">
           <el-input
             type="number"
             v-model="currentSelectRow.withdrawValue"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('手续费')" v-if="moneyType == 'fabi'">
+        <el-form-item :label="$t('sxfei')" v-if="moneyType == 'fabi'">
           <el-input
             type="number"
             v-model="currentSelectRow.commission"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('汇款凭证')">
+        <el-form-item :label="$t('hkpz')">
           <el-upload
             class="upload-demo"
             action="null"
@@ -421,7 +421,7 @@
             v-if="currentSelectRow.withdrawProof == null"
           >
             <el-button size="small" type="primary" class="btn">
-              {{ $t("上传汇款凭证") }}
+              {{ $t("schkpz") }}
             </el-button>
           </el-upload>
           <a
@@ -429,25 +429,25 @@
               target="_blank"
               v-else
               class="down-a"
-              >预览</a
+              >{{$t('yulan')}}</a
             >
         </el-form-item>
       </el-form>
       <div slot="footer">
         <el-button type="info" class="qx" @click="passdialogVisible = false"
-          >取消</el-button
+          >{{$t('cancel')}}</el-button
         >
         <el-button
           type="primary"
           class="qd"
           @click="passConfirm"
           v-loading="operationLoading"
-          >确认</el-button
+          >{{$t('sure')}}</el-button
         >
       </div>
     </el-dialog>
     <el-dialog
-      :title="`驳回`"
+      :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
       width="650"
       :before-close="
@@ -457,7 +457,7 @@
       "
     >
       <el-form label-position="top" ref="formss" :model="currentSelectRow">
-        <el-form-item :label="$t('驳回理由')">
+        <el-form-item :label="$t('bhly')">
           <el-input type="textarea" v-model="currentSelectRow.memo"></el-input>
         </el-form-item>
       </el-form>
@@ -467,7 +467,7 @@
           size="large"
           class="qx"
           @click="rejectdialogVisible = false"
-          >取消</el-button
+          >{{$t('cancel')}}</el-button
         >
         <el-button
           type="primary"
@@ -475,7 +475,7 @@
           class="qd"
           @click="rejectConfirm"
           v-loading="operationLoading"
-          >确认</el-button
+          >{{$t('sure')}}</el-button
         >
       </div>
     </el-dialog>
@@ -552,7 +552,7 @@ export default {
         this.$t("shz"),
         this.$t("clz"),
         this.$t("done"),
-        this.$t("确认到账"),
+        this.$t("qrdz"),
         this.$t("bh"),
       ],
       typeOption: ["", "info", "warning", "success", "danger", "danger"],
@@ -604,7 +604,7 @@ export default {
         }
         Message({
           type: "success",
-          message: this.$t("操作成功！"),
+          message: this.$t("czcg"),
         });
         this.operationLoading = false;
         this.passdialogVisible = false;
@@ -628,7 +628,7 @@ export default {
         }
         Message({
           type: "success",
-          message: this.$t("操作成功！"),
+          message: this.$t("czcg"),
         });
         this.operationLoading = false;
         this.rejectdialogVisible = false;

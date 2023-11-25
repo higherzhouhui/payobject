@@ -24,7 +24,7 @@
           </div>
           <div class="right">
             <div class="form-item">
-              <div class="label">{{ $t("汇付总额") }}</div>
+              <div class="label">{{ $t("hfze") }}</div>
               <div class="input-with-select">
                 <el-input
                   :placeholder="$t('enterAmount')"
@@ -59,7 +59,7 @@
               </div>
             </div>
             <div class="form-item">
-              <div class="label">{{ $t("到账额") }}</div>
+              <div class="label">{{ $t("dze") }}</div>
               <div class="input-with-select">
                 <el-input
                   :placeholder="$t('enterAmount')"
@@ -98,7 +98,7 @@
               <li>{{ $t("limitNum") }}</li>
             </ul>
             <div class="form-item">
-              <div class="label">{{ $t("收款账号") }}</div>
+              <div class="label">{{ $t("skzh") }}</div>
               <div class="input-with-select">
                 <el-select v-model="transactionType" class="input-transaction">
                   <el-option
@@ -133,9 +133,9 @@
                 <svg-icon iconClass="user" className="rleft-svg" />
               </div>
               <div class="svg-conent">
-                <div class="title">创建账户</div>
+                <div class="title">{{$t('cjzh')}}</div>
                 <div class="desc">
-                  我们将通过邮箱验证您的基础信息，创建并激活您的账户。
+                  {{$t('cjzhdes')}}
                 </div>
               </div>
             </div>
@@ -144,9 +144,9 @@
                 <svg-icon iconClass="building" className="rleft-svg" />
               </div>
               <div class="svg-conent">
-                <div class="title">完成账户KYC认证</div>
+                <div class="title">{{$t('wckyc')}}</div>
                 <div class="desc">
-                  我们需要您的企业资料和银行资料进行KYC资料核对，保障支付过程的安全。
+                  {{$t('wckycdes')}}
                 </div>
               </div>
             </div>
@@ -158,8 +158,8 @@
                 />
               </div>
               <div class="svg-conent">
-                <div class="title">发起转汇</div>
-                <div class="desc">认证服务，开启您的全球支付之旅！</div>
+                <div class="title">{{$t('fqzh')}}</div>
+                <div class="desc">{{$t('fqzhdes')}}</div>
               </div>
             </div>
           </div>
@@ -328,13 +328,13 @@
                 </div>
                 <div class="title-big">{{ $t("manyPlantDesc") }}</div>
                 <span class="normal-text">
-                  {{ $t("下载应用") }}
+                  {{ $t("xzyy") }}
                 </span>
                 <span class="normal-text" @click="handleNext">
-                  {{ $t("创建账户") }}
+                  {{ $t("cjzh") }}
                 </span>
                 <span class="normal-text" @click="handleNext">
-                  {{ $t("开始使用") }}
+                  {{ $t("kssy") }}
                 </span>
               </div>
             </div>
@@ -532,7 +532,6 @@ export default {
         "https://upload.wikimedia.org/wikipedia/commons/8/87/Schlossbergbahn.webm",
       type: 0,
       lang: Local("lang") || "zh",
-      notice: "Reliance-Pay正式上线了",
       serviceLeftData: [
         { title: "szyw", des: "s1" },
         { title: "qqsk", des: "s2" },
@@ -547,8 +546,8 @@ export default {
       rateDetail: "",
       sendTypeList: ["USA", "EUR", "GBP"],
       recipientsTypeList: ["AUD", "PRI", "CHN"],
-      transactionType: "银行入账",
-      transactionTypeList: ["银行入账", "ReliancePay Wallet"],
+      transactionType: this.$t("yhrz"),
+      transactionTypeList: [this.$t("yhrz"), "ReliancePay Wallet"],
       commentsWiperOption: {
         // 设置垂直轮播vertical,  水平轮播 horizontal
         direction: "horizontal",

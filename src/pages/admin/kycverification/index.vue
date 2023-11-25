@@ -158,24 +158,24 @@ export default {
       this.tips = index;
     },
     getBaseKycInfo() {
-        let status = '实名认证'
+        let status = this.$t('smrz')
         if (this.userInfo.kyc) {
-            status = '正在审核中'
+            status = this.$t('zzshz')
             if (this.userInfo.kyc.kycStatus == 1) {
-                status = '已认证成功'
+                status = this.$t('yrzcg')
             }
             if (this.userInfo.kyc.kycStatus === 2) {
-                status = `重新认证`
+                status = this.$t('csrz')
             }
         }
         this.status = status
         let reason = ''
         if (this.userInfo.kyc) {
           if (this.userInfo.kyc.kycStatus === 0) {
-                reason = '正在审核中，请等待...'
+                reason = this.$t('zzshzloading')
             }
             if (this.userInfo.kyc.kycStatus === 1) {
-                reason = '如需修改请联系工作人员'
+                reason = this.$t('rxxgqlxwm')
             }
             if (this.userInfo.kyc.kycStatus === 2) {
                 reason = this.userInfo.kyc.reason

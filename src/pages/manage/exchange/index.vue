@@ -2,8 +2,8 @@
   <div class="user_transferAccountMangement_contianer">
     <!-- <LinkPath :linkList="linkList" /> -->
     <el-tabs v-model="type">
-      <el-tab-pane label="收款账户" name="first"></el-tab-pane>
-      <el-tab-pane label="汇率设置" name="second"></el-tab-pane>
+      <el-tab-pane :label="$t('skzh')" name="first"></el-tab-pane>
+      <el-tab-pane :label="$t('hlgl')" name="second"></el-tab-pane>
     </el-tabs>
     <template v-if="type == 'first'">
       <div class="content">
@@ -46,7 +46,7 @@
           </el-form-item>
         </el-form>
         <el-button type="primary normal-btn" @click="showAdd1" class="primary"
-          ><i class="el-icon-plus"></i>增加收款账户</el-button
+          ><i class="el-icon-plus"></i>{{$t('addskzh')}}</el-button
         >
         <el-table
           class="tables"
@@ -57,7 +57,7 @@
         >
           <el-table-column
             prop="coinCode"
-            :label="$t('币种')"
+            :label="$t('bz')"
             min-width="100"
           />
           <el-table-column
@@ -98,10 +98,10 @@
           >
             <template slot-scope="scope">
               <el-button type="primary" size="small" class="btn" @click="toDetail(scope.row)">
-                修改
+                {{$t('xg')}}
               </el-button>
               <el-button type="danger" size="small" class="btn" @click="del1(scope.row.id)">
-                删除
+                {{$t('del')}}
               </el-button>
             </template>
           </el-table-column>
@@ -117,7 +117,7 @@
     <template v-if="type == 'second'">
       <div class="content">
         <el-button type="primary" @click="showAdd" class="primary normal-btn"
-          ><i class="el-icon-plus"></i>增加汇率</el-button
+          ><i class="el-icon-plus"></i>{{$t('zjhld')}}</el-button
         >
         <el-table
           class="tables"
@@ -126,7 +126,7 @@
           v-loading="loading"
           size="small"
         >
-          <el-table-column prop="exFrom" label="被兑换币种" min-width="100">
+          <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
                 <span
@@ -138,8 +138,8 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="exRate" label="汇率" min-width="120" />
-          <el-table-column prop="exTarget" label="兑换币种" min-width="100">
+          <el-table-column prop="exRate" :label="$t('hl')" min-width="120" />
+          <el-table-column prop="exTarget" :label="$t('dhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
                 <span
@@ -165,10 +165,10 @@
             <template slot-scope="scope">
               <div>
                 <el-button type="primary" size="small" class="btn" @click="toDetail2(scope.row)">
-                  修改
+                  {{$t('xg')}}
                 </el-button>
                 <el-button type="danger" size="small" class="btn" @click="del2(scope.row.id)">
-                  删除
+                  {{$t('del')}}
                 </el-button>
               </div>
             </template>
@@ -184,10 +184,9 @@
     </template>
 
     <el-dialog
-      :title="bankForm.id ? '修改' : '新增'"
+      :title="bankForm.id ? $t('xg') : $t('add')"
       :visible.sync="dialogVisible"
-      width="636px"
-      top="3%"
+      width="600px"
       :before-close="
         () => {
           dialogVisible = false;
@@ -200,7 +199,7 @@
         :model="bankForm"
         class="formStyle"
       >
-        <el-form-item :label="$t('币种')" class="mb24">
+        <el-form-item :label="$t('bz')">
           <el-select v-model="bankForm.coinCode" class="elSelect">
             <el-option
               style="padding: 0 10px"
@@ -218,10 +217,10 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="$t('zhmc')" class="mb24">
+        <el-form-item :label="$t('zhmc')">
           <el-input v-model="bankForm.accountName"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('ssgj')" class="mb24">
+        <el-form-item :label="$t('ssgj')">
           <!-- <el-input
             v-model="bankForm.country"
           ></el-input> -->
@@ -241,22 +240,22 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('jzdz')" class="mb24">
+        <el-form-item :label="$t('jzdz')">
           <el-input v-model="bankForm.accountAdd" type="textarea"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankname')" class="mb24">
+        <el-form-item :label="$t('bankname')">
           <el-input v-model="bankForm.bankName"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('swift')" class="mb24">
+        <el-form-item :label="$t('swift')">
           <el-input v-model="bankForm.swiftCode"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankcode')" class="mb24">
+        <el-form-item :label="$t('bankcode')">
           <el-input v-model="bankForm.bankCode"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankcount')" class="mb24">
+        <el-form-item :label="$t('bankcount')">
           <el-input v-model="bankForm.bankAccount"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('khgj')" class="mb24">
+        <el-form-item :label="$t('khgj')">
           <!-- <el-input
             v-model="bankForm.bankCountry"
           ></el-input> -->
@@ -276,10 +275,10 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('khdz')" class="mb24">
+        <el-form-item :label="$t('khdz')">
           <el-input v-model="bankForm.bankAdd" type="textarea"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24">
+        <el-form-item :label="$t('scwj')">
           <label style="font-size: 12px">
             {{ $t("zzd") }}
           </label>
@@ -308,7 +307,7 @@
 
               :href="'/api/file/downLoad?url=' + bankForm.accountCer"
               target="_blank"
-              >预览</a>
+              >{{$t('yulan')}}</a>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -322,7 +321,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="bankForm2.id ? '修改' : '新增汇率'"
+      :title="bankForm2.id ? $t('xg') : $t('zjhld')"
       :visible.sync="dialogVisible2"
       width="636px"
       :before-close="
@@ -332,7 +331,7 @@
       "
     >
       <el-form label-position="top" ref="formss" :model="bankForm2">
-        <el-form-item label="被兑换币种" class="mb24">
+        <el-form-item :label="$t('bdhbz')">
           <el-select
             v-model="bankForm2.exFrom"
             class="elSelect"
@@ -354,9 +353,9 @@
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan"
-          ><i class="el-icon-sort" />兑换</el-form-item
+          ><i class="el-icon-sort" />{{$t('duihuan')}}</el-form-item
         >
-        <el-form-item label="兑换币种" class="mb24">
+        <el-form-item :label="$t('dhbz')">
           <el-select v-model="bankForm2.exTarget" class="elSelect">
             <el-option
               style="padding: 0 10px"
@@ -373,7 +372,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="兑换汇率" class="mb24">
+        <el-form-item :label="$t('hl')">
           <el-input v-model="bankForm2.exRate" type="number"></el-input>
         </el-form-item>
         <el-form-item
@@ -434,19 +433,19 @@ export default {
       areaList: [],
       options: [
         {
-          label: "审核中",
+          label: this.$t('shz'),
           value: 0,
         },
         {
-          label: "已通过",
+          label: this.$t('ytg'),
           value: 1,
         },
         {
-          label: "驳回",
+          label: this.$t('bh'),
           value: 2,
         },
       ],
-      status: ["审核中", "已通过", "驳回"],
+      status: [this.$t('shz'), this.$t('ytg'), this.$t('bh')],
       loading: true,
       form: {
         // bankStatus: "",
@@ -480,13 +479,13 @@ export default {
   },
   methods: {
     async del1(id) {
-      this.$confirm("确认删除？")
+      this.$confirm(this.$t('qrsc'), this.$t('hint'))
         .then(async (_) => {
           try {
             await delDeposit({ id });
             Message({
               type: "success",
-              message: "操作成功",
+              message:  this.$t('czcg'),
             });
             this.getlist();
           } catch (error) {}
@@ -494,13 +493,13 @@ export default {
         .catch((_) => {});
     },
     async del2(id) {
-      this.$confirm("确认删除？")
+      this.$confirm(this.$t('qrsc'), this.$t('hint'))
         .then(async (_) => {
           try {
             await delExchange({ id });
             Message({
               type: "success",
-              message: "操作成功",
+              message:  this.$t('czcg'),
             });
             this.dialogVisible2();
             this.getlist2();
@@ -607,7 +606,7 @@ export default {
         if (res.code === 200) {
           Message({
             type: "success",
-            message: "操作成功！",
+            message: this.$t('czcg'),
           });
           this.getlist2();
         }
@@ -618,7 +617,7 @@ export default {
         await setDeposit(this.bankForm);
         Message({
           type: "success",
-          message: "添加成功",
+          message: this.$t('czcg'),
         });
         this.getlist();
         this.dialogVisible = false;

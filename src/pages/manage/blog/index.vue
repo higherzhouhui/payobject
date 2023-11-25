@@ -15,25 +15,25 @@
       >
         <el-table-column
           prop="title"
-          :label="$t('标题')"
+          :label="$t('title')"
           min-width="100"
           show-overflow-tooltip
         />
         <el-table-column
           prop="mainPoint"
-          :label="$t('摘要')"
+          :label="$t('zhaiyao')"
           min-width="150"
           show-overflow-tooltip
         />
         <el-table-column
           prop="content"
-          :label="$t('内容')"
+          :label="$t('content')"
           min-width="250"
           show-overflow-tooltip
         />
         <el-table-column
           prop="recommend"
-          :label="$t('是否推荐')"
+          :label="$t('sftj')"
           min-width="80"
           show-overflow-tooltip
         >
@@ -44,7 +44,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="cover" :label="$t('封面')" min-width="120">
+        <el-table-column prop="cover" :label="$t('cover')" min-width="120">
           <template slot-scope="scope">
             <el-image
               :src="`/api/file/downLoad?url=${scope.row.cover}`"
@@ -55,19 +55,18 @@
         </el-table-column>
         <el-table-column
           prop="createTime"
-          :label="$t('创建时间')"
+          :label="$t('cjsj')"
           min-width="180"
           show-overflow-tooltip
         />
         <el-table-column
           prop="modifiedTime"
-          :label="$t('更新时间')"
+          :label="$t('xgsj')"
           min-width="180"
           show-overflow-tooltip
         />
         <el-table-column
-          prop="modifiedTime"
-          :label="$t('更新时间')"
+          :label="$t('cz')"
           width="120"
           fixed="right"
         >
@@ -78,16 +77,16 @@
               size="small"
               @click="showDialog(scope.row)"
             >
-              {{ $t("修改") }}
+              {{ $t("xg") }}
             </el-button>
-            <el-popconfirm title="确定删除吗？" @confirm="deleteCms(scope.row)">
+            <el-popconfirm :title="$t('qrsc')" @confirm="deleteCms(scope.row)">
               <el-button
                 slot="reference"
                 type="danger"
                 class="btn"
                 size="small"
               >
-                {{ $t("删除") }}
+                {{ $t("del") }}
               </el-button>
             </el-popconfirm>
           </template>
@@ -111,7 +110,7 @@
       >
       </el-pagination>
       <el-dialog
-        :title="blogForm.id ? '修改' : '新增'"
+        :title="blogForm.id ? $t('xg') : $t('add')"
         :visible.sync="dialogVisible"
         width="800px"
         :before-close="
@@ -121,23 +120,23 @@
         "
       >
         <el-form label-width="120px" ref="formss" :model="blogForm" label-position="top" class="formStyle">
-          <el-form-item :label="$t('标题')" class="mb24">
+          <el-form-item :label="$t('title')" class="mb24">
             <el-input
               v-model="blogForm.title"
-              placeholder="请输入标题"
+              placeholder="qsrbt"
             ></el-input>
           </el-form-item>
-          <el-form-item :label="$t('摘要')" class="mb24">
+          <el-form-item :label="$t('zhaiyao')" class="mb24">
             <el-input
               type="textarea"
               v-model="blogForm.mainPoint"
-              placeholder="请输入摘要"
+              placeholder="qsrzy"
             ></el-input>
           </el-form-item>
-          <el-form-item :label="$t('内容')" class="mb24">
+          <el-form-item :label="$t('content')" class="mb24">
             <Editor :passSon="blogForm.content" @update:content="updateContent"/>
           </el-form-item>
-          <el-form-item :label="$t('封面')" class="mb24">
+          <el-form-item :label="$t('cover')" class="mb24">
             <el-upload
               class="upload-demo"
               action="null"
@@ -156,7 +155,7 @@
               :previewSrcList="[`/api/file/downLoad?url=${blogForm.cover}`]"
             />
           </el-form-item>
-          <el-form-item :label="$t('是否推荐')" class="mb24">
+          <el-form-item :label="$t('sftj')" class="mb24">
             <el-switch v-model="blogForm.recommend"></el-switch>
           </el-form-item>
         </el-form>
@@ -201,7 +200,6 @@ export default {
         recommend: false,
         content: "",
       },
-      linkList: ["jycx", "兑换明细"],
       form: {
         name: "",
       },
@@ -210,36 +208,6 @@ export default {
       size: 10,
       total: 0,
       searchForm: {},
-      coinCodeList: [],
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [
-          {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            },
-          },
-          {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            },
-          },
-          {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            },
-          },
-        ],
-      },
     };
   },
   created() {
@@ -279,7 +247,7 @@ export default {
         this.loading = false;
         this.dialogVisible = false;
         this.getInitData();
-        this.$message.success("操作成功！");
+        this.$message.success("czcg");
       } catch (error) {
         this.loading = false;
       }

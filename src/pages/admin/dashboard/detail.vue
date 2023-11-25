@@ -14,7 +14,7 @@
       </div>
       <div class="normal-btn" @click="routerToPath('/admin/convert/index')">
         <i class="el-icon-connection" />
-        {{$t("兑换")}}
+        {{$t("duihuan")}}
       </div>
       <div class="normal-btn" @click="routerToPath('/admin/withdraw/index')">
         <i class="el-icon-position" />
@@ -77,7 +77,7 @@ export default {
   },
   data() {
     return {
-      typeOption: ['', '入账', '出账', '换汇', '换汇的入账'],
+      typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('huanhui'), this.$t('huanhuidrz')],
       getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],

@@ -37,10 +37,10 @@ export default {
     copyText2(word) {
       navigator.clipboard.writeText(word)
       .then(() => {
-        this.$message.success('复制成功')
+        this.$message.success(this.$t('copysuccess'))
       })
       .catch(() => {
-        this.$message.error('复制失败')
+        console.error('copy fail')
       })
     }
   }

@@ -24,9 +24,9 @@
                                 <div />
                             </div>
                             <div class="menus" :class="showMenu && 'showMenu'">
-                                <div class="menus-item" @click="to('/index')">首页</div>
-                                <div class="menus-item" @click="to('/user/login')">登陆</div>
-                                <div class="menus-item" @click="to('/user/register')">注册</div>
+                                <div class="menus-item" @click="to('/index')">{{$t('home')}}</div>
+                                <div class="menus-item" @click="to('/user/login')">{{$t('login')}}</div>
+                                <div class="menus-item" @click="to('/user/register')">{{$t('register')}}</div>
                             </div>
                         </div>
                     </div>

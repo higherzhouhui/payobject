@@ -133,7 +133,7 @@
             target="_blank"
             class="down-a"
             v-if="form.regCer"
-            >{{ $t("预览") }}</a
+            >{{ $t("yulan") }}</a
           >
         </label>
         <el-upload
@@ -162,7 +162,7 @@
             target="_blank"
             class="down-a"
             v-if="form.legal"
-            >{{ $t("预览") }}</a
+            >{{ $t("yulan") }}</a
           >
         </label>
         <el-upload
@@ -190,7 +190,7 @@
             target="_blank"
             class="down-a"
             v-if="form.shareholder"
-            >{{ $t("预览") }}</a
+            >{{ $t("yulan") }}</a
           >
         </label>
         <el-upload
@@ -234,7 +234,7 @@
       <div class="dialog-content">
         <img src="@/assets/images/moneyManage/success.png" />
         <div class="desc">
-          {{ $t("申请成功，请等待...") }}
+          {{ $t("fqkyc") }}
         </div>
       </div>
       <el-button

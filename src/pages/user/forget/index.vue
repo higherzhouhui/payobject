@@ -8,13 +8,13 @@
             <el-form-item :label="$t('email')" prop="email">
                 <div class="line">
                     <img class="icon icon2" src="@/assets/images/user/email.png" alt="">
-                    <el-input class="input" placeholder="请输入电子邮箱" v-model="form.email" />
+                    <el-input class="input" :placeholder="$t('qsryxhm')" v-model="form.email" />
                 </div>
             </el-form-item>
             <el-form-item :label="$t('yxyzm')" prop="emailecode">
                 <div class="line flex flex_jc_sb flex_align_center">
                     <img class="icon" src="@/assets/images/user/yzm.png" alt="">
-                    <el-input class="input yzm" placeholder="请输入验证码" v-model="form.emailecode" />
+                    <el-input class="input yzm" :placeholder="$t('qsryzm')" v-model="form.emailecode" />
                     
 
                     <el-button class="send_btn" type="primary" @click="sendSms">
@@ -27,9 +27,9 @@
                 <el-dropdown class="item pointer" style="width: 100%" trigger="click">
                     <div class="line">
                         <img class="icon" src="@/assets/images/user/password.png" alt="">
-                        <el-input class="input" placeholder="请输入新密码" v-model="form.newPassword" />
+                        <el-input class="input" :placeholder="$t('qsrmm')" v-model="form.newPassword" />
                         <el-dropdown-menu slot="dropdown">
-                            大小写字母，不少于8个字符
+                            {{$t('qsrmm')}}
                         </el-dropdown-menu>
                     </div>
                 </el-dropdown>
@@ -37,13 +37,13 @@
             <el-form-item :label="$t('zcxdlmm')" prop="renewPassword">
                 <div class="line">
                     <img class="icon icon2" src="@/assets/images/user/password.png" alt="">
-                    <el-input class="input" placeholder="请再次输入密码" v-model="form.renewPassword" />
+                    <el-input class="input" :placeholder="$t('qzcsrmm')" v-model="form.renewPassword" />
                 </div>
             </el-form-item>
             <el-form-item :label="$t('txm')" prop="ecode">
                 <div class="line flex flex_jc_sb flex_align_center">
                     <img class="icon icon3" src="@/assets/images/user/txm.png" alt="">
-                    <el-input class="input yzm" placeholder="请输入图像验证码" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
+                    <el-input class="input yzm" :placeholder="$t('qsrtxm')" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>
                         <div class="ecode pointer" :class="imgLoading && 'loading'">
                             <img
                                 width="100%"
@@ -87,19 +87,19 @@ export default {
             identifyCode: '',
             rules: {
                 email: [{
-                    required: true, message: '请输入电子邮箱', trigger: 'blur'
+                    required: true, message: this.$t('qsrsjhyx'), trigger: 'blur'
                 }],
                 emailecode: [{
-                    required: true, message: '请输入验证码', trigger: 'blur'
+                    required: true, message: this.$t('qsryzm'), trigger: 'blur'
                 }],
                 newPassword: [{
-                    required: true, message: '请输入新密码', trigger: 'blur'
+                    required: true, message: this.$t('qsrmm'), trigger: 'blur'
                 }],
                 renewPassword: [{
-                    required: true, message: '请再次确认密码', trigger: 'blur'
+                    required: true, message: this.$t('qzcsrmm'), trigger: 'blur'
                 }],
                 ecode: [{
-                    required: true, message: '请输入图形验证码', trigger: 'blur'
+                    required: true, message: this.$t('qsrtxm'), trigger: 'blur'
                 }]
             },
             form: {},

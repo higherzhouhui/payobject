@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      typeOption: ['', '入账', '出账', '换汇', '换汇的入账'],
+      typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('huanhui'), this.$t('huanhuidrz')],
       getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],

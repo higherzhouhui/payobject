@@ -267,7 +267,7 @@
             class="down-a"
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
-            >{{$t('djxz')}}</a
+            >{{$t('yulan')}}</a
           >
         </el-form-item>
       </el-form>
@@ -289,7 +289,6 @@
   </div>
 </template>
 <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import { getBankList, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
@@ -299,7 +298,6 @@ import { getFlagIcon } from "@/utils/common";
 
 export default {
   name: "transferAccountMangement",
-  components: { LinkPath },
   data() {
     return {
       getFlagIcon: getFlagIcon,

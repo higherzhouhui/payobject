@@ -125,12 +125,10 @@
   </div>
 </template>
 <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import { getBillDetails } from "@/api/manage";
 import { depCoins } from "@/api/out";
 export default {
   name: "transactionInquiry",
-  components: { LinkPath },
   data() {
     return {
       tableData: [],
@@ -140,7 +138,7 @@ export default {
       form: {
         name: "",
       },
-      typeOption: ['', '入账', '出账', '换汇', '换汇的入账'],
+      typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('huanhui'), this.$t('huanhuidrz')],
       typeStyle: ['', 'success', 'danger', 'info', 'warning'],
       loading: true,
       current: 1,

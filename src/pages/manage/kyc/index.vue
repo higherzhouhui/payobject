@@ -2,8 +2,8 @@
   <div class="user_transferAccountMangement_contianer">
     <!-- <LinkPath :linkList="linkList" /> -->
     <el-tabs v-model="type">
-      <el-tab-pane label="银行卡" name="first"></el-tab-pane>
-      <el-tab-pane label="KYC认证" name="second"></el-tab-pane>
+      <el-tab-pane :label="$t('bankcard')" name="first"></el-tab-pane>
+      <el-tab-pane :label="$t('kycyz')" name="second"></el-tab-pane>
     </el-tabs>
     <template v-if="type == 'first'">
       <div class="content">
@@ -90,7 +90,7 @@
                 size="small"
                 @click="toDetail(scope.row)"
               >
-                详情
+                {{$t('xq')}}
               </el-button>
               <el-button
                 type="primary"
@@ -99,7 +99,7 @@
                 @click="showUsdtForm(scope.row)"
               >
                 <i class="el-icon-plus" />
-                加密货币地址
+                {{$t('jmhb')}}
               </el-button>
               <el-button
                 v-if="scope.row.bankStatus == 0"
@@ -108,7 +108,7 @@
                 size="small"
                 @click="sh(scope.row.id, true)"
               >
-                通过
+                {{$t('tg')}}
               </el-button>
               <el-button
                 v-if="scope.row.bankStatus == 0"
@@ -117,7 +117,7 @@
                 size="small"
                 @click="rejectKyc(scope.row)"
               >
-                驳回
+                {{$t('bh')}}
               </el-button>
             </template>
           </el-table-column>
@@ -214,7 +214,7 @@
                   size="small"
                   @click="toDetail2(scope.row)"
                 >
-                  详情
+                  {{$t('xq')}}
                 </el-button>
                 <el-button
                   v-if="scope.row.kycStatus == 0"
@@ -223,7 +223,7 @@
                   size="small"
                   @click="sh2(scope.row.id, true)"
                 >
-                  通过
+                  {{$t('tg')}}
                 </el-button>
                 <el-button
                   v-if="scope.row.kycStatus == 0"
@@ -232,7 +232,7 @@
                   size="small"
                   @click="rejectKyc(scope.row)"
                 >
-                  驳回
+                  {{$t('bh')}}
                 </el-button>
                 <el-button
                 v-if="scope.row.kycStatus == 1"
@@ -241,7 +241,7 @@
                 size="small"
                 @click="showUserBalance(scope.row)"
               >
-                余额
+                {{$t('ye')}}
               </el-button>
               </div>
             </template>
@@ -268,7 +268,7 @@
     </template>
 
     <el-dialog
-      :title="'详情'"
+      :title="$t('xq')"
       :visible.sync="dialogVisible"
       width="636px"
       :before-close="
@@ -347,7 +347,7 @@
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
             class="down-a"
-            >预览</a
+            >{{$t('yulan')}}</a
           >
         </el-form-item>
       </el-form>
@@ -358,7 +358,7 @@
       </div>
     </el-dialog>
     <el-dialog
-      :title="'详情'"
+      :title="$t('xq')"
       :visible.sync="dialogVisible2"
       width="636px"
       :before-close="
@@ -451,7 +451,7 @@
         <el-form-item :label="$t('qygw')">
           <el-input v-model="bankForm2.webSite" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('驳回理由')" v-if="bankForm2.reason">
+        <el-form-item :label="$t('bhly')" v-if="bankForm2.reason">
           <el-input
             type="textarea"
             v-model="bankForm2.reason"
@@ -466,7 +466,7 @@
             :href="'/api/file/downLoad?url=' + bankForm2.regCer"
             target="_blank"
             class="down-a"
-            >预览</a
+            >{{$t('yulan')}}</a
           >
         </el-form-item>
         <el-form-item :label="$t('scwj')">
@@ -477,7 +477,7 @@
             :href="'/api/file/downLoad?url=' + bankForm2.legal"
             target="_blank"
             class="down-a"
-            >预览</a
+            >{{$t('yulan')}}</a
           >
         </el-form-item>
         <el-form-item :label="$t('scwj')" v-if="bankForm2.busType != 1">
@@ -488,18 +488,18 @@
             :href="'/api/file/downLoad?url=' + bankForm2.shareholder"
             target="_blank"
             class="down-a"
-            >预览</a
+            >{{$t('yulan')}}</a
           >
         </el-form-item>
       </el-form>
       <div slot="footer">
         <el-button class="qd" size="small" @click="dialogVisible2 = false">
-          完成
+          {{$t('done')}}
         </el-button>
       </div>
     </el-dialog>
     <el-dialog
-      :title="'加密货币地址'"
+      :title="$t('jmhb')"
       :visible.sync="dialogVisible3"
       :before-close="
         () => {
@@ -508,7 +508,7 @@
       "
     >
       <el-form label-position="top">
-        <el-form-item label="币种">
+        <el-form-item :label="$t('bz')">
           <el-select v-model="addressForm.cryCode" class="elSelect">
             <el-option
               style="padding: 0 10px"
@@ -519,7 +519,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="加密协议">
+        <el-form-item :label="$t('jmxy')">
           <el-select
           class="elSelect"
           v-model="addressForm.agreement"
@@ -535,8 +535,8 @@
           </el-option>
         </el-select>
         </el-form-item>
-        <el-form-item label="钱包地址">
-          <el-input v-model="addressForm.cryAdd" placeholder="请输入钱包地址"></el-input>
+        <el-form-item :label="$t('qbdz')">
+          <el-input v-model="addressForm.cryAdd" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -552,7 +552,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="'驳回'"
+      :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
       :before-close="
         () => {
@@ -561,7 +561,7 @@
       "
     >
       <el-form label-position="top">
-        <el-form-item label="驳回理由">
+        <el-form-item :label="$t('bhly')">
           <el-input
             type="textarea"
             v-model="currentSelectRow.reason"
@@ -581,7 +581,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      :title="'用户余额'"
+      :title="$t('yhqb')"
       :visible.sync="userBalanceDialog"
       :before-close="
         () => {
@@ -646,19 +646,19 @@ export default {
       userBalanceDialog: false,
       options: [
         {
-          label: "审核中",
+          label: this.$t('shz'),
           value: 0,
         },
         {
-          label: "已通过",
+          label: this.$t('ytg'),
           value: 1,
         },
         {
-          label: "驳回",
+          label: this.$t("bh"),
           value: 2,
         },
       ],
-      status: ["审核中", "已通过", "驳回"],
+      status: [this.$t('shz'), this.$t('ytg'), this.$t("bh")],
 
       form: {
         bankStatus: "",
@@ -735,7 +735,7 @@ export default {
         }
         Message({
           type: "success",
-          message: "操作成功",
+          message:  this.$t('czcg'),
         });
         this.getInitData();
         this.bankloading = false;
@@ -752,7 +752,7 @@ export default {
         if (res.code === 200) {
           Message({
             type: "success",
-            message: "操作成功",
+            message:  this.$t('czcg'),
           });
           this.dialogVisible3 = false;
         }
@@ -790,13 +790,13 @@ export default {
       } catch (error) {}
     },
     sh2(id, type) {
-      this.$confirm(type ? "确认通过？" : "确认驳回？", "提示")
+      this.$confirm(type ? this.$t('qrtg') : this.$t('qrbh'), this.$t("hint"))
         .then(async (_) => {
           try {
             await perKyc({ id, pass: type, reason: "123" });
             Message({
               type: "success",
-              message: "操作成功",
+              message:  this.$t('czcg'),
             });
             this.getlist2();
           } catch (error) {}
@@ -804,13 +804,13 @@ export default {
         .catch((_) => {});
     },
     sh(id, type) {
-      this.$confirm(type ? "确认通过？" : "确认驳回？", "提示")
+      this.$confirm(type ? this.$t('qrtg') : this.$t('qrbh'), this.$t("hint"))
         .then(async (_) => {
           try {
             await perBank({ id, pass: type });
             Message({
               type: "success",
-              message: "操作成功",
+              message:  this.$t('czcg'),
             });
             this.getlist();
           } catch (error) {}

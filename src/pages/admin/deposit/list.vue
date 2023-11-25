@@ -119,7 +119,7 @@
             </el-button>
             <el-popconfirm
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
-              title="确认通过？"
+              :title="$t('qrtg')"
               @confirm="passDeposit(scope.row)"
             >
               <el-button
@@ -129,7 +129,7 @@
                 size="small"
                 style="margin: 0 5px"
               >
-                {{ $t("通过") }}
+                {{ $t("tg") }}
               </el-button>
             </el-popconfirm>
             <el-button
@@ -139,7 +139,7 @@
               @click="rejectDeposit(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
-              {{ $t("驳回") }}
+              {{ $t("bh") }}
             </el-button>
           </template>
         </el-table-column>
@@ -209,7 +209,7 @@
             </el-button>
             <el-popconfirm
             v-if="scope.row.reqProof && $store.state.userInfo.admin && scope.row.reqStatus == 1"
-            title="确认通过？"
+            :title="$t('qrtg')"
             @confirm="passDeposit(scope.row)"
           >
             <el-button
@@ -219,7 +219,7 @@
               size="small"
               style="margin: 0 5px"
             >
-              {{ $t("通过") }}
+              {{ $t("tg") }}
             </el-button>
           </el-popconfirm>
           <el-button
@@ -229,7 +229,7 @@
             @click="rejectDeposit(scope.row)"
             v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
           >
-            {{ $t("驳回") }}
+            {{ $t("bh") }}
           </el-button>
           </template>
         </el-table-column>
@@ -392,7 +392,7 @@
           target="_blank"
           class="down-a"
           v-else
-          >{{ $t("djxz") }}</a
+          >{{ $t("yulan") }}</a
         >
         </el-form-item>
         <el-form-item
@@ -403,7 +403,7 @@
         :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
         target="_blank"
         class="down-a"
-        >{{ $t("djxz") }}</a
+        >{{ $t("yulan") }}</a
       >
         </el-form-item>
       </el-form>
@@ -486,7 +486,7 @@
             target="_blank"
             class="down-a"
             v-if="currentSelectRow.reqProof"
-            >{{ $t("djxz") }}</a
+            >{{ $t("yulan") }}</a
           >
           <span v-else>
             {{$t('未上传')}}
@@ -500,7 +500,7 @@
         :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
         target="_blank"
         class="down-a"
-        >{{ $t("djxz") }}</a
+        >{{ $t("yulan") }}</a
       >
         </el-form-item>
       </el-form>
@@ -517,8 +517,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="info" class="qx" @click="rejectdialogVisible = false">取消</el-button>
-        <el-button type="primary" class="qr" @click="rejectConfirm">确认</el-button>
+        <el-button type="info" class="qx" @click="rejectdialogVisible = false">{{$t('cancel')}}</el-button>
+        <el-button type="primary" class="qr" @click="rejectConfirm">{{$t('sure')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -555,9 +555,9 @@ export default {
       },
       loading: true,
       slectOption: [],
-      status: ['全部', '提交申请', '确认汇款', '财务审核', '完成', '驳回'],
+      status: [this.$t('all'), this.$t('tjsq'), this.$t('qrhk'), this.$t('cwsh'), this.$t('done'), this.$t('bh')],
       typeOption: ['', 'info','warning','','success','danger'],
-      usdtstatus: ['全部', '提交申请', '完成', '驳回'],
+      usdtstatus: [this.$t('all'), this.$t('tjsq'), this.$t('done'), this.$t('bh')],
       usdttypeOption: ['', 'info','success','danger'],
       dialogVisible: false,
       currentSelectRow: {},
@@ -643,7 +643,7 @@ export default {
       if (res.code == 200) {
         Message({
           type: "success",
-          message: "操作成功",
+          message:  this.$t('czcg'),
         });
         this.getInitData()
         this.rejectdialogVisible = false
@@ -665,7 +665,7 @@ export default {
         if (res.code == 200) {
           Message({
             type: "success",
-            message: "操作成功",
+            message:  this.$t('czcg'),
           });
           this.getInitData();
         }

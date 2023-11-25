@@ -62,7 +62,7 @@
         <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
         <el-table-column
           prop="depValue"
-          :label="$t('兑换金额')"
+          :label="$t('dhje')"
           min-width="100"
         />
         <el-table-column
@@ -105,7 +105,7 @@
               </el-button>
             <el-popconfirm
               v-if="scope.row.changeStatus == 0 && !$store.state.userInfo.admin"
-              title="确定取消申请吗？"
+              :title="$t('qrsxsq')"
               @confirm="cancelReq(scope.row)"
             >
               <el-button
@@ -119,7 +119,7 @@
             </el-popconfirm>
             <el-popconfirm
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
-              title="确认通过？"
+              :title="$t('qrtg')"
               @confirm="confirmPass(scope.row)"
             >
               <el-button
@@ -129,7 +129,7 @@
                 size="small"
                 style="margin-right: 5px"
               >
-                {{ $t("通过") }}
+                {{ $t("tg") }}
               </el-button>
             </el-popconfirm>
             <el-button
@@ -185,13 +185,13 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('兑换金额')">
+        <el-form-item :label="$t('dhje')">
           <el-input
             v-model="currentSelectRow.depValue"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('目标币种')">
+        <el-form-item :label="$t('mbbz')">
           <el-input
             v-model="currentSelectRow.targetCoin"
             :readOnly="true"
@@ -231,7 +231,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >{{ $t("djxz") }}</a
+              >{{ $t("yulan") }}</a
             ></el-button
           >
         </el-form-item>
@@ -263,10 +263,10 @@
           size="large"
           class="qx"
           @click="rejectdialogVisible = false"
-          >取消</el-button
+          >{{$t('cancel')}}</el-button
         >
         <el-button type="primary" size="large" class="qd" @click="rejectCertin"
-          >确认</el-button
+          >{{$t('sure')}}</el-button
         >
       </div>
     </el-dialog>
@@ -324,10 +324,10 @@ export default {
       },
       loading: true,
       status: [
-        this.$t("待审核"),
-        this.$t("已通过"),
-        this.$t("已取消"),
-        this.$t("驳回"),
+        this.$t("dsh"),
+        this.$t("ytg"),
+        this.$t("yqx"),
+        this.$t("bh"),
       ],
       typeOption: ["", "success", "warning", "danger"],
       dialogVisible: false,
@@ -387,7 +387,7 @@ export default {
         changePer(param);
         Message({
           type: "success",
-          message: "操作成功",
+          message: this.$t('czcg'),
         });
         this.getInitData();
         this.rejectdialogVisible = false;
@@ -401,7 +401,7 @@ export default {
         row.changeStatus = 1;
         Message({
           type: "success",
-          message: "操作成功",
+          message: this.$t('czcg'),
         });
       } catch (err) {
         this.loading = false;

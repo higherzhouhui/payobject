@@ -7,7 +7,7 @@
           <li>引言
             <ul>
               <li>目的：本协议旨在规范用户使用ReliancePay提供的法币与数字货币间的兑换服务。</li>
-              <li>定义：“用户”指注册使用ReliancePay服务的个人或机构；“服务”指ReliancePay提供的法币与数字货币间的兑换服务；“平台”指ReliancePay网站及其相关应用程序。</li>
+              <li>定义：“用户”指注册使用ReliancePay服务的个人或机构；“服务”指ReliancePay提供的法币与数字货币间的兑换服务；“平台”指ReliancePay网站及其相关应用程序。</li>
             </ul>
           </li>
           <li>用户注册与账户
@@ -20,7 +20,7 @@
             兑换服务
             <ul>
               <li>服务描述：用户可通过ReliancePay进行法币与多种数字货币间的兑换。</li>
-              <li>费用和汇率：交易按照ReliancePay提供的实时汇率进行，相关手续费将在交易前明示。</li>
+              <li>费用和汇率：交易按照ReliancePay提供的实时汇率进行，相关手续费将在交易前明示。</li>
             </ul>
           </li>
           <li>

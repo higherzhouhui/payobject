@@ -78,7 +78,7 @@
           </el-table-column>
           <el-table-column
             prop="createTime"
-            :label="$t('cjrq')"
+            :label="$t('cjsj')"
             min-width="180"
             show-overflow-tooltip
           />
@@ -200,7 +200,7 @@
           </el-table-column>
           <el-table-column
             prop="createTime"
-            :label="$t('cjrq')"
+            :label="$t('cjsj')"
             min-width="160"
             show-overflow-tooltip
           />

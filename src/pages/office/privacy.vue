@@ -51,7 +51,7 @@
 import { Local } from "@/utils/index";
 
 export default {
-  name: "indexVue",
+  name: "privacyOffice",
   data() {
     return {
       lang: Local("lang") || "zh",

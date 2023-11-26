@@ -40,7 +40,7 @@
                     <el-input class="input" :placeholder="$t('qzcsrmm')" v-model="form.renewPassword" />
                 </div>
             </el-form-item>
-            <el-form-item :label="$t('txm')" prop="ecode">
+            <el-form-item :label="$t('qsrtxm')" prop="ecode">
                 <div class="line flex flex_jc_sb flex_align_center">
                     <img class="icon icon3" src="@/assets/images/user/txm.png" alt="">
                     <el-input class="input yzm" :placeholder="$t('qsrtxm')" v-model="form.ecode" @keyup.enter.native="submitForm('form')"/>

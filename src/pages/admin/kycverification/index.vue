@@ -56,7 +56,7 @@
           <div class="item content_shadow">
             <div class="title">{{ $t("wmsk") }}</div>
             <img src="@/assets/images/user/right.png" alt="" />
-            <div class="txt">{{ $t("wmsk2") }}</div>
+            <div class="txt">{{ $t("kjdssk2") }}</div>
             <el-button
               class="primary"
               @click="checkTips(3, 'wmsk')"
@@ -84,10 +84,10 @@
           <div class="item content_shadow">
             <img src="@/assets/images/user/sh_1.png" alt="" />
             <div class="title">{{ $t("rz2") }}</div>
-            <div class="txt">{{ $t("rz2-2") }}</div>
+            <div class="txt">{{ $t("rz1-2") }}</div>
             <div class="info">
-              <div class="val">1）{{ $t("rz2-3") }}</div>
-              <div class="val">2）{{ $t("rz2-4") }}</div>
+              <div class="val">1）{{ $t("rz1-3") }}</div>
+              <div class="val">2）{{ $t("rz1-4") }}</div>
               <div class="val">3）{{ $t("rz2-5") }}</div>
             </div>
             <el-button
@@ -100,12 +100,12 @@
           <div class="item content_shadow">
             <img src="@/assets/images/user/sh_2.png" alt="" />
             <div class="title">{{ $t("rz3") }}</div>
-            <div class="txt">{{ $t("rz3-2") }}</div>
+            <div class="txt">{{ $t("rz1-2") }}</div>
             <div class="info">
               <div class="val">1）{{ $t("rz3-3") }}</div>
               <div class="val">2）{{ $t("rz3-4") }}</div>
               <div class="val">3）{{ $t("rz3-5") }}</div>
-              <div class="val">4）{{ $t("rz3-6") }}</div>
+              <div class="val">4）{{ $t("rz2-5") }}</div>
             </div>
             <el-button
             class="primary normal-btn"

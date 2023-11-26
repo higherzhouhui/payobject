@@ -36,7 +36,7 @@
       />
       <el-table-column
         prop="createTime"
-        :label="$t('cjrq')"
+        :label="$t('cjsj')"
         min-width="180"
         show-overflow-tooltip
       />
@@ -78,7 +78,7 @@
       />
       <el-table-column
         prop="createTime"
-        :label="$t('cjrq')"
+        :label="$t('cjsj')"
         min-width="180"
         show-overflow-tooltip
       />

@@ -4,7 +4,7 @@
       <div class="banner">
         <div class="container-auto banner-content">
           <div class="left leftAni">
-            <h4>{{ $t("trusted") }}</h4>
+            <h4>ReliancePay</h4>
             <div class="title-big">
               {{ $t("moveMoney") }}
             </div>
@@ -324,7 +324,7 @@
                     font-size: 1rem;
                   "
                 >
-                  {{ $t("manyPlant") }}
+                  {{ $t("download") }}
                 </div>
                 <div class="title-big">{{ $t("manyPlantDesc") }}</div>
                 <span class="normal-text">

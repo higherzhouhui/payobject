@@ -6,9 +6,7 @@
           <h1>{{ $t("lastnews") }}</h1>
           <h3>{{ $t("lastnewsDesc") }}</h3>
         </div>
-        <div
-          class="container-auto section-column section-three section-news"
-        >
+        <div class="container-auto section-column section-three section-news">
           <div
             class="item show"
             v-for="item in blogList"
@@ -35,21 +33,18 @@
           </div>
         </div>
       </div>
-  
     </div>
   </div>
 </template>
 <script>
-import { Local } from "@/utils/index";
-import {
-  cmsPageReq,
-} from "@/api/common";
+import { cmsPageReq } from "@/api/common";
+import i18n from "@/lang/i18n";
 export default {
   name: "indexVue",
   data() {
     return {
       loading: true,
-      lang: Local("lang") || "zh",
+      lang: i18n.locale,
       blogList: [],
     };
   },
@@ -71,32 +66,8 @@ export default {
         }
       },
     },
-    rate: function () {
-      if (this.form.exFrom && this.form.exTarget) {
-        if (this.form.exValue) {
-          this.exTargetValue = this.rate * this.form.exValue;
-        } else {
-          if (this.exTargetValue) {
-            this.form.exValue = this.exTargetValue / this.rate;
-          }
-        }
-      }
-    },
-    exTargetValue: function () {
-      if (this.form.exFrom && this.form.exTarget) {
-        if (this.exTargetValue && this.exValue) {
-          if (
-            Math.abs(this.exTargetValue - this.rate * this.form.exValue) < 1
-          ) {
-            return;
-          }
-        }
-        if (this.exTargetValue) {
-          this.form.exValue = this.exTargetValue / this.rate;
-        } else {
-          this.form.exValue = "";
-        }
-      }
+    "$i18n.locale"() {
+      this.getBlogsList();
     },
   },
   mounted() {
@@ -151,12 +122,12 @@ export default {
       this.$router.push(path);
     },
     routerToBlogDetail(id) {
-        this.$router.push(`/blog/detail?id=${id}`)
+      this.$router.push(`/blog/detail?id=${id}`);
     },
     async getBlogsList() {
       try {
-        this.loading = true
-        const res = await cmsPageReq({current: 1, size: 30});
+        this.loading = true;
+        const res = await cmsPageReq({ current: 1, size: 30, lang: this.lang });
         res.data.records.map((item) => {
           const time = item.createTime.split(" ")[0].split("-");
           if (time.length == 3) {
@@ -166,10 +137,10 @@ export default {
           }
         });
         this.blogList = res.data.records;
-        this.loading = false
+        this.loading = false;
       } catch {
         console.log("err");
-        this.loading = false
+        this.loading = false;
       }
     },
   },
@@ -181,7 +152,6 @@ export default {
   min-height: 100vh;
   padding-top: 80px;
   background: $contentColor;
-
 }
 
 .animation-warapper {

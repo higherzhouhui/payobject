@@ -124,7 +124,8 @@
                 class="input-transaction"
                 v-model="form.bankId"
                 :placeholder="$t('qsztxzh')"
-              >
+                @change="changehkAccount"
+                >
                 <el-option
                   v-for="item in outZHList"
                   :key="item.id"
@@ -682,6 +683,11 @@ export default {
     },
   },
   methods: {
+    changehkAccount(id) {
+      if (id == 'add') {
+        this.$router.push('/admin/exchange/list?type=add')
+      }
+    },
     getReamin(coinCode) {
       const rarr = this.bankListBalance.filter((item) => {
         return item.coinCode == coinCode;
@@ -792,7 +798,11 @@ export default {
     // 获取提现账户
     async getCjZh() {
       try {
-        let res = await withdrawAccounts();
+        const res = await withdrawAccounts();
+        res.data.push({
+          id: 'add',
+          bankName: this.$t('add'),
+        })
         this.outZHList = res.data;
       } catch (error) {}
     },

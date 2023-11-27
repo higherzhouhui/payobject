@@ -293,7 +293,7 @@ import { getBankList, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
 import { upload, downLoad } from "@/api/file";
-import { Local } from "@/utils/index";
+import { getHashParams, Local } from "@/utils/index";
 import { getFlagIcon } from "@/utils/common";
 
 export default {
@@ -361,6 +361,10 @@ export default {
   created() {
     this.getlist();
     this.getAreaCode();
+    const params = getHashParams()
+    if (params.get('type') == 'add') {
+      this.showAdd()
+    }
   },
   methods: {
     async getAreaCode() {
@@ -382,7 +386,7 @@ export default {
     downLoad,
     showAdd() {
       this.dialogVisible = true;
-      this.bankForm = this.default;
+      this.bankForm = {};
     },
     handleClick() {},
     async handlesuccess(e) {

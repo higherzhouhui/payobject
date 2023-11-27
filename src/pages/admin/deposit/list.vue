@@ -489,7 +489,7 @@
             >{{ $t("yulan") }}</a
           >
           <span v-else>
-            {{$t('未上传')}}
+            {{$t('noupload')}}
           </span>
         </el-form-item>
         <el-form-item

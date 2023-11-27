@@ -24,6 +24,7 @@
               class="input-transaction"
               v-model="form.sendBank"
               :placeholder="$t('qszhkzh')"
+              @change="changehkAccount"
             >
               <el-option
                 v-for="item in outZHList"
@@ -662,6 +663,11 @@ export default {
     //   })
   },
   methods: {
+    changehkAccount(id) {
+      if (id == 'add') {
+        this.$router.push('/admin/exchange/list?type=add')
+      }
+    },
     async getSzList() {
       try {
         let list = Local("szList");
@@ -824,7 +830,11 @@ export default {
     // 获取汇款账户
     async getCjZh() {
       try {
-        let res = await withdrawAccounts();
+        const res = await withdrawAccounts();
+        res.data.push({
+          id: 'add',
+          bankName: this.$t('add'),
+        })
         this.outZHList = res.data;
       } catch (error) {}
     },

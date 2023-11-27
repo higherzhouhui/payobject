@@ -65,7 +65,6 @@
           class="input"
           :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
           v-model="form.phone"
-          ref="myName"
         >
         </el-input>
       </div>
@@ -237,7 +236,6 @@ export default {
     }
   },
   mounted() {
-    this.$refs.myName.focus();
   },
   methods: {
     changeAraeSelect() {
@@ -344,10 +342,18 @@ export default {
         });
         this.$store.commit("SET_USERINFO", res.data);
         this.loading = false;
+        // 非管理员，未认证的话只能去KYC认证
         if (!res.data.admin) {
-          return this.$router.push("/home");
+          if (res.data.userStatus) {
+            this.$router.push("/admin");
+          } else {
+            this.$router.push("/admin/kycverification");
+          }
+        } else {
+          this.$router.push("/manage");
         }
-        this.$router.push("/manage");
+
+
       } catch (error) {
         this.randomT();
         this.loading = false;

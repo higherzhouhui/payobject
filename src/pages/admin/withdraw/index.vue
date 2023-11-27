@@ -614,8 +614,8 @@ export default {
   data() {
     return {
       agreementList: [
-        { label: "TRC", value: "TRC" },
-        { label: "ERC", value: "ERC" },
+        { label: "TRC20", value: "TRC" },
+        { label: "ERC20", value: "ERC" },
       ],
       dialogVisibleSuccess: false,
       form: {

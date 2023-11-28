@@ -97,6 +97,7 @@
                 class="btn"
                 size="small"
                 @click="showUsdtForm(scope.row)"
+                v-if="scope.row.bankStatus == 1"
               >
                 <i class="el-icon-plus" />
                 {{$t('jmhb')}}

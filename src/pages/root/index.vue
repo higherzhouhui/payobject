@@ -38,11 +38,13 @@
                   class="input-select"
                   ref="exFromRef"
                   @change="getTargetList"
+                  filterable
                 >
                   <el-option
                     v-for="item in areaList"
                     :key="item.code"
                     :value="item.coinCode"
+                    :label="item.coinCode"
                   >
                     <span
                       :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
@@ -685,6 +687,9 @@ export default {
         }
       }
     },
+    "$i18n.locale"() {
+      this.getBlogsList();
+    },
   },
   mounted() {
     window.addEventListener("scroll", this.debounce(this.onScroll, 50));
@@ -881,7 +886,7 @@ export default {
     },
     async getBlogsList() {
       try {
-        const res = await homeBlogList();
+        const res = await homeBlogList({lang: this.lang});
         res.data.map((item) => {
           const time = item.createTime.split(" ")[0].split("-");
           if (time.length == 3) {

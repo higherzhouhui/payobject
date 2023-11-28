@@ -93,6 +93,10 @@
                 <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
                 <span slot="title">{{ $t('yhkgl') }}</span>
             </el-menu-item>
+            <el-menu-item index="/admin/address/list">
+                <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
+                <span slot="title">{{ $t('数字货币地址管理') }}</span>
+            </el-menu-item>
             <el-menu-item index="/admin/kycverification">
                 <img class="icon" src="@/assets/images/home/grzx.png" alt="">
                 <span slot="title">{{ $t('kycyz') }}</span>

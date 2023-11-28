@@ -200,12 +200,13 @@
         class="formStyle"
       >
         <el-form-item :label="$t('bz')">
-          <el-select v-model="bankForm.coinCode" class="elSelect">
+          <el-select v-model="bankForm.coinCode" class="elSelect" filter>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
               :value="item.coinCode"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <span
                 :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
@@ -224,12 +225,13 @@
           <!-- <el-input
             v-model="bankForm.country"
           ></el-input> -->
-          <el-select v-model="bankForm.country" class="elSelect">
+          <el-select v-model="bankForm.country" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
               :value="item.areaCode"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <span
                 :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
@@ -259,12 +261,13 @@
           <!-- <el-input
             v-model="bankForm.bankCountry"
           ></el-input> -->
-          <el-select v-model="bankForm.bankCountry" class="elSelect">
+          <el-select v-model="bankForm.bankCountry" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
               :value="item.areaCode"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <span
                 :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
@@ -580,7 +583,9 @@ export default {
       try {
         let req = await upload(formData);
         if (req.code == 200) {
-          this.bankForm.accountCer = req.data[0];
+          this.bankForm = {
+            ...this.bankForm,
+            accountCer: req.data[0]};
           Message({
             type: "success",
             message: this.$t("sccg"),

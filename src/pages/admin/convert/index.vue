@@ -13,6 +13,7 @@
                 :placeholder="$t('enterAmount')"
                 v-model="form.reqValue"
                 class="input-amount"
+                @change="changeReqValue"
                 :disabled="!form.coinCode"
               >
               </el-input>
@@ -30,7 +31,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{$t('ye')}}：<span>{{getReamin()}}</span>
+              {{$t('ye')}}<span>{{getReamin()}}</span>
             </div>
           </div>
 
@@ -174,6 +175,9 @@ export default {
   watch: {
     "form.coinCode": function () {
       this.form.targetCode = "";
+      this.form.reqValue = ""
+      this.form.rateDetail = ""
+      this.calculateMoney = ""
       this.getCJBZ();
     },
     form: {
@@ -186,6 +190,12 @@ export default {
     },
   },
   methods: {
+    changeReqValue(value) {
+      const max = this.getReamin(this.form.coinCode)
+      if (value * 1 > max) {
+        this.form.reqValue = max
+      }
+    },
     getReamin() {
       const rarr = this.bankListBalance.filter(item => {
         return item.coinCode == this.form.coinCode
@@ -396,10 +406,13 @@ export default {
   margin-top: 5rem;
 }
 .remain {
+  font-size: 1rem;
   margin-top: 6px;
   span {
     font-weight: bold;
     color: $baseColor;
+    margin-left: 6px;
+    font-size: 1.2rem;
   }
 }
 </style>

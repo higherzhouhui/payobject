@@ -306,22 +306,12 @@ export default {
       }
     }
 
-    .icon {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      left: 10px;
-      top: 16px;
-      z-index: 1;
-
-      &.icon2 {
-        top: 56px;
-      }
-      &.icon3 {
-        top: 24px;
-      }
+    .icon2 {
+      top: 56px;
     }
-
+    .icon3 {
+      top: 24px;
+    }
     .btn {
       margin-top: 16px;
       padding: 16px 0;

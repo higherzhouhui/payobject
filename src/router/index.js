@@ -46,6 +46,12 @@ const router = new VueRouter({
                     { path: 'list', name: 'exchangeList', component: () => import('@/pages/admin/exchange/list.vue')},
                     ]
                 },
+                { path: 'address', name: 'address', redirect: '/address/index',  component: () => import('@/pages/admin/address/layout.vue'),
+                    children: [
+                    { path: 'index', name: 'addressIndex', component: () => import('@/pages/admin/address/index.vue')},
+                    { path: 'list', name: 'addressList', component: () => import('@/pages/admin/address/list.vue')},
+                    ]
+                },
                 { path: 'record', name: 'record', redirect: '/record/exchangelist',  component: () => import('@/pages/admin/record/layout.vue'),
                     children: [
                     { path: 'exchangelist', name: 'recordIndex', component: () => import('@/pages/admin/record/exchangelist.vue')},
@@ -55,6 +61,7 @@ const router = new VueRouter({
                 { path: 'referfriends', component: () => import('@/pages/admin/referfriends/index.vue') },
                 { path: 'info', component: () => import('@/pages/admin/info/index.vue') },
                 { path: 'reset', component: () => import('@/pages/admin/info/reset.vue') },
+                { path: 'paypass', component: () => import('@/pages/admin/info/paypass.vue') },
             ]
         },
         {

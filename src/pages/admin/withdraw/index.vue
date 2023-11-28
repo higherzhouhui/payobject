@@ -26,6 +26,7 @@
                 :placeholder="$t('enterAmount')"
                 v-model="form.reqValue"
                 class="input-amount"
+                @change="changeReqValue"
                 :disabled="!form.coinCode"
               >
               </el-input>
@@ -35,7 +36,7 @@
                 ref="selectRef"
               >
                 <el-option
-                  v-for="item in bankListBalance"
+                  v-for="item in filterBalanceList()"
                   :label="item.coinCode"
                   :value="item.coinCode"
                   :key="item.coinCode"
@@ -53,6 +54,7 @@
                 type="number"
                 :placeholder="$t('enterAmount')"
                 v-model="usdtForm.reqValue"
+                @change="changeUsdtReqValue"
                 class="input-amount"
               >
               </el-input>
@@ -63,7 +65,7 @@
               >
                 <el-option
                   style="padding: 0 20px"
-                  v-for="item in bankListBalance"
+                  v-for="item in filterBalanceList()"
                   :key="item.id"
                   :label="item.coinCode"
                   :value="item.coinCode"
@@ -657,7 +659,7 @@ export default {
     this.getCjZh();
     this.getBalanceList();
     // this.getCJBZ();
-    this.getRJBZ();
+    // this.getRJBZ();
     this.getSzList();
     //   calculateRate({
     //       exFrom: 'CNY',
@@ -683,6 +685,31 @@ export default {
     },
   },
   methods: {
+    changeUsdtReqValue(value) {
+      const max = this.getReamin(this.usdtForm.coinCode)
+      if (value * 1 > max) {
+        this.usdtForm.reqValue = max
+      }
+    },
+    changeReqValue(value) {
+      const max = this.getReamin(this.form.coinCode)
+      if (value * 1 > max) {
+        this.form.reqValue = max
+      }
+    },
+    filterBalanceList() {
+      let arr = []
+      if (this.moneyType == 'fabi') {
+        arr = this.bankListBalance.filter(item => {
+          return item.balType == 1
+        })
+      } else {
+        arr = this.bankListBalance.filter(item => {
+          return item.balType == 2
+        })
+      }
+      return arr
+    },
     changehkAccount(id) {
       if (id == 'add') {
         this.$router.push('/admin/exchange/list?type=add')
@@ -931,10 +958,13 @@ export default {
   }
 }
 .remain {
+  font-size: 1rem;
   margin-top: 6px;
   span {
     font-weight: bold;
     color: $baseColor;
+    margin-left: 6px;
+    font-size: 1.2rem;
   }
 }
 </style>

@@ -156,15 +156,17 @@
             style="width: 100%"
             v-model="bankForm.country"
             :disabled="!!bankForm.id"
+            filterable
           >
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
               :value="item.areaCode"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-              {{ languge == "zh" ? item.name : item.enName }}
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
@@ -208,15 +210,17 @@
             style="width: 100%"
             v-model="bankForm.bankCountry"
             :disabled="!!bankForm.id"
+            filterable 
           >
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
               :value="item.areaCode"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-              {{ languge == "zh" ? item.name : item.enName }}
+              {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
         </el-form-item>
@@ -301,7 +305,7 @@ export default {
   data() {
     return {
       getFlagIcon: getFlagIcon,
-      languge: Local("lang") || "zh",
+      lang: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
       loading: true,
@@ -395,7 +399,10 @@ export default {
       formData.append("file", e);
       try {
         let req = await upload(formData);
-        this.bankForm.accountCer = req.data[0];
+        this.bankForm = {
+          ...this.bankForm,
+          accountCer: req.data[0]
+        }
         Message({
           type: "success",
           message: this.$t("czcg"),

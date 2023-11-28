@@ -21,7 +21,7 @@ export const getCalculateRate = (data) => service({
 export const homeBlogList = (data) => service({
   url: '/cmdList',
   data,
-  method: 'post'
+  method: 'get'
 })
 
 export const cmsPageReq = (data) => service({

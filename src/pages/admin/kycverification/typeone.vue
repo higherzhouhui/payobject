@@ -55,15 +55,17 @@
           size="small"
           style="width: 100%"
           :placeholder="$t('qxzqyzcszd')"
+          filterable
         >
           <el-option
             style="padding: 0 10px"
             v-for="item in areaList"
             :key="item.id"
             :value="item.areaCode"
+            :label="lang == 'zh' ? item.name : item.enName"
           >
             <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-            {{ languge == "zh" ? item.name : item.enName }}
+            {{ lang == "zh" ? item.name : item.enName }}
           </el-option>
         </el-select>
       </div>
@@ -262,7 +264,7 @@ export default {
       dialogVisibleSuccess: false,
       getFlagIcon: getFlagIcon,
       loading: false,
-      languge: Local("lang") || "zh",
+      lang: Local("lang") || "zh",
       form: {
         busType: 1,
         shareholder: "",

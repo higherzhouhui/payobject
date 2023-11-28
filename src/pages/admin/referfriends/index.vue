@@ -6,11 +6,11 @@
       <div class="number">{{userInfo.providerId}}</div>
       <img src="@/assets/images/home/copy.png"/>
     </div>
-    <div class="label">{{$t("yqlj")}}</div>
+    <!-- <div class="label">{{$t("yqlj")}}</div>
     <div class="code"  @click="copyText2(shareLink)">
       <div class="number">{{shareLink}}</div>
       <img src="@/assets/images/home/copy.png"/>
-    </div>
+    </div> -->
   </div>
 </template>
 

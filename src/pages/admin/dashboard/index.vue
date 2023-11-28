@@ -78,7 +78,7 @@ export default {
       balanceArrapy: [],
       billArray: [],
       current: 1,
-      size: 10,
+      size: 7,
       noMore: false,
       balanceLoading: false,
       billLoading: false,
@@ -137,6 +137,7 @@ export default {
     },
     initData() {
       this.getBalanceList()
+      this.getBillList()
     },
     getBalanceList() {
       if (this.balanceLoading) {
@@ -182,7 +183,7 @@ export default {
       this.$forceUpdate();  
     },
     load() {
-      this.getBillList()
+      // this.getBillList()
     }
   }
 }

@@ -28,48 +28,49 @@
       <div class="line" v-if="type == 1">
         <img class="icon" src="@/assets/images/user/area.png" alt="user" />
         <el-select
-        class="input"
-        v-model="form.areaCode"
-        :placeholder="$t('qxzgj')"
-        @change="changeAraeSelect"
-      >
-        <el-option
-          style="padding: 0 10px"
-          v-for="item in tempList"
-          :key="item.id"
-          :label="languge == 'zh' ? item.name : item.enName"
-          :value="item.areaCode"
+          class="input"
+          v-model="form.areaCode"
+          :placeholder="$t('qxzgj')"
+          @change="changeAraeSelect"
+          filterable
         >
-          <div class="country">
-            <div class="left">
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-              {{ languge == "zh" ? item.name : item.enName }}
+          <el-option
+            style="padding: 0 10px"
+            v-for="item in tempList"
+            :key="item.id"
+            :label="lang.areaCode"
+            :value="item.areaCode"
+          >
+            <div class="country">
+              <div class="left">
+                <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+                {{ lang == "zh" ? item.name : item.enName }}
+              </div>
+              <div class="right">{{ item.areaCode }}</div>
             </div>
-           <div class="right">{{item.areaCode}}</div>
-          </div>
-        </el-option>
-      </el-select>
+          </el-option>
+        </el-select>
       </div>
       <div class="area-wrapper">
-        <el-input
+        <!-- <el-input
           class="input-areacode"
           :placeholder="$t('qsr')"
           v-model="form.areaCode"
           v-if="type == 1"
           @change="changeAraeCode"
         >
-      </el-input>
-      <div class="line">
-        <img class="icon" src="@/assets/images/user/user.png" alt="user" />
-        <el-input
-          class="input"
-          :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
-          v-model="form.phone"
-        >
-        </el-input>
+      </el-input> -->
+        <div class="line">
+          <img class="icon" src="@/assets/images/user/user.png" alt="user" />
+          <el-input
+            class="input"
+            :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
+            v-model="form.phone"
+          >
+          </el-input>
+        </div>
       </div>
-      </div>
-   
+
       <!-- <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="user" />
         <el-input
@@ -92,7 +93,7 @@
                 :value="item.areaCode"
               >
                 <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
-                {{ languge == "zh" ? item.name : item.enName }}
+                {{ lang == "zh" ? item.name : item.enName }}
               </el-option>
             </el-select>
           </template>
@@ -204,7 +205,7 @@ export default {
     return {
       getFlagIcon: getFlagIcon,
       input3: "",
-      languge: Local("lang") || "zh",
+      lang: Local("lang") || "zh",
       t: Math.random(),
       imgLoading: true,
       loading: false,
@@ -235,31 +236,32 @@ export default {
       this.form.inviteCode = hashArray[1];
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     changeAraeSelect() {
-      this.tempList = this.areaList
+      // this.tempList = this.areaList;
     },
     changeAraeCode(newValue) {
       if (!newValue) {
-        this.form.areaCode = '+'
+        this.form.areaCode = "+";
       } else {
-        const newList = this.areaList.filter(item => {return item.areaCode.includes(newValue)})
-        this.tempList = newList
+        const newList = this.areaList.filter((item) => {
+          return item.areaCode.includes(newValue);
+        });
+        this.tempList = newList;
       }
     },
     async getAreaCode() {
       try {
         let list = Local("areaList");
         if (list && list.length) {
-          this.areaList = list
-          this.tempList = list
-          return
+          this.areaList = list;
+          this.tempList = list;
+          return;
         }
         let res = await countries();
         this.areaList = res.data;
-        this.tempList = res.data
+        this.tempList = res.data;
         Local("areaList", res.data);
       } catch (error) {}
     },
@@ -267,7 +269,7 @@ export default {
       this.$router.push(path);
     },
     checkLang(lang) {
-      this.languge = lang;
+      this.lang = lang;
       Local("lang", lang);
       this.$i18n.locale = lang;
     },
@@ -352,8 +354,6 @@ export default {
         } else {
           this.$router.push("/manage");
         }
-
-
       } catch (error) {
         this.randomT();
         this.loading = false;
@@ -478,17 +478,6 @@ export default {
           border-bottom-right-radius: 0;
           border: none;
         }
-      }
-    }
-    .icon {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      left: 10px;
-      top: 16px;
-      z-index: 1;
-      &.icon3 {
-        top: 19px;
       }
     }
 

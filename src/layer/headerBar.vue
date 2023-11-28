@@ -20,6 +20,9 @@
             <el-dropdown-item icon="el-icon-lock" command="reset">
               {{$t("resetPwd")}}
             </el-dropdown-item>
+            <el-dropdown-item icon="el-icon-key" command="paypass" v-if="!$store.state.userInfo.admin">
+              {{$t("支付密码")}}
+            </el-dropdown-item>
             <el-dropdown-item icon="el-icon-switch-button" command="logout">
               {{$t("quitLogin")}}
             </el-dropdown-item>
@@ -73,6 +76,9 @@ export default {
       }
       if (command == 'reset') {
         this.$router.push("/admin/reset")
+      }
+      if (command == 'paypass') {
+        this.$router.push("/admin/paypass")
       }
       if (command == 'logout') {
         this.quit()
@@ -232,7 +238,7 @@ header {
   display: inline;
 }
 ::v-deep .el-dropdown-menu__item {
-  padding: 4px 10px;
+  padding: 4px 18px;
   font-size: 13px;
   line-height: 18jpx;
 }

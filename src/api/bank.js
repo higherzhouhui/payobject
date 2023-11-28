@@ -48,3 +48,15 @@ export const userBalanceList = (data) => service({
     data,
     method: 'get'
 })
+
+export const outCryAccPage = (data) => service({
+    url: '/outCryAccPage',
+    data,
+    method: 'post'
+})
+
+export const setOutCryAcc = (data) => service({
+    url: '/setOutCryAcc',
+    data,
+    method: 'post'
+})

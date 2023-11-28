@@ -1,14 +1,15 @@
 <template>
   <div class="login_box">
     <div class="form">
-      <h2>{{$t("resetPwd")}}</h2>
+      <h2>
+        {{$store.state.userInfo.hasPayPass ? $t("修改支付密码") : $t("设置支付密码")}}
+         <span>{{$t('定期更改支付密码有利于账户安全')}}</span>
+      </h2>
       <div class="line">
-        <img class="icon" src="@/assets/images/user/user.png" alt="" />
+        <img class="icon" src="@/assets/images/user/user.png" alt="user" />
         <el-input
           class="input"
-          :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
           v-model="form.phone"
-          ref="myName"
           disabled
         >
         </el-input>
@@ -29,15 +30,6 @@
         <el-input
           class="input"
           show-password
-          :placeholder="$t('qsrymm')"
-          v-model="form.oldPass"
-        />
-      </div>
-      <div class="line">
-        <img class="icon" src="@/assets/images/user/password.png" alt="" />
-        <el-input
-          class="input"
-          show-password
           :placeholder="$t('qsrmm')"
           v-model="form.password"
         />
@@ -48,8 +40,8 @@
           class="input"
           show-password
           :placeholder="$t('qzcsrmm')"
-          v-model="form.repassWord"
-          @keyup.enter.native="resetPwd"
+          v-model="form.newPass"
+          @keyup.enter.native="setPayPwd"
         />
       </div>
 
@@ -57,23 +49,22 @@
         class="btn normal-btn"
         type="primary"
         :class="loading && 'loading'"
-        @click="resetPwd"
+        @click="setPayPwd"
         >{{ $t("queding") }}</el-button
       >
     </div>
   </div>
 </template>
 <script>
-import { Local } from "@/utils/index";
-import { sendCheckCode, resetPwd, countries } from "@/api/login";
+import { sendCheckCode, setPayPwd } from "@/api/login";
 import { Message } from "element-ui";
+import { Local } from '@/utils';
 
 export default {
-  name: "userRegister",
+  name: "payPass",
   data() {
     return {
       input3: "",
-      languge: Local("lang") || "zh",
       t: Math.random(),
       imgLoading: true,
       loading: false,
@@ -83,11 +74,9 @@ export default {
       areaList: [],
       form: {
         phone: this.$store.state.userInfo.email || this.$store.state.userInfo.phone,
+        newPass: "",
         password: "",
-        areaCode: "+86",
-        repassWord: "",
         checkCode: "",
-        code: "",
       },
     };
   },
@@ -95,9 +84,8 @@ export default {
     clearInterval(this.tt);
   },
   created() {
-    this.getAreaCode();
   },
-  mounted() {  
+  mounted() {
     if (this.form.phone.includes('@')) {
       this.type = 2
     } else {
@@ -105,17 +93,6 @@ export default {
     }
   }, 
   methods: {
-    async getAreaCode() {
-      try {
-        let list = Local("areaList");
-        if (list && list.length) {
-          return (this.areaList = list);
-        }
-        let res = await countries();
-        this.areaList = res.data;
-        Local("areaList", res.data);
-      } catch (error) {}
-    },
     to(path) {
       this.$router.push(path);
     },
@@ -127,20 +104,17 @@ export default {
     valid() {
       let {
         password,
-        repassWord,
         checkCode,
-        oldPass,
+        newPass,
       } = this.form;
       let msg = "";
       if (!checkCode) {
         msg = "qsryzm";
-      } else if (!oldPass) {
-        msg = "qsrymm";
       } else if (!password) {
         msg = "qsrmm";
-      } else if (!repassWord) {
+      } else if (!newPass) {
         msg = "qzcsrmm";
-      } else if (password != repassWord) {
+      } else if (password != newPass) {
         msg = "repassError";
       }
       if (msg) {
@@ -150,25 +124,28 @@ export default {
         });
         return false;
       }
-      return this.form;
+      const params = {
+        checkCode: this.form.checkCode,
+        newPass: this.form.newPass
+      }
+      return params;
     },
-    async resetPwd() {
+    async setPayPwd() {
       if (this.loading) return;
       let params = this.valid();
       if (!params) return;
       try {
         this.loading = true;
-        const params = {
-          checkCode: params.checkCode,
-          oldPass: params.oldPass,
-          newPass: params.password
-        }
-        if (this.form.phone.includes("@")) {
+        if (this.form.phone.includes('@')) {
           params.email = this.form.phone
         } else {
           params.phone = this.form.phone
         }
-        await resetPwd(params);
+        await setPayPwd(params);
+        this.loading = false
+        const userInfo = this.$store.state.userInfo
+        userInfo.hasPayPass = true
+        this.$store.commit("SET_USERINFO", userInfo);
         Message({
           type: "success",
           message: this.$t("zccg"),
@@ -232,6 +209,10 @@ export default {
   margin: 0 auto;
   h2 {
     color: #fff;
+    span {
+      font-size: 12px;
+      color: #eee;
+    }
   }
   @media screen and (max-width: 900px) {
     width: 100%;

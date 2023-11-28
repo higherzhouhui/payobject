@@ -266,8 +266,10 @@ export default {
       try {
         const req = await upload(formData);
         if (req.code === 200) {
-          this.blogForm.cover = req.data[0];
-          this.$forceUpdate();
+          this.blogForm = {
+            ...this.blogForm,
+            cover: req.data[0]
+          };
           Message({
             type: "success",
             message: this.$t("sccg"),
@@ -299,6 +301,7 @@ export default {
         ...this.searchForm,
         current: this.current,
         size: this.size,
+        lang: this.$i18n.locale
       };
       res = await cmsPageReq(param);
       this.loading = false;

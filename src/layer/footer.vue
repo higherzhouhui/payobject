@@ -1,7 +1,7 @@
 <template>
   <div class="footer-container">
-    <div class="item" v-for="(item) in navList" :key="item.icon" @click="routerTo(item.path)">
-      <template v-if="item.path != '/admin/dashboard'">
+    <div class="item" v-for="(item, index) in ($store.state.userInfo.admin ? adminNavList : userNavList)" :key="item.icon" @click="routerTo(item.path)">
+      <template v-if="index != 2">
         <svg-icon :iconClass="item.icon" className="svg" />
         <p>{{ item.title }}</p>
       </template>
@@ -17,7 +17,7 @@ export default {
   name: "footerBootom",
   data() {
     return {
-      navList: [
+      userNavList: [
         {
           icon: 'coins-solid',
           title: this.$t('chongzhi'),
@@ -43,7 +43,34 @@ export default {
           title: this.$t('tjgpy'),
           path: '/admin/referfriends'
         },
-      ]
+      ],
+      adminNavList: [
+        {
+          icon: 'coins-solid',
+          title: this.$t('rjlist'),
+          path: '/manage/deposit'
+        },
+        {
+          icon: 'paper-plane-solid',
+          title: this.$t('cjlist'),
+          path: '/manage/withdraw'
+        },
+        {
+          icon: 'house-solid',
+          title: this.$t('kztai'),
+          path: '/manage/index'
+        },
+        {
+          icon: 'circle-dollar-to-slot-solid',
+          title: this.$t('duihuanls'),
+          path: '/manage/convert'
+        },
+        {
+          icon: 'percent-solid',
+          title: this.$t('hlgl'),
+          path: '/manage/exchange'
+        },
+      ],
     };
   },
   methods: {
@@ -64,6 +91,7 @@ export default {
   width: 100%;
   background: $contentColor;
   height: 54px;
+  z-index: 10020;
   .item {
     display: flex;
     flex-direction: column;

@@ -1042,7 +1042,7 @@ export default {
     font-size: 16px;
   }
   ::v-deep .el-input__inner {
-    height: 48px;
+    height: 3rem;
   }
 }
 </style>

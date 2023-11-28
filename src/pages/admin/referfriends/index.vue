@@ -24,7 +24,7 @@
         <el-table-column
           prop="email"
           :label="$t('邮箱/手机号')"
-          min-width="180"
+          min-width="120"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
@@ -34,7 +34,7 @@
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
-          min-width="180"
+          min-width="120"
           show-overflow-tooltip
         />
         <div slot="empty">

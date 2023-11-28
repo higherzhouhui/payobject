@@ -1,5 +1,5 @@
 <template>
-  <div class="headerWrapper">
+  <div class="headerWrapper" :class="className">
     <header>
         <div class="arrow" @click="backPage">
           <svg-icon iconClass="arrow-left-solid" className="back" />
@@ -56,6 +56,12 @@
 import { Local } from "@/utils/index";
 export default {
   name: "headerIndex",
+  props: {
+    className: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       languge: Local("lang") || "zh",

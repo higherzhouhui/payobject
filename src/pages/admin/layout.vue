@@ -6,14 +6,14 @@
             <div class="index_content">
                 <router-view></router-view>
             </div>
+            <Footer class="footer"/>
         </div>
     </div>
 </template>
 <script>
 import LeftBar from '@/layer/leftBars.vue'
 import HeaderBar from '@/layer/headerBar.vue'
-import {getAccountKyc} from '@/api/user'
-import { Local } from "@/utils/index";
+import Footer from '@/layer/footer.vue'
 
 export default {
     name: 'homeIndex',
@@ -24,7 +24,7 @@ export default {
     created() {
       
     },
-    components: { LeftBar, HeaderBar },
+    components: { LeftBar, HeaderBar, Footer },
     methods: {
 
     }
@@ -44,7 +44,11 @@ export default {
         .index_content {
             margin: 0!important;
             min-height: calc(100vh - 124px)!important;
-            padding: 1.5rem 6px!important;
+            
+            padding: 1.5rem 6px 100px 6px!important;
+        }
+        .footer {
+            display: grid!important;
         }
     }
     .content {
@@ -57,6 +61,9 @@ export default {
         background: $bgColor;
         width: 100%;
         min-height: calc(100vh - $adminHeaderHeight);
+    }
+    .footer {
+        display: none;
     }
 }
 </style>

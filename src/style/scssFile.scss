@@ -283,7 +283,7 @@ html {
 
 .el-table .el-table__header-wrapper,
 .el-table__fixed-right {
-    background-color: $contentColor !important;
+    // background-color: $contentColor !important;
 
     thead {
         background-color: $contentColor !important;
@@ -303,12 +303,12 @@ html {
     }
 }
 
-.el-table td.el-table__cell,
-.el-table th.el-table__cell.is-leaf {
-    border: none;
-    border-bottom: 1px solid #f5f5f5;
+.el-table--border::after, .el-table--group::after, .el-table::before {
+    content: none;
 }
-
+.el-table__fixed-right::before, .el-table__fixed::before {
+    content: none;
+}
 .el-loading-mask {
     background-color: rgba($color: $bgColor, $alpha: 0.8);
 }
@@ -317,12 +317,16 @@ html {
     margin-top: 36px;
     .el-table__row {
         background: $contentColor;
-
         &:hover .el-table__cell {
             background: rgba(0, 0, 0, 0.075) !important;
         }
     }
-
+    // .el-table__row:last-child {
+    //     td.el-table__cell,
+    //     th.el-table__cell.is-leaf {
+    //         border: none;
+    //     }
+    // }
     .el-table__body tr.hover-row.current-row>td.el-table__cell,
     .el-table__body tr.hover-row.el-table__row--striped.current-row>td.el-table__cell,
     .el-table__body tr.hover-row.el-table__row--striped>td.el-table__cell,
@@ -548,14 +552,28 @@ ul::-webkit-scrollbar-thumb {
 
 .elPagination {
     margin-top: 10px;
-    background: $contentColor;
-    margin-top: 10px;
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
-    @media screen and (max-width: 800px) {
-        display: contents;
+    // .el-pager li {
+    //     background: $contentColor;
+    //     border: 1px solid #fff;
+    //     color: #fff;
+    // }
+    .el-pager li:hover {
+        color: $baseColor;
     }
+    .el-pager li.active {
+        color: $baseColor;
+    }
+    // .btn-prev, .btn-next {
+    //     background: $contentColor;
+    //     color: #fff;
+    //     border: 1px solid #fff;
+    // }
+    // button:disabled {
+    //     background-color: $contentColor!important;
+    //     color: #fff;
+    // }
 }
 
 .el-pagination__total,

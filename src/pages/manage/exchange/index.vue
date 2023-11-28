@@ -124,8 +124,8 @@
         :current-page.sync="current"
         :page-sizes="[10, 50, 100, 500]"
         :page-size="size"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+      layout="prev, pager, next"
+      small        :total="total"
         class="elPagination"
       >
       </el-pagination>
@@ -213,8 +213,8 @@
           :current-page.sync="current"
           :page-sizes="[10, 50, 100, 500]"
           :page-size="size"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
+        layout="prev, pager, next"
+      small          :total="total"
           class="elPagination"
         >
         </el-pagination>

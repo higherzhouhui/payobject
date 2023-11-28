@@ -1,8 +1,14 @@
 <template>
   <div class="footer-container">
-    <div class="item" v-for="item in navList" :key="item.icon" @click="routerTo(item.path)">
-      <svg-icon :iconClass="item.icon" className="svg" />
-      <p>{{ item.title }}</p>
+    <div class="item" v-for="(item) in navList" :key="item.icon" @click="routerTo(item.path)">
+      <template v-if="item.path != '/admin/dashboard'">
+        <svg-icon :iconClass="item.icon" className="svg" />
+        <p>{{ item.title }}</p>
+      </template>
+      <div class="dashboard" v-else>
+        <svg-icon :iconClass="item.icon" className="svg" />
+        <p>{{ item.title }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -70,9 +76,13 @@ export default {
     font-size: 20px;
     margin-bottom: 4px;
   }
-  .item:nth-child(3) {
+  .dashboard {
     background: $baseColor;
     border-radius: 20px;
+    width: 100%;
+    margin-top: -27px;
+    text-align: center;
+    padding: 8px 0;
   }
 }
 </style>

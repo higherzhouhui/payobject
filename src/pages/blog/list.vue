@@ -38,13 +38,12 @@
 </template>
 <script>
 import { cmsPageReq } from "@/api/common";
-import i18n from "@/lang/i18n";
 export default {
   name: "indexVue",
   data() {
     return {
       loading: true,
-      lang: i18n.locale,
+      lang: this.$i18n.locale,
       blogList: [],
     };
   },
@@ -67,6 +66,7 @@ export default {
       },
     },
     "$i18n.locale"() {
+      this.lang = this.$i18n.locale
       this.getBlogsList();
     },
   },

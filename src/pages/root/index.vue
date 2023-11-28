@@ -688,6 +688,7 @@ export default {
       }
     },
     "$i18n.locale"() {
+      this.lang = this.$i18n.locale
       this.getBlogsList();
     },
   },

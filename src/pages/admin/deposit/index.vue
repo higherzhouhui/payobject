@@ -36,9 +36,6 @@
             </el-select>
           </div>
         </div>
-        <ul class="list">
-          <li>{{ $t("limitNum") }}</li>
-        </ul>
         <div class="form-item" v-if="moneyType == 'fabi'">
           <div class="label">{{ $t("czje") }}</div>
           <div class="input-with-select">
@@ -86,47 +83,49 @@
             </el-select>
           </div>
         </div>
+        <ul class="list">
+          <li>{{ $t("limitNum") }}</li>
+        </ul>
         <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
           <div class="label">{{ $t("skqbdz") }}</div>
           <div class="input-with-select">
             <el-input :value="usdtForm.cryptAdd" class="input-amount" />
             <el-select
-            class="input-select"
-            v-model="usdtForm.hkAgreement"
-            :placeholder="$t('qsz')"
-            disabled
-          >
-            <el-option
-              style="padding: 0 20px"
-              v-for="item in []"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              class="input-select"
+              v-model="usdtForm.hkAgreement"
+              :placeholder="$t('qsz')"
+              disabled
             >
-            </el-option>
-          </el-select>
+              <el-option
+                style="padding: 0 20px"
+                v-for="item in []"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
         <div class="form-item" v-if="moneyType == 'usdt'">
           <div class="label">{{ $t("hkqbdz") }}</div>
           <div class="input-with-select">
-            <el-input
-              v-model="usdtForm.tid"
-              class="input-amount"
-              :placeholder="$t('qsrhkzbdz')"
-            />
             <el-select
-              class="input-select"
-              v-model="usdtForm.agreement"
-              :placeholder="$t('qsz')"
+              class="input-transaction"
+              v-model="usdtForm.tid"
+              @change="changehkAddress"
+              :placeholder="$t('qxzhkqbdz')"
             >
               <el-option
-                style="padding: 0 20px"
-                v-for="item in agreementList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in hkAddressList"
+                :key="item.id"
+                :label="item.cryAdd"
+                :value="item.cryAdd"
               >
+                <div class="el-option">
+                  <div class="left">{{item.cryAdd}}</div>
+                  <div class="right">{{item.agreement}}</div>
+                </div>
               </el-option>
             </el-select>
           </div>
@@ -152,7 +151,8 @@
             {{ $t("czje") }}
           </div>
           <div class="column-right">
-            {{ form.reqValue || 0 }}<span class="unit">{{ form.coinCode }}</span>
+            {{ form.reqValue || 0
+            }}<span class="unit">{{ form.coinCode }}</span>
           </div>
         </div>
         <div class="divider" v-if="form.sendBank" />
@@ -210,6 +210,15 @@
           </div>
           <div class="column-right">
             {{ usdtForm.cryptAdd }}
+          </div>
+        </div>
+        <div class="divider" v-if="usdtForm.agreement" />
+        <div class="column" v-if="usdtForm.agreement">
+          <div class="column-left">
+            {{ $t("jmxy") }}
+          </div>
+          <div class="column-right">
+            {{ usdtForm.agreement }}
           </div>
         </div>
         <div class="divider" v-if="usdtForm.tid" />
@@ -493,7 +502,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >{{$t('yulan')}}</a
+              >{{ $t("yulan") }}</a
             ></el-button
           >
         </el-form-item>
@@ -522,11 +531,14 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
+        <el-form-item :label="$t('jmxy')">
+          <el-input
+            v-model="currentSelectRow.agreement"
+            :readOnly="true"
+          ></el-input>
+        </el-form-item>
         <el-form-item :label="$t('hkqbdz')">
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('jmxy')">
-          <el-input v-model="currentSelectRow.agreement" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('hkpz')">
           <el-upload
@@ -553,7 +565,7 @@
             ><a
               :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
               target="_blank"
-              >{{$t('yulan')}}</a
+              >{{ $t("yulan") }}</a
             ></el-button
           >
         </el-form-item>
@@ -607,6 +619,7 @@ import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
+import { outCryAccPage } from "@/api/bank";
 
 export default {
   name: "userWithdrawManagementWithdraw",
@@ -633,8 +646,8 @@ export default {
         reqValue: "",
         cryptAdd: "",
         tid: "",
-        agreement: "TRC",
-        hkAgreement: ""
+        agreement: "",
+        hkAgreement: "",
       },
       tableData: [],
       options: [],
@@ -642,6 +655,7 @@ export default {
       outCoinList: [],
       inCoinList: [],
       outZHList: [],
+      hkAddressList: [],
       bankListBalance: [],
       loading: false,
       dialogVisible: false,
@@ -656,6 +670,7 @@ export default {
     // this.getCJBZ();
     this.getRJBZ();
     this.getSzList();
+    this.getAddressList();
     //   calculateRate({
     //       exFrom: 'CNY',
     //       exTarget: 'USDT',
@@ -663,9 +678,32 @@ export default {
     //   })
   },
   methods: {
+    async getAddressList() {
+      try {
+        const res = await outCryAccPage({current: 1, size: 50})
+        const list = res.data.records
+        list.push({
+          id: 'add',
+          cryAdd: this.$t('add')
+        })
+        this.hkAddressList = list
+      } catch {
+        console.log('error')
+      }
+    },
     changehkAccount(id) {
-      if (id == 'add') {
-        this.$router.push('/admin/exchange/list?type=add')
+      if (id == "add") {
+        this.$router.push("/admin/exchange/list?type=add");
+      }
+    },
+    changehkAddress(id) {
+      if (id == this.$t('add')) {
+        this.$router.push("/admin/address/list?type=add");
+      } else {
+        const list = this.hkAddressList.filter(item => {
+          return item.cryAdd == id
+        })
+        this.usdtForm.agreement = list[0].agreement
       }
     },
     async getSzList() {
@@ -683,7 +721,7 @@ export default {
       const res = await getCryAdd({ cryCode: this.usdtForm.coinCode });
       this.usdtForm.cryptAdd = res.data.cryAdd;
       this.usdtForm.userId = res.data.userId;
-      this.usdtForm.hkAgreement = res.data.agreement
+      this.usdtForm.hkAgreement = res.data.agreement;
     },
     async handlesuccess(e) {
       const size = e.size;
@@ -832,9 +870,9 @@ export default {
       try {
         const res = await withdrawAccounts();
         res.data.push({
-          id: 'add',
-          bankName: this.$t('add'),
-        })
+          id: "add",
+          bankName: this.$t("add"),
+        });
         this.outZHList = res.data;
       } catch (error) {}
     },
@@ -881,6 +919,17 @@ export default {
     max-width: 80%;
     text-align: center;
     color: $baseColor;
+  }
+}
+.el-option {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  .left {
+    font-weight: bold;
+  }
+  .right {
+    color: #333;
   }
 }
 </style>

@@ -52,3 +52,8 @@ export const cmsGetReq = (data) => service({
   data,
   method: 'get'
 })
+export const getInviteUser = (data) => service({
+  url: '/inviteUser',
+  data,
+  method: 'post'
+})

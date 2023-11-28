@@ -143,7 +143,7 @@ export default {
         cryptAdd: "",
         srcCode: "",
         tid: "default",
-        agreement: "TRC",
+        agreement: "TRC20",
       },
       transactionTypeList: [
         { label: this.$t("fdhb"), value: "fabi" },

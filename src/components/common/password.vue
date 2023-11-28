@@ -63,11 +63,13 @@ export default {
         let param = {}
         if (this.form.pwdType == 'payPass') {
           param = {
+            verCode: '',
             payPass: this.form.payPass
           }
         }
         if (this.form.pwdType == 'verCode') {
           param = {
+            payPass: '',
             verCode: this.form.verCode
           }
         }
@@ -124,14 +126,16 @@ export default {
     position: absolute;
     right: 0;
     top: 0;
-    height: 40px;
+    height: 100%;
   }
   .timer {
     padding: 0 16px;
     background: #adadad;
     top: 1px;
-    height: 38px;
+    height: calc(100% - 2px);
     color: #fff;
+    display: flex;
+    align-items: center;
   }
 }
 </style>

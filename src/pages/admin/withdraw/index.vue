@@ -143,41 +143,31 @@
             <div class="input-with-select">
               <el-select
                 class="input-transaction"
-                v-model="form.bankId"
-                :placeholder="$t('qsztxqbdz')"
-                @change="changehkAccount"
-                >
+                v-model="usdtForm.cryptAdd"
+                @change="changehkAddress"
+                :placeholder="$t('qsxtxqbdz')"
+              >
                 <el-option
-                  v-for="item in outZHList"
+                  v-for="item in hkAddressList"
                   :key="item.id"
-                  :label="item.bankName"
-                  :value="item.id.toString()"
+                  :label="item.cryAdd"
+                  :value="item.cryAdd"
                 >
+                  <div class="el-option">
+                    <div class="left">{{item.cryAdd}}</div>
+                    <div class="right">{{item.agreement}}</div>
+                  </div>
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="input-with-select">
-              <el-input
-                v-model="usdtForm.cryptAdd"
-                class="input-amount"
-                :placeholder="$t('qsrtxdqbdz')"
-              />
-              <el-select
-                class="input-select"
-                v-model="usdtForm.agreement"
-                :placeholder="$t('qsz')"
-              >
-                <el-option
-                  style="padding: 0 20px"
-                  v-for="item in agreementList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </div> -->
           </div>
+          <el-form
+            label-position="top"
+            ref="forms"
+            :model="form"
+            class="withdraw-password">
+            <passwordVue @changeData="componentDataChange" />
+          </el-form>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
             {{ $t("fqtx") }}
           </div>
@@ -259,13 +249,22 @@
               {{ usdtForm.reqValue || 0 }}
             </div>
           </div>
+          <div class="divider" v-if="usdtForm.agreement" />
+          <div class="column" v-if="usdtForm.agreement">
+            <div class="column-left">
+              {{ $t("jmxy") }}
+            </div>
+            <div class="column-right">
+              {{ usdtForm.agreement }}
+            </div>
+          </div>
           <div class="divider" v-if="usdtForm.cryptAdd" />
           <div class="column" v-if="usdtForm.cryptAdd">
             <div class="column-left">
               {{ $t("txdqbdz") }}
             </div>
             <div class="column-right">
-              {{ usdtForm.cryptAdd }}
+              {{ usdtForm.tid }}
             </div>
           </div>
           <div class="divider" />
@@ -626,10 +625,12 @@ import { getCryAdd } from "@/api/exchange";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
+import { outCryAccPage } from "@/api/bank";
+import passwordVue from '@/components/common/password.vue';
 
 export default {
   name: "userWithdrawManagementWithdraw",
-  components: { LinkPath },
+  components: { LinkPath, passwordVue },
   data() {
     return {
       agreementList: [
@@ -647,8 +648,8 @@ export default {
         reqValue: "",
         cryptAdd: "",
         srcCode: "",
-        tid: "default",
-        agreement: "TRC",
+        tid: "0x",
+        agreement: "",
       },
       moneyType: "fabi",
       transactionTypeList: [
@@ -669,6 +670,7 @@ export default {
       currentSelectRow: {},
       szList: [],
       calculateMoney: 0,
+      hkAddressList: [],
     };
   },
   created() {
@@ -677,6 +679,7 @@ export default {
     // this.getCJBZ();
     // this.getRJBZ();
     this.getSzList();
+    this.getAddressList()
     //   calculateRate({
     //       exFrom: 'CNY',
     //       exTarget: 'USDT',
@@ -701,6 +704,39 @@ export default {
     },
   },
   methods: {
+    componentDataChange(params) {
+      if (this.moneyType == 'fabi') {
+        this.form = {
+          ...this.form,
+          ...params
+        }
+      } else {
+        this.usdtForm = {...this.usdtForm, ...params}
+      }
+    },
+    changehkAddress(id) {
+      if (id == this.$t('add')) {
+        this.$router.push("/admin/address/list?type=add");
+      } else {
+        const list = this.hkAddressList.filter(item => {
+          return item.cryAdd == id
+        })
+        this.usdtForm.agreement = list[0].agreement
+      }
+    },
+    async getAddressList() {
+      try {
+        const res = await outCryAccPage({current: 1, size: 50})
+        const list = res.data.records
+        list.push({
+          id: 'add',
+          cryAdd: this.$t('add')
+        })
+        this.hkAddressList = list
+      } catch {
+        console.log('error')
+      }
+    },
     changeUsdtReqValue(value) {
       const max = this.getReamin(this.usdtForm.coinCode)
       if (value * 1 > max) {
@@ -765,6 +801,7 @@ export default {
     },
 
     async handleUsdtPutDeposit() {
+      console.log(this.usdtForm)
       if (
         !this.usdtForm.reqValue ||
         !this.usdtForm.cryptAdd ||
@@ -981,6 +1018,31 @@ export default {
     color: $baseColor;
     margin-left: 6px;
     font-size: 1.2rem;
+  }
+}
+.el-option {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  .left {
+    font-weight: bold;
+  }
+  .right {
+    color: #333;
+  }
+}
+.withdraw-password {
+  margin-bottom: 1.6rem;
+  ::v-deep .el-form-item__label {
+    color: #fff;
+    font-size: 16px;
+  }
+  ::v-deep .el-radio__label {
+    color: #fff;
+    font-size: 16px;
+  }
+  ::v-deep .el-input__inner {
+    height: 48px;
   }
 }
 </style>

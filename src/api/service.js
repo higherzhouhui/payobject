@@ -1,6 +1,7 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 const whiteRetry = new Set(['ECONNABORTED', 'ERR_NETWORK', undefined, 0]);
+let execOnce = false
 // import { Local } from "@/utils/index";
 import { Message } from 'element-ui';
 import router from '@/router/index.js'
@@ -72,6 +73,7 @@ serviceAxios.interceptors.request.use(
 
 // 统一发起请求的函数
 async function request(options) {
+
     try {
         const response = await serviceAxios.request(options);
         const { status, data = { code: 500 } } = response;
@@ -80,10 +82,13 @@ async function request(options) {
         if (status < 200 || status >= 500) {
             return Promise.reject(data.msg);
         } else if (data.code == 401) {
-            Message({
-                type: 'error',
-                message: data.msg
-            })
+            if (!execOnce) {
+                Message({
+                    type: 'error',
+                    message: data.msg
+                })
+            }
+            execOnce = true
             store.commit("SET_Logout", {})
             router.push("/user/login")
             return
@@ -94,6 +99,7 @@ async function request(options) {
             })
             return Promise.reject(data.msg);
         }
+        execOnce = false
         // let json = response.data;
         return Promise.resolve(data);
     } catch (_) {

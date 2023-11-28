@@ -2,7 +2,7 @@
     <div class="link_path_container">
         <div class="flex flex_align_center flex_jc_sb">
             <div class="flex flex_align_center">
-                <span v-if="showHome" class="pointer" @click="toHome">{{ $t('home') }}</span>
+                <span v-if="showHome" class="pointer" @click="toHome">{{ $t('kztai') }}</span>
                 <div v-for="(item, index) in linkList" :key="index" class="flex flex_align_center">
                     <img v-if="showHome" src="@/assets/images/home/user/xiegang.png" alt="">
                     <span>{{ $t(item) }}</span>

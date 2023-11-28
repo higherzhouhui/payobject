@@ -211,7 +211,6 @@
       >
       </el-pagination>
     </div>
-
     <el-dialog
       :title="$t('xq')"
       :visible.sync="dialogVisible"

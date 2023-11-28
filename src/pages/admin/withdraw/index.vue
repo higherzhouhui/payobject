@@ -141,6 +141,22 @@
           <div class="form-item" v-if="moneyType == 'usdt'">
             <div class="label">{{ $t("txdqbdz") }}</div>
             <div class="input-with-select">
+              <el-select
+                class="input-transaction"
+                v-model="form.bankId"
+                :placeholder="$t('qsztxqbdz')"
+                @change="changehkAccount"
+                >
+                <el-option
+                  v-for="item in outZHList"
+                  :key="item.id"
+                  :label="item.bankName"
+                  :value="item.id.toString()"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <!-- <div class="input-with-select">
               <el-input
                 v-model="usdtForm.cryptAdd"
                 class="input-amount"
@@ -160,7 +176,7 @@
                 >
                 </el-option>
               </el-select>
-            </div>
+            </div> -->
           </div>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
             {{ $t("fqtx") }}
@@ -617,8 +633,8 @@ export default {
   data() {
     return {
       agreementList: [
-        { label: "TRC20", value: "TRC" },
-        { label: "ERC20", value: "ERC" },
+        { label: "TRC20", value: "TRC20" },
+        { label: "ERC20", value: "ERC20" },
       ],
       dialogVisibleSuccess: false,
       form: {

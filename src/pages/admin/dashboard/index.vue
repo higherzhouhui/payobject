@@ -13,9 +13,16 @@
               </div>
           </swiper-slide>
       </swiper>
-      <div class="empty" v-if="!balanceLoading && !balanceArrapy.length">
-        <img src="@/assets/images/home/recharge.png" />
-        <span @click="$router.push('/admin/deposit/index')">{{$t("qcz")}}</span>
+      <div v-if="!balanceLoading && !balanceArrapy.length">
+        <div class="balance-item">
+          <span :class="`flag-icon ${getFlagIcon('USD')}`" v-if="'USD' != 'USDT'"></span>
+          <img src="@/assets/images/usdt.png" v-else class="usdt-pic" />
+          <h3>0.00<span>{{ 'USD' }}</span></h3>
+          <div class="qcz" @click="$router.push('/admin/deposit/index')">
+            <img src="@/assets/images/home/recharge.png" />
+            {{$t("qcz")}}
+          </div>
+        </div>
       </div>
     </div>
     <div class="transaction-wrapper">
@@ -57,7 +64,9 @@
           </div>
         </div>
       </ul>
-      <el-empty :description="$t('nodata')" v-if="!billLoading && !billArray.length"></el-empty>
+      <div v-if="!billLoading && !billArray.length" class="empty">
+        {{$t('nodata')}}
+      </div>
     </div>
   </div>
 </template>
@@ -198,23 +207,7 @@ h1 {
   margin: 1.5rem 0;
 }
 .balance-wrapper {
-  .empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba($color: #fff, $alpha: 0.88);
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    &:hover {
-      color: #fff;
-    }
-    img {
-      margin-right: 0.5rem;
-      width: 2rem;
-      object-fit: contain;
-    }
-  }
+  
 }
 .swiper {
   width: 100%;
@@ -249,6 +242,21 @@ h1 {
   transition: all 0.5s;
   color: #fff;
   border-radius: 5px;
+  position: relative;
+  .qcz {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+    }
+  }
   @media screen and (max-width: 500px) {
     padding: 6px;
   }
@@ -346,5 +354,13 @@ h1 {
       box-shadow: 0 5px 10px rgba(30, 32, 37, 0.12);
     }
   }
+}
+.empty {
+  border-radius: 6px;
+  background: $contentColor;
+  padding: 100px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #fff;
 }
 </style>

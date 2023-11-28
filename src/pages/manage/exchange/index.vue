@@ -16,7 +16,7 @@
           </el-form-item>
           <el-form-item>
             <el-input
-              :placeholder="$t('yhzhh')"
+              :placeholder="$t('yhzh')"
               v-model="form.bankAccount"
             ></el-input>
           </el-form-item>
@@ -46,7 +46,7 @@
           </el-form-item>
         </el-form>
         <el-button type="primary normal-btn" @click="showAdd1" class="primary"
-          ><i class="el-icon-plus"></i>{{$t('addskzh')}}</el-button
+          ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
         >
         <el-table
           class="tables"
@@ -55,11 +55,7 @@
           v-loading="loading"
           size="small"
         >
-          <el-table-column
-            prop="coinCode"
-            :label="$t('bz')"
-            min-width="100"
-          />
+          <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
           <el-table-column
             prop="accountName"
             :label="$t('zhmc')"
@@ -97,11 +93,21 @@
             fixed="right"
           >
             <template slot-scope="scope">
-              <el-button type="primary" size="small" class="btn" @click="toDetail(scope.row)">
-                {{$t('xg')}}
+              <el-button
+                type="primary"
+                size="small"
+                class="btn"
+                @click="toDetail(scope.row)"
+              >
+                {{ $t("xg") }}
               </el-button>
-              <el-button type="danger" size="small" class="btn" @click="del1(scope.row.id)">
-                {{$t('del')}}
+              <el-button
+                type="danger"
+                size="small"
+                class="btn"
+                @click="del1(scope.row.id)"
+              >
+                {{ $t("del") }}
               </el-button>
             </template>
           </el-table-column>
@@ -112,12 +118,23 @@
             ></el-empty>
           </div>
         </el-table>
+        <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="current"
+        :page-sizes="[10, 50, 100, 500]"
+        :page-size="size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        class="elPagination"
+      >
+      </el-pagination>
       </div>
     </template>
     <template v-if="type == 'second'">
       <div class="content">
         <el-button type="primary" @click="showAdd" class="primary normal-btn"
-          ><i class="el-icon-plus"></i>{{$t('zjhld')}}</el-button
+          ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
         >
         <el-table
           class="tables"
@@ -164,11 +181,21 @@
           >
             <template slot-scope="scope">
               <div>
-                <el-button type="primary" size="small" class="btn" @click="toDetail2(scope.row)">
-                  {{$t('xg')}}
+                <el-button
+                  type="primary"
+                  size="small"
+                  class="btn"
+                  @click="toDetail2(scope.row)"
+                >
+                  {{ $t("xg") }}
                 </el-button>
-                <el-button type="danger" size="small" class="btn" @click="del2(scope.row.id)">
-                  {{$t('del')}}
+                <el-button
+                  type="danger"
+                  size="small"
+                  class="btn"
+                  @click="del2(scope.row.id)"
+                >
+                  {{ $t("del") }}
                 </el-button>
               </div>
             </template>
@@ -180,6 +207,17 @@
             ></el-empty>
           </div>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          class="elPagination"
+        >
+        </el-pagination>
       </div>
     </template>
 
@@ -305,12 +343,12 @@
             </div>
           </el-upload>
           <a
-          v-else
-          class="down-a"
-
-              :href="'/api/file/downLoad?url=' + bankForm.accountCer"
-              target="_blank"
-              >{{$t('yulan')}}</a>
+            v-else
+            class="down-a"
+            :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+            target="_blank"
+            >{{ $t("yulan") }}</a
+          >
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -356,7 +394,7 @@
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan"
-          ><i class="el-icon-sort" />{{$t('duihuan')}}</el-form-item
+          ><i class="el-icon-sort" />{{ $t("duihuan") }}</el-form-item
         >
         <el-form-item :label="$t('dhbz')">
           <el-select v-model="bankForm2.exTarget" class="elSelect">
@@ -436,19 +474,19 @@ export default {
       areaList: [],
       options: [
         {
-          label: this.$t('shz'),
+          label: this.$t("shz"),
           value: 0,
         },
         {
-          label: this.$t('ytg'),
+          label: this.$t("ytg"),
           value: 1,
         },
         {
-          label: this.$t('bh'),
+          label: this.$t("bh"),
           value: 2,
         },
       ],
-      status: [this.$t('shz'), this.$t('ytg'), this.$t('bh')],
+      status: [this.$t("shz"), this.$t("ytg"), this.$t("bh")],
       loading: true,
       form: {
         // bankStatus: "",
@@ -469,26 +507,45 @@ export default {
           value: 3,
         },
       ],
+      size: 10,
+      current: 1,
+      total: 0,
     };
   },
   watch: {
     type() {
+      this.current = 1;
+      this.getInitData();
+    },
+  },
+  methods: {
+    handleSizeChange(val) {
+      this.size = val;
+      this.getInitData();
+    },
+    handleCurrentChange(val) {
+      this.current = val;
+      this.getInitData();
+    },
+    handleChangeSearch() {
+      this.current = 1;
+      this.getInitData();
+    },
+    getInitData() {
       if (this.type == "first") {
         this.getlist();
       } else {
         this.getlist2();
       }
     },
-  },
-  methods: {
     async del1(id) {
-      this.$confirm(this.$t('qrsc'), this.$t('hint'))
+      this.$confirm(this.$t("qrsc"), this.$t("hint"))
         .then(async (_) => {
           try {
             await delDeposit({ id });
             Message({
               type: "success",
-              message:  this.$t('czcg'),
+              message: this.$t("czcg"),
             });
             this.getlist();
           } catch (error) {}
@@ -496,13 +553,13 @@ export default {
         .catch((_) => {});
     },
     async del2(id) {
-      this.$confirm(this.$t('qrsc'), this.$t('hint'))
+      this.$confirm(this.$t("qrsc"), this.$t("hint"))
         .then(async (_) => {
           try {
             await delExchange({ id });
             Message({
               type: "success",
-              message:  this.$t('czcg'),
+              message: this.$t("czcg"),
             });
             this.dialogVisible2();
             this.getlist2();
@@ -585,7 +642,8 @@ export default {
         if (req.code == 200) {
           this.bankForm = {
             ...this.bankForm,
-            accountCer: req.data[0]};
+            accountCer: req.data[0],
+          };
           Message({
             type: "success",
             message: this.$t("sccg"),
@@ -611,7 +669,7 @@ export default {
         if (res.code === 200) {
           Message({
             type: "success",
-            message: this.$t('czcg'),
+            message: this.$t("czcg"),
           });
           this.getlist2();
         }
@@ -622,7 +680,7 @@ export default {
         await setDeposit(this.bankForm);
         Message({
           type: "success",
-          message: this.$t('czcg'),
+          message: this.$t("czcg"),
         });
         this.getlist();
         this.dialogVisible = false;
@@ -639,24 +697,33 @@ export default {
     async getlist() {
       try {
         this.loading = true;
-        let req = await getDeposits(this.form);
+        let req = await getDeposits({
+          ...this.form,
+          current: this.current,
+          size: this.size,
+        });
         this.loading = false;
-        req.data.forEach((item) => {
+        req.data.records.forEach((item) => {
           Object.keys(item.bank).forEach((key) => {
             if (key !== "coinCode") {
               item[key] = item.bank[key];
             }
           });
         });
-        this.tableData = req.data;
+        this.tableData = req.data.records;
+        this.total = req.data.total;
       } catch (error) {}
     },
     async getlist2() {
       try {
         this.loading = true;
-        let req = await getExchanges();
+        let req = await getExchanges({
+          current: this.current,
+          size: this.size,
+        });
         this.loading = false;
-        this.tableData2 = req.data;
+        this.tableData2 = req.data.records;
+        this.total = req.data.total;
       } catch (error) {}
     },
   },

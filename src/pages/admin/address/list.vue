@@ -13,6 +13,12 @@
         style="width: 100%"
         v-loading="loading"
       >
+      <el-table-column
+      prop="cryName"
+      :label="$t('别名')"
+      min-width="100"
+      show-overflow-tooltip
+    />
         <el-table-column
           prop="cryAdd"
           :label="$t('地址')"
@@ -42,17 +48,17 @@
               type="info"
               class="btn"
               size="small"
-              @click="toDetail(scope.row)"
+              @click="toDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
             </el-button>
             <el-button
-              type="danger"
+              type="primary"
               class="btn"
               size="small"
-              @click="delBank(scope.row.id)"
+              @click="toDetail(scope.row, 'update')"
             >
-              {{ $t("del") }}
+              {{ $t("xg") }}
             </el-button>
           </template>
         </el-table-column>
@@ -63,9 +69,20 @@
           ></el-empty>
         </div>
       </el-table>
+      <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="current"
+      :page-sizes="[10, 50, 100, 500]"
+      :page-size="size"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      class="elPagination"
+    >
+    </el-pagination>
     </div>
     <el-dialog
-      :title="form.id ? `${$t('xq')}` : $t('新增地址')"
+      :title="showObj.title"
       :visible.sync="dialogVisible"
       width="600px"
       :before-close="
@@ -104,21 +121,16 @@
             :placeholder="$t('请输入地址')"
           ></el-input>
         </el-form-item>
-       <passwordVue @changeData="componentDataChange"/>
+       <passwordVue @changeData="componentDataChange" v-if="showObj.title != $t('xq')"/>
       </el-form>
-      <span slot="footer" class="dialog-footer" v-if="!form.id">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
         <el-button
           class="qd"
           :class="bankloading && 'loading'"
-          @click="addBank"
-          >{{ $t("sure") }}</el-button
+          @click="addAddress"
+          >{{showObj.btn}}</el-button
         >
-      </span>
-      <span slot="footer" class="dialog-footer" v-if="form.id">
-        <el-button class="qd" @click="dialogVisible = false">{{
-          $t("sure")
-        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -127,7 +139,7 @@
 import { outCryAccPage, setOutCryAcc, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
-import { upload, downLoad } from "@/api/file";
+import { upload } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
 import { getFlagIcon } from "@/utils/common";
 import passwordVue from '@/components/common/password.vue';
@@ -140,9 +152,13 @@ export default {
   data() {
     return {
       agreementList: [
-        { label: "TRC20", value: "TRC" },
-        { label: "ERC20", value: "ERC" },
+        { label: "TRC20", value: "TRC20" },
+        { label: "ERC20", value: "ERC20" },
       ],
+      showObj: {
+        title: this.$t('add'),
+        btn: this.$t('sure')
+      },
       getFlagIcon: getFlagIcon,
       languge: Local("lang") || "zh",
       dialogVisible: false,
@@ -187,17 +203,32 @@ export default {
         accountCer: null,
       },
       areaList: [],
+      current: 1,
+      size: 10,
+      total: 0
     };
   },
   created() {
-    this.getlist();
-    this.getAreaCode();
+    this.getInitData();
+    // this.getAreaCode();
     const params = getHashParams();
     if (params.get("type") == "add") {
       this.showAdd();
     }
   },
   methods: {
+    handleSizeChange(val) {
+      this.size = val;
+      this.getInitData();
+    },
+    handleCurrentChange(val) {
+      this.current = val;
+      this.getInitData();
+    },
+    handleChangeSearch() {
+      this.current = 1
+      this.getInitData();
+    },
     componentDataChange(params) {
       this.form = {...this.form, ...params}
     },
@@ -212,17 +243,30 @@ export default {
         Local("areaList", res.data);
       } catch (error) {}
     },
-    toDetail(data) {
+    toDetail(data, type) {
       this.dialogVisible = true;
+      if (type == 'detail') {
+        this.showObj = {
+          title: this.$t('xq'),
+          btn: this.$t('sure')
+        }
+      } else {
+        this.showObj = {
+          title: this.$t('xg'),
+          btn: this.$t('sure')
+        }
+      }
+
       this.$set(this, "form", data);
-      //   this.form = dat ;
     },
-    downLoad,
     showAdd() {
       this.dialogVisible = true;
       this.form = {};
+      this.showObj = {
+          title: this.$t('add'),
+          btn: this.$t('sure')
+        }
     },
-    handleClick() {},
     async handlesuccess(e) {
       //   this.$refs["form"].resetFields();
       const formData = new FormData();
@@ -246,33 +290,41 @@ export default {
               type: "success",
               message: this.$t("czcg"),
             });
-            this.getlist();
+            this.getInitData();
           } catch (error) {}
         })
         .catch((_) => {});
     },
-    async addBank() {
+    async addAddress() {
       if (this.bankloading) return;
       try {
         this.bankloading = true;
-        await setOutCryAcc(this.form);
+        await setOutCryAcc({
+          ...this.form,
+          userId: this.$store.state.userInfo.id
+        });
         Message({
           type: "success",
           message: this.$t("czcg"),
         });
-        this.getlist();
+        this.getInitData();
         this.dialogVisible = false;
         this.bankloading = false;
       } catch (error) {
         this.bankloading = false;
       }
     },
-    async getlist() {
+    async getInitData() {
+      const searchParam = {
+        current: this.current,
+        size: this.size
+      }
       try {
         this.loading = true;
-        let req = await outCryAccPage();
+        let req = await outCryAccPage(searchParam);
         this.tableData = req.data.records;
         this.loading = false;
+        this.total = req.data.total
       } catch (error) {
         this.loading = false;
       }

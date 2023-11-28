@@ -614,8 +614,8 @@ export default {
   data() {
     return {
       agreementList: [
-        { label: "TRC20", value: "TRC" },
-        { label: "ERC20", value: "ERC" },
+        { label: "TRC20", value: "TRC20" },
+        { label: "ERC20", value: "ERC20" },
       ],
       moneyType: "fabi",
       linkList: ["zjgl", "chongzhi"],

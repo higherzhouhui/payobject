@@ -1,15 +1,15 @@
 import service from './service';
 // 获取收款账户
 export const getDeposits = (data) => service({
-    url: '/getDeposits',
+    url: '/depositsPage',
     data,
-    method: 'get'
+    method: 'post'
 })
 // 获取汇率表
 export const getExchanges = (data) => service({
-    url: '/getExchanges',
+    url: '/exchangesPage',
     data,
-    method: 'get'
+    method: 'post'
 })
 // 新增汇率
 export const setExchange = (data) => service({

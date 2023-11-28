@@ -306,6 +306,7 @@ html {
 .el-table td.el-table__cell,
 .el-table th.el-table__cell.is-leaf {
     border: none;
+    border-bottom: 1px solid #f5f5f5;
 }
 
 .el-loading-mask {
@@ -313,6 +314,7 @@ html {
 }
 
 .tables {
+    margin-top: 36px;
     .el-table__row {
         background: $contentColor;
 

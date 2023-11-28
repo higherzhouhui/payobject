@@ -291,10 +291,20 @@
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')">
-          <el-input
-            v-model="bankForm.country"
-            :disabled="!!bankForm.id"
-          ></el-input>
+          <el-select
+          v-model="bankForm.country"
+          style="width: 100%"
+          :disabled="!!bankForm.id"
+          >
+          <el-option
+            style="padding: 0 10px"
+            v-for="item in areaList"
+            :key="item.id"
+            :label="lang == 'zh' ? item.name : item.enName"
+            :value="item.areaCode"
+          >
+          </el-option>
+        </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')">
           <el-input
@@ -328,10 +338,20 @@
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')">
-          <el-input
-            v-model="bankForm.bankCountry"
-            :disabled="!!bankForm.id"
-          ></el-input>
+          <el-select
+          v-model="bankForm.bankCountry"
+          style="width: 100%"
+          :disabled="!!bankForm.id"
+          >
+          <el-option
+            style="padding: 0 10px"
+            v-for="item in areaList"
+            :key="item.id"
+            :label="lang == 'zh' ? item.name : item.enName"
+            :value="item.areaCode"
+          >
+          </el-option>
+        </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')">
           <el-input
@@ -354,7 +374,7 @@
       </el-form>
       <div slot="footer">
         <el-button class="qd" size="small" @click="dialogVisible = false">
-          完成
+          {{$t('done')}}
         </el-button>
       </div>
     </el-dialog>
@@ -619,7 +639,7 @@ import {
   userBalanceList,
 } from "@/api/bank";
 import { setCryAcc, getCryAdd } from "@/api/exchange";
-import { cryptocurrencies } from "@/api/login";
+import { cryptocurrencies, countries } from "@/api/login";
 import { Local, getHashParams } from "@/utils/index";
 import { Message } from "element-ui";
 
@@ -628,9 +648,11 @@ export default {
   data() {
     return {
       agreementList: [
-        { label: "TRC20", value: "TRC" },
-        { label: "ERC20", value: "ERC" },
+        { label: "TRC20", value: "TRC20" },
+        { label: "ERC20", value: "ERC20" },
       ],
+      lang: this.$i18n.locale,
+      areaList: [],
       typeOption: ["warning", "success", "danger"],
       szList: [],
       dialogVisible3: false,
@@ -696,6 +718,18 @@ export default {
     },
   },
   methods: {
+    async getAreaCode() {
+      try {
+        let list = Local("areaList");
+        if (list && list.length) {
+          this.areaList = list;
+           return;
+        }
+        let res = await countries();
+        this.areaList = res.data;
+        Local("areaList", res.data);
+      } catch (error) {}
+    },
     async showUserBalance(row) {
       try {
         this.loading = true
@@ -871,6 +905,7 @@ export default {
     this.type = params.get("type") || "first";
     this.getlist();
     this.getSzList();
+    this.getAreaCode()
   },
 };
 </script>

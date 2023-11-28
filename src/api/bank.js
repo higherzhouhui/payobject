@@ -60,3 +60,9 @@ export const setOutCryAcc = (data) => service({
     data,
     method: 'post'
 })
+
+export const outCryAccList = (data) => service({
+    url: '/outCryAccList',
+    data,
+    method: 'get'
+})

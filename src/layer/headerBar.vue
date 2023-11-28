@@ -9,7 +9,7 @@
         </div>
         <el-dropdown trigger="click" @command="handleDropCommand">
           <span class="el-dropdown-link">
-            <svg-icon iconClass="user" className="svg" />
+            <svg-icon iconClass="user-gear-solid" className="svg" />
             <span class="nickName">{{userInfo.nickName || userInfo.phone || userInfo.email}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -200,6 +200,7 @@ header {
     font-size: 14px;
   }
   .svg {
+    font-size: 16px;
     color: #fff;
     margin-right: 4px;
   }

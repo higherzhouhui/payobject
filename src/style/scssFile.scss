@@ -218,11 +218,14 @@ html {
 .el-menu-item {
     color: rgba(255, 255, 255, 0.7);
     background: #20304c;
-
+    display: flex;
+    align-items: center;
     &:hover {
         color: #fff;
         background: rgba($color: #20304c, $alpha: 0.8);
-
+        .icon-svg {
+            color: #fff;
+        }
         .icon {
             filter: grayscale(100%) brightness(200%)
         }
@@ -236,7 +239,9 @@ html {
         .icon {
             filter: grayscale(100%) brightness(200%)
         }
-
+        .icon-svg {
+            color: #fff;
+        }
         &::before {
             position: absolute;
             content: "";

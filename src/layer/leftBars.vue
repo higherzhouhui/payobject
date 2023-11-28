@@ -6,109 +6,133 @@
         </div>
         <el-menu @select="select" :class="showMenu ? 'showMenu' : 'hideMenu'" :default-active="path" v-if="$store.state.userInfo.admin">
             <el-menu-item index="/manage/index">
-                <img class="icon" src="@/assets/images/home/home.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/home.png" alt=""> -->
+                <svg-icon iconClass="house-solid" className="icon-svg" />
                 <span slot="title">{{ $t('kztai') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/kyc">
-                <img class="icon" src="@/assets/images/home/grzx.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/grzx.png" alt=""> -->
+                <svg-icon iconClass="address-card-regular" className="icon-svg" />
                 <span slot="title">{{ $t('shgl') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/deposit">
-                <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/hk_icon.png" alt=""> -->
+                <svg-icon iconClass="coins-solid" className="icon-svg" />
                 <span slot="title">{{ $t('rjlist') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/withdraw">
-                <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt=""> -->
+                <svg-icon iconClass="sack-dollar-solid" className="icon-svg" />
                 <span slot="title">{{ $t('cjlist') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/convert">
-                <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/hk_icon.png" alt=""> -->
+                <svg-icon iconClass="circle-dollar-to-slot-solid" className="icon-svg" />
                 <span slot="title">{{ $t('duihuanls') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/bill">
-                <img class="icon" src="@/assets/images/home/jymx_icon.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/jymx_icon.png" alt=""> -->
+                <svg-icon iconClass="clipboard-list-solid" className="icon-svg" />
                 <span slot="title">{{ $t('jymx') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/exchange">
-                <img class="icon" src="@/assets/images/manage/hlgl.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/manage/hlgl.png" alt=""> -->
+                <svg-icon iconClass="percent-solid" className="icon-svg" />
                 <span slot="title">{{ $t('hlgl') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/blog">
-                <img class="icon" src="@/assets/images/home/zz_icon.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/zz_icon.png" alt=""> -->
+                <svg-icon iconClass="rectangle-ad-solid" className="icon-svg" />
                 <span slot="title">{{ $t('newslist') }}</span>
             </el-menu-item>
         </el-menu>
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && $store.state.userInfo.userStatus">
             <el-menu-item index="/admin/dashboard">
-                <img class="icon" src="@/assets/images/home/home.png" alt="">
-                <span slot="title">{{ $t('kztai') }}</span>
+                <!-- <img class="icon" src="@/assets/images/home/home.png" alt=""> -->
+                <svg-icon iconClass="house-solid" className="icon-svg" />
+                <span slot="title">{{ $t('kztai') }}</span> 
             </el-menu-item>
             <el-submenu index="31">
                 <template slot="title">
-                    <img class="icon" src="@/assets/images/home/zjgl.png" alt="zjgl">
+                    <!-- <img class="icon" src="@/assets/images/home/zjgl.png" alt="zjgl"> -->
+                    <svg-icon iconClass="coins-solid" className="icon-svg" />
                     <span slot="title">{{ $t('zjgl') }}</span>
                 </template>
                 <el-menu-item index="/admin/deposit/index">
-                    <img class="icon" src="@/assets/images/home/sk_icon.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/sk_icon.png" alt=""> -->
+                    <svg-icon iconClass="bolt-solid" className="icon-svg" />
                     <span slot="title">{{ $t('chongzhi') }}</span>
                 </el-menu-item>
                 <el-menu-item index="/admin/deposit/list">
-                    <img class="icon" src="@/assets/images/home/hk_icon.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/hk_icon.png" alt=""> -->
+                    <svg-icon iconClass="file-invoice-dollar-solid" className="icon-svg" />
                     <span slot="title">{{ $t('hh') }}</span>
                 </el-menu-item>
             </el-submenu>
             <el-submenu index="4">
                 <template slot="title">
-                    <img class="icon" src="@/assets/images/home/txgl.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/txgl.png" alt=""> -->
+                    <svg-icon iconClass="paper-plane-solid" className="icon-svg" />
                     <span slot="title">{{ $t('txgl') }}</span>
                 </template>
                 <el-menu-item index="/admin/withdraw/index">
-                    <img class="icon" src="@/assets/images/home/tx_icon.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/tx_icon.png" alt=""> -->
+                    <svg-icon iconClass="money-bill-transfer-solid" className="icon-svg" />
                     <span slot="title">{{ $t('tx') }}</span>
                 </el-menu-item>
                 <el-menu-item index="/admin/withdraw/list">
-                    <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt=""> -->
+                    <svg-icon iconClass="money-check-dollar-solid" className="icon-svg" />
                     <span slot="title">{{ $t('txzhgl') }}</span>
                 </el-menu-item>
             </el-submenu>
             <el-submenu index="convert">
                 <template slot="title">
-                    <img class="icon" src="@/assets/images/home/txgl.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/txgl.png" alt=""> -->
+                    <svg-icon iconClass="circle-dollar-to-slot-solid" className="icon-svg" />
                     <span slot="title">{{ $t('dhgl') }}</span>
                 </template>
                 <el-menu-item index="/admin/convert/index">
-                    <img class="icon" src="@/assets/images/home/tx_icon.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/tx_icon.png" alt=""> -->
+                    <svg-icon iconClass="arrow-right-arrow-left-solid" className="icon-svg" />
                     <span slot="title">{{ $t('duihuan') }}</span>
                 </el-menu-item>
                 <el-menu-item index="/admin/convert/list">
-                    <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt="">
+                    <!-- <img class="icon" src="@/assets/images/home/txzhgl_icon.png" alt=""> -->
+                    <svg-icon iconClass="list-solid" className="icon-svg" />
                     <span slot="title">{{ $t('duihuanls') }}</span>
                 </el-menu-item>
             </el-submenu>
             <el-menu-item index="/admin/record/exchangelist">
-                <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/zjmx_icon.png" alt=""> -->
+                <svg-icon iconClass="clipboard-list-solid" className="icon-svg" />
                 <span slot="title">{{ $t('jyjl') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/exchange/list">
-                <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/zzzhgl.png" alt=""> -->
+                <svg-icon iconClass="building" className="icon-svg" />
                 <span slot="title">{{ $t('yhkgl') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/address/list">
-                <img class="icon" src="@/assets/images/home/zzzhgl.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/zzzhgl.png" alt=""> -->
+                <svg-icon iconClass="bitcoin" className="icon-svg" />
                 <span slot="title">{{ $t('地址管理') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/kycverification">
-                <img class="icon" src="@/assets/images/home/grzx.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/grzx.png" alt=""> -->
+                <svg-icon iconClass="user-check-solid" className="icon-svg" />
                 <span slot="title">{{ $t('kycyz') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/referfriends">
-                <img class="icon" src="@/assets/images/home/jycx.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/jycx.png" alt=""> -->
+                <svg-icon iconClass="user-group-solid" className="icon-svg" />
                 <span slot="title">{{ $t('tjgpy') }}</span>
             </el-menu-item>
         </el-menu>
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && !$store.state.userInfo.userStatus">
             <el-menu-item index="/admin/kycverification">
-                <img class="icon" src="@/assets/images/home/grzx.png" alt="">
+                <!-- <img class="icon" src="@/assets/images/home/grzx.png" alt=""> -->
+                <svg-icon iconClass="user-check-solid" className="icon-svg" />
                 <span slot="title">{{ $t('kycyz') }}</span>
             </el-menu-item>
         </el-menu>
@@ -241,6 +265,11 @@ export default {
         margin-right: 8px;
         width: 18px;
         height: 18px;
+    }
+    .icon-svg {
+        font-size: 16px;
+        margin-right: 8px;
+        color: #9c9797;
     }
     .footer {
         height: 50px;

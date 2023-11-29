@@ -767,3 +767,15 @@ ul::-webkit-scrollbar-thumb {
     font-size: 12px;
     color: red;
 }
+.poper-scrollbar-show {
+    .el-scrollbar {
+        > .el-scrollbar__bar.is-vertical {
+            display: block!important;
+        }
+    }
+}
+.el-scrollbar {
+    .el-scrollbar__bar {
+        opacity: 1!important;
+    }
+}

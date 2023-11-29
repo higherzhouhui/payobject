@@ -90,7 +90,7 @@
                 size="small"
                 @click="toDetail(scope.row)"
               >
-                {{$t('xq')}}
+                {{ $t("xq") }}
               </el-button>
               <el-button
                 type="primary"
@@ -100,7 +100,7 @@
                 v-if="scope.row.bankStatus == 1"
               >
                 <i class="el-icon-plus" />
-                {{$t('jmhb')}}
+                {{ $t("jmhb") }}
               </el-button>
               <el-button
                 v-if="scope.row.bankStatus == 0"
@@ -109,7 +109,7 @@
                 size="small"
                 @click="sh(scope.row.id, true)"
               >
-                {{$t('tg')}}
+                {{ $t("tg") }}
               </el-button>
               <el-button
                 v-if="scope.row.bankStatus == 0"
@@ -118,7 +118,7 @@
                 size="small"
                 @click="rejectKyc(scope.row)"
               >
-                {{$t('bh')}}
+                {{ $t("bh") }}
               </el-button>
             </template>
           </el-table-column>
@@ -135,8 +135,9 @@
           :current-page.sync="current"
           :page-sizes="[10, 50, 100, 500]"
           :page-size="size"
-        layout="prev, pager, next"
-      small          :total="total"
+          layout="prev, pager, next"
+          small
+          :total="total"
           class="elPagination"
         >
         </el-pagination>
@@ -215,7 +216,7 @@
                   size="small"
                   @click="toDetail2(scope.row)"
                 >
-                  {{$t('xq')}}
+                  {{ $t("xq") }}
                 </el-button>
                 <el-button
                   v-if="scope.row.kycStatus == 0"
@@ -224,7 +225,7 @@
                   size="small"
                   @click="sh2(scope.row.id, true)"
                 >
-                  {{$t('tg')}}
+                  {{ $t("tg") }}
                 </el-button>
                 <el-button
                   v-if="scope.row.kycStatus == 0"
@@ -233,17 +234,17 @@
                   size="small"
                   @click="rejectKyc(scope.row)"
                 >
-                  {{$t('bh')}}
+                  {{ $t("bh") }}
                 </el-button>
                 <el-button
-                v-if="scope.row.kycStatus == 1"
-                class="btn"
-                type="primary"
-                size="small"
-                @click="showUserBalance(scope.row)"
-              >
-                {{$t('ye')}}
-              </el-button>
+                  v-if="scope.row.kycStatus == 1"
+                  class="btn"
+                  type="primary"
+                  size="small"
+                  @click="showUserBalance(scope.row)"
+                >
+                  {{ $t("ye") }}
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -260,8 +261,9 @@
           :current-page.sync="current"
           :page-sizes="[10, 50, 100, 500]"
           :page-size="size"
-        layout="prev, pager, next"
-      small          :total="total"
+          layout="prev, pager, next"
+          small
+          :total="total"
           class="elPagination"
         >
         </el-pagination>
@@ -292,19 +294,19 @@
         </el-form-item>
         <el-form-item :label="$t('ssgj')">
           <el-select
-          v-model="bankForm.country"
-          style="width: 100%"
-          :disabled="!!bankForm.id"
+            v-model="bankForm.country"
+            style="width: 100%"
+            :disabled="!!bankForm.id"
           >
-          <el-option
-            style="padding: 0 10px"
-            v-for="item in areaList"
-            :key="item.id"
-            :label="lang == 'zh' ? item.name : item.enName"
-            :value="item.areaCode"
-          >
-          </el-option>
-        </el-select>
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in areaList"
+              :key="item.id"
+              :label="lang == 'zh' ? item.name : item.enName"
+              :value="item.areaCode"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')">
           <el-input
@@ -339,19 +341,19 @@
         </el-form-item>
         <el-form-item :label="$t('khgj')">
           <el-select
-          v-model="bankForm.bankCountry"
-          style="width: 100%"
-          :disabled="!!bankForm.id"
+            v-model="bankForm.bankCountry"
+            style="width: 100%"
+            :disabled="!!bankForm.id"
           >
-          <el-option
-            style="padding: 0 10px"
-            v-for="item in areaList"
-            :key="item.id"
-            :label="lang == 'zh' ? item.name : item.enName"
-            :value="item.areaCode"
-          >
-          </el-option>
-        </el-select>
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in areaList"
+              :key="item.id"
+              :label="lang == 'zh' ? item.name : item.enName"
+              :value="item.areaCode"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')">
           <el-input
@@ -368,13 +370,13 @@
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
             class="down-a"
-            >{{$t('yulan')}}</a
+            >{{ $t("yulan") }}</a
           >
         </el-form-item>
       </el-form>
       <div slot="footer">
         <el-button class="qd" size="small" @click="dialogVisible = false">
-          {{$t('done')}}
+          {{ $t("done") }}
         </el-button>
       </div>
     </el-dialog>
@@ -487,7 +489,7 @@
             :href="'/api/file/downLoad?url=' + bankForm2.regCer"
             target="_blank"
             class="down-a"
-            >{{$t('yulan')}}</a
+            >{{ $t("yulan") }}</a
           >
         </el-form-item>
         <el-form-item :label="$t('scwj')">
@@ -498,7 +500,7 @@
             :href="'/api/file/downLoad?url=' + bankForm2.legal"
             target="_blank"
             class="down-a"
-            >{{$t('yulan')}}</a
+            >{{ $t("yulan") }}</a
           >
         </el-form-item>
         <el-form-item :label="$t('scwj')" v-if="bankForm2.busType != 1">
@@ -509,13 +511,13 @@
             :href="'/api/file/downLoad?url=' + bankForm2.shareholder"
             target="_blank"
             class="down-a"
-            >{{$t('yulan')}}</a
+            >{{ $t("yulan") }}</a
           >
         </el-form-item>
       </el-form>
       <div slot="footer">
         <el-button class="qd" size="small" @click="dialogVisible2 = false">
-          {{$t('done')}}
+          {{ $t("done") }}
         </el-button>
       </div>
     </el-dialog>
@@ -528,7 +530,7 @@
         }
       "
     >
-      <el-form label-position="top">
+      <el-form label-position="top" :class="dialogVisible3Loading && 'loading'">
         <el-form-item :label="$t('bz')">
           <el-select v-model="addressForm.cryCode" class="elSelect">
             <el-option
@@ -540,7 +542,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('jmxy')">
+        <!-- <el-form-item :label="$t('jmxy')">
           <el-select
           class="elSelect"
           v-model="addressForm.agreement"
@@ -555,9 +557,18 @@
           >
           </el-option>
         </el-select>
+        </el-form-item> -->
+        <el-form-item :label="$t('ERC20钱包地址')">
+          <el-input
+            v-model="addressForm.ercAdd"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('qbdz')">
-          <el-input v-model="addressForm.cryAdd" :placeholder="$t('qsr')"></el-input>
+        <el-form-item :label="$t('TRC20钱包地址')">
+          <el-input
+            v-model="addressForm.trcAdd"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -610,18 +621,20 @@
         }
       "
     >
-    <div class="formStyle">
-      <div class="dialog-input" v-for="item in userBalanceDetail" :key="item.coinCode">
-          <el-input
-            :value="item.balance"
-          >
-          <template slot="append">
-            {{ item.coinCode }}
-          </template>
-        </el-input>
+      <div class="formStyle">
+        <div
+          class="dialog-input"
+          v-for="item in userBalanceDetail"
+          :key="item.coinCode"
+        >
+          <el-input :value="item.balance">
+            <template slot="append">
+              {{ item.coinCode }}
+            </template>
+          </el-input>
+        </div>
+        <el-empty v-if="!userBalanceDetail.length" />
       </div>
-      <el-empty v-if="!userBalanceDetail.length"/>
-    </div>
       <span slot="footer" class="dialog-footer">
         <el-button class="qd" @click="userBalanceDialog = false">{{
           $t("sure")
@@ -671,11 +684,11 @@ export default {
       userBalanceDialog: false,
       options: [
         {
-          label: this.$t('shz'),
+          label: this.$t("shz"),
           value: 0,
         },
         {
-          label: this.$t('ytg'),
+          label: this.$t("ytg"),
           value: 1,
         },
         {
@@ -683,7 +696,7 @@ export default {
           value: 2,
         },
       ],
-      status: [this.$t('shz'), this.$t('ytg'), this.$t("bh")],
+      status: [this.$t("shz"), this.$t("ytg"), this.$t("bh")],
 
       form: {
         bankStatus: "",
@@ -723,7 +736,7 @@ export default {
         let list = Local("areaList");
         if (list && list.length) {
           this.areaList = list;
-           return;
+          return;
         }
         let res = await countries();
         this.areaList = res.data;
@@ -732,16 +745,14 @@ export default {
     },
     async showUserBalance(row) {
       try {
-        this.loading = true
-        const res = await userBalanceList({id: row.id})
-        this.loading = false
-        this.userBalanceDetail = res.data
-        this.userBalanceDialog = true
+        this.loading = true;
+        const res = await userBalanceList({ id: row.id });
+        this.loading = false;
+        this.userBalanceDetail = res.data;
+        this.userBalanceDialog = true;
       } catch {
-      this.loading = false
-
+        this.loading = false;
       }
-
     },
     getInitData() {
       if (this.type == "first") {
@@ -772,7 +783,7 @@ export default {
         }
         Message({
           type: "success",
-          message:  this.$t('czcg'),
+          message: this.$t("czcg"),
         });
         this.getInitData();
         this.bankloading = false;
@@ -789,7 +800,7 @@ export default {
         if (res.code === 200) {
           Message({
             type: "success",
-            message:  this.$t('czcg'),
+            message: this.$t("czcg"),
           });
           this.dialogVisible3 = false;
         }
@@ -804,15 +815,29 @@ export default {
       this.dialogVisible3Loading = true;
       const res = await getCryAdd({ cryCode: "USDT", userId: list.userId });
       this.dialogVisible3Loading = false;
+
       if (res.code === 200) {
-        this.addressForm = {
-          userId: list.userId,
-          accountName: list.accountName,
-          cryCode: res.data.cryCode,
-          cryAdd: res.data.cryAdd,
-          id: res.data.id,
-          agreement: res.data.agreement,
-        };
+        if (res.data.length) {
+          this.addressForm = {
+            userId: list.userId,
+            accountName: list.accountName,
+            cryCode: res.data[0].cryCode,
+          };
+          res.data.forEach((item) => {
+            if (item.agreement == "TRC20") {
+              this.addressForm = {
+                ...this.addressForm,
+                trcAdd: item.cryAdd,
+              };
+            }
+            if (item.agreement == "ERC20") {
+              this.addressForm = {
+                ...this.addressForm,
+                ercAdd: item.cryAdd,
+              };
+            }
+          });
+        }
       }
     },
     async getSzList() {
@@ -827,13 +852,13 @@ export default {
       } catch (error) {}
     },
     sh2(id, type) {
-      this.$confirm(type ? this.$t('qrtg') : this.$t('qrbh'), this.$t("hint"))
+      this.$confirm(type ? this.$t("qrtg") : this.$t("qrbh"), this.$t("hint"))
         .then(async (_) => {
           try {
             await perKyc({ id, pass: type, reason: "123" });
             Message({
               type: "success",
-              message:  this.$t('czcg'),
+              message: this.$t("czcg"),
             });
             this.getlist2();
           } catch (error) {}
@@ -841,13 +866,13 @@ export default {
         .catch((_) => {});
     },
     sh(id, type) {
-      this.$confirm(type ? this.$t('qrtg') : this.$t('qrbh'), this.$t("hint"))
+      this.$confirm(type ? this.$t("qrtg") : this.$t("qrbh"), this.$t("hint"))
         .then(async (_) => {
           try {
             await perBank({ id, pass: type });
             Message({
               type: "success",
-              message:  this.$t('czcg'),
+              message: this.$t("czcg"),
             });
             this.getlist();
           } catch (error) {}
@@ -905,7 +930,7 @@ export default {
     this.type = params.get("type") || "first";
     this.getlist();
     this.getSzList();
-    this.getAreaCode()
+    this.getAreaCode();
   },
 };
 </script>

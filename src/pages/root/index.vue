@@ -38,7 +38,6 @@
                   class="input-select"
                   ref="exFromRef"
                   @change="getTargetList"
-                  filterable
                 >
                   <el-option
                     v-for="item in areaList"

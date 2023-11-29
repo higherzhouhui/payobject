@@ -34,7 +34,10 @@
               {{$t('ye')}}<span>{{getReamin()}}</span>
             </div>
           </div>
-
+          <ul class="list">
+            <li v-if="rateDetail">{{ rateDetail }}</li>
+            <li>{{ $t("limitNum") }}</li>
+          </ul>
           <div class="form-item" v-if="form.coinCode">
             <div class="label">{{ $t("dhmbbz") }}</div>
             <div class="input-with-select">
@@ -55,10 +58,6 @@
               </el-select>
             </div>
           </div>
-          <ul class="list">
-            <li v-if="rateDetail">{{ rateDetail }}</li>
-            <li>{{ $t("limitNum") }}</li>
-          </ul>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
             {{ $t("ljdh") }}
           </div>

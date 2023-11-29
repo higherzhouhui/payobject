@@ -89,19 +89,20 @@
         <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
           <div class="label">{{ $t("skqbdz") }}</div>
           <div class="input-with-select">
-            <el-input :value="usdtForm.cryptAdd" class="input-amount" />
+            <el-input :value="usdtForm.cryptAdd" class="input-amount" readonly/>
             <el-select
               class="input-select"
-              v-model="usdtForm.hkAgreement"
+              v-model="usdtForm.agreement"
               :placeholder="$t('qsz')"
-              disabled
+              @change="changeAgreement"
+              ref="changeAgreementRef"
             >
               <el-option
                 style="padding: 0 20px"
-                v-for="item in []"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in skqbList"
+                :key="item.agreement"
+                :label="item.agreement"
+                :value="item.agreement"
               >
               </el-option>
             </el-select>
@@ -662,6 +663,7 @@ export default {
       dialogVisibleSuccess: false,
       currentSelectRow: {},
       szList: [],
+      skqbList: [],
     };
   },
   created() {
@@ -678,6 +680,12 @@ export default {
     //   })
   },
   methods: {
+    changeAgreement(value) {
+      const list = this.skqbList.filter(item => {
+        return item.agreement == value
+      })
+      this.usdtForm.cryptAdd = list[0].cryAdd
+    },
     async getAddressList() {
       try {
         const res = await outCryAccPage({current: 1, size: 50})
@@ -719,9 +727,12 @@ export default {
     },
     async getUsdtAddress() {
       const res = await getCryAdd({ cryCode: this.usdtForm.coinCode });
-      this.usdtForm.cryptAdd = res.data.cryAdd;
-      this.usdtForm.userId = res.data.userId;
-      this.usdtForm.hkAgreement = res.data.agreement;
+      this.skqbList = res.data
+      this.$refs.changeAgreementRef.toggleMenu();
+
+      // this.usdtForm.cryptAdd = res.data.cryAdd;
+      // this.usdtForm.hkAgreement = res.data.agreement;
+      // this.usdtForm.userId = res.data.userId;
     },
     async handlesuccess(e) {
       const size = e.size;

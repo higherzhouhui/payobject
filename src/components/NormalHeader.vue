@@ -81,7 +81,7 @@
               </div>
               <div
                 class="menus-item"
-                @click="to('/admin/dashboard')"
+                @click="handleTodashboard"
                 v-if="email"
               >
                 {{ $t("profile") }}
@@ -133,7 +133,7 @@ export default {
       lang: i18n.locale,
       dialogTableVisible: false,
       showMenu: false,
-      email: this.$store.state.userInfo.email,
+      email: this.$store.state.userInfo.email || this.$store.state.userInfo.phone,
       links: [
         { title: this.$t("home"), path: "/index", active: true },
         {

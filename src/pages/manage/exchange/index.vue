@@ -119,16 +119,17 @@
           </div>
         </el-table>
         <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page.sync="current"
-        :page-sizes="[10, 50, 100, 500]"
-        :page-size="size"
-      layout="prev, pager, next"
-      small        :total="total"
-        class="elPagination"
-      >
-      </el-pagination>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="prev, pager, next"
+          small
+          :total="total"
+          class="elPagination"
+        >
+        </el-pagination>
       </div>
     </template>
     <template v-if="type == 'second'">
@@ -213,8 +214,9 @@
           :current-page.sync="current"
           :page-sizes="[10, 50, 100, 500]"
           :page-size="size"
-        layout="prev, pager, next"
-      small          :total="total"
+          layout="prev, pager, next"
+          small
+          :total="total"
           class="elPagination"
         >
         </el-pagination>
@@ -238,13 +240,13 @@
         class="formStyle"
       >
         <el-form-item :label="$t('bz')">
-          <el-select v-model="bankForm.coinCode" class="elSelect" filter>
+          <el-select v-model="bankForm.coinCode" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
               :value="item.coinCode"
-              :label="lang == 'zh' ? item.name : item.enName"
+              :label="item.coinCode"
             >
               <span
                 :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
@@ -377,6 +379,7 @@
             v-model="bankForm2.exFrom"
             class="elSelect"
             @change="changeExformCoin"
+            filterable
           >
             <el-option
               style="padding: 0 10px"
@@ -394,10 +397,14 @@
           </el-select>
         </el-form-item>
         <el-form-item class="mb24 duihuan"
-          ><i class="el-icon-sort" />{{ $t("duihuan") }}</el-form-item
+          >
+          <!-- <i class="el-icon-sort" /> -->
+          <svg-icon iconClass="rotate-solid" className="svg-icon" />
+          {{ $t("duihuan") }}
+          </el-form-item
         >
         <el-form-item :label="$t('dhbz')">
-          <el-select v-model="bankForm2.exTarget" class="elSelect">
+          <el-select v-model="bankForm2.exTarget" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in targetCoinList"
@@ -754,10 +761,14 @@ export default {
   font-weight: bold;
   color: $baseColor;
   font-size: 1.3rem !important;
+  .svg-icon {
+    color: $baseColor;
+  }
 }
 .preview {
   color: #e21b1b;
   letter-spacing: 2px;
+  text-align: center;
 }
 .elSelect {
   width: 100%;

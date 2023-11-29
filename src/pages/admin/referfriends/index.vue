@@ -1,19 +1,14 @@
 <template>
   <div class="refer">
     <div class="refer-container">
-      <h1>{{ $t("tjgpy") }}</h1>
-      <div class="label">{{ $t("wdyqm") }}</div>
-      <div class="code" @click="copyText2(userInfo.providerId)">
-        <div class="number">{{ userInfo.providerId }}</div>
-        <img src="@/assets/images/home/copy.png" />
+      <div class="admin-title">{{ $store.state.title }}</div>
+      <div class="list">
+        <div class="list-left">{{ $t("wdyqm") }}</div>
+        <div class="list-right" @click="copyText2(userInfo.providerId)">{{ userInfo.providerId }}</div>
       </div>
-      <!-- <div class="label">{{$t("yqlj")}}</div>
-      <div class="code"  @click="copyText2(shareLink)">
-        <div class="number">{{shareLink}}</div>
-        <img src="@/assets/images/home/copy.png"/>
-      </div> -->
     </div>
     <div class="table-wrapper">
+      <div class="admin-title">{{$t('推荐列表')}}</div>
       <el-table
         class="tables"
         size="small"
@@ -128,51 +123,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.refer {
+  display: grid;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  grid-template-columns: 1fr 3fr;
+}
 .refer-container {
-  margin: 2rem auto;
   padding: 1.5rem;
-  width: fit-content;
+  width: 100%;
   background: $contentColor;
-  border-radius: 8px;
-  @media screen and (max-width: 800px) {
-    padding: 1rem;
-    .code {
-      width: 330px !important;
-    }
-  }
-  h1 {
-    font-size: 1.6rem;
-    color: #fff;
-    margin: 1rem 0;
-  }
-  .label {
-    color: #fff;
-    margin-bottom: 8px;
-  }
-  .code {
+  border-radius: 6px;
+  .list {
+    background: $bgColor;
+    width: 100%;
     display: flex;
-    background: #fff;
     align-items: center;
     justify-content: space-between;
-    width: 550px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    .number {
-      border-radius: 6px;
-      word-break: break-all;
-    }
-    img {
-      width: 30px;
-      min-width: 30px;
-      margin-left: 6px;
-      cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    margin-top: 8px;
+    border-radius: 4px;
+    padding: 8px 4px;
+    .list-left::after {
+      content: ':';
     }
   }
 }
 .table-wrapper {
   background: $contentColor;
-  padding: 1rem;
-  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border-radius: 6px;
 }
 </style>

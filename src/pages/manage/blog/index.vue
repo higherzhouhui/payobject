@@ -1,12 +1,14 @@
 <template>
   <div class="user_transactionInquiry_transactionDetails_contianer">
-    <div class="content">
-      <div class="add-new">
-        <div class="normal-btn" @click="showDialog()">
-          <i class="el-icon-plus"></i>
-          新增
-        </div>
+    <div class="search-container">
+      <div class="admin-title">
+        {{ $store.state.title }}
+        <el-button type="primary normal-btn" @click="showDialog" class="primary"
+        ><i class="el-icon-plus"></i>{{ $t("add") }}</el-button
+      >
       </div>
+      </div>
+    <div class="content">
       <el-table
         class="tables"
         size="small"

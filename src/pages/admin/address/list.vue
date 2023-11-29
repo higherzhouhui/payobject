@@ -1,11 +1,14 @@
 <template>
   <div class="user_transferAccountMangement_contianer">
-    <div class="content">
-      <div class="s_title flex flex_align_center flex_jc_sb_end">
+    <div class="search-container">
+      <div class="admin-title">
+        <span>{{ $store.state.title }}</span>
         <el-button type="primary" @click="showAdd" class="normal-btn"
           ><i class="el-icon-plus"></i>{{ $t("新增地址") }}</el-button
         >
       </div>
+    </div>
+    <div class="content">
       <el-table
         class="tables"
         size="small"
@@ -13,12 +16,12 @@
         style="width: 100%"
         v-loading="loading"
       >
-      <el-table-column
-      prop="cryName"
-      :label="$t('别名')"
-      min-width="80"
-      show-overflow-tooltip
-    />
+        <el-table-column
+          prop="cryName"
+          :label="$t('别名')"
+          min-width="80"
+          show-overflow-tooltip
+        />
         <el-table-column
           prop="cryAdd"
           :label="$t('地址')"
@@ -70,17 +73,17 @@
         </div>
       </el-table>
       <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="current"
-      :page-sizes="[10, 50, 100, 500]"
-      :page-size="size"
-      layout="prev, pager, next"
-      small
-      :total="total"
-      class="elPagination"
-    >
-    </el-pagination>
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="current"
+        :page-sizes="[10, 50, 100, 500]"
+        :page-size="size"
+        layout="prev, pager, next"
+        small
+        :total="total"
+        class="elPagination"
+      >
+      </el-pagination>
     </div>
     <el-dialog
       :title="showObj.title"
@@ -122,7 +125,10 @@
             :placeholder="$t('请输入地址')"
           ></el-input>
         </el-form-item>
-       <passwordVue @changeData="componentDataChange" v-if="showObj.title != $t('xq')"/>
+        <passwordVue
+          @changeData="componentDataChange"
+          v-if="showObj.title != $t('xq')"
+        />
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
@@ -130,7 +136,7 @@
           class="qd"
           :class="bankloading && 'loading'"
           @click="addAddress"
-          >{{showObj.btn}}</el-button
+          >{{ showObj.btn }}</el-button
         >
       </span>
     </el-dialog>
@@ -143,7 +149,7 @@ import { Message } from "element-ui";
 import { upload } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
 import { getFlagIcon } from "@/utils/common";
-import passwordVue from '@/components/common/password.vue';
+import passwordVue from "@/components/common/password.vue";
 
 export default {
   name: "addressList",
@@ -157,8 +163,8 @@ export default {
         { label: "ERC20", value: "ERC20" },
       ],
       showObj: {
-        title: this.$t('add'),
-        btn: this.$t('sure')
+        title: this.$t("add"),
+        btn: this.$t("sure"),
       },
       getFlagIcon: getFlagIcon,
       languge: Local("lang") || "zh",
@@ -206,7 +212,7 @@ export default {
       areaList: [],
       current: 1,
       size: 10,
-      total: 0
+      total: 0,
     };
   },
   created() {
@@ -227,11 +233,11 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
-      this.current = 1
+      this.current = 1;
       this.getInitData();
     },
     componentDataChange(params) {
-      this.form = {...this.form, ...params}
+      this.form = { ...this.form, ...params };
     },
     async getAreaCode() {
       try {
@@ -246,16 +252,16 @@ export default {
     },
     toDetail(data, type) {
       this.dialogVisible = true;
-      if (type == 'detail') {
+      if (type == "detail") {
         this.showObj = {
-          title: this.$t('xq'),
-          btn: this.$t('sure')
-        }
+          title: this.$t("xq"),
+          btn: this.$t("sure"),
+        };
       } else {
         this.showObj = {
-          title: this.$t('xg'),
-          btn: this.$t('sure')
-        }
+          title: this.$t("xg"),
+          btn: this.$t("sure"),
+        };
       }
 
       this.$set(this, "form", data);
@@ -264,9 +270,9 @@ export default {
       this.dialogVisible = true;
       this.form = {};
       this.showObj = {
-          title: this.$t('add'),
-          btn: this.$t('sure')
-        }
+        title: this.$t("add"),
+        btn: this.$t("sure"),
+      };
     },
     async handlesuccess(e) {
       //   this.$refs["form"].resetFields();
@@ -302,7 +308,7 @@ export default {
         this.bankloading = true;
         await setOutCryAcc({
           ...this.form,
-          userId: this.$store.state.userInfo.id
+          userId: this.$store.state.userInfo.id,
         });
         Message({
           type: "success",
@@ -318,14 +324,14 @@ export default {
     async getInitData() {
       const searchParam = {
         current: this.current,
-        size: this.size
-      }
+        size: this.size,
+      };
       try {
         this.loading = true;
         let req = await outCryAccPage(searchParam);
         this.tableData = req.data.records;
         this.loading = false;
-        this.total = req.data.total
+        this.total = req.data.total;
       } catch (error) {
         this.loading = false;
       }

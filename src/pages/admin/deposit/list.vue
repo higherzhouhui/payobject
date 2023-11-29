@@ -1,35 +1,36 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
-    <LinkPath :linkList="linkList" v-if="!$store.state.userInfo.admin" style="margin-bottom: 1.5rem"/>
+    <!-- <LinkPath :linkList="linkList" v-if="!$store.state.userInfo.admin" style="margin-bottom: 1.5rem"/> -->
     <el-tabs v-model="moneyType">
       <el-tab-pane :label="$t('fdhb')" name="fabi"></el-tab-pane>
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
     </el-tabs>
-    <div class="content">
-      <el-form v-model="searchForm" :inline="true">
-        <el-form-item>
+    <div class="search-container">
+      <div class="admin-title">{{ $store.state.title }}</div>
+      <el-form v-model="searchForm" :inline="true" label-position="top" class="search-form four-column">
+        <el-form-item :label="$t('kssj')">
           <el-date-picker
             v-model="searchForm.startTime"
             align="right"
             type="datetime"
-            :placeholder="$t('kssj')"
+            :placeholder="$t('timeplace')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
+        <el-form-item :label="$t('jssj')">
           <el-date-picker
             v-model="searchForm.endTime"
             align="right"
             type="datetime"
-            :placeholder="$t('jssj')"
+            :placeholder="$t('timeplace')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
+        <el-form-item :label="$t('kzt')">
           <el-select
             v-model="searchForm.status"
             :placeholder="$t('kzt')"
@@ -37,7 +38,7 @@
           >
             <el-option
               style="padding: 0 20px"
-              v-for="(item, index) in slectOption"
+              v-for="(item, index) in selectOption"
               :key="item"
               :label="item"
               :value="index"
@@ -46,6 +47,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
+          <label class="el-form-item__label"></label>
           <el-button
             type="primary"
             @click="handleChangeSearch"
@@ -56,7 +58,8 @@
           </el-button>
         </el-form-item>
       </el-form>
-
+    </div>
+    <div class="content">
       <el-table
         class="tables"
         size="small"
@@ -554,7 +557,7 @@ export default {
         name: "",
       },
       loading: true,
-      slectOption: [],
+      selectOption: [],
       status: [this.$t('all'), this.$t('tjsq'), this.$t('qrhk'), this.$t('cwsh'), this.$t('done'), this.$t('bh')],
       typeOption: ['', 'info','warning','','success','danger'],
       usdtstatus: [this.$t('all'), this.$t('tjsq'), this.$t('done'), this.$t('bh')],
@@ -767,14 +770,14 @@ export default {
           current: this.current,
           size: this.size,
         });
-        this.slectOption = this.status
+        this.selectOption = this.status
       } else if (this.moneyType == "usdt") {
         res = await cryptDepositList({
           ...this.searchForm,
           current: this.current,
           size: this.size,
         });
-        this.slectOption = this.usdtstatus
+        this.selectOption = this.usdtstatus
       }
       this.loading = false;
       if (res.code === 200) {

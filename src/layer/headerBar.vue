@@ -1,12 +1,13 @@
 <template>
   <div class="headerWrapper" :class="className">
     <header>
-        <div class="arrow" @click="backPage">
+        <!-- <div class="arrow" @click="backPage">
           <svg-icon iconClass="arrow-left-solid" className="back" />
         </div>
         <div class="rotate" @click="reload">
           <svg-icon iconClass="rotate-solid" className="back" />
-        </div>
+        </div> -->
+        <div class="title">{{ $store.state.title }}</div>
         <el-dropdown trigger="click" @command="handleDropCommand">
           <span class="el-dropdown-link">
             <svg-icon iconClass="user-gear-solid" className="svg" />
@@ -137,7 +138,7 @@ export default {
 }
 
 .headerWrapper {
-  background: $bgColor;  
+  background: $contentColor;  
 }
 header {
   position: fixed;
@@ -148,7 +149,7 @@ header {
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
   z-index: 99;
   padding: 0 1rem 0 calc($leftSideWidth + 1rem);
-  background: $bgColor;  
+  background: $contentColor;  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -248,5 +249,10 @@ header {
   padding: 4px 18px;
   font-size: 13px;
   line-height: 18jpx;
+}
+.title {
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: bold;
 }
 </style>

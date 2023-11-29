@@ -1,35 +1,37 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
-    <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" v-if="!$store.state.userInfo.admin"/>
+    <!-- <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" v-if="!$store.state.userInfo.admin"/> -->
+    <div class="admin-title">{{$t('提现列表')}}</div>
     <el-tabs v-model="moneyType">
       <el-tab-pane :label="$t('fdhb')" name="fabi"></el-tab-pane>
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
     </el-tabs>
-    <div class="content">
-      <el-form v-model="searchForm" :inline="true">
-        <el-form-item>
+    <div class="search-container">
+      <div class="admin-title">{{ $store.state.title }}</div>
+      <el-form v-model="searchForm" :inline="true" label-position="top" class="search-form four-column">
+        <el-form-item :label="$t('kssj')">
           <el-date-picker
             v-model="searchForm.startTime"
             align="right"
             type="datetime"
-            :placeholder="$t('kssj')"
+            :placeholder="$t('timeplace')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
+        <el-form-item :label="$t('jssj')">
           <el-date-picker
             v-model="searchForm.endTime"
             align="right"
             type="datetime"
-            :placeholder="$t('jssj')"
+            :placeholder="$t('timeplace')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
+        <el-form-item :label="$t('kzt')">
           <el-select
             v-model="searchForm.status"
             :placeholder="$t('kzt')"
@@ -46,6 +48,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
+          <label class="el-form-item__label"></label>
           <el-button
             type="primary"
             @click="handleChangeSearch"
@@ -56,6 +59,8 @@
           </el-button>
         </el-form-item>
       </el-form>
+    </div>
+    <div class="content">
       <el-table
         class="tables"
         size="small"

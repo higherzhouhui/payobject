@@ -69,7 +69,7 @@
                     <span slot="title">{{ $t('hh') }}</span>
                 </el-menu-item>
             </el-submenu>
-            <el-submenu index="4">
+            <el-submenu index="/admin/withdraw/index">
                 <template slot="title">
                     <!-- <img class="icon" src="@/assets/images/home/txgl.png" alt=""> -->
                     <svg-icon iconClass="paper-plane-solid" className="icon-svg" />
@@ -86,7 +86,7 @@
                     <span slot="title">{{ $t('txzhgl') }}</span>
                 </el-menu-item>
             </el-submenu>
-            <el-submenu index="convert">
+            <el-submenu index="/admin/convert/index">
                 <template slot="title">
                     <!-- <img class="icon" src="@/assets/images/home/txgl.png" alt=""> -->
                     <svg-icon iconClass="circle-dollar-to-slot-solid" className="icon-svg" />

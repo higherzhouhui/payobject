@@ -57,7 +57,7 @@ export default {
 
     .index_content {
         margin: 0 0 0 $leftSideWidth;
-        padding: 1.5rem;
+        padding: 2.5rem 1.5rem;
         background: $bgColor;
         width: 100%;
         min-height: calc(100vh - $adminHeaderHeight);

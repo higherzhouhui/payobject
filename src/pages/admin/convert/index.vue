@@ -1,10 +1,11 @@
 
 <template>
   <div>
-    <LinkPath :linkList="linkList" />
+    <!-- <LinkPath :linkList="linkList" /> -->
     <div class="user_withdrawmanagement_withdraw_contianer">
       <div class="money-wrapper">
         <div class="money-left">
+          <div class="admin-title">{{$t('duihuan')}}</div>
           <div class="form-item">
             <div class="label">{{ $t("dhje") }}</div>
             <div class="input-with-select">
@@ -303,7 +304,6 @@ export default {
 </script>
   <style scoped lang="scss">
 .user_withdrawmanagement_withdraw_contianer {
-  margin-top: 1.5rem;
   .content {
     margin-top: 40px;
     gap: 32px;

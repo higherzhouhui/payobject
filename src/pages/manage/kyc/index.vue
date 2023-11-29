@@ -6,23 +6,29 @@
       <el-tab-pane :label="$t('kycyz')" name="second"></el-tab-pane>
     </el-tabs>
     <template v-if="type == 'first'">
-      <div class="content">
-        <el-form ref="form2" :inline="true">
-          <el-form-item>
+      <div class="search-container">
+        <div class="admin-title">{{ $store.state.title }}</div>
+        <el-form
+          v-model="searchForm"
+          :inline="true"
+          label-position="top"
+          class="search-form four-column"
+        >
+          <el-form-item :label="$t('bankname')">
             <el-input
               :placeholder="$t('bankname')"
               v-model="form.bankName"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item  :label="$t('yhzh')">
             <el-input
               :placeholder="$t('yhzh')"
               v-model="form.bankAccount"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item  :label="$t('kzt')">
             <el-select
               v-model="form.bankStatus"
               :placeholder="$t('zhbdzt')"
@@ -39,11 +45,14 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getlist" class="primary">
+            <label class="el-form-item__label"></label>
+            <el-button type="primary" @click="handleChangeSearch" class="primary normal-btn">
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
           </el-form-item>
         </el-form>
+      </div>
+      <div class="content">
         <el-table
           class="tables"
           size="small"
@@ -144,8 +153,15 @@
       </div>
     </template>
     <template v-else>
-      <el-form ref="form2" :inline="true">
-        <el-form-item>
+      <div class="search-container">
+        <div class="admin-title">{{ $store.state.title }}</div>
+        <el-form
+          v-model="searchForm"
+          :inline="true"
+          label-position="top"
+          class="search-form two-column"
+        >
+        <el-form-item :label="$t('kzt')">
           <el-select
             v-model="form.kycStatus"
             :placeholder="$t('zhbdzt')"
@@ -162,11 +178,14 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="getInitData" class="primary">
+          <label class="el-form-item__label"></label>
+          <el-button type="primary" @click="handleChangeSearch" class="primary normal-btn">
             <i class="el-icon-search"></i>{{ $t("search") }}
           </el-button>
         </el-form-item>
       </el-form>
+      </div>
+       
       <div class="content">
         <el-table
           class="tables"
@@ -731,6 +750,10 @@ export default {
     },
   },
   methods: {
+    handleChangeSearch() {
+      this.current = 1
+      this.getInitData()
+    },
     async getAreaCode() {
       try {
         let list = Local("areaList");
@@ -919,9 +942,6 @@ export default {
     },
     handleCurrentChange(val) {
       this.current = val;
-      this.getInitData();
-    },
-    handleChangeSearch() {
       this.getInitData();
     },
   },

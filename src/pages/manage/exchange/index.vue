@@ -6,48 +6,59 @@
       <el-tab-pane :label="$t('hlgl')" name="second"></el-tab-pane>
     </el-tabs>
     <template v-if="type == 'first'">
-      <div class="content">
-        <el-form ref="form2" v-model="form" :inline="true">
-          <el-form-item>
-            <el-input
-              :placeholder="$t('bankname')"
-              v-model="form.bankName"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input
-              :placeholder="$t('yhzh')"
-              v-model="form.bankAccount"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
-              <el-option
-                style="padding: 0 20px"
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              type="primary"
-              @click="getlist"
-              class="primary normal-btn"
-            >
-              <i class="el-icon-search"></i>{{ $t("search") }}
-            </el-button>
-            <!-- <el-button class="primary">
-                <i class="el-icon-refresh"></i>{{ $t("reset") }}
-              </el-button> -->
-          </el-form-item>
-        </el-form>
-        <el-button type="primary normal-btn" @click="showAdd1" class="primary"
+      <div class="search-container">
+        <div class="admin-title">
+          {{ $store.state.title }}
+          <el-button type="primary normal-btn" @click="showAdd1" class="primary"
           ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
         >
+        </div>
+        <el-form
+          v-model="searchForm"
+          :inline="true"
+          label-position="top"
+          class="search-form four-column"
+        >
+        <el-form-item :label="$t('bankname')">
+          <el-input
+            :placeholder="$t('bankname')"
+            v-model="form.bankName"
+          ></el-input>
+        </el-form-item>
+        <el-form-item  :label="$t('yhzh')">
+          <el-input
+            :placeholder="$t('yhzh')"
+            v-model="form.bankAccount"
+          ></el-input>
+        </el-form-item>
+        <el-form-item  :label="$t('kzt')">
+          <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
+            <el-option
+              style="padding: 0 20px"
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <label class="el-form-item__label"></label>
+          <el-button
+            type="primary"
+            @click="getlist"
+            class="primary normal-btn"
+          >
+            <i class="el-icon-search"></i>{{ $t("search") }}
+          </el-button>
+          <!-- <el-button class="primary">
+              <i class="el-icon-refresh"></i>{{ $t("reset") }}
+            </el-button> -->
+        </el-form-item>
+      </el-form>
+      </div>
+      <div class="content">
         <el-table
           class="tables"
           :data="tableData"
@@ -133,10 +144,15 @@
       </div>
     </template>
     <template v-if="type == 'second'">
-      <div class="content">
-        <el-button type="primary" @click="showAdd" class="primary normal-btn"
+      <div class="search-container">
+        <div class="admin-title">
+          {{ $store.state.title }}
+          <el-button type="primary" @click="showAdd" class="primary normal-btn"
           ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
         >
+        </div>
+        </div>
+      <div class="content">
         <el-table
           class="tables"
           :data="tableData2"

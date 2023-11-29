@@ -1,30 +1,35 @@
 <template>
   <div class="user_transferAccountMangement_contianer">
-    <div class="content">
-      <div class="s_title flex flex_align_center flex_jc_sb_end">
-        <!-- <div>{{ $t("zzzhgl") }}</div> -->
+    <div class="search-container">
+      <div class="admin-title">
+        <span>{{ $store.state.title }}</span>
         <el-button type="primary" @click="showAdd" class="normal-btn"
           ><i class="el-icon-plus"></i>{{ $t("zjzzzh") }}</el-button
         >
       </div>
-      <el-form ref="form2" :inline="true" class="mt24">
+      <el-form
+        v-model="searchForm"
+        :inline="true"
+        label-position="top"
+        class="search-form four-column"
+      >
         <el-form-item>
           <el-input
             :placeholder="$t('bankname')"
-            v-model="form.bankName"
+            v-model="searchForm.bankName"
             clearable
           ></el-input>
         </el-form-item>
         <el-form-item>
           <el-input
             :placeholder="$t('yhzh')"
-            v-model="form.bankAccount"
+            v-model="searchForm.bankAccount"
             clearable
           ></el-input>
         </el-form-item>
         <el-form-item>
           <el-select
-            v-model="form.bankStatus"
+            v-model="searchForm.bankStatus"
             :placeholder="$t('zhbdzt')"
             clearable
           >
@@ -42,11 +47,10 @@
           <el-button type="primary" @click="getlist" class="normal-btn primary">
             <i class="el-icon-search"></i>{{ $t("search") }}
           </el-button>
-          <!-- <el-button class="primary">
-            <i class="el-icon-refresh"></i>{{ $t("reset") }}
-          </el-button> -->
         </el-form-item>
       </el-form>
+    </div>
+    <div class="content">
       <el-table
         class="tables"
         size="small"
@@ -210,7 +214,7 @@
             style="width: 100%"
             v-model="bankForm.bankCountry"
             :disabled="!!bankForm.id"
-            filterable 
+            filterable
           >
             <el-option
               style="padding: 0 10px"
@@ -271,7 +275,7 @@
             class="down-a"
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
-            >{{$t('yulan')}}</a
+            >{{ $t("yulan") }}</a
           >
         </el-form-item>
       </el-form>
@@ -335,6 +339,7 @@ export default {
         bankName: "",
         bankAccount: "",
       },
+      searchForm: {},
       default: {
         accountName: "",
         country: "",
@@ -365,9 +370,9 @@ export default {
   created() {
     this.getlist();
     this.getAreaCode();
-    const params = getHashParams()
-    if (params.get('type') == 'add') {
-      this.showAdd()
+    const params = getHashParams();
+    if (params.get("type") == "add") {
+      this.showAdd();
     }
   },
   methods: {
@@ -401,8 +406,8 @@ export default {
         let req = await upload(formData);
         this.bankForm = {
           ...this.bankForm,
-          accountCer: req.data[0]
-        }
+          accountCer: req.data[0],
+        };
         Message({
           type: "success",
           message: this.$t("czcg"),
@@ -443,7 +448,7 @@ export default {
     async getlist() {
       try {
         this.loading = true;
-        let req = await getBankList(this.form);
+        let req = await getBankList(this.searchForm);
         this.tableData = req.data;
         this.loading = false;
       } catch (error) {

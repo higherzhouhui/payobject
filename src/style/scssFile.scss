@@ -322,9 +322,57 @@ html {
 .el-loading-mask {
     background-color: rgba($color: $bgColor, $alpha: 0.8);
 }
-
+.search-container {
+    margin-bottom: 15px;
+    background: $contentColor;
+    border-radius: 4px;
+    padding: 1.5rem;
+    .search-form {
+        display: grid;
+        @media screen and (max-width: 500px) {
+            grid-template-columns: repeat(1, 1fr)!important;
+        }
+        column-gap: 1rem;
+        .normal-btn {
+            width: 100%;
+        }
+        .el-form-item__label {
+            color: #fff;
+        }
+        .el-select {
+            width: 100%;
+        }
+        .el-date-editor.el-input, .el-date-editor.el-input__inner {
+            width: 100%;
+        }
+        .el-form-item {
+            width: 100%;
+            .el-input__inner {
+                width: 100%;
+            }
+        }
+    }
+    .three-column {
+        @media screen and (min-width: 1366px) {
+            grid-template-columns: 1fr 1fr 0.3fr;
+        }
+        @media screen and (max-width: 1366px) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    .four-column {
+        @media screen and (min-width: 1366px) {
+            grid-template-columns: 1fr 1fr 0.5fr 70px;
+        }
+        @media screen and (max-width: 1366px) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    .two-column {
+        grid-template-columns: 1fr 80px;
+    }
+}
 .tables {
-    margin-top: 36px;
     .el-table__row {
         background: $contentColor;
         &:hover .el-table__cell {
@@ -466,7 +514,7 @@ html {
 }
 
 .el-form-item {
-    margin-bottom: 3px;
+    margin-bottom: 12px;
 }
 
 .content_shadow {
@@ -778,4 +826,13 @@ ul::-webkit-scrollbar-thumb {
     .el-scrollbar__bar {
         opacity: 1!important;
     }
+}
+.admin-title {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -1,71 +1,60 @@
 <template>
   <div class="user_transactionInquiry_transactionDetails_contianer">
-    <div class="content">
-      <el-form ref="form2" :inline="true" class="mt12">
-        <el-form-item>
-          <el-select
-            v-model="searchForm.coinCode"
-            :placeholder="$t('qszyhbzl')"
-            clearable
-          >
-            <el-option
-              style="padding: 0 20px"
-              v-for="(item, index) in coinCodeList"
-              :key="index"
-              :label="item.coinCode"
-              :value="item.coinCode"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <!-- <el-form-item>
-          <el-select
-            v-model="searchForm.targetCode"
-            :placeholder="$t('qxzdhhbzl')"
-            clearable
-          >
-            <el-option
-              style="padding: 0 20px"
-              v-for="(item, index) in coinCodeList"
-              :key="index"
-              :label="item.coinCode"
-              :value="item.coinCode"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item> -->
-        <el-form-item>
+    <div class="search-container">
+      <div class="admin-title">{{ $store.state.title }}</div>
+      <el-form v-model="searchForm" :inline="true" label-position="top" class="search-form four-column">
+        <el-form-item :label="$t('kssj')">
           <el-date-picker
             v-model="searchForm.startTime"
             align="right"
             type="datetime"
-            :placeholder="$t('kssj')"
+            :placeholder="$t('timeplace')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
+        <el-form-item :label="$t('jssj')">
           <el-date-picker
             v-model="searchForm.endTime"
             align="right"
             type="datetime"
-            :placeholder="$t('jssj')"
+            :placeholder="$t('timeplace')"
             value-format="timestamp"
             :picker-options="pickerOptions"
           >
           </el-date-picker>
         </el-form-item>
+        <el-form-item :label="$t('bz')">
+          <el-select
+          v-model="searchForm.coinCode"
+          :placeholder="$t('qszyhbzl')"
+          clearable
+        >
+          <el-option
+            style="padding: 0 20px"
+            v-for="(item, index) in coinCodeList"
+            :key="index"
+            :label="item.coinCode"
+            :value="item.coinCode"
+          >
+          </el-option>
+        </el-select>
+        </el-form-item>
         <el-form-item>
+          <label class="el-form-item__label"></label>
           <el-button
             type="primary"
             @click="handleChangeSearch"
             class="normal-btn"
+            style="height: 40px"
           >
             <i class="el-icon-search"></i>{{ $t("search") }}
           </el-button>
         </el-form-item>
       </el-form>
+    </div>
+    <div class="content">
       <el-table
         class="tables"
         size="small"

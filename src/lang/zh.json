@@ -411,5 +411,8 @@
     "account": "账号",
     "noupload": "未上传",
     "qxzhkqbdz": "请选择汇款钱包地址",
-    "qsxtxqbdz": "请选择提现钱包地址"
+    "qsxtxqbdz": "请选择提现钱包地址",
+    "addressMange": "地址管理",
+    "paypass": "支付密码",
+    "timeplace": "年/月/日"
 }

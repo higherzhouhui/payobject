@@ -7,10 +7,16 @@ export default new Vuex.Store({
   state: {
     path: '/',
     userInfo: Local('userInfo') || {},
+    title: '',
   },
   mutations: {
-    SET_PATH(state, path) {
-      state.path = path
+    SET_PATH(state, toObj) {
+      state.path = toObj.fullPath
+      if (toObj.meta && toObj.meta.title) {
+        state.title = toObj.meta.title
+      } else {
+        state.title = ''
+      }
     },
     SET_USERINFO: (state, userInfo) => {
       state.userInfo = userInfo

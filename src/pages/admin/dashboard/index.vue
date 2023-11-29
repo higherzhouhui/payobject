@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="balance-wrapper" :class="balanceLoading && 'loading'">
-      <h1>{{$t("wdqb")}}</h1>
+      <div class="admin-title">{{$t("wdqb")}}</div>
       <swiper ref="refSwiper"
         :options="swiperOption"
         class="content-swiper">
@@ -206,9 +206,7 @@ h1 {
   font-size: 1.5rem;
   margin: 1.5rem 0;
 }
-.balance-wrapper {
-  
-}
+
 .swiper {
   width: 100%;
   height: 100%;

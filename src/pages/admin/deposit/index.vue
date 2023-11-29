@@ -1,9 +1,10 @@
 
 <template>
   <div class="user_withdrawmanagement_withdraw_contianer">
-    <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" />
+    <!-- <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" /> -->
     <div class="money-wrapper">
       <div class="money-left">
+        <div class="admin-title">{{$t('chongzhi')}}</div>
         <div class="form-item">
           <div class="label">{{ $t("hblx") }}</div>
           <div class="input-with-select">

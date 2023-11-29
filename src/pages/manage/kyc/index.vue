@@ -21,14 +21,14 @@
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item  :label="$t('yhzh')">
+          <el-form-item :label="$t('yhzh')">
             <el-input
               :placeholder="$t('yhzh')"
               v-model="form.bankAccount"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item  :label="$t('kzt')">
+          <el-form-item :label="$t('kzt')">
             <el-select
               v-model="form.bankStatus"
               :placeholder="$t('zhbdzt')"
@@ -46,7 +46,11 @@
           </el-form-item>
           <el-form-item>
             <label class="el-form-item__label"></label>
-            <el-button type="primary" @click="handleChangeSearch" class="primary normal-btn">
+            <el-button
+              type="primary"
+              @click="handleChangeSearch"
+              class="primary normal-btn"
+            >
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
           </el-form-item>
@@ -88,47 +92,35 @@
           <el-table-column
             prop="createTime"
             :label="$t('cjsj')"
-            min-width="180"
+            min-width="160"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="190" fixed="right">
+          <el-table-column :label="$t('cz')" width="105" fixed="right">
             <template slot-scope="scope">
-              <el-button
-                type="info"
-                class="btn"
-                size="small"
-                @click="toDetail(scope.row)"
-              >
+              <div class="operation-btn" @click="toDetail(scope.row)">
                 {{ $t("xq") }}
-              </el-button>
-              <el-button
-                type="primary"
-                class="btn"
-                size="small"
+              </div>
+              <div
+                class="operation-btn"
                 @click="showUsdtForm(scope.row)"
                 v-if="scope.row.bankStatus == 1"
               >
-                <i class="el-icon-plus" />
                 {{ $t("jmhb") }}
-              </el-button>
-              <el-button
+              </div>
+              <div
                 v-if="scope.row.bankStatus == 0"
-                class="btn"
-                type="success"
-                size="small"
+                class="operation-btn"
                 @click="sh(scope.row.id, true)"
               >
                 {{ $t("tg") }}
-              </el-button>
-              <el-button
+              </div>
+              <div
                 v-if="scope.row.bankStatus == 0"
-                class="btn"
-                type="danger"
-                size="small"
+                class="operation-btn"
                 @click="rejectKyc(scope.row)"
               >
                 {{ $t("bh") }}
-              </el-button>
+              </div>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -161,31 +153,35 @@
           label-position="top"
           class="search-form two-column"
         >
-        <el-form-item :label="$t('kzt')">
-          <el-select
-            v-model="form.kycStatus"
-            :placeholder="$t('zhbdzt')"
-            clearable
-          >
-            <el-option
-              style="padding: 0 20px"
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+          <el-form-item :label="$t('kzt')">
+            <el-select
+              v-model="form.kycStatus"
+              :placeholder="$t('zhbdzt')"
+              clearable
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <label class="el-form-item__label"></label>
-          <el-button type="primary" @click="handleChangeSearch" class="primary normal-btn">
-            <i class="el-icon-search"></i>{{ $t("search") }}
-          </el-button>
-        </el-form-item>
-      </el-form>
+              <el-option
+                style="padding: 0 20px"
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <label class="el-form-item__label"></label>
+            <el-button
+              type="primary"
+              @click="handleChangeSearch"
+              class="primary normal-btn"
+            >
+              <i class="el-icon-search"></i>{{ $t("search") }}
+            </el-button>
+          </el-form-item>
+        </el-form>
       </div>
-       
+
       <div class="content">
         <el-table
           class="tables"
@@ -226,44 +222,36 @@
             show-overflow-tooltip
           />
 
-          <el-table-column :label="$t('cz')" width="180" fixed="right">
+          <el-table-column :label="$t('cz')" width="105" fixed="right">
             <template slot-scope="scope">
               <div>
-                <el-button
-                  type="info"
-                  class="btn"
-                  size="small"
+                <div
+                  class="operation-btn"
                   @click="toDetail2(scope.row)"
                 >
                   {{ $t("xq") }}
-                </el-button>
-                <el-button
+                </div>
+                <div
                   v-if="scope.row.kycStatus == 0"
-                  type="success"
-                  class="btn"
-                  size="small"
+                  class="operation-btn"
                   @click="sh2(scope.row.id, true)"
                 >
                   {{ $t("tg") }}
-                </el-button>
-                <el-button
+                </div>
+                <div
                   v-if="scope.row.kycStatus == 0"
-                  type="danger"
-                  class="btn"
-                  size="small"
+                  class="operation-btn"
                   @click="rejectKyc(scope.row)"
                 >
                   {{ $t("bh") }}
-                </el-button>
-                <el-button
+                </div>
+                <div
                   v-if="scope.row.kycStatus == 1"
-                  class="btn"
-                  type="primary"
-                  size="small"
+                  class="operation-btn"
                   @click="showUserBalance(scope.row)"
                 >
                   {{ $t("ye") }}
-                </el-button>
+                </div>
               </div>
             </template>
           </el-table-column>
@@ -543,6 +531,7 @@
     <el-dialog
       :title="$t('jmhb')"
       :visible.sync="dialogVisible3"
+      width="600px"
       :before-close="
         () => {
           dialogVisible3 = false;
@@ -751,8 +740,8 @@ export default {
   },
   methods: {
     handleChangeSearch() {
-      this.current = 1
-      this.getInitData()
+      this.current = 1;
+      this.getInitData();
     },
     async getAreaCode() {
       try {

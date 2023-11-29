@@ -836,3 +836,43 @@ ul::-webkit-scrollbar-thumb {
     justify-content: space-between;
     align-items: center;
 }
+.operation-btn {
+    font-size: 12px;
+    color: $baseColor;
+    display: inline-block;
+    margin-right: 6px;
+    cursor: pointer;
+    line-height: 23px;
+    position: relative;
+    &::after {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 12px;
+        background: #eee;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: -4px;
+    }
+}
+.cell .operation-btn:last-child {
+    &::after {
+        content: none;
+    }
+    margin-right: 0;
+}
+.special-btn {
+    margin-right: 6px!important;
+    &::after {
+        content: ''!important;
+        display: inline-block;
+        width: 1px;
+        height: 12px;
+        background: #eee;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: -4px;
+    }
+}

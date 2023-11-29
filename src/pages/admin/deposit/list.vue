@@ -95,7 +95,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="185"
+          width="125"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -108,42 +108,35 @@
               multiple
               v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
             >
-              <el-button size="small" type="primary" class="btn">
+              <div class="operation-btn">
                 {{ $t("schkpz") }}
-              </el-button>
+              </div>
             </el-upload>
-            <el-button
-              type="info"
-              class="btn"
-              size="small"
+            <div
+              class="operation-btn"
               @click="handleShowDetail(scope.row)"
             >
               {{ $t("xq") }}
-            </el-button>
+            </div>
             <el-popconfirm
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
               :title="$t('qrtg')"
               @confirm="passDeposit(scope.row)"
             >
-              <el-button
+              <div
                 slot="reference"
-                type="success"
-                class="btn"
-                size="small"
-                style="margin: 0 10px"
+                class="operation-btn special-btn"
               >
                 {{ $t("tg") }}
-              </el-button>
+              </div>
             </el-popconfirm>
-            <el-button
-              type="danger"
-              class="btn"
-              size="small"
+            <div
+              class="operation-btn"
               @click="rejectDeposit(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}
-            </el-button>
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -850,6 +843,5 @@ export default {
 }
 .upload-demo {
   display: inline-block;
-  margin-right: 12px;
 }
 </style>

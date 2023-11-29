@@ -16,19 +16,19 @@
       <el-table-column
       prop="cryName"
       :label="$t('别名')"
-      min-width="100"
+      min-width="80"
       show-overflow-tooltip
     />
         <el-table-column
           prop="cryAdd"
           :label="$t('地址')"
-          min-width="180"
+          min-width="120"
           show-overflow-tooltip
         />
         <el-table-column
           prop="agreement"
           :label="$t('jmxy')"
-          min-width="180"
+          min-width="80"
           show-overflow-tooltip
         />
         <el-table-column
@@ -40,7 +40,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="140"
+          width="130"
           fixed="right"
         >
           <template slot-scope="scope">

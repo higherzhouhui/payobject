@@ -23,7 +23,7 @@
         :placeholder="$t('请输入验证码')"
       ></el-input>
       <el-button
-        class="normal-btn send"
+        class="send"
         :class="loading && 'loading'"
         @click="sendSms"
         v-if="timer == '60'"
@@ -126,16 +126,23 @@ export default {
     position: absolute;
     right: 0;
     top: 0;
-    height: 100%;
-  }
-  .timer {
     padding: 0 16px;
-    background: #adadad;
-    top: 1px;
-    height: calc(100% - 2px);
+    top: 0;
+    height: 100%;
     color: #fff;
     display: flex;
     align-items: center;
+    background: $baseColor;
+    border: none;
+    @media screen and (max-width: 500px) {
+      height: calc(100% - 4px);
+      top: 2px;
+    }
+  }
+  .timer {
+    color: #fff;
+    background: #adadad;
+
   }
 }
 </style>

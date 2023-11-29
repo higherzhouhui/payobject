@@ -287,9 +287,11 @@ h1 {
     }
     .send {
       color: #ff0000;
+      font-weight: bold;
     }
     .recive {
       color: #2dbe60;
+      font-weight: bold;
     }
     &:hover {
       transform: translateY(-4px);

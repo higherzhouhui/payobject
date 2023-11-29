@@ -284,6 +284,11 @@ html {
 
 .el-submenu__title {
     color: rgba(255, 255, 255, 0.7);
+    &:hover {
+        .icon-svg {
+            color: #fff;
+        }
+    }
 }
 
 .el-table .el-table__header-wrapper,

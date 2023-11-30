@@ -38,7 +38,7 @@
             <el-menu-item index="/manage/exchange">
                 <!-- <img class="icon" src="@/assets/images/manage/hlgl.png" alt=""> -->
                 <svg-icon iconClass="percent-solid" className="icon-svg" />
-                <span slot="title">{{ $t('hlgl') }}</span>
+                <span slot="title">{{ $t('skzhhl') }}</span>
             </el-menu-item>
             <el-menu-item index="/manage/blog">
                 <!-- <img class="icon" src="@/assets/images/home/zz_icon.png" alt=""> -->

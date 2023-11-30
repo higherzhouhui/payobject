@@ -331,6 +331,9 @@ html {
         display: grid;
         @media screen and (max-width: 500px) {
             grid-template-columns: repeat(1, 1fr)!important;
+            .normal-btn {
+                margin-top: -30px;
+            }
         }
         column-gap: 1rem;
         .normal-btn {
@@ -362,7 +365,7 @@ html {
     }
     .four-column {
         @media screen and (min-width: 1366px) {
-            grid-template-columns: 1fr 1fr 0.5fr 70px;
+            grid-template-columns: 1fr 1fr 0.6fr 80px;
         }
         @media screen and (max-width: 1366px) {
             grid-template-columns: 1fr 1fr;
@@ -875,4 +878,11 @@ ul::-webkit-scrollbar-thumb {
         transform: translate(0, -50%);
         right: -4px;
     }
+}
+.el-radio-button__orig-radio:checked+.el-radio-button__inner {
+    background: $baseColor;
+    border-color: $baseColor;
+}
+.el-radio-button__inner:hover {
+    color: $baseColor;
 }

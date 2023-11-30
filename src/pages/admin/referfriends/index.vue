@@ -127,7 +127,10 @@ export default {
   display: grid;
   row-gap: 1rem;
   column-gap: 1rem;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 2fr;
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
 }
 .refer-container {
   padding: 1.5rem;

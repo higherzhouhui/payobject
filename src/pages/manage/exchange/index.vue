@@ -1,10 +1,10 @@
 <template>
   <div class="user_transferAccountMangement_contianer">
     <!-- <LinkPath :linkList="linkList" /> -->
-    <el-tabs v-model="type">
+    <!-- <el-tabs v-model="type">
       <el-tab-pane :label="$t('skzh')" name="first"></el-tab-pane>
       <el-tab-pane :label="$t('hlgl')" name="second"></el-tab-pane>
-    </el-tabs>
+    </el-tabs> -->
     <template v-if="type == 'first'">
       <div class="search-container">
         <div class="admin-title">
@@ -13,6 +13,10 @@
           ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
         >
         </div>
+        <el-radio-group v-model="type">
+          <el-radio-button label="first">{{$t('skzh')}}</el-radio-button>
+          <el-radio-button label="second">{{$t('hlgl')}}</el-radio-button>
+        </el-radio-group>
         <el-form
           v-model="searchForm"
           :inline="true"
@@ -151,6 +155,10 @@
           ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
         >
         </div>
+        <el-radio-group v-model="type">
+          <el-radio-button label="first">{{$t('skzh')}}</el-radio-button>
+          <el-radio-button label="second">{{$t('hlgl')}}</el-radio-button>
+        </el-radio-group>
         </div>
       <div class="content">
         <el-table

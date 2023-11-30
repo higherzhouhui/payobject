@@ -1,12 +1,16 @@
 <template>
   <div class="user_moneymanagement_transfer_contianer">
     <!-- <LinkPath :linkList="linkList" v-if="!$store.state.userInfo.admin" style="margin-bottom: 1.5rem"/> -->
-    <el-tabs v-model="moneyType">
+    <!-- <el-tabs v-model="moneyType">
       <el-tab-pane :label="$t('fdhb')" name="fabi"></el-tab-pane>
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
-    </el-tabs>
+    </el-tabs> -->
     <div class="search-container">
       <div class="admin-title">{{ $store.state.title }}</div>
+      <el-radio-group v-model="moneyType">
+        <el-radio-button label="fabi">{{$t('fdhb')}}</el-radio-button>
+        <el-radio-button label="usdt">{{$t('jmhb')}}</el-radio-button>
+      </el-radio-group>
       <el-form v-model="searchForm" :inline="true" label-position="top" class="search-form four-column">
         <el-form-item :label="$t('kssj')">
           <el-date-picker

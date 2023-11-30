@@ -2,10 +2,12 @@
   <div class="home_index_container">
     <div class="label" v-if="kycTotal">
       <div class="desc">
+        <i class="el-icon-time" />
         {{$t('kycdsh')}}<span>{{ kycTotal }}</span>
       </div>
       <div @click="to('/manage/kyc?type=second')" class="normal-btn">
         {{$t('qsh')}}
+        <i class="el-icon-right" />
       </div>
     </div>
     <el-table
@@ -46,9 +48,13 @@
     </el-table>
     <div class="label" v-if="bankTotal">
       <div class="desc">
+        <i class="el-icon-time" />
         {{$t('yhkdsh')}}<span>{{ bankTotal }}</span>
       </div>
-      <div @click="to('/manage/kyc?type=first')" class="normal-btn">{{$t('qsh')}}</div>
+      <div @click="to('/manage/kyc?type=first')" class="normal-btn">
+        {{$t('qsh')}}
+        <i class="el-icon-right" />
+      </div>
     </div>
     <el-table
       class="tables"
@@ -88,10 +94,12 @@
     </el-table>
     <div class="label" v-if="depositTotal">
       <div class="desc">
+        <i class="el-icon-time" />
         {{$t('fdhbrjdsh')}}<span>{{ depositTotal }}</span>
       </div>
       <div @click="to('/manage/deposit?type=fabi')" class="normal-btn">
         {{$t('qsh')}}
+        <i class="el-icon-right" />
       </div>
     </div>
     <el-table
@@ -121,10 +129,12 @@
     </el-table>
     <div class="label" v-if="cryptdepositTotal">
       <div class="desc">
+        <i class="el-icon-time" />
         {{$t('jmhbrjdsh')}}<span>{{ cryptdepositTotal }}</span>
       </div>
       <div @click="to('/manage/deposit?type=usdt')" class="normal-btn">
         {{$t('qsh')}}
+        <i class="el-icon-right" />
       </div>
     </div>
     <el-table
@@ -154,10 +164,12 @@
     </el-table>
     <div class="label" v-if="withdrawTotal">
       <div class="desc">
+        <i class="el-icon-time" />
         {{$t('fdhbcjdsh')}}<span>{{ withdrawTotal }}</span>
       </div>
       <div @click="to('/manage/withdraw?type=fabi')" class="normal-btn">
         {{$t('qsh')}}
+        <i class="el-icon-right" />
       </div>
     </div>
     <el-table
@@ -187,10 +199,12 @@
     </el-table>
     <div class="label" v-if="cryptwithdrawTotal">
       <div class="desc">
+        <i class="el-icon-time" />
         {{$t('jmhbcjdsh')}}<span>{{ cryptwithdrawTotal }}</span>
       </div>
       <div @click="to('/manage/withdraw?type=usdt')" class="normal-btn">
         {{$t('qsh')}}
+        <i class="el-icon-right" />
       </div>
     </div>
     <el-table
@@ -343,8 +357,10 @@ export default {
     color: #fff;
     margin-bottom: 1rem;
     .desc {
+      font-size: 1.2rem;
+      font-weight: bold;
       span {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         margin-left: 4px;
         font-weight: bold;
         color: $baseColor;

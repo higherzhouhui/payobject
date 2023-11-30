@@ -1,7 +1,7 @@
 <template>
   <div class="login_box">
     <div class="form">
-      <h2>{{$t("resetPwd")}}</h2>
+      <div class="admin-title">{{$t("resetPwd")}}</div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="" />
         <el-input
@@ -230,9 +230,6 @@ export default {
 .login_box {
   width: 700px;
   margin: 0 auto;
-  h2 {
-    color: #fff;
-  }
   @media screen and (max-width: 900px) {
     width: 100%;
     padding: 0!important;

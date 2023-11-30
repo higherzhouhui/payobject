@@ -1,10 +1,10 @@
 <template>
   <div class="login_box">
     <div class="form">
-      <h2>
+      <div class="admin-title">
         {{$store.state.userInfo.hasPayPass ? $t("修改支付密码") : $t("设置支付密码")}}
          <span>{{$t('定期更改支付密码有利于账户安全')}}</span>
-      </h2>
+      </div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="user" />
         <el-input
@@ -207,8 +207,7 @@ export default {
 .login_box {
   width: 700px;
   margin: 0 auto;
-  h2 {
-    color: #fff;
+  .admin-title {
     span {
       font-size: 12px;
       color: #eee;

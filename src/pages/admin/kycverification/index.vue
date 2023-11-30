@@ -174,9 +174,6 @@ export default {
           if (this.userInfo.kyc.kycStatus === 0) {
                 reason = this.$t('zzshzloading')
             }
-            if (this.userInfo.kyc.kycStatus === 1) {
-                reason = this.$t('rxxgqlxwm')
-            }
             if (this.userInfo.kyc.kycStatus === 2) {
                 reason = this.userInfo.kyc.reason
             }
@@ -211,19 +208,22 @@ export default {
 <style scoped lang="scss">
 .verified_container {
   .content_hui {
-    background: $contentColor;
+    //background: $contentColor;
   }
 
   .content {
     padding: 1rem;
+    border-radius: 6px;
     .s_title {
       color: #fff;
-      font-size: 1.2rem;
-      animation: bounceln 0.8s forwards 0.75s;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
     }
     .hint_title {
         font-size: 15px;
         color: rgb(201, 127, 127);
+        font-weight: normal;
       }
     .choice_box {
       padding: 24px;

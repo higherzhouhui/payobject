@@ -4,10 +4,10 @@
       <div class="admin-title">
         {{ $store.state.title }}
         <el-button type="primary normal-btn" @click="showDialog" class="primary"
-        ><i class="el-icon-plus"></i>{{ $t("add") }}</el-button
-      >
+          ><i class="el-icon-plus"></i>{{ $t("add") }}</el-button
+        >
       </div>
-      </div>
+    </div>
     <div class="content">
       <el-table
         class="tables"
@@ -27,6 +27,12 @@
           min-width="150"
           show-overflow-tooltip
         />
+        <el-table-column
+        prop="yuyan"
+        :label="$t('yuyan')"
+        min-width="80"
+        show-overflow-tooltip
+      />
         <el-table-column
           prop="content"
           :label="$t('content')"
@@ -67,30 +73,23 @@
           min-width="180"
           show-overflow-tooltip
         />
-        <el-table-column
-          :label="$t('cz')"
-          width="120"
-          fixed="right"
-        >
+        <el-table-column :label="$t('cz')" width="105" fixed="right">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              class="btn detail-btn"
-              size="small"
-              @click="showDialog(scope.row)"
+            <div
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'detail')"
             >
+              {{ $t("xq") }}
+            </div>
+            <div class="operation-btn" @click="showDialog(scope.row)">
               {{ $t("xg") }}
-            </el-button>
-            <el-popconfirm :title="$t('qrsc')" @confirm="deleteCms(scope.row)">
-              <el-button
-                slot="reference"
-                type="danger"
-                class="btn"
-                size="small"
-              >
-                {{ $t("del") }}
-              </el-button>
-            </el-popconfirm>
+            </div>
+            <div
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'del')"
+            >
+              {{ $t("del") }}
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -106,8 +105,9 @@
         :current-page.sync="current"
         :page-sizes="[10, 50, 100, 500]"
         :page-size="size"
-      layout="prev, pager, next"
-      small        :total="total"
+        layout="prev, pager, next"
+        small
+        :total="total"
         class="elPagination"
       >
       </el-pagination>
@@ -121,24 +121,34 @@
           }
         "
       >
-        <el-form label-width="120px" ref="formss" :model="blogForm" label-position="top" class="formStyle">
-          <el-form-item :label="$t('title')" class="mb24">
-            <el-input
-              v-model="blogForm.title"
-              placeholder="qsrbt"
-            ></el-input>
+        <el-form
+          ref="formss"
+          :model="blogForm"
+          label-position="top"
+          class="formStyle"
+        >
+          <el-form-item :label="$t('yuyan')">
+            <el-select style="width: 100%" v-model="blogForm.lang">
+              <el-option :label="item.label" :value="item.value" v-for="item in langList" :key="item.label" />
+            </el-select>
           </el-form-item>
-          <el-form-item :label="$t('zhaiyao')" class="mb24">
+          <el-form-item :label="$t('title')">
+            <el-input v-model="blogForm.title" :placeholder="$t('qsr')"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('zhaiyao')">
             <el-input
               type="textarea"
               v-model="blogForm.mainPoint"
-              placeholder="qsrzy"
+              :placeholder="$t('qsr')"
             ></el-input>
           </el-form-item>
-          <el-form-item :label="$t('content')" class="mb24">
-            <Editor :passSon="blogForm.content" @update:content="updateContent"/>
+          <el-form-item :label="$t('content')">
+            <Editor
+              :passSon="blogForm.content"
+              @update:content="updateContent"
+            />
           </el-form-item>
-          <el-form-item :label="$t('cover')" class="mb24">
+          <el-form-item :label="$t('cover')">
             <el-upload
               class="upload-demo"
               action="null"
@@ -157,7 +167,7 @@
               :previewSrcList="[`/api/file/downLoad?url=${blogForm.cover}`]"
             />
           </el-form-item>
-          <el-form-item :label="$t('sftj')" class="mb24">
+          <el-form-item :label="$t('sftj')">
             <el-switch v-model="blogForm.recommend"></el-switch>
           </el-form-item>
         </el-form>
@@ -173,6 +183,55 @@
           >
         </div>
       </el-dialog>
+      <el-dialog
+      :title="$t('xq')"
+      :visible.sync="detailVisible"
+      width="600px"
+      :before-close="
+        () => {
+          detailVisible = false;
+        }
+      "
+    >
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                {{ $t("yulan") }}
+              </a>
+            </template>
+            <template v-if="!item.type">
+              {{ item.value }}
+            </template>
+            <template v-if="item.type == 'html'">
+              <span v-html="item.value" />
+            </template>
+            <template v-if="item.type == 'bol'">
+              {{ item.value ? $t('yes') : $t('no') }}
+            </template>
+          </div>
+        </div>
+      </div>
+      <div slot="footer">
+        <el-button class="qx" @click="detailVisible = false">{{
+          $t("cancel")
+        }}</el-button>
+        <el-button
+          v-if="operationType == 'del'"
+          class="qd"
+          @click="deleteRow"
+          >{{ $t("del") }}</el-button
+        >
+      </div>
+    </el-dialog>
     </div>
   </div>
 </template>
@@ -185,15 +244,20 @@ import {
 } from "@/api/common";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
-import Editor from "@/components/Editor"
+import Editor from "@/components/Editor";
+import { pjDownUrl } from '@/utils/common';
 
 export default {
   name: "transactionInquiry",
   components: {
-    Editor
+    Editor,
   },
   data() {
     return {
+      langList: [
+        {label: '中文', value: 'zh'},
+        {label: 'Englist', value: 'en'},
+      ],
       tableData: [],
       options: [],
       type: "1",
@@ -210,14 +274,37 @@ export default {
       size: 10,
       total: 0,
       searchForm: {},
+      detailVisible: false,
+      detailList: [],
+      operationType: "",
+      currentSelectRow: {},
     };
   },
   created() {
     this.getInitData();
   },
   methods: {
+    handleShowDetail(row, type) {
+      this.currentSelectRow = row;
+      this.detailVisible = true;
+      this.operationType = type
+      this.detailList = [
+          { label: this.$t("title"), value: row.title },
+          { label: this.$t("zhaiyao"), value: row.mainPoint },
+          { label: this.$t("cover"), value: pjDownUrl(row.cover), type: "link" },
+          { label: this.$t("content"), value: row.content, type: 'html' },
+          { label: this.$t("sftj"), value: row.recommend, type: 'bol' },
+          { label: this.$t("yuyan"), value: row.yuyan },
+          { label: this.$t("cjsj"), value: row.createTime },
+          { label: this.$t("xgsj"), value: row.modifiedTime },
+        ];
+ 
+    },
+    deleteRow() {
+      this.deleteCms(this.currentSelectRow.id)
+    },
     updateContent(e) {
-      this.blogForm.content = e
+      this.blogForm.content = e;
     },
     async changeSwitch(row) {
       try {
@@ -249,7 +336,7 @@ export default {
         this.loading = false;
         this.dialogVisible = false;
         this.getInitData();
-        this.$message.success("czcg");
+        this.$message.success(this.$t("czcg"));
       } catch (error) {
         this.loading = false;
       }
@@ -270,7 +357,7 @@ export default {
         if (req.code === 200) {
           this.blogForm = {
             ...this.blogForm,
-            cover: req.data[0]
+            cover: req.data[0],
           };
           Message({
             type: "success",
@@ -293,7 +380,7 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
-      this.current = 1
+      this.current = 1;
       this.getInitData();
     },
     async getInitData() {
@@ -303,12 +390,15 @@ export default {
         ...this.searchForm,
         current: this.current,
         size: this.size,
-        lang: this.$i18n.locale
+        lang: this.$i18n.locale,
       };
       res = await cmsPageReq(param);
       this.loading = false;
       if (res.code === 200) {
         this.tableData = res.data.records;
+        this.tableData.forEach(item => {
+          item.yuyan = item.lang == 'zh' ? '中文' : 'EngLish'
+        })
         this.total = res.data.total;
       }
     },

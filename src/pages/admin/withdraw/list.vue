@@ -8,10 +8,15 @@
     <div class="search-container">
       <div class="admin-title">{{ $store.state.title }}</div>
       <el-radio-group v-model="moneyType">
-        <el-radio-button label="fabi">{{$t('fdhb')}}</el-radio-button>
-        <el-radio-button label="usdt">{{$t('jmhb')}}</el-radio-button>
+        <el-radio-button label="fabi">{{ $t("fdhb") }}</el-radio-button>
+        <el-radio-button label="usdt">{{ $t("jmhb") }}</el-radio-button>
       </el-radio-group>
-      <el-form v-model="searchForm" :inline="true" label-position="top" class="search-form four-column">
+      <el-form
+        v-model="searchForm"
+        :inline="true"
+        label-position="top"
+        class="search-form four-column"
+      >
         <el-form-item :label="$t('kssj')">
           <el-date-picker
             v-model="searchForm.startTime"
@@ -95,22 +100,18 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="210"
+          width="130"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button
-              type="info"
-              class="btn"
-              size="small"
-              @click="handleShowDetail(scope.row)"
+            <div
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </el-button>
-            <el-button
-              type="success"
-              class="btn"
-              size="small"
+            </div>
+            <div
+              class="operation-btn"
               @click="
                 currentSelectRow = scope.row;
                 passConfirm();
@@ -118,25 +119,21 @@
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("qrsq") }}
-            </el-button>
-            <el-button
-              type="danger"
-              class="btn"
-              size="small"
+            </div>
+            <div
+              class="operation-btn"
               @click="rejectWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}
-            </el-button>
-            <el-button
-              type="success"
-              class="btn"
-              size="small"
+            </div>
+            <div
+              class="operation-btn"
               @click="passWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
               {{ $t("tg") }}
-            </el-button>
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -180,24 +177,27 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="190"
+          width="120"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button
-              type="info"
-              class="btn"
-              size="small"
-              @click="handleShowDetail(scope.row)"
-            >
+            <div class="operation-btn" @click="handleShowDetail(scope.row)">
               {{ $t("xq") }}
-            </el-button>
-            <el-button type="success" class="btn" size="small" @click="passWithdraw(scope.row)" v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin">
+            </div>
+            <div
+              class="operation-btn"
+              @click="passWithdraw(scope.row)"
+              v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
+            >
               {{ $t("tg") }}
-            </el-button>
-            <el-button type="danger" class="btn" size="small" @click="rejectWithdraw(scope.row)"  v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin">
+            </div>
+            <div
+              class="operation-btn"
+              @click="rejectWithdraw(scope.row)"
+              v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
+            >
               {{ $t("bh") }}
-            </el-button>
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -213,8 +213,9 @@
         :current-page.sync="current"
         :page-sizes="[10, 50, 100, 500]"
         :page-size="size"
-      layout="prev, pager, next"
-      small        :total="total"
+        layout="prev, pager, next"
+        small
+        :total="total"
         class="elPagination"
       >
       </el-pagination>
@@ -222,14 +223,35 @@
     <el-dialog
       :title="$t('xq')"
       :visible.sync="dialogVisible"
-      width="1000px"
+      width="636px"
       :before-close="
         () => {
           dialogVisible = false;
         }
       "
     >
-      <el-form
+    <div class="formStyle">
+      <div
+        class="list"
+        v-for="(item, index) in detailList.filter((item) => {
+          return item.value;
+        })"
+        :key="index"
+      >
+        <div class="list-left">{{ item.label }}</div>
+        <div class="list-right">
+          <template v-if="item.type == 'link'">
+            <a :href="item.value" target="_blank">
+              {{ $t("yulan") }}
+            </a>
+          </template>
+          <template v-else>
+            {{ item.value }}
+          </template>
+        </div>
+      </div>
+    </div>
+      <!-- <el-form
         label-position="top"
         ref="formss"
         :model="currentSelectRow"
@@ -253,9 +275,6 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item :label="$t('yjdzje')">
-            <el-input v-model="currentSelectRow.changeValue" :readOnly="true"></el-input>
-          </el-form-item> -->
         <el-form-item :label="$t('skzh')">
           <el-input
             v-model="currentSelectRow.outbankAccount"
@@ -308,16 +327,16 @@
         </el-form-item>
         <el-form-item :label="$t('hkpz')" v-if="currentSelectRow.reqProof">
           <a
-          :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
-          target="_blank"
-          class="down-a"
-          >{{ $t("yulan") }}</a
-        >
+            :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+            target="_blank"
+            class="down-a"
+            >{{ $t("yulan") }}</a
+          >
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
-        <el-button class="qd" @click="dialogVisible = false">{{
-          $t("done")
+        <el-button class="qx" @click="dialogVisible = false">{{
+          $t("cancel")
         }}</el-button>
       </div>
     </el-dialog>
@@ -331,7 +350,28 @@
         }
       "
     >
-      <el-form
+    <div class="formStyle">
+      <div
+        class="list"
+        v-for="(item, index) in detailList.filter((item) => {
+          return item.value;
+        })"
+        :key="index"
+      >
+        <div class="list-left">{{ item.label }}</div>
+        <div class="list-right">
+          <template v-if="item.type == 'link'">
+            <a :href="item.value" target="_blank">
+              {{ $t("yulan") }}
+            </a>
+          </template>
+          <template v-else>
+            {{ item.value }}
+          </template>
+        </div>
+      </div>
+    </div>
+      <!-- <el-form
         label-position="top"
         ref="formss"
         :model="currentSelectRow"
@@ -349,23 +389,18 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item :label="$t('mbbz')">
-            <el-input v-model="currentSelectRow.coinCode" :readOnly="true"></el-input>
-          </el-form-item> -->
         <el-form-item :label="$t('ckje')">
           <el-input
             v-model="currentSelectRow.reqValue"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item :label="$t('yjdzje')">
-            <el-input v-model="currentSelectRow.witValue" :readOnly="true"></el-input>
-          </el-form-item> -->
-        <el-form-item
-          :label="$t('bhly')"
-          v-if="currentSelectRow.memo"
-        >
-          <el-input type="textarea" v-model="currentSelectRow.memo" :readOnly="true"></el-input>
+        <el-form-item :label="$t('bhly')" v-if="currentSelectRow.memo">
+          <el-input
+            type="textarea"
+            v-model="currentSelectRow.memo"
+            :readOnly="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('cjsj')">
           <el-input
@@ -381,23 +416,23 @@
         </el-form-item>
         <el-form-item :label="$t('hkpz')" v-if="currentSelectRow.reqProof">
           <a
-          :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
-          target="_blank"
-          class="down-a"
-          >{{ $t("yulan") }}</a
-        >
+            :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+            target="_blank"
+            class="down-a"
+            >{{ $t("yulan") }}</a
+          >
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
-        <el-button class="qd" @click="usdtdialogVisible = false">{{
-          $t("done")
+        <el-button class="qx" @click="usdtdialogVisible = false">{{
+          $t("cancel")
         }}</el-button>
       </div>
     </el-dialog>
     <el-dialog
       :title="$t('cjqr')"
       :visible.sync="passdialogVisible"
-      width="650"
+      width="650px"
       :before-close="
         () => {
           passdialogVisible = false;
@@ -409,14 +444,22 @@
           <el-input
             type="number"
             v-model="currentSelectRow.withdrawValue"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('sxfei')" v-if="moneyType == 'fabi'">
           <el-input
             type="number"
             v-model="currentSelectRow.commission"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
+        <!-- <el-form-item :label="$t('hkqbdz')" v-if="moneyType == 'usdt'">
+          <el-input
+            v-model="currentSelectRow.tid"
+            :placeholder="$t('qsr')"
+          ></el-input>
+        </el-form-item> -->
         <el-form-item :label="$t('hkpz')">
           <el-upload
             class="upload-demo"
@@ -432,24 +475,24 @@
             </el-button>
           </el-upload>
           <a
-              :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof"
-              target="_blank"
-              v-else
-              class="down-a"
-              >{{$t('yulan')}}</a
-            >
+            :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof"
+            target="_blank"
+            v-else
+            class="down-a"
+            >{{ $t("yulan") }}</a
+          >
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="info" class="qx" @click="passdialogVisible = false"
-          >{{$t('cancel')}}</el-button
-        >
+        <el-button type="info" class="qx" @click="passdialogVisible = false">{{
+          $t("cancel")
+        }}</el-button>
         <el-button
           type="primary"
           class="qd"
           @click="passConfirm"
           v-loading="operationLoading"
-          >{{$t('sure')}}</el-button
+          >{{ $t("sure") }}</el-button
         >
       </div>
     </el-dialog>
@@ -465,7 +508,7 @@
     >
       <el-form label-position="top" ref="formss" :model="currentSelectRow">
         <el-form-item :label="$t('bhly')">
-          <el-input type="textarea" v-model="currentSelectRow.memo"></el-input>
+          <el-input type="textarea" v-model="currentSelectRow.memo" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -474,7 +517,7 @@
           size="large"
           class="qx"
           @click="rejectdialogVisible = false"
-          >{{$t('cancel')}}</el-button
+          >{{ $t("cancel") }}</el-button
         >
         <el-button
           type="primary"
@@ -482,7 +525,7 @@
           class="qd"
           @click="rejectConfirm"
           v-loading="operationLoading"
-          >{{$t('sure')}}</el-button
+          >{{ $t("sure") }}</el-button
         >
       </div>
     </el-dialog>
@@ -501,10 +544,10 @@ import {
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank.js";
-import { getHashParams } from "@/utils/index"
-
+import { getHashParams } from "@/utils/index";
+import { pjDownUrl, getCountryName } from "@/utils/common";
 export default {
-  name: "userMoneyManagementTransfer",
+  name: "widthDrawl",
   components: { LinkPath },
   data() {
     return {
@@ -575,13 +618,15 @@ export default {
       passdialogVisible: false,
       rejectdialogVisible: false,
       operationLoading: false,
+      operationType: "",
+      detailList: [],
     };
   },
   created() {
-    const params = getHashParams()
-    if (params && params.get('type')) {
-      const mt = params.get('type')
-      this.moneyType = mt
+    const params = getHashParams();
+    if (params && params.get("type")) {
+      const mt = params.get("type");
+      this.moneyType = mt;
     }
     this.getInitData();
     this.getRJBZ();
@@ -681,9 +726,9 @@ export default {
         }
       } catch (error) {}
     },
-    handleClick() {},
-    handleShowDetail(row) {
+    handleShowDetail(row, type) {
       this.currentSelectRow = row;
+      this.operationType = type
       if (this.moneyType == "fabi") {
         const outlist = this.outCoinList.filter((item) => {
           return item.id == row.bankId;
@@ -698,9 +743,39 @@ export default {
             outswiftCode: outlist[0].swiftCode,
           };
         }
+        this.detailList = [
+          {label: this.$t("bz"), value: this.currentSelectRow.coinCode},
+          {label: this.$t("ckje"), value: this.currentSelectRow.reqValue},
+          {label: this.$t("userId"), value: this.currentSelectRow.userId},
+          {label: this.$t("skzhmc"), value: this.currentSelectRow.accountName},
+          {label: this.$t("skzh"), value: this.currentSelectRow.outbankAccount},
+          {label: this.$t("bankcode"), value: this.currentSelectRow.outbankCode},
+          {label: this.$t("skyhszdz"), value: this.currentSelectRow.outbankAdd},
+          {label: this.$t("khgj"), value: getCountryName(this.currentSelectRow.outbankCountry)},
+          {label: this.$t("sksdm"), value: this.currentSelectRow.outswiftCode},
+          {label: this.$t("sxfei"), value: this.currentSelectRow.commission},
+          {label: this.$t("kzt"), value: this.status[this.currentSelectRow.reqStatus]},
+          {label: this.$t("bhly"), value: this.currentSelectRow.memo},
+          {label: this.$t("zl"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
+          {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
+          {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
+        ]
         this.dialogVisible = true;
       }
       if (this.moneyType == "usdt") {
+        this.detailList = [
+          {label: this.$t("bz"), value: this.currentSelectRow.coinCode},
+          {label: this.$t("czje"), value: this.currentSelectRow.reqValue},
+          {label: this.$t("jmxy"), value: this.currentSelectRow.agreement},
+          {label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd},
+          // {label: this.$t("hkqbdz"), value: this.currentSelectRow.tid},
+          {label: this.$t("kzt"), value: this.usdtstatus[this.currentSelectRow.reqStatus]},
+          {label: this.$t("bhly"), value: this.currentSelectRow.memo},
+          {label: this.$t("zl"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
+          {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
+          {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
+
+        ]
         this.usdtdialogVisible = true;
       }
     },
@@ -747,8 +822,8 @@ export default {
         if (req.code === 200) {
           this.currentSelectRow = {
             ...this.currentSelectRow,
-            withdrawProof: req.data[0]
-          }
+            withdrawProof: req.data[0],
+          };
           Message({
             type: "success",
             message: this.$t("sccg"),

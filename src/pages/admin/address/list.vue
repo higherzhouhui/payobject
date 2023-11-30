@@ -41,28 +41,24 @@
           show-overflow-tooltip
         />
         <el-table-column
+        prop="modifiedTime"
+        :label="$t('xgsj')"
+        min-width="165"
+        show-overflow-tooltip
+      />
+        <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="130"
+          width="60"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button
-              type="info"
-              class="btn"
-              size="small"
-              @click="toDetail(scope.row, 'detail')"
-            >
-              {{ $t("xq") }}
-            </el-button>
-            <el-button
-              type="primary"
-              class="btn"
-              size="small"
+            <div
+              class="operation-btn"
               @click="toDetail(scope.row, 'update')"
             >
               {{ $t("xg") }}
-            </el-button>
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">

@@ -3,7 +3,12 @@
     <!-- <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" v-if="!$store.state.userInfo.admin"/> -->
     <div class="search-container">
       <div class="admin-title">{{ $store.state.title }}</div>
-      <el-form v-model="searchForm" :inline="true" label-position="top" class="search-form four-column">
+      <el-form
+        v-model="searchForm"
+        :inline="true"
+        label-position="top"
+        class="search-form four-column"
+      >
         <el-form-item :label="$t('kssj')">
           <el-date-picker
             v-model="searchForm.startTime"
@@ -64,11 +69,7 @@
         v-loading="loading"
       >
         <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
-        <el-table-column
-          prop="depValue"
-          :label="$t('dhje')"
-          min-width="100"
-        />
+        <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" />
         <el-table-column
           prop="targetCoin"
           :label="$t('mbbz')"
@@ -94,57 +95,39 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="170"
+          width="105"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button
-                type="info"
-                class="btn"
-                size="small"
-                style="margin-right: 5px"
-                @click="handleShowDetail(scope.row)"
-              >
-                {{ $t("xq") }}
-              </el-button>
-            <el-popconfirm
+            <div
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'detail')"
+            >
+              {{ $t("xq") }}
+            </div>
+
+            <div
               v-if="scope.row.changeStatus == 0 && !$store.state.userInfo.admin"
-              :title="$t('qrsxsq')"
-              @confirm="cancelReq(scope.row)"
+              @click="handleShowDetail(scope.row, 'cancel')"
+              class="operation-btn"
             >
-              <el-button
-                slot="reference"
-                type="warning"
-                class="btn"
-                size="small"
-              >
-                {{ $t("cancel") }}
-              </el-button>
-            </el-popconfirm>
-            <el-popconfirm
+              {{ $t("cancel") }}
+            </div>
+
+            <div
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
-              :title="$t('qrtg')"
-              @confirm="confirmPass(scope.row)"
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'pass')"
             >
-              <el-button
-                slot="reference"
-                type="success"
-                class="btn"
-                size="small"
-                style="margin-right: 5px"
-              >
-                {{ $t("tg") }}
-              </el-button>
-            </el-popconfirm>
-            <el-button
+              {{ $t("tg") }}
+            </div>
+            <div
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
-              type="danger"
-              class="btn"
-              size="small"
+              class="operation-btn"
               @click="rejectConfirm(scope.row)"
             >
               {{ $t("bh") }}
-            </el-button>
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -160,15 +143,16 @@
         :current-page.sync="current"
         :page-sizes="[10, 50, 100, 500]"
         :page-size="size"
-      layout="prev, pager, next"
-      small        :total="total"
+        layout="prev, pager, next"
+        small
+        :total="total"
         class="elPagination"
       >
       </el-pagination>
     </div>
 
     <el-dialog
-      :title="$t('xq')"
+      :title="operationType == 'detail' ? $t('xq') : operationType == 'pass' ? $t('sh') : $t('cancel')"
       :visible.sync="dialogVisible"
       width="636px"
       :before-close="
@@ -177,7 +161,28 @@
         }
       "
     >
-      <el-form
+    <div class="formStyle">
+      <div
+        class="list"
+        v-for="(item, index) in detailList.filter((item) => {
+          return item.value;
+        })"
+        :key="index"
+      >
+        <div class="list-left">{{ item.label }}</div>
+        <div class="list-right">
+          <template v-if="item.type == 'link'">
+            <a :href="item.value" target="_blank">
+              {{ $t("yulan") }}
+            </a>
+          </template>
+          <template v-else>
+            {{ item.value }}
+          </template>
+        </div>
+      </div>
+    </div>
+      <!-- <el-form
         label-position="top"
         ref="formss"
         :model="currentSelectRow"
@@ -239,17 +244,20 @@
             ></el-button
           >
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
-        <el-button class="qd" @click="dialogVisible = false">{{
-          $t("done")
+        <el-button class="qx" @click="dialogVisible = false">{{
+          $t("cancel")
         }}</el-button>
+        <el-button class="qd" @click="handleDialogQd" v-if="operationType !== 'detail'">
+          {{ operationType == 'pass' ?  $t("tg") : $t('qd') }}
+        </el-button>
       </div>
     </el-dialog>
     <el-dialog
       :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
-      width="650"
+      width="650px"
       :before-close="
         () => {
           rejectdialogVisible = false;
@@ -257,8 +265,8 @@
       "
     >
       <el-form label-position="top" ref="formss">
-        <el-form-item :label="$t('bh')">
-          <el-input type="textarea" v-model="mime"></el-input>
+        <el-form-item :label="$t('bhly')">
+          <el-input type="textarea" v-model="mime" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -267,10 +275,14 @@
           size="large"
           class="qx"
           @click="rejectdialogVisible = false"
-          >{{$t('cancel')}}</el-button
+          >{{ $t("cancel") }}</el-button
         >
-        <el-button type="primary" size="large" class="qd" @click="rejectCertin"
-          >{{$t('sure')}}</el-button
+        <el-button
+          type="primary"
+          size="large"
+          class="qd"
+          @click="rejectCertin"
+          >{{ $t("sure") }}</el-button
         >
       </div>
     </el-dialog>
@@ -288,6 +300,8 @@ export default {
   components: { LinkPath },
   data() {
     return {
+      operationType: "",
+      detailList: [],
       rejectdialogVisible: false,
       pickerOptions: {
         disabledDate(time) {
@@ -327,12 +341,7 @@ export default {
         name: "",
       },
       loading: true,
-      status: [
-        this.$t("dsh"),
-        this.$t("ytg"),
-        this.$t("yqx"),
-        this.$t("bh"),
-      ],
+      status: [this.$t("dsh"), this.$t("ytg"), this.$t("yqx"), this.$t("bh")],
       typeOption: ["", "success", "warning", "danger"],
       dialogVisible: false,
       currentSelectRow: {},
@@ -361,7 +370,7 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
-      this.current = 1
+      this.current = 1;
       this.getInitData();
     },
     async getRJBZ() {
@@ -391,11 +400,18 @@ export default {
         changePer(param);
         Message({
           type: "success",
-          message: this.$t('czcg'),
+          message: this.$t("czcg"),
         });
         this.getInitData();
         this.rejectdialogVisible = false;
       } catch {}
+    },
+    handleDialogQd() {
+      if (this.operationType == 'pass') {
+        this.confirmPass(this.currentSelectRow)
+      } else {
+        this.cancelReq(this.currentSelectRow)
+      }
     },
     confirmPass(row) {
       try {
@@ -405,8 +421,9 @@ export default {
         row.changeStatus = 1;
         Message({
           type: "success",
-          message: this.$t('czcg'),
+          message: this.$t("czcg"),
         });
+        this.dialogVisible = false
       } catch (err) {
         this.loading = false;
       }
@@ -417,13 +434,25 @@ export default {
         changeCancel({ id: row.id });
         this.loading = false;
         row.changeStatus = 2;
+        this.dialogVisible = false
       } catch (err) {
         this.loading = false;
       }
     },
-    handleShowDetail(row) {
+    handleShowDetail(row, type) {
       this.currentSelectRow = row;
+      this.operationType = type
       this.dialogVisible = true;
+      this.detailList = [
+        {label: this.$t('bz'), value: row.depCoin},
+        {label: this.$t('dhje'), value: row.depValue},
+        {label: this.$t('mbbz'), value: row.targetCoin},
+        {label: this.$t('kzt'), value: this.status[row.changeStatus]},
+        {label: this.$t('hl'), value: row.changeRate},
+        {label: this.$t('yjdzje'), value: row.targetValue},
+        {label: this.$t('cjsj'), value: row.createTime},
+        {label: this.$t('xgsj'), value: row.modifiedTime},
+      ]
     },
     async getInitData() {
       this.loading = true;

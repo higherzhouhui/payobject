@@ -9,8 +9,8 @@
       <div class="search-container">
         <div class="admin-title">{{ $store.state.title }}</div>
         <el-radio-group v-model="type">
-          <el-radio-button label="first">{{$t('bankcard')}}</el-radio-button>
-          <el-radio-button label="second">{{$t('kycyz')}}</el-radio-button>
+          <el-radio-button label="first">{{ $t("bankcard") }}</el-radio-button>
+          <el-radio-button label="second">{{ $t("kycyz") }}</el-radio-button>
         </el-radio-group>
         <el-form
           v-model="searchForm"
@@ -101,7 +101,10 @@
           />
           <el-table-column :label="$t('cz')" width="105" fixed="right">
             <template slot-scope="scope">
-              <div class="operation-btn" @click="toDetail(scope.row)">
+              <div
+                class="operation-btn"
+                @click="passBankDialog(scope.row, 'detail')"
+              >
                 {{ $t("xq") }}
               </div>
               <div
@@ -114,7 +117,7 @@
               <div
                 v-if="scope.row.bankStatus == 0"
                 class="operation-btn"
-                @click="sh(scope.row.id, true)"
+                @click="passBankDialog(scope.row, 'pass')"
               >
                 {{ $t("tg") }}
               </div>
@@ -152,8 +155,8 @@
       <div class="search-container">
         <div class="admin-title">{{ $store.state.title }}</div>
         <el-radio-group v-model="type">
-          <el-radio-button label="first">{{$t('bankcard')}}</el-radio-button>
-          <el-radio-button label="second">{{$t('kycyz')}}</el-radio-button>
+          <el-radio-button label="first">{{ $t("bankcard") }}</el-radio-button>
+          <el-radio-button label="second">{{ $t("kycyz") }}</el-radio-button>
         </el-radio-group>
         <el-form
           v-model="searchForm"
@@ -235,14 +238,14 @@
               <div>
                 <div
                   class="operation-btn"
-                  @click="toDetail2(scope.row)"
+                  @click="passKycDialog(scope.row, 'detail')"
                 >
                   {{ $t("xq") }}
                 </div>
                 <div
                   v-if="scope.row.kycStatus == 0"
                   class="operation-btn"
-                  @click="sh2(scope.row.id, true)"
+                  @click="passKycDialog(scope.row, 'pass')"
                 >
                   {{ $t("tg") }}
                 </div>
@@ -286,7 +289,7 @@
     </template>
 
     <el-dialog
-      :title="$t('xq')"
+      :title="operationType == 'detail' ? $t('xq') : $t('sh')"
       :visible.sync="dialogVisible"
       width="636px"
       :before-close="
@@ -295,7 +298,28 @@
         }
       "
     >
-      <el-form
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                {{ $t("yulan") }}
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
+      </div>
+      <!-- <el-form
         label-position="top"
         ref="formss"
         :model="bankForm"
@@ -388,10 +412,18 @@
             >{{ $t("yulan") }}</a
           >
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
-        <el-button class="qd" size="small" @click="dialogVisible = false">
-          {{ $t("done") }}
+        <el-button class="qx" size="small" @click="dialogVisible = false">
+          {{ $t("cancel") }}
+        </el-button>
+        <el-button
+          v-if="operationType == 'pass'"
+          class="qd"
+          size="small"
+          @click="sh(bankForm.id, true)"
+        >
+          {{ $t("tg") }}
         </el-button>
       </div>
     </el-dialog>
@@ -405,7 +437,28 @@
         }
       "
     >
-      <el-form
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                {{ $t("yulan") }}
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
+      </div>
+      <!-- <el-form
         ref="formss"
         :model="bankForm2"
         class="formStyle"
@@ -492,6 +545,7 @@
         <el-form-item :label="$t('bhly')" v-if="bankForm2.reason">
           <el-input
             type="textarea"
+            :rows="5"
             v-model="bankForm2.reason"
             :disabled="true"
           ></el-input>
@@ -529,10 +583,18 @@
             >{{ $t("yulan") }}</a
           >
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
-        <el-button class="qd" size="small" @click="dialogVisible2 = false">
-          {{ $t("done") }}
+        <el-button class="qx" size="small" @click="dialogVisible2 = false">
+          {{ $t("cancel") }}
+        </el-button>
+        <el-button
+          v-if="operationType == 'pass'"
+          class="qd"
+          size="small"
+          @click="sh2(bankForm.id, true)"
+        >
+          {{ $t("tg") }}
         </el-button>
       </div>
     </el-dialog>
@@ -558,22 +620,6 @@
             />
           </el-select>
         </el-form-item>
-        <!-- <el-form-item :label="$t('jmxy')">
-          <el-select
-          class="elSelect"
-          v-model="addressForm.agreement"
-          :placeholder="$t('qsz')"
-        >
-          <el-option
-            style="padding: 0 20px"
-            v-for="item in agreementList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
-        </el-form-item> -->
         <el-form-item :label="$t('ERC20钱包地址')">
           <el-input
             v-model="addressForm.ercAdd"
@@ -638,22 +684,37 @@
       "
     >
       <div class="formStyle">
-        <div
-          class="dialog-input"
-          v-for="item in userBalanceDetail"
-          :key="item.coinCode"
-        >
-          <el-input :value="item.balance">
-            <template slot="append">
-              {{ item.coinCode }}
-            </template>
-          </el-input>
+        <div class="list-wrapper" v-for="(item, index) in userBalanceDetail" :key="index">
+          <div
+            class="list"
+          >
+            <div class="list-left">
+              <span
+                :class="`flag-icon ${getFlagIcon(userBalanceDetail[index].coinCode)}`"
+                v-if="item.coinCode != 'USDT'"
+              ></span>
+              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              {{ userBalanceDetail[index].coinCode }}
+            </div>
+            <div class="list-right">
+              {{ userBalanceDetail[index].balance }}
+            </div>
+          </div>
+          <div class="list">
+            <div class="list-left">{{$t('cjsj')}}</div>
+            <div class="list-right">{{userBalanceDetail[index].createTime}}</div>
+          </div>
+          <div class="list">
+            <div class="list-left">{{$t('xgsj')}}</div>
+            <div class="list-right">{{userBalanceDetail[index].modifiedTime}}</div>
+          </div>
         </div>
+      
         <el-empty v-if="!userBalanceDetail.length" />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button class="qd" @click="userBalanceDialog = false">{{
-          $t("sure")
+        <el-button class="qx" @click="userBalanceDialog = false">{{
+          $t("cancel")
         }}</el-button>
       </span>
     </el-dialog>
@@ -671,11 +732,14 @@ import { setCryAcc, getCryAdd } from "@/api/exchange";
 import { cryptocurrencies, countries } from "@/api/login";
 import { Local, getHashParams } from "@/utils/index";
 import { Message } from "element-ui";
+import { getCountryName, pjDownUrl, getFlagIcon } from "@/utils/common";
 
 export default {
   name: "KYCPage",
   data() {
     return {
+      getFlagIcon: getFlagIcon,
+      searchForm: {},
       agreementList: [
         { label: "TRC20", value: "TRC20" },
         { label: "ERC20", value: "ERC20" },
@@ -723,20 +787,22 @@ export default {
       bankForm: {},
       options3: [
         {
-          label: "gth",
+          label: this.$t("gth"),
           value: 1,
         },
         {
-          label: "qy",
+          label: this.$t("qy"),
           value: 2,
         },
         {
-          label: "hwgs",
+          label: this.$t("hwgs"),
           value: 3,
         },
       ],
       dialogVisible3Loading: false,
       userBalanceDetail: [],
+      operationType: "",
+      detailList: [],
     };
   },
   watch: {
@@ -871,41 +937,89 @@ export default {
         Local("szList", res.data);
       } catch (error) {}
     },
-    sh2(id, type) {
-      this.$confirm(type ? this.$t("qrtg") : this.$t("qrbh"), this.$t("hint"))
-        .then(async (_) => {
-          try {
-            await perKyc({ id, pass: type, reason: "123" });
-            Message({
-              type: "success",
-              message: this.$t("czcg"),
-            });
-            this.getlist2();
-          } catch (error) {}
-        })
-        .catch((_) => {});
+    async sh2(id, type) {
+      try {
+        await perKyc({ id, pass: type });
+        this.dialogVisible2 = false
+        Message({
+          type: "success",
+          message: this.$t("czcg"),
+        });
+        this.getlist2();
+      } catch (error) {}
     },
-    sh(id, type) {
-      this.$confirm(type ? this.$t("qrtg") : this.$t("qrbh"), this.$t("hint"))
-        .then(async (_) => {
-          try {
-            await perBank({ id, pass: type });
-            Message({
-              type: "success",
-              message: this.$t("czcg"),
-            });
-            this.getlist();
-          } catch (error) {}
-        })
-        .catch((_) => {});
+    async sh(id, type) {
+      try {
+        await perBank({ id, pass: type });
+        this.dialogVisible = false
+        Message({
+          type: "success",
+          message: this.$t("czcg"),
+        });
+        this.getInitData();
+      } catch (error) {}
     },
-    toDetail(data) {
+    passBankDialog(data, type) {
       this.dialogVisible = true;
       this.$set(this, "bankForm", data);
+      this.operationType = type;
+      this.detailList = [
+        { label: this.$t("zhmc"), value: data.accountName },
+        { label: this.$t("yhzh"), value: data.bankCode },
+        { label: this.$t("bankname"), value: data.bankName },
+        { label: this.$t("khgj"), value: getCountryName(data.bankCountry) },
+        { label: this.$t("khdz"), value: data.bankAdd },
+        { label: this.$t("jzdz"), value: data.accountAdd },
+        { label: this.$t("ssgj"), value: getCountryName(data.country) },
+        { label: this.$t("kzt"), value: this.status[data.bankStatus] },
+        { label: this.$t("swiftCode"), value: data.swiftCode },
+        { label: this.$t("userId"), value: data.userId },
+        { label: this.$t("bhly"), value: data.reason },
+        {
+          label: this.$t("zl"),
+          value: pjDownUrl(data.accountCer),
+          type: "link",
+        },
+        { label: this.$t("cjsj"), value: data.createTime },
+        { label: this.$t("xgsj"), value: data.modifiedTime },
+      ];
     },
-    toDetail2(data) {
+    passKycDialog(data, type) {
       this.dialogVisible2 = true;
       this.$set(this, "bankForm2", data);
+      this.operationType = type;
+      this.detailList = [
+        { label: this.$t("qymc"), value: data.companyName },
+        { label: this.$t("qyjydz"), value: data.businessAdd },
+        { label: this.$t("qylx"), value: this.options3[data.busType].label },
+        { label: this.$t("ywcjsm"), value: data.businessScenario },
+        { label: this.$t("ssgj"), value: getCountryName(data.country) },
+        { label: this.$t("kzt"), value: this.status[data.kycStatus] },
+        { label: this.$t("zcrq"), value: data.regDate },
+        { label: this.$t("qyyxq"), value: data.period },
+        { label: this.$t("userId"), value: data.userId },
+        { label: this.$t("qygw"), value: data.webSite },
+        { label: this.$t("dbjyed"), value: data.transactionLimit },
+        { label: this.$t("ygyjybs"), value: data.transactionsMonth },
+        { label: this.$t("bhly"), value: data.reason },
+        {
+          label: this.$t("t1"),
+          value: pjDownUrl(data.regCer),
+          type: "link",
+        },
+        {
+          label: this.$t("t2"),
+          value: pjDownUrl(data.legal),
+          type: "link",
+        },
+        {
+          label: this.$t("t3"),
+          value: pjDownUrl(data.shareholder),
+          type: "link",
+        },
+        { label: this.$t("cjsj"), value: data.createTime },
+        { label: this.$t("xgsj"), value: data.modifiedTime },
+      ];
     },
     async getlist() {
       try {

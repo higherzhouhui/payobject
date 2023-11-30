@@ -10,57 +10,57 @@
         <div class="admin-title">
           {{ $store.state.title }}
           <el-button type="primary normal-btn" @click="showAdd1" class="primary"
-          ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
-        >
+            ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
+          >
         </div>
         <el-radio-group v-model="type">
-          <el-radio-button label="first">{{$t('skzh')}}</el-radio-button>
-          <el-radio-button label="second">{{$t('hlgl')}}</el-radio-button>
+          <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
+          <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
         </el-radio-group>
         <el-form
-          v-model="searchForm"
+          v-model="form"
           :inline="true"
           label-position="top"
           class="search-form four-column"
         >
-        <el-form-item :label="$t('bankname')">
-          <el-input
-            :placeholder="$t('bankname')"
-            v-model="form.bankName"
-          ></el-input>
-        </el-form-item>
-        <el-form-item  :label="$t('yhzh')">
-          <el-input
-            :placeholder="$t('yhzh')"
-            v-model="form.bankAccount"
-          ></el-input>
-        </el-form-item>
-        <el-form-item  :label="$t('kzt')">
-          <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
-            <el-option
-              style="padding: 0 20px"
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+          <el-form-item :label="$t('bankname')">
+            <el-input
+              :placeholder="$t('bankname')"
+              v-model="form.bankName"
+            ></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('yhzh')">
+            <el-input
+              :placeholder="$t('yhzh')"
+              v-model="form.bankAccount"
+            ></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('kzt')">
+            <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
+              <el-option
+                style="padding: 0 20px"
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <label class="el-form-item__label"></label>
+            <el-button
+              type="primary"
+              @click="getlist"
+              class="primary normal-btn"
             >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <label class="el-form-item__label"></label>
-          <el-button
-            type="primary"
-            @click="getlist"
-            class="primary normal-btn"
-          >
-            <i class="el-icon-search"></i>{{ $t("search") }}
-          </el-button>
-          <!-- <el-button class="primary">
+              <i class="el-icon-search"></i>{{ $t("search") }}
+            </el-button>
+            <!-- <el-button class="primary">
               <i class="el-icon-refresh"></i>{{ $t("reset") }}
             </el-button> -->
-        </el-form-item>
-      </el-form>
+          </el-form-item>
+        </el-form>
       </div>
       <div class="content">
         <el-table
@@ -104,26 +104,25 @@
           <el-table-column
             prop="name"
             :label="$t('cz')"
-            width="130"
+            width="105"
             fixed="right"
           >
             <template slot-scope="scope">
-              <el-button
-                type="primary"
-                size="small"
-                class="btn"
-                @click="toDetail(scope.row)"
+              <div
+                class="operation-btn"
+                @click="handleShowDetail(scope.row, 'detail')"
               >
+                {{ $t("xq") }}
+              </div>
+              <div class="operation-btn" @click="toDetail(scope.row)">
                 {{ $t("xg") }}
-              </el-button>
-              <el-button
-                type="danger"
-                size="small"
-                class="btn"
-                @click="del1(scope.row.id)"
+              </div>
+              <div
+                class="operation-btn"
+                @click="handleShowDetail(scope.row, 'del')"
               >
                 {{ $t("del") }}
-              </el-button>
+              </div>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -152,14 +151,14 @@
         <div class="admin-title">
           {{ $store.state.title }}
           <el-button type="primary" @click="showAdd" class="primary normal-btn"
-          ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
-        >
+            ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
+          >
         </div>
         <el-radio-group v-model="type">
-          <el-radio-button label="first">{{$t('skzh')}}</el-radio-button>
-          <el-radio-button label="second">{{$t('hlgl')}}</el-radio-button>
+          <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
+          <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
         </el-radio-group>
-        </div>
+      </div>
       <div class="content">
         <el-table
           class="tables"
@@ -201,28 +200,28 @@
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
-            width="130"
+            width="105"
             fixed="right"
           >
             <template slot-scope="scope">
-              <div>
-                <el-button
-                  type="primary"
-                  size="small"
-                  class="btn"
+                <div
+                class="operation-btn"
+                @click="handleShowDetail(scope.row, 'detail')"
+              >
+                {{ $t("xq") }}
+              </div>
+                <div
+                  class="operation-btn"
                   @click="toDetail2(scope.row)"
                 >
                   {{ $t("xg") }}
-                </el-button>
-                <el-button
-                  type="danger"
-                  size="small"
-                  class="btn"
-                  @click="del2(scope.row.id)"
+                </div>
+                <div
+                  class="operation-btn"
+                  @click="handleShowDetail(scope.row, 'del')"
                 >
                   {{ $t("del") }}
-                </el-button>
-              </div>
+                </div>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -246,7 +245,49 @@
         </el-pagination>
       </div>
     </template>
-
+    <el-dialog
+      :title="$t('xq')"
+      :visible.sync="detailVisible"
+      width="600px"
+      :before-close="
+        () => {
+          detailVisible = false;
+        }
+      "
+    >
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                {{ $t("yulan") }}
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
+      </div>
+      <div slot="footer">
+        <el-button class="qx" @click="detailVisible = false">{{
+          $t("cancel")
+        }}</el-button>
+        <el-button
+          v-if="operationType == 'del'"
+          class="qd"
+          @click="deleteRow"
+          >{{ $t("del") }}</el-button
+        >
+      </div>
+    </el-dialog>
     <el-dialog
       :title="bankForm.id ? $t('xg') : $t('add')"
       :visible.sync="dialogVisible"
@@ -283,7 +324,10 @@
         </el-form-item>
 
         <el-form-item :label="$t('zhmc')">
-          <el-input v-model="bankForm.accountName"></el-input>
+          <el-input
+            v-model="bankForm.accountName"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')">
           <!-- <el-input
@@ -307,19 +351,35 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')">
-          <el-input v-model="bankForm.accountAdd" type="textarea"></el-input>
+          <el-input
+            v-model="bankForm.accountAdd"
+            type="textarea"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')">
-          <el-input v-model="bankForm.bankName"></el-input>
+          <el-input
+            v-model="bankForm.bankName"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('swift')">
-          <el-input v-model="bankForm.swiftCode"></el-input>
+          <el-input
+            v-model="bankForm.swiftCode"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcode')">
-          <el-input v-model="bankForm.bankCode"></el-input>
+          <el-input
+            v-model="bankForm.bankCode"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcount')">
-          <el-input v-model="bankForm.bankAccount"></el-input>
+          <el-input
+            v-model="bankForm.bankAccount"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')">
           <!-- <el-input
@@ -343,14 +403,14 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')">
-          <el-input v-model="bankForm.bankAdd" type="textarea"></el-input>
+          <el-input
+            v-model="bankForm.bankAdd"
+            type="textarea"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('scwj')">
-          <label style="font-size: 12px">
-            {{ $t("zzd") }}
-          </label>
+        <el-form-item :label="$t('zzd')">
           <el-upload
-            v-if="!bankForm.id"
             class="upload-demo"
             action="null"
             list-type="text"
@@ -369,7 +429,7 @@
             </div>
           </el-upload>
           <a
-            v-else
+            v-if="bankForm.accountCer"
             class="down-a"
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
@@ -420,13 +480,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item class="mb24 duihuan"
-          >
+        <el-form-item class="mb24 duihuan">
           <!-- <i class="el-icon-sort" /> -->
           <svg-icon iconClass="rotate-solid" className="svg-icon" />
           {{ $t("duihuan") }}
-          </el-form-item
-        >
+        </el-form-item>
         <el-form-item :label="$t('dhbz')">
           <el-select v-model="bankForm2.exTarget" class="elSelect" filterable>
             <el-option
@@ -445,14 +503,18 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('hl')">
-          <el-input v-model="bankForm2.exRate" type="number"></el-input>
+          <el-input
+            v-model="bankForm2.exRate"
+            type="number"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item
           class="preview"
           v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate"
         >
           {{
-            `1${bankForm2.exFrom} = ${bankForm2.exRate}${bankForm2.exTarget}`
+            `1(${bankForm2.exFrom}) = ${bankForm2.exRate}(${bankForm2.exTarget})`
           }}
         </el-form-item>
       </el-form>
@@ -483,10 +545,15 @@ import { Message } from "element-ui";
 import { upload } from "@/api/file";
 import { Local } from "@/utils/index";
 import { countries, cryptocurrencies } from "@/api/login";
-import { getFlagIcon } from "@/utils/common";
+import { getFlagIcon, getCountryName, pjDownUrl } from "@/utils/common";
+
 export default {
   data() {
     return {
+      detailVisible: false,
+      detailList: [],
+      operationType: "",
+      currentSelectRow: {},
       getFlagIcon: getFlagIcon,
       dialogVisible2: false,
       lang: Local("lang") || "zh",
@@ -569,34 +636,69 @@ export default {
         this.getlist2();
       }
     },
+    handleShowDetail(row, type) {
+      this.currentSelectRow = row;
+      this.detailVisible = true;
+      this.operationType = type
+      if (this.type == "first") {
+        this.detailList = [
+          { label: this.$t("bz"), value: row.coinCode },
+          { label: this.$t("zhmc"), value: row.accountName },
+          { label: this.$t("ssgj"), value: getCountryName(row.country) },
+          { label: this.$t("jzdz"), value: row.accountAdd },
+          {
+            label: this.$t("zzd"),
+            value: pjDownUrl(row.accountCer),
+            type: "link",
+          },
+          { label: this.$t("yhzh"), value: row.bankAccount },
+          { label: this.$t("khdz"), value: row.bankAdd },
+          { label: this.$t("bankcode"), value: row.bankCode },
+          { label: this.$t("khgj"), value: getCountryName(row.bankCountry) },
+          { label: this.$t("swift"), value: row.swiftCode },
+          { label: this.$t("cjsj"), value: row.createTime },
+          { label: this.$t("xgsj"), value: row.modifiedTime },
+        ];
+      } else {
+        this.detailList = [
+          { label: this.$t("bdhbz"), value: row.exFrom }, 
+          { label: this.$t("bdhgj"), value: getCountryName(row.fromCountry) },
+          { label: this.$t("dhbz"), value: row.exTarget },
+          { label: this.$t("dhgj"), value: getCountryName(row.targetCountry) },
+          { label: this.$t("hl"), value: row.exRate },
+          { label: this.$t("cjsj"), value: row.createTime },
+          { label: this.$t("xgsj"), value: row.modifiedTime },
+        ];
+      }
+    },
+    deleteRow() {
+      if (this.type == "first") {
+        this.del1(this.currentSelectRow.id);
+      } else {
+        this.del2(this.currentSelectRow.id);
+      }
+    },
     async del1(id) {
-      this.$confirm(this.$t("qrsc"), this.$t("hint"))
-        .then(async (_) => {
-          try {
-            await delDeposit({ id });
-            Message({
-              type: "success",
-              message: this.$t("czcg"),
-            });
-            this.getlist();
-          } catch (error) {}
-        })
-        .catch((_) => {});
+      try {
+        await delDeposit({ id });
+        Message({
+          type: "success",
+          message: this.$t("czcg"),
+        });
+        this.detailVisible = false;
+        this.getlist();
+      } catch (error) {}
     },
     async del2(id) {
-      this.$confirm(this.$t("qrsc"), this.$t("hint"))
-        .then(async (_) => {
-          try {
-            await delExchange({ id });
-            Message({
-              type: "success",
-              message: this.$t("czcg"),
-            });
-            this.dialogVisible2();
-            this.getlist2();
-          } catch (error) {}
-        })
-        .catch((_) => {});
+      try {
+        await delExchange({ id });
+        Message({
+          type: "success",
+          message: this.$t("czcg"),
+        });
+        this.detailVisible = false;
+        this.getlist2();
+      } catch (error) {}
     },
     getNewareaList(list) {
       if (list.length) {
@@ -783,14 +885,14 @@ export default {
 .duihuan {
   text-align: center;
   font-weight: bold;
-  color: $baseColor;
-  font-size: 1.3rem !important;
+  color: #fff;
+  font-size: 1.5rem !important;
   .svg-icon {
-    color: $baseColor;
+    color: #fff;
   }
 }
 .preview {
-  color: #e21b1b;
+  color: #fff;
   letter-spacing: 2px;
   text-align: center;
 }

@@ -98,26 +98,25 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="140"
+          width="105"
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button
-              type="info"
-              class="btn"
-              size="small"
-              @click="toDetail(scope.row)"
+            <div
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </el-button>
-            <el-button
-              type="danger"
-              class="btn"
-              size="small"
-              @click="delBank(scope.row.id)"
+            </div>
+            <div class="operation-btn" @click="toDetail(scope.row)">
+              {{ $t("xg") }}
+            </div>
+            <div
+              class="operation-btn"
+              @click="handleShowDetail(scope.row, 'del')"
             >
               {{ $t("del") }}
-            </el-button>
+            </div>
           </template>
         </el-table-column>
         <div slot="empty">
@@ -127,6 +126,18 @@
           ></el-empty>
         </div>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="current"
+        :page-sizes="[10, 50, 100, 500]"
+        :page-size="size"
+        layout="prev, pager, next"
+        small
+        :total="total"
+        class="elPagination"
+      >
+      </el-pagination>
     </div>
     <el-dialog
       :title="bankForm.id ? `${$t('xq')}` : $t('zjzzzh')"
@@ -145,21 +156,13 @@
         :model="bankForm"
         class="formStyle"
       >
-        <el-form-item :label="$t('zhmc')" class="mb24">
-          <el-input
-            v-model="bankForm.accountName"
-            :disabled="!!bankForm.id"
-          ></el-input>
+        <el-form-item :label="$t('zhmc')">
+          <el-input v-model="bankForm.accountName" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('ssgj')" class="mb24">
-          <!-- <el-input
-            v-model="bankForm.country"
-            :disabled="!!bankForm.id"
-          ></el-input> -->
+        <el-form-item :label="$t('ssgj')">
           <el-select
             style="width: 100%"
             v-model="bankForm.country"
-            :disabled="!!bankForm.id"
             filterable
           >
             <el-option
@@ -174,46 +177,41 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('jzdz')" class="mb24">
+        <el-form-item :label="$t('jzdz')">
           <el-input
             v-model="bankForm.accountAdd"
-            :disabled="!!bankForm.id"
             type="textarea"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankname')" class="mb24">
+        <el-form-item :label="$t('bankname')">
           <el-input
             v-model="bankForm.bankName"
-            :disabled="!!bankForm.id"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('swift')" class="mb24">
+        <el-form-item :label="$t('swift')">
           <el-input
             v-model="bankForm.swiftCode"
-            :disabled="!!bankForm.id"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankcode')" class="mb24">
+        <el-form-item :label="$t('bankcode')">
           <el-input
             v-model="bankForm.bankCode"
-            :disabled="!!bankForm.id"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('bankcount')" class="mb24">
+        <el-form-item :label="$t('bankcount')">
           <el-input
             v-model="bankForm.bankAccount"
-            :disabled="!!bankForm.id"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('khgj')" class="mb24">
-          <!-- <el-input
-            v-model="bankForm.bankCountry"
-            :disabled="!!bankForm.id"
-          ></el-input> -->
+        <el-form-item :label="$t('khgj')">
           <el-select
             style="width: 100%"
             v-model="bankForm.bankCountry"
-            :disabled="!!bankForm.id"
             filterable
           >
             <el-option
@@ -228,30 +226,22 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('khdz')" class="mb24">
+        <el-form-item :label="$t('khdz')">
           <el-input
             v-model="bankForm.bankAdd"
-            :disabled="!!bankForm.id"
             type="textarea"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item
-          :label="$t('bhly')"
-          class="mb24"
-          v-if="bankForm.bankStatus == 2"
-        >
+        <el-form-item :label="$t('bhly')" v-if="bankForm.bankStatus == 2">
           <el-input
             v-model="bankForm.reason"
-            :disabled="!!bankForm.id"
             type="textarea"
+            :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('scwj')" class="mb24">
-          <label style="font-size: 12px">
-            {{ $t("zzd") }}
-          </label>
+        <el-form-item :label="$t('zzd')">
           <el-upload
-            v-if="!bankForm.id"
             class="upload-demo"
             action="null"
             list-type="text"
@@ -279,7 +269,7 @@
           >
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer" v-if="!bankForm.id">
+      <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
         <el-button
           class="qd"
@@ -287,32 +277,77 @@
           @click="addBank"
           >{{ $t("sure") }}</el-button
         >
-      </span>
-      <span slot="footer" class="dialog-footer" v-if="bankForm.id">
-        <el-button class="qd" @click="dialogVisible = false">{{
-          $t("sure")
+      </div>
+    </el-dialog>
+    <el-dialog
+      :title="$t('xq')"
+      :visible.sync="detailVisible"
+      width="600px"
+      :before-close="
+        () => {
+          detailVisible = false;
+        }
+      "
+    >
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                {{ $t("yulan") }}
+              </a>
+            </template>
+            <template v-if="!item.type">
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
+      </div>
+      <div slot="footer">
+        <el-button class="qx" @click="detailVisible = false">{{
+          $t("cancel")
         }}</el-button>
-      </span>
+        <el-button
+          v-if="operationType == 'del'"
+          class="qd"
+          @click="delBank(currentSelectRow.id)"
+          >{{ $t("del") }}</el-button
+        >
+      </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import { getBankList, subBank, bankDel } from "@/api/bank";
+import { getBankListPage, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
 import { upload, downLoad } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
-import { getFlagIcon } from "@/utils/common";
+import { getCountryName, getFlagIcon, pjDownUrl } from "@/utils/common";
 
 export default {
   name: "transferAccountMangement",
   data() {
     return {
+      detailVisible: false,
+      detailList: [],
+      operationType: "",
+      currentSelectRow: {},
       getFlagIcon: getFlagIcon,
       lang: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
       loading: true,
+      current: 1,
+      size: 10,
+      total: 0,
       tableData: [],
       status: [this.$t("shz"), this.$t("ytg"), this.$t("bh")],
       typeOption: ["warning", "success", "danger"],
@@ -376,6 +411,43 @@ export default {
     }
   },
   methods: {
+    handleSizeChange(val) {
+      this.size = val;
+      this.getInitData();
+    },
+    handleCurrentChange(val) {
+      this.current = val;
+      this.getInitData();
+    },
+    handleChangeSearch() {
+      this.current = 1;
+      this.getInitData();
+    },
+    handleShowDetail(row, type) {
+      this.currentSelectRow = row;
+      this.detailVisible = true;
+      this.operationType = type;
+      this.detailList = [
+        { label: this.$t("zhmc"), value: row.accountName },
+        { label: this.$t("jzdz"), value: row.accountAdd },
+        { label: this.$t("ssgj"), value: getCountryName(row.country) },
+        { label: this.$t("bankname"), value: row.bankName },
+        { label: this.$t("yhzh"), value: row.bankAccount },
+        { label: this.$t("khdz"), value: row.bankAdd },
+        { label: this.$t("bankcode"), value: row.bankCode },
+        { label: this.$t("khgj"), value: getCountryName(row.bankCountry) },
+        { label: this.$t("swift"), value: row.swiftCode },
+        { label: this.$t("kzt"), value: this.status[row.bankStatus] },
+        { label: this.$t("bhly"), value: row.reason },
+        {
+          label: this.$t("zzd"),
+          value: pjDownUrl(row.accountCer),
+          type: "link",
+        },
+        { label: this.$t("cjsj"), value: row.createTime },
+        { label: this.$t("xgsj"), value: row.modifiedTime },
+      ];
+    },
     async getAreaCode() {
       try {
         let list = Local("areaList");
@@ -392,14 +464,12 @@ export default {
       this.$set(this, "bankForm", data);
       //   this.bankForm = dat ;
     },
-    downLoad,
     showAdd() {
       this.dialogVisible = true;
       this.bankForm = {};
     },
     handleClick() {},
     async handlesuccess(e) {
-      //   this.$refs["form"].resetFields();
       const formData = new FormData();
       formData.append("file", e);
       try {
@@ -415,24 +485,24 @@ export default {
       } catch (error) {}
       return false;
     },
-    delBank(id) {
-      this.$confirm(this.$t("qrsc"), this.$t("hint"))
-        .then(async (_) => {
-          try {
-            await bankDel({ bankId: id });
-            Message({
-              type: "success",
-              message: this.$t("czcg"),
-            });
-            this.getlist();
-          } catch (error) {}
-        })
-        .catch((_) => {});
+    async delBank(id) {
+      try {
+        await bankDel({ bankId: id });
+        Message({
+          type: "success",
+          message: this.$t("czcg"),
+        });
+        this.detailVisible = false
+        this.getlist();
+      } catch (error) {}
     },
     async addBank() {
       if (this.bankloading) return;
       try {
         this.bankloading = true;
+        if (this.bankForm.id) {
+          this.bankForm.bankStatus = 0;
+        }
         await subBank(this.bankForm);
         Message({
           type: "success",
@@ -448,8 +518,9 @@ export default {
     async getlist() {
       try {
         this.loading = true;
-        let req = await getBankList(this.searchForm);
-        this.tableData = req.data;
+        let req = await getBankListPage(this.searchForm);
+        this.tableData = req.data.records;
+        this.total = req.data.total;
         this.loading = false;
       } catch (error) {
         this.loading = false;

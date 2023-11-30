@@ -419,18 +419,22 @@ html {
     display: flex;
     align-items: center;
     .el-dialog__title {
-        font-size: 15px;
+        font-size: 1.2rem;
+        color: #fff;
     }
 }
 .el-form--label-top .el-form-item__label {
     padding: 0;
 }
-.el-dialog__body {
-    padding: 1.5rem 1rem;
-}
+.el-upload__tip {
+    color: #fff;
+    opacity: 0.8;
+  }
 .el-dialog {
-    padding: 0 2rem;
+    padding: 0 1.5rem;
     margin-top: 0!important;
+    background: $contentColor;
+    border-radius: 10px;
     @media screen and (max-width: 800px) {
         width: 95%;
         max-width: 95%;
@@ -463,8 +467,46 @@ html {
     }
     .el-dialog__header,
     .el-dialog__body {
-        border-bottom: 1px solid var(--unnamed, #f5f5f5);
-        padding: 1.3rem 0!important;
+        border-bottom: none;
+        padding: 1rem 0!important;
+        .el-dialog__headerbtn .el-dialog__close {
+            color: #fff;
+        }
+    }
+    .list-wrapper {
+        margin-bottom: 1rem;
+    }
+    .list {
+        background: $bgColor;
+        border-radius: 0.25rem;
+        padding: 0.3rem 0.5rem;
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+        .list-left, .list-right {
+            line-height: 1.8em;
+            color: #fff;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+        }
+        .list-left::after {
+            content: ':';
+        }
+        .list-right {
+            max-width: 80%;
+        }
+        .list-left {
+            max-width: 80%;
+        }
+    }
+    .el-form-item__label {
+        color: #fff;
     }
 }
 
@@ -841,7 +883,7 @@ ul::-webkit-scrollbar-thumb {
 }
 .operation-btn {
     font-size: 12px;
-    color: $baseColor;
+    color: #fff;
     display: inline-block;
     margin-right: 6px;
     cursor: pointer;

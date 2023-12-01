@@ -90,7 +90,7 @@
           <el-table-column
             prop="accountAdd"
             :label="$t('jzdz')"
-            min-width="300"
+            min-width="250"
             show-overflow-tooltip
           />
           <el-table-column
@@ -99,7 +99,7 @@
             min-width="160"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="110" fixed="right">
+          <el-table-column :label="$t('cz')" width="95" fixed="right">
             <template slot-scope="scope">
               <div
                 class="operation-btn"
@@ -227,7 +227,7 @@
             show-overflow-tooltip
           />
 
-          <el-table-column :label="$t('cz')" width="130" fixed="right">
+          <el-table-column :label="$t('cz')" width="115" fixed="right">
             <template slot-scope="scope">
               <div>
                 <div

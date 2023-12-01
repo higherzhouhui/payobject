@@ -7,7 +7,7 @@
         <div class="rotate" @click="reload">
           <svg-icon iconClass="rotate-solid" className="back" />
         </div> -->
-        <div class="title">{{ $store.state.title }}</div>
+        <div class="title" @click="reload">{{ $store.state.title }}</div>
         <el-dropdown trigger="click" @command="handleDropCommand">
           <span class="el-dropdown-link">
             <svg-icon iconClass="user-gear-solid" className="svg" />

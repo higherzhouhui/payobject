@@ -4,7 +4,10 @@
       <div class="admin-title">{{ $store.state.title }}</div>
       <div class="list">
         <div class="list-left">{{ $t("wdyqm") }}</div>
-        <div class="list-right" @click="copyText2(userInfo.providerId)">{{ userInfo.providerId }}</div>
+        <div class="list-right" @click="copyText2(userInfo.providerId)" style="cursor: pointer">
+          {{ userInfo.providerId }}
+          <i class="el-icon-document-copy"></i>
+        </div>
       </div>
     </div>
     <div class="table-wrapper">

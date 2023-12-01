@@ -75,13 +75,13 @@
               }}<span class="unit">{{ form.coinCode }}</span>
             </div>
           </div>
-          <div class="divider" v-if="calculateMoney" />
-          <div class="column" v-if="calculateMoney">
+          <div class="divider" v-if="form.reqValue" />
+          <div class="column" v-if="form.reqValue">
             <div class="column-left">
               {{ $t("yjdzje") }}
             </div>
             <div class="column-right">
-              {{ calculateMoney || 0
+              {{ rate * this.form.reqValue || 0
               }}<span class="unit">{{ form.targetCode }}</span>
             </div>
           </div>
@@ -162,7 +162,7 @@ export default {
       dialogVisible: false,
       currentSelectRow: {},
       szList: [],
-      calculateMoney: 0,
+      rate: 0,
       rateDetail: "",
     };
   },
@@ -177,14 +177,17 @@ export default {
       this.form.targetCode = "";
       this.form.reqValue = ""
       this.form.rateDetail = ""
-      this.calculateMoney = ""
+      this.rate = ""
       this.getCJBZ();
     },
     form: {
       deep: true,
       handler: function (newVal, oldVal) {
-        if (this.form.coinCode && this.form.targetCode && this.form.reqValue) {
+        if (this.form.coinCode && this.form.targetCode) {
           this.calculateRateMoney();
+        } else {
+          this.rate = 0
+          this.rateDetail = ''
         }
       },
     },
@@ -207,11 +210,10 @@ export default {
         const res = await calculateRate({
           exFrom: this.form.coinCode,
           exTarget: this.form.targetCode,
-          exValue: this.form.reqValue,
+          exValue: 1,
         });
-        this.calculateMoney = res.data.targetValue;
-        const rate = this.calculateMoney / this.form.reqValue;
-        this.rateDetail = `Latest Currancy Rate 1 ${this.form.coinCode} = ${rate} ${this.form.targetCode}`;
+        this.rate = res.data.targetValue;
+        this.rateDetail = `Latest Currancy Rate 1 ${this.form.coinCode} = ${this.rate} ${this.form.targetCode}`;
       } catch {}
     },
     async getSzList() {

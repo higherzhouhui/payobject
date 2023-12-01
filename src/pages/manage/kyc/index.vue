@@ -263,7 +263,7 @@
                   class="operation-btn"
                   @click.stop="showUserBalance(scope.row)"
                 >
-                  {{ $t("ye") }}
+                  {{ $t("qb") }}
                 </div>
               </div>
             </template>
@@ -652,6 +652,7 @@
     <el-dialog
       :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
+      width="600px"
       :before-close="
         () => {
           rejectdialogVisible = false;
@@ -682,6 +683,7 @@
     <el-dialog
       :title="$t('yhqb')"
       :visible.sync="userBalanceDialog"
+      width="600px"
       :before-close="
         () => {
           userBalanceDialog = false;

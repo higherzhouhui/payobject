@@ -239,10 +239,10 @@ export default {
         }  
     }
     .showMenu {
-        animation: expand 1s ease-in-out forwards;  
+        animation: expand 0.5s ease-in-out forwards;  
     }
     .hideMenu {
-        animation: expandscale 1s ease-in-out forwards;  
+        animation: expandscale 0.5s ease-in-out forwards;  
     }
     .logoImg {
         height: 40px;
@@ -261,8 +261,10 @@ export default {
         height: calc(100vh - 112px);
         overflow-y: auto;
         @media screen and (max-width: 800px) {
+            position: absolute;
             height: auto;
             overflow-y: hidden;
+            width: 100%;
         }
     }
     .icon {

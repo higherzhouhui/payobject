@@ -46,15 +46,18 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <el-switch
+            <div @click.stop>
+              <el-switch
               v-model="scope.row.recommend"
               @change="changeSwitch(scope.row)"
             ></el-switch>
+            </div>
           </template>
         </el-table-column>
         <el-table-column prop="cover" :label="$t('cover')" min-width="120">
           <template slot-scope="scope">
             <el-image
+              @click.stop
               :src="`/api/file/downLoad?url=${scope.row.cover}`"
               class="cover"
               :previewSrcList="[`/api/file/downLoad?url=${scope.row.cover}`]"

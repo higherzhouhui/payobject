@@ -46,7 +46,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{ $t("ye") }}<span>{{ getReamin(form.coinCode) }}</span>
+              {{ $t("ye") }}<span>{{ getReamin(form.coinCode) }}</span>{{form.coinCode}}
             </div>
           </div>
           <div class="form-item" v-else>
@@ -78,7 +78,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="usdtForm.srcCode">
-              {{ $t("ye") }}<span>{{ getReamin(usdtForm.srcCode) }}</span>
+              {{ $t("ye") }}<span>{{ getReamin(usdtForm.srcCode) }}</span>{{usdtForm.srcCode}}
             </div>
           </div>
           <!-- <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
@@ -1022,7 +1022,7 @@ export default {
   span {
     font-weight: bold;
     color: $baseColor;
-    margin-left: 6px;
+    margin: 0 6px;
     font-size: 1.2rem;
   }
 }

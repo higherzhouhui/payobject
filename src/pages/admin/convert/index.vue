@@ -32,7 +32,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{$t('ye')}}<span>{{getReamin()}}</span>
+              {{$t('ye')}}<span>{{getReamin()}}</span>{{form.coinCode}}
             </div>
           </div>
           <ul class="list">
@@ -412,7 +412,7 @@ export default {
   span {
     font-weight: bold;
     color: $baseColor;
-    margin-left: 6px;
+    margin: 0 6px;
     font-size: 1.2rem;
   }
 }

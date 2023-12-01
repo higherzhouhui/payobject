@@ -67,12 +67,7 @@
           </el-button>
         </el-form-item>
       </el-form>
-      <el-table
-        class="tables"
-        size="small"
-        :data="tableData"
-        v-loading="loading"
-      >
+      <el-table class="tables" :data="tableData" v-loading="loading">
         <el-table-column
           prop="depCoin"
           :label="$t('bz')"
@@ -84,17 +79,9 @@
           :label="$t('dhbz')"
           min-width="100"
         />
-        <el-table-column
-          prop="changeRate"
-          :label="$t('hl')"
-          min-width="100"
-        />
+        <el-table-column prop="changeRate" :label="$t('hl')" min-width="100" />
         <el-table-column prop="depValue" :label="$t('je')" min-width="100" />
-        <el-table-column
-          prop="targetValue"
-          :label="$t('dzje')"
-          width="130"
-        />
+        <el-table-column prop="targetValue" :label="$t('dzje')" width="130" />
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
@@ -120,8 +107,9 @@
         :current-page.sync="current"
         :page-sizes="[10, 50, 100, 500]"
         :page-size="size"
-      layout="prev, pager, next"
-      small        :total="total"
+        layout="prev, pager, next"
+        small
+        :total="total"
         class="elPagination"
       >
       </el-pagination>
@@ -206,8 +194,8 @@ export default {
       this.getInitData();
     },
     handleChangeSearch() {
-      this.current = 1
-    this.getInitData();
+      this.current = 1;
+      this.getInitData();
     },
     async getInitData() {
       this.loading = true;

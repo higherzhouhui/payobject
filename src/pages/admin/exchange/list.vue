@@ -53,10 +53,10 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
       >
         <el-table-column
           prop="accountName"
@@ -99,16 +99,16 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="100"
+          width="70"
           fixed="right"
         >
           <template slot-scope="scope">
-            <div
+            <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </div>
+            </div> -->
             <div class="operation-btn edit-btn" @click="toDetail(scope.row)">
               {{ $t("xg") }}
             </div>

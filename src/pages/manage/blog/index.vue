@@ -11,9 +11,9 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
       >
         <el-table-column
           prop="title"
@@ -75,12 +75,12 @@
         />
         <el-table-column :label="$t('cz')" width="95" fixed="right">
           <template slot-scope="scope">
-            <div
+            <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </div>
+            </div> -->
             <div class="operation-btn edit-btn" @click="showDialog(scope.row)">
               {{ $t("xg") }}
             </div>

@@ -63,10 +63,10 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
       >
         <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
         <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="120">
@@ -96,16 +96,16 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="95"
+          width="70"
           fixed="right"
         >
           <template slot-scope="scope">
-            <div
+            <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </div>
+            </div> -->
 
             <div
               v-if="scope.row.changeStatus == 0 && !$store.state.userInfo.admin"

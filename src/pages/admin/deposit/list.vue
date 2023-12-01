@@ -71,10 +71,10 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'fabi'"
       >
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
@@ -106,7 +106,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="100"
+          width="70"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -123,12 +123,12 @@
                 {{ $t("schkpz") }}
               </div>
             </el-upload>
-            <div
+            <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </div>
+            </div> -->
             <div
               slot="reference"
               class="operation-btn pass-btn"
@@ -155,10 +155,10 @@
       </el-table>
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'usdt'"
       >
        
@@ -186,7 +186,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="100"
+          width="70"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -207,12 +207,12 @@
                 {{ $t("schkpz") }}
               </div>
             </el-upload>
-            <div
+            <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </div>
+            </div> -->
 
             <div
               class="operation-btn pass-btn"
@@ -800,6 +800,7 @@ export default {
       } catch (error) {}
     },
     handleShowDetail(row, type) {
+      console.log(row, 11111111111)
       this.currentSelectRow = row;
       this.operationType = type;
       if (this.moneyType == "fabi") {

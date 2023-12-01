@@ -66,9 +66,9 @@
         <el-table
           class="tables"
           :data="tableData"
-          style="width: 100%; margin-top: 16px"
+          style="width: 100%"
           v-loading="loading"
-          size="small"
+          @row-click="(e) => handleShowDetail(e, 'detail')"
         >
           <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
           <el-table-column
@@ -104,16 +104,16 @@
           <el-table-column
             prop="name"
             :label="$t('cz')"
-            width="95"
+            width="70"
             fixed="right"
           >
             <template slot-scope="scope">
-              <div
+              <!-- <div
                 class="operation-btn"
                 @click="handleShowDetail(scope.row, 'detail')"
               >
                 {{ $t("xq") }}
-              </div>
+              </div> -->
               <div class="operation-btn edit-btn" @click="toDetail(scope.row)">
                 {{ $t("xg") }}
               </div>
@@ -163,9 +163,9 @@
         <el-table
           class="tables"
           :data="tableData2"
-          style="width: 100%; margin-top: 16px"
+          style="width: 100%"
           v-loading="loading"
-          size="small"
+          @row-click="(e) => handleShowDetail(e, 'detail')"
         >
           <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="100">
             <template slot-scope="scope">
@@ -200,16 +200,16 @@
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
-            width="95"
+            width="70"
             fixed="right"
           >
             <template slot-scope="scope">
-                <div
+                <!-- <div
                 class="operation-btn"
                 @click="handleShowDetail(scope.row, 'detail')"
               >
                 {{ $t("xq") }}
-              </div>
+              </div> -->
                 <div
                   class="operation-btn edit-btn"
                   @click="toDetail2(scope.row)"

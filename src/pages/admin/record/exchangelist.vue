@@ -57,7 +57,6 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         v-loading="loading"
       >

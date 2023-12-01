@@ -63,10 +63,10 @@
       <div class="content">
         <el-table
           class="tables"
-          size="small"
           :data="tableData"
           style="width: 100%"
           v-loading="loading"
+          @row-click="(e) => passBankDialog(e, 'detail')"
         >
           <el-table-column
             prop="accountName"
@@ -99,14 +99,14 @@
             min-width="160"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="95" fixed="right">
+          <el-table-column :label="$t('cz')" width="70" fixed="right">
             <template slot-scope="scope">
-              <div
+              <!-- <div
                 class="operation-btn"
                 @click="passBankDialog(scope.row, 'detail')"
               >
                 {{ $t("xq") }}
-              </div>
+              </div> -->
               <div
                 v-if="scope.row.bankStatus == 0"
                 class="operation-btn pass-btn"
@@ -189,10 +189,11 @@
       <div class="content">
         <el-table
           class="tables"
-          size="small"
           :data="tableData2"
           style="width: 100%"
           v-loading="loading"
+          @row-click="(e) => passKycDialog(e, 'detail')"
+
         >
           <el-table-column
             prop="companyName"
@@ -227,15 +228,15 @@
             show-overflow-tooltip
           />
 
-          <el-table-column :label="$t('cz')" width="115" fixed="right">
+          <el-table-column :label="$t('cz')" width="90" fixed="right">
             <template slot-scope="scope">
               <div>
-                <div
+                <!-- <div
                   class="operation-btn"
                   @click="passKycDialog(scope.row, 'detail')"
                 >
                   {{ $t("xq") }}
-                </div>
+                </div> -->
                 <div
                   v-if="scope.row.kycStatus == 0"
                   class="operation-btn pass-btn"

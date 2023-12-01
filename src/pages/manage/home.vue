@@ -12,7 +12,6 @@
     </div>
     <el-table
       class="tables"
-      size="small"
       :data="kycData"
       style="width: 100%"
       v-loading="kycLoading"
@@ -58,7 +57,6 @@
     </div>
     <el-table
       class="tables"
-      size="small"
       :data="bankData"
       style="width: 100%"
       v-loading="bankLoading"
@@ -104,7 +102,6 @@
     </div>
     <el-table
       class="tables"
-      size="small"
       :data="depositData"
       style="width: 100%"
       v-loading="depositLoading"
@@ -139,7 +136,6 @@
     </div>
     <el-table
       class="tables"
-      size="small"
       :data="cryptdepositData"
       style="width: 100%"
       v-loading="cryptdepositLoading"
@@ -174,7 +170,6 @@
     </div>
     <el-table
       class="tables"
-      size="small"
       :data="withdrawData"
       style="width: 100%"
       v-loading="withdrawLoading"
@@ -209,7 +204,6 @@
     </div>
     <el-table
       class="tables"
-      size="small"
       :data="cryptwithdrawData"
       style="width: 100%"
       v-loading="cryptwithdrawLoading"

@@ -14,7 +14,6 @@
       <div class="admin-title">{{$t('推荐列表')}}</div>
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"

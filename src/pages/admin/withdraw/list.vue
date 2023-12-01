@@ -71,10 +71,10 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'fabi'"
       >
        
@@ -102,16 +102,16 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="120"
+          width="95"
           fixed="right"
         >
           <template slot-scope="scope">
-            <div
+            <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
             >
               {{ $t("xq") }}
-            </div>
+            </div> -->
             <div
               class="operation-btn pass-btn"
               @click="
@@ -147,10 +147,10 @@
       </el-table>
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'usdt'"
       >
         <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" />
@@ -180,13 +180,13 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="100"
+          width="70"
           fixed="right"
         >
           <template slot-scope="scope">
-            <div class="operation-btn" @click="handleShowDetail(scope.row)">
+            <!-- <div class="operation-btn" @click="handleShowDetail(scope.row)">
               {{ $t("xq") }}
-            </div>
+            </div> -->
             <div
               class="operation-btn pass-btn"
               @click="passWithdraw(scope.row)"

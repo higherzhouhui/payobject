@@ -11,7 +11,6 @@
     <div class="content">
       <el-table
         class="tables"
-        size="small"
         :data="tableData"
         style="width: 100%"
         v-loading="loading"

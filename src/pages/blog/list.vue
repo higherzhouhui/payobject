@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container" ref="container" v-loading="loading">
-      <div class="animation-warapper">
+    <div class="container" ref="container" >
+      <div class="animation-warapper" v-loading="loading">
         <div class="title-lg">
           <h1>{{ $t("lastnews") }}</h1>
           <h3>{{ $t("lastnewsDesc") }}</h3>

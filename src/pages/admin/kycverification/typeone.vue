@@ -231,21 +231,20 @@
         })"
         :key="index"
       >
-        <div class="list-left list-link" v-if="item.type == 'link'">
+      <div class="list-left">{{ item.label }}</div>
+      <div class="list-right">
+        <template v-if="item.type == 'link'">
           <a :href="item.value" target="_blank">
-            {{ item.label }}
             <span>
               <i class="el-icon-folder-checked"></i>
               {{$t('download')}}
             </span>
           </a>
-        </div>
-        <div class="list-left" v-else>
-          {{ item.label }}
-        </div>
-        <div class="list-right" v-if="!item.type">
-            {{ item.value }}
-        </div>
+        </template>
+        <template v-else>
+          {{ item.value }}
+        </template>
+      </div>
       </div>
     </div>
     <el-dialog
@@ -415,17 +414,17 @@ export default {
           { label: this.$t("cjsj"), value: this.form.createTime },
           { label: this.$t("xgsj"), value: this.form.modifiedTime },
           {
-            label: this.$t("t1"),
+            label: this.$t("qycl"),
             value: pjDownUrl(this.form.regCer),
             type: "link",
           },
           {
-            label: this.$t("t2"),
-            value: pjDownUrl(this.formegal),
+            label: this.$t("frcl"),
+            value: pjDownUrl(this.form.legal),
             type: "link",
           },
           {
-            label: this.$t("t3"),
+            label: this.$t("gqcl"),
             value: pjDownUrl(this.form.shareholder),
             type: "link",
           },
@@ -467,6 +466,9 @@ export default {
         word-break: break-all;
         display: flex;
         align-items: center;
+        span {
+          color: $baseColor;
+        }
       }
       .list-left::after {
         content: ":";

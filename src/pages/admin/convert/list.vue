@@ -96,7 +96,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="105"
+          width="95"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -110,21 +110,21 @@
             <div
               v-if="scope.row.changeStatus == 0 && !$store.state.userInfo.admin"
               @click="handleShowDetail(scope.row, 'cancel')"
-              class="operation-btn"
+              class="operation-btn reject-btn"
             >
               {{ $t("cancel") }}
             </div>
 
             <div
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
-              class="operation-btn"
+              class="operation-btn pass-btn"
               @click="handleShowDetail(scope.row, 'pass')"
             >
               {{ $t("tg") }}
             </div>
             <div
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
-              class="operation-btn"
+              class="operation-btn reject-btn"
               @click="rejectConfirm(scope.row)"
             >
               {{ $t("bh") }}
@@ -251,7 +251,7 @@
           $t("cancel")
         }}</el-button>
         <el-button class="qd" @click="handleDialogQd" v-if="operationType !== 'detail'">
-          {{ operationType == 'pass' ?  $t("tg") : $t('qd') }}
+          {{ operationType == 'pass' ?  $t("tg") : $t('queding') }}
         </el-button>
       </div>
     </el-dialog>

@@ -73,7 +73,7 @@
           min-width="180"
           show-overflow-tooltip
         />
-        <el-table-column :label="$t('cz')" width="105" fixed="right">
+        <el-table-column :label="$t('cz')" width="95" fixed="right">
           <template slot-scope="scope">
             <div
               class="operation-btn"
@@ -81,11 +81,11 @@
             >
               {{ $t("xq") }}
             </div>
-            <div class="operation-btn" @click="showDialog(scope.row)">
+            <div class="operation-btn edit-btn" @click="showDialog(scope.row)">
               {{ $t("xg") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn reject-btn"
               @click="handleShowDetail(scope.row, 'del')"
             >
               {{ $t("del") }}

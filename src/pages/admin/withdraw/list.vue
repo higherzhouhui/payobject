@@ -102,7 +102,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="130"
+          width="95"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -113,7 +113,7 @@
               {{ $t("xq") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn pass-btn"
               @click="
                 currentSelectRow = scope.row;
                 passConfirm();
@@ -123,14 +123,14 @@
               {{ $t("qrsq") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn reject-btn"
               @click="rejectWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn pass-btn"
               @click="passWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
@@ -180,7 +180,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="120"
+          width="95"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -188,14 +188,14 @@
               {{ $t("xq") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn pass-btn"
               @click="passWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("tg") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn reject-btn"
               @click="rejectWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >

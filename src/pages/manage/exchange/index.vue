@@ -104,7 +104,7 @@
           <el-table-column
             prop="name"
             :label="$t('cz')"
-            width="105"
+            width="95"
             fixed="right"
           >
             <template slot-scope="scope">
@@ -114,11 +114,11 @@
               >
                 {{ $t("xq") }}
               </div>
-              <div class="operation-btn" @click="toDetail(scope.row)">
+              <div class="operation-btn edit-btn" @click="toDetail(scope.row)">
                 {{ $t("xg") }}
               </div>
               <div
-                class="operation-btn"
+                class="operation-btn reject-btn"
                 @click="handleShowDetail(scope.row, 'del')"
               >
                 {{ $t("del") }}
@@ -200,7 +200,7 @@
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
-            width="105"
+            width="95"
             fixed="right"
           >
             <template slot-scope="scope">
@@ -211,13 +211,13 @@
                 {{ $t("xq") }}
               </div>
                 <div
-                  class="operation-btn"
+                  class="operation-btn edit-btn"
                   @click="toDetail2(scope.row)"
                 >
                   {{ $t("xg") }}
                 </div>
                 <div
-                  class="operation-btn"
+                  class="operation-btn reject-btn"
                   @click="handleShowDetail(scope.row, 'del')"
                 >
                   {{ $t("del") }}

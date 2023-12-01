@@ -106,7 +106,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="125"
+          width="100"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -119,7 +119,7 @@
               multiple
               v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
             >
-              <div class="operation-btn">
+              <div class="operation-btn edit-btn">
                 {{ $t("schkpz") }}
               </div>
             </el-upload>
@@ -131,14 +131,14 @@
             </div>
             <div
               slot="reference"
-              class="operation-btn"
+              class="operation-btn pass-btn"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
               @click="handleShowDetail(scope.row, 'pass')"
             >
               {{ $t("tg") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn reject-btn"
               @click="rejectDeposit(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
@@ -186,7 +186,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="125"
+          width="100"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -203,7 +203,7 @@
                 scope.row.reqStatus == 1
               "
             >
-              <div class="operation-btn">
+              <div class="operation-btn edit-btn">
                 {{ $t("schkpz") }}
               </div>
             </el-upload>
@@ -215,7 +215,7 @@
             </div>
 
             <div
-              class="operation-btn"
+              class="operation-btn pass-btn"
               v-if="
                 scope.row.reqProof &&
                 $store.state.userInfo.admin &&
@@ -226,7 +226,7 @@
               {{ $t("tg") }}
             </div>
             <div
-              class="operation-btn"
+              class="operation-btn reject-btn"
               @click="rejectDeposit(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >

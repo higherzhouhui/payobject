@@ -99,7 +99,7 @@
             min-width="160"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="105" fixed="right">
+          <el-table-column :label="$t('cz')" width="110" fixed="right">
             <template slot-scope="scope">
               <div
                 class="operation-btn"
@@ -109,14 +109,14 @@
               </div>
               <div
                 v-if="scope.row.bankStatus == 0"
-                class="operation-btn"
+                class="operation-btn pass-btn"
                 @click="passBankDialog(scope.row, 'pass')"
               >
                 {{ $t("tg") }}
               </div>
               <div
                 v-if="scope.row.bankStatus == 0"
-                class="operation-btn"
+                class="operation-btn reject-btn"
                 @click="rejectKyc(scope.row)"
               >
                 {{ $t("bh") }}
@@ -238,25 +238,25 @@
                 </div>
                 <div
                   v-if="scope.row.kycStatus == 0"
-                  class="operation-btn"
+                  class="operation-btn pass-btn"
                   @click="passKycDialog(scope.row, 'pass')"
                 >
                   {{ $t("tg") }}
                 </div>
                 <div
                   v-if="scope.row.kycStatus == 0"
-                  class="operation-btn"
+                  class="operation-btn reject-btn"
                   @click="rejectKyc(scope.row)"
                 >
                   {{ $t("bh") }}
                 </div>
                 <div
-                class="operation-btn"
-                @click="showUsdtForm(scope.row)"
-                v-if="scope.row.kycStatus == 1"
-              >
-                {{ $t("jmhb") }}
-              </div>
+                  class="operation-btn edit-btn"
+                  @click="showUsdtForm(scope.row)"
+                  v-if="scope.row.kycStatus == 1"
+                >
+                  {{ $t("jmhb") }}
+                </div>
                 <div
                   v-if="scope.row.kycStatus == 1"
                   class="operation-btn"
@@ -307,21 +307,18 @@
           })"
           :key="index"
         >
-        <div class="list-left list-link" v-if="item.type == 'link'">
-          <a :href="item.value" target="_blank">
-            {{ item.label }}
-            <span>
-              <i class="el-icon-folder-checked"></i>
-              {{$t('download')}}
-            </span>
-          </a>
-        </div>
-        <div class="list-left" v-else>
-          {{ item.label }}
-        </div>
-        <div class="list-right" v-if="!item.type">
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right" v-if="item.type == 'link'">
+            <a :href="item.value" target="_blank">
+              <span>
+                <i class="el-icon-folder-checked"></i>
+                {{ $t("download") }}
+              </span>
+            </a>
+          </div>
+          <div class="list-right" v-else>
             {{ item.value }}
-        </div>
+          </div>
         </div>
       </div>
       <!-- <el-form
@@ -450,21 +447,18 @@
           })"
           :key="index"
         >
-        <div class="list-left list-link" v-if="item.type == 'link'">
-          <a :href="item.value" target="_blank">
-            {{ item.label }}
-            <span>
-              <i class="el-icon-folder-checked"></i>
-              {{$t('download')}}
-            </span>
-          </a>
-        </div>
-        <div class="list-left" v-else>
-          {{ item.label }}
-        </div>
-        <div class="list-right" v-if="!item.type">
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right" v-if="item.type == 'link'">
+            <a :href="item.value" target="_blank">
+              <span>
+                <i class="el-icon-folder-checked"></i>
+                {{ $t("download") }}
+              </span>
+            </a>
+          </div>
+          <div class="list-right" v-else>
             {{ item.value }}
-        </div>
+          </div>
         </div>
       </div>
       <!-- <el-form
@@ -694,13 +688,17 @@
       "
     >
       <div class="formStyle">
-        <div class="list-wrapper" v-for="(item, index) in userBalanceDetail" :key="index">
-          <div
-            class="list"
-          >
+        <div
+          class="list-wrapper"
+          v-for="(item, index) in userBalanceDetail"
+          :key="index"
+        >
+          <div class="list">
             <div class="list-left">
               <span
-                :class="`flag-icon ${getFlagIcon(userBalanceDetail[index].coinCode)}`"
+                :class="`flag-icon ${getFlagIcon(
+                  userBalanceDetail[index].coinCode
+                )}`"
                 v-if="item.coinCode != 'USDT'"
               ></span>
               <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
@@ -711,15 +709,19 @@
             </div>
           </div>
           <div class="list">
-            <div class="list-left">{{$t('cjsj')}}</div>
-            <div class="list-right">{{userBalanceDetail[index].createTime}}</div>
+            <div class="list-left">{{ $t("cjsj") }}</div>
+            <div class="list-right">
+              {{ userBalanceDetail[index].createTime }}
+            </div>
           </div>
           <div class="list">
-            <div class="list-left">{{$t('xgsj')}}</div>
-            <div class="list-right">{{userBalanceDetail[index].modifiedTime}}</div>
+            <div class="list-left">{{ $t("xgsj") }}</div>
+            <div class="list-right">
+              {{ userBalanceDetail[index].modifiedTime }}
+            </div>
           </div>
         </div>
-      
+
         <el-empty v-if="!userBalanceDetail.length" />
       </div>
       <span slot="footer" class="dialog-footer">
@@ -950,7 +952,7 @@ export default {
     async sh2(id, type) {
       try {
         await perKyc({ id, pass: type });
-        this.dialogVisible2 = false
+        this.dialogVisible2 = false;
         Message({
           type: "success",
           message: this.$t("czcg"),
@@ -961,7 +963,7 @@ export default {
     async sh(id, type) {
       try {
         await perBank({ id, pass: type });
-        this.dialogVisible = false
+        this.dialogVisible = false;
         Message({
           type: "success",
           message: this.$t("czcg"),
@@ -985,11 +987,11 @@ export default {
         { label: this.$t("bhly"), value: data.reason },
         { label: this.$t("swiftCode"), value: data.swiftCode },
         { label: this.$t("userId"), value: data.userId },
-  
+
         { label: this.$t("cjsj"), value: data.createTime },
         { label: this.$t("xgsj"), value: data.modifiedTime },
         {
-          label: this.$t("zzd"),
+          label: this.$t("zmgr"),
           value: pjDownUrl(data.accountCer),
           type: "link",
         },
@@ -1017,17 +1019,17 @@ export default {
         { label: this.$t("xgsj"), value: data.modifiedTime },
 
         {
-          label: this.$t("t1"),
+          label: this.$t("qycl"),
           value: pjDownUrl(data.regCer),
           type: "link",
         },
         {
-          label: this.$t("t2"),
+          label: this.$t("frcl"),
           value: pjDownUrl(data.legal),
           type: "link",
         },
         {
-          label: this.$t("t3"),
+          label: this.$t("gqcl"),
           value: pjDownUrl(data.shareholder),
           type: "link",
         },

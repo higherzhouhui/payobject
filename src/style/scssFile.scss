@@ -301,7 +301,9 @@ html {
         }
     }
 }
-
+.el-table .cell {
+    padding: 0!important;
+}
 .el-table .el-table__header-wrapper,
 .el-table__fixed-right {
     // background-color: $contentColor !important;
@@ -961,22 +963,33 @@ ul::-webkit-scrollbar-thumb {
 
 .operation-btn {
     font-size: 12px;
-    color: $baseColor;
+    color: #333;
     display: inline-block;
-    margin-right: 1px;
+    margin-right: 3px;
     cursor: pointer;
-    line-height: 23px;
+    line-height: 21px;
     position: relative;
-    background: rgba($color: #fff, $alpha: 0.2);
-    padding: 0 1px;
-    border-radius: 4px;
+    padding: 0 2px;
+    border-radius: 2px;
+    background: #fff1f3;
+}
+
+.pass-btn {
+    color: #fff;
+    background: rgb(69, 137, 196);
+}
+
+.edit-btn {
+    color: #fff;
+    background: rgb(69, 137, 196);
+}
+
+.reject-btn {
+    color: #fff;
+    background: rgb(174, 54, 50);
 }
 
 .cell .operation-btn:last-child {
-    &::after {
-        content: none;
-    }
-
     margin-right: 0;
 }
 

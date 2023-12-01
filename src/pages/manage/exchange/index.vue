@@ -724,14 +724,18 @@ export default {
       return [];
     },
     changeExformCoin() {
-      if (this.bankForm2.exFrom == "USDT") {
-        this.targetCoinList = this.szList;
-      } else {
-        const all = this.getNewareaList(this.areaList);
+      // if (this.bankForm2.exFrom == "USDT") {
+      //   this.targetCoinList = this.szList;
+      // } else {
+      //   const all = this.getNewareaList(this.areaList);
+      //   this.targetCoinList = all.filter((item) => {
+      //     return item.coinCode !== this.bankForm2.exFrom;
+      //   });
+      // }
+      const all = this.getNewareaList(this.areaList);
         this.targetCoinList = all.filter((item) => {
           return item.coinCode !== this.bankForm2.exFrom;
         });
-      }
       if (this.bankForm2.exTarget) {
         this.bankForm2.exTarget = "";
       }

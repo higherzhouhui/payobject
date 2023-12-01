@@ -1,7 +1,7 @@
 <template>
   <div class="kyc-container">
-    <div class="verified_type_1_contarner">
-      <div class="process_box2" v-if="form.kycStatus != '1'">
+    <div class="verified_type_1_contarner" v-if="showEditForm">
+      <div class="process_box2">
         <el-steps :active="1" align-center>
           <el-step :title="$t('qyxx')"></el-step>
           <!-- <el-step :title="$t('frxx')"></el-step> -->
@@ -125,131 +125,105 @@
             :placeholder="$t('qsrywcjsm')"
           ></el-input>
         </div>
-        <div class="title">{{ $t("qtcl") }}</div>
-        <div class="mb10">
-          <label>
-            {{ $t("t1") }}
+      </div>
+      <div class="ziliao-wrapper">
+        <div class="title">{{ $t("相关材料") }}</div>
+        <div class="upload-wrapper">
+        <div class="upload-item">
+          <div class="item-left">
+            <el-upload
+              action="null"
+              list-type="text"
+              accept=".pdf, .zip, .rar"
+              :before-upload="(e) => handlesuccess(e, 'regCer')"
+            >
+              <div class="load-cover">
+                <i class="el-icon-folder-add" v-if="!form.regCer"></i>
+                <i class="el-icon-folder-checked" v-else></i>
+              </div>
+              <div slot="tip" class="el-upload__tip">
+                {{ $t("scts") }}
+              </div>
+            </el-upload>
+          </div>
+          <div class="item-right">
+            <div class="sub-title"><span>*</span>{{ $t("企业材料") }}</div>
+            <div class="desc">{{ $t("t1") }}</div>
             <a
               :href="'/api/file/downLoad?url=' + form.regCer"
               target="_blank"
-              class="down-a"
+              class="down"
               v-if="form.regCer"
-              >{{ $t("yulan") }}</a
+              >{{ $t("download") }}</a
             >
-          </label>
-          <el-upload
-            v-if="form.kycStatus != 1"
-            class="upload-demo"
-            action="null"
-            list-type="text"
-            accept=".pdf, .zip, .rar"
-            :before-upload="(e) => handlesuccess(e, 'regCer')"
-            multiple
-          >
-            <el-button size="small" type="primary" class="btn">{{
-              form.regCer ? $t("ysccxsc") : $t("djsc")
-            }}</el-button>
-            <div slot="tip" class="el-upload__tip">
-              {{ $t("scts") }}
-            </div>
-          </el-upload>
+          </div>
         </div>
-        <div class="mb10">
-          <label>
-            {{ $t("t2") }}
+        <div class="upload-item">
+          <div class="item-left">
+            <el-upload
+              action="null"
+              list-type="text"
+              accept=".pdf, .zip, .rar"
+              :before-upload="(e) => handlesuccess(e, 'legal')"
+            >
+              <div class="load-cover">
+                <i class="el-icon-folder-add" v-if="!form.legal"></i>
+                <i class="el-icon-folder-checked" v-else></i>
+              </div>
+              <div slot="tip" class="el-upload__tip">
+                {{ $t("scts") }}
+              </div>
+            </el-upload>
+          </div>
+          <div class="item-right">
+            <div class="sub-title"><span>*</span>{{ $t("法人材料") }}</div>
+            <div class="desc">{{ $t("t2") }}</div>
             <a
               :href="'/api/file/downLoad?url=' + form.legal"
               target="_blank"
-              class="down-a"
+              class="down"
               v-if="form.legal"
-              >{{ $t("yulan") }}</a
+              >{{ $t("download") }}</a
             >
-          </label>
-          <el-upload
-            v-if="form.kycStatus != 1"
-            class="upload-demo"
-            action="null"
-            list-type="text"
-            accept=".pdf, .zip, .rar"
-            :before-upload="(e) => handlesuccess(e, 'legal')"
-            multiple
-          >
-            <el-button size="small" type="primary" class="btn">{{
-              form.legal ? $t("ysccxsc") : $t("djsc")
-            }}</el-button>
-            <div slot="tip" class="el-upload__tip">
-              {{ $t("scts") }}
-            </div>
-          </el-upload>
+          </div>
         </div>
-        <div class="mb10" v-if="form.busType != 1">
-          <label>
-            {{ $t("t3") }}
+        <div class="upload-item" v-if="form.busType != 1">
+          <div class="item-left">
+            <el-upload
+              action="null"
+              list-type="text"
+              accept=".pdf, .zip, .rar"
+              :before-upload="(e) => handlesuccess(e, 'shareholder')"
+            >
+              <div class="load-cover">
+                <i class="el-icon-folder-add" v-if="!form.shareholder"></i>
+                <i class="el-icon-folder-checked" v-else></i>
+              </div>
+              <div slot="tip" class="el-upload__tip">
+                {{ $t("scts") }}
+              </div>
+            </el-upload>
+          </div>
+          <div class="item-right">
+            <div class="sub-title"><span>*</span>{{ $t("股权材料") }}</div>
+            <div class="desc">{{ $t("t3") }}</div>
             <a
               :href="'/api/file/downLoad?url=' + form.shareholder"
               target="_blank"
-              class="down-a"
+              class="down"
               v-if="form.shareholder"
-              >{{ $t("yulan") }}</a
+              >{{ $t("download") }}</a
             >
-          </label>
-          <el-upload
-            v-if="form.kycStatus != 1"
-            class="upload-demo"
-            action="null"
-            list-type="text"
-            accept=".pdf, .zip, .rar"
-            :before-upload="(e) => handlesuccess(e, 'shareholder')"
-            multiple
-          >
-            <el-button size="small" type="primary" class="btn">{{
-              form.shareholder ? $t("ysccxsc") : $t("djsc")
-            }}</el-button>
-            <div slot="tip" class="el-upload__tip">
-              {{ $t("scts") }}
-            </div>
-          </el-upload>
-        </div>
-        <div class="mt40 flex flex_jc_sb_center">
-          <el-button class="primary" @click="to()">{{ $t("cxxz") }}</el-button>
-          <el-button
-            class="primary normal-btn"
-            :class="loading && 'loading'"
-            type="primary"
-            @click="sendForm"
-            >{{ $t("done") }}</el-button
-          >
-        </div>
-      </div>
-      <el-dialog
-        :title="$t('done')"
-        :visible.sync="dialogVisibleSuccess"
-        width="500px"
-        :before-close="
-          () => {
-            dialogVisibleSuccess = false;
-          }
-        "
-      >
-        <div class="dialog-content">
-          <img src="@/assets/images/moneyManage/success.png" />
-          <div class="desc">
-            {{ $t("fqkyc") }}
           </div>
         </div>
-        <el-button
-          slot="footer"
-          type="primary"
-          class="normal-btn"
-          @click="dialogVisibleSuccess = false"
-          >{{ $t("done") }}</el-button
-        >
-      </el-dialog>
-    </div>
-    <div class="kyc-detail">
-      <div class="admin-title">
-        {{$t('xq')}}
       </div>
+      </div>
+      <div class="operation-group">
+        <div class="csxz" @click="to">{{$t('cxxz')}}</div>
+        <div class="qd" @click="sendForm">{{$t('sure')}}</div>
+      </div>
+    </div>
+    <div class="kyc-detail" v-else>
       <div
         class="list"
         v-for="(item, index) in detailList.filter((item) => {
@@ -257,19 +231,47 @@
         })"
         :key="index"
       >
-        <div class="list-left">{{ item.label }}</div>
-        <div class="list-right">
-          <template v-if="item.type == 'link'">
-            <a :href="item.value" target="_blank">
-              {{ $t("yulan") }}
-            </a>
-          </template>
-          <template v-if="!item.type">
+        <div class="list-left list-link" v-if="item.type == 'link'">
+          <a :href="item.value" target="_blank">
+            {{ item.label }}
+            <span>
+              <i class="el-icon-folder-checked"></i>
+              {{$t('download')}}
+            </span>
+          </a>
+        </div>
+        <div class="list-left" v-else>
+          {{ item.label }}
+        </div>
+        <div class="list-right" v-if="!item.type">
             {{ item.value }}
-          </template>
         </div>
       </div>
     </div>
+    <el-dialog
+      :title="$t('done')"
+      :visible.sync="dialogVisibleSuccess"
+      width="500px"
+      :before-close="
+        () => {
+          dialogVisibleSuccess = false;
+        }
+      "
+    >
+      <div class="dialog-content">
+        <img src="@/assets/images/moneyManage/success.png" />
+        <div class="desc">
+          {{ $t("fqkyc") }}
+        </div>
+      </div>
+      <el-button
+        slot="footer"
+        type="primary"
+        class="normal-btn"
+        @click="dialogVisibleSuccess = false"
+        >{{ $t("done") }}</el-button
+      >
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -312,6 +314,18 @@ export default {
       ],
       areaList: [],
     };
+  },
+  computed: {
+    showEditForm() {
+      const userInfo = this.$store.state.userInfo;
+      if (!userInfo.kyc) {
+        return true;
+      }
+      if (userInfo.kyc && userInfo.kyc.kycStatus == 2) {
+        return true;
+      }
+      return false;
+    },
   },
   created() {
     this.form.busType = this.type;
@@ -380,8 +394,14 @@ export default {
         this.detailList = [
           { label: this.$t("qymc"), value: this.form.companyName },
           { label: this.$t("qyjydz"), value: this.form.businessAdd },
-          { label: this.$t("qylx"), value: this.options[this.form.busType].label },
-          { label: this.$t("qyzcszd"), value: getCountryName(this.form.country) },
+          {
+            label: this.$t("qylx"),
+            value: this.options[this.form.busType].label,
+          },
+          {
+            label: this.$t("qyzcszd"),
+            value: getCountryName(this.form.country),
+          },
           { label: this.$t("zcrq"), value: this.form.regDate },
           { label: this.$t("qyyxq"), value: this.form.period },
           { label: this.$t("ygyhkje"), value: this.form.monthlyRemittance },
@@ -389,14 +409,26 @@ export default {
           { label: this.$t("dbjyed"), value: this.form.transactionLimit },
           { label: this.$t("ywcjsm"), value: this.form.businessScenario },
           { label: this.$t("qymc"), value: this.form.webSite },
-          { label: this.$t("t1"), value: pjDownUrl(this.form.regCer), type: 'link' },
-          { label: this.$t("t2"), value: pjDownUrl(this.formegal), type: 'link' },
-          { label: this.$t("t3"), value: pjDownUrl(this.form.shareholder), type: 'link' },
           { label: this.$t("kzt"), value: this.status[this.form.kycStatus] },
           { label: this.$t("userId"), value: this.form.userId },
           { label: this.$t("bhly"), value: this.form.reason },
           { label: this.$t("cjsj"), value: this.form.createTime },
           { label: this.$t("xgsj"), value: this.form.modifiedTime },
+          {
+            label: this.$t("t1"),
+            value: pjDownUrl(this.form.regCer),
+            type: "link",
+          },
+          {
+            label: this.$t("t2"),
+            value: pjDownUrl(this.formegal),
+            type: "link",
+          },
+          {
+            label: this.$t("t3"),
+            value: pjDownUrl(this.form.shareholder),
+            type: "link",
+          },
         ];
       }
     },
@@ -405,17 +437,17 @@ export default {
 </script>
 <style scoped lang="scss">
 .kyc-container {
-  display: grid;
-  grid-template-columns: 2fr 1.2fr;
-  row-gap: 20px;
-  column-gap: 20px;
-  @media screen and (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
+  background: $contentColor;
   .kyc-detail {
     border-radius: 6px;
-    background: $contentColor;
     padding: 1.5rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 22px;
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(1, 1fr);
+      row-gap: 22px;
+    }
     .list {
       background: $bgColor;
       border-radius: 0.25rem;
@@ -439,8 +471,21 @@ export default {
       .list-left::after {
         content: ":";
       }
+      .list-link::after {
+        content: none;
+      }
+      .list-link {
+        max-width: 100%!important;
+        span {
+          color: $baseColor;
+        }
+        .el-icon-folder-checked {
+          font-size: 18px;
+        }
+      }
       .list-right {
         max-width: 80%;
+        padding-left: 10px;
       }
       .list-left {
         max-width: 80%;
@@ -469,7 +514,6 @@ export default {
     padding: 1.2rem 2rem;
     border-radius: 4px;
     border: 1px solid rgba($color: #fff, $alpha: 0.6);
-    background: $contentColor;
     margin-bottom: 1rem;
     ::v-deep .el-step__icon {
       width: 2.8rem;
@@ -544,14 +588,43 @@ export default {
       }
     }
   }
-
+  .operation-group {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 24px;
+    .csxz, .qd {
+      padding: 6px 18px;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        color: $baseColor;
+      }
+    }
+    .qd {
+      background: $baseColor;
+      margin-left: 20px;
+      color: #fff;
+      &:hover {
+        color: $baseColor;
+        background: #fff;
+      }
+    }
+  }
   .content {
     padding: 1.5rem;
     color: #fff;
-    background: $contentColor;
     border-radius: 8px;
     .title {
       font-size: 15px;
+    }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 22px;
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(1, 1fr);
+      row-gap: 22px;
     }
   }
   .label {
@@ -590,6 +663,23 @@ export default {
     max-width: 80%;
     text-align: center;
     color: $baseColor;
+  }
+}
+.ziliao-wrapper {
+  padding: 1.5rem;
+  .upload-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 22px;
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(1, 1fr);
+      row-gap: 22px;
+    }
+  }
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: #fff;
   }
 }
 </style>

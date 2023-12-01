@@ -201,11 +201,13 @@
           })"
           :key="index"
         >
+        
           <div class="list-left">{{ item.label }}</div>
           <div class="list-right">
             <template v-if="item.type == 'link'">
               <a :href="item.value" target="_blank">
-                {{ $t("yulan") }}
+                <span><i class="el-icon-folder-checked"></i>
+                  {{ $t("download") }}</span>
               </a>
             </template>
             <template v-if="!item.type">
@@ -291,12 +293,12 @@ export default {
       this.detailList = [
           { label: this.$t("title"), value: row.title },
           { label: this.$t("zhaiyao"), value: row.mainPoint },
-          { label: this.$t("cover"), value: pjDownUrl(row.cover), type: "link" },
           { label: this.$t("content"), value: row.content, type: 'html' },
           { label: this.$t("sftj"), value: row.recommend, type: 'bol' },
           { label: this.$t("yuyan"), value: row.yuyan },
           { label: this.$t("cjsj"), value: row.createTime },
           { label: this.$t("xgsj"), value: row.modifiedTime },
+          { label: this.$t("cover"), value: pjDownUrl(row.cover), type: "link" },
         ];
  
     },

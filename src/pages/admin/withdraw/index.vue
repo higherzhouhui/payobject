@@ -1034,12 +1034,6 @@ export default {
 }
 .withdraw-password {
   margin-bottom: 1.6rem;
-  ::v-deep .el-form-item__label {
-    font-size: 16px;
-  }
-  ::v-deep .el-radio__label {
-    font-size: 16px;
-  }
   ::v-deep .el-input__inner {
     height: 3rem;
   }

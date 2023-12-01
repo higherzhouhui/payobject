@@ -77,25 +77,27 @@
         v-loading="loading"
         v-if="moneyType == 'fabi'"
       >
-        <el-table-column
-          prop="accountName"
-          :label="$t('skzhmc')"
-          min-width="180"
-        />
-        <el-table-column prop="coinCode" :label="$t('bz')" min-width="200" />
-        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
-        <el-table-column
-          prop="sendAccount"
-          :label="$t('hkzh')"
-          min-width="180"
-        />
-        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="180">
+        <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
+
+        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
               {{ status[scope.row.reqStatus] }}
             </el-tag>
           </template>
         </el-table-column>
+
+        <el-table-column
+          prop="sendAccount"
+          :label="$t('hkzh')"
+          min-width="120"
+        />
+        <el-table-column prop="reqValue" :label="$t('czje')" min-width="100" />
+        <el-table-column
+          prop="accountName"
+          :label="$t('skzhmc')"
+          min-width="100"
+        />
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
@@ -159,22 +161,23 @@
         v-loading="loading"
         v-if="moneyType == 'usdt'"
       >
-        <el-table-column
-          prop="cryptAdd"
-          :label="$t('skqbdz')"
-          min-width="180"
-        />
+       
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
-        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
-        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
-        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
-        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="180">
+        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
               {{ usdtstatus[scope.row.reqStatus] }}
             </el-tag>
           </template>
         </el-table-column>
+        <el-table-column
+        prop="cryptAdd"
+        :label="$t('skqbdz')"
+        min-width="180"
+      />
+        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
+        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
+        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
@@ -200,9 +203,9 @@
                 scope.row.reqStatus == 1
               "
             >
-              <el-button size="small" type="primary" class="btn">
+              <div class="operation-btn">
                 {{ $t("schkpz") }}
-              </el-button>
+              </div>
             </el-upload>
             <div
               class="operation-btn"
@@ -274,7 +277,10 @@
           <div class="list-right">
             <template v-if="item.type == 'link'">
               <a :href="item.value" target="_blank">
-                {{ $t("yulan") }}
+                <span>
+                  <i class="el-icon-folder-checked"></i>
+                  {{$t('download')}}
+                </span>
               </a>
             </template>
             <template v-else>
@@ -440,7 +446,7 @@
       </div>
     </el-dialog>
     <el-dialog
-      :title="operationType == 'detal' ? $t('xq') : $t('sh')"
+      :title="operationType == 'detail' ? $t('xq') : $t('sh')"
       :visible.sync="usdtdialogVisible"
       :before-close="
         () => {
@@ -448,27 +454,30 @@
         }
       "
     >
-    <div class="formStyle">
-      <div
-        class="list"
-        v-for="(item, index) in detailList.filter((item) => {
-          return item.value;
-        })"
-        :key="index"
-      >
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
         <div class="list-left">{{ item.label }}</div>
         <div class="list-right">
           <template v-if="item.type == 'link'">
             <a :href="item.value" target="_blank">
-              {{ $t("yulan") }}
+              <span>
+                <i class="el-icon-folder-checked"></i>
+                {{$t('download')}}
+              </span>
             </a>
           </template>
           <template v-else>
             {{ item.value }}
           </template>
         </div>
+        </div>
       </div>
-    </div>
       <!-- <el-form
         label-position="top"
         ref="formss"
@@ -748,10 +757,10 @@ export default {
         };
         if (this.moneyType == "fabi") {
           res = await perDeposit(param);
-          this.dialogVisible = false
+          this.dialogVisible = false;
         } else {
           res = await perCryptDeposit(param);
-          this.usdtdialogVisible = false
+          this.usdtdialogVisible = false;
         }
         if (res.code == 200) {
           Message({
@@ -895,6 +904,8 @@ export default {
           },
           { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
           { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
+          { label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.reqProof), type: 'link' },
+          
         ];
         this.dialogVisible = true;
       }
@@ -902,18 +913,21 @@ export default {
         this.detailList = [
           { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
           { label: this.$t("czje"), value: this.currentSelectRow.reqValue },
-          { label: this.$t("kzt"), value: this.usdtstatus[this.currentSelectRow.reqStatus] },
+          {
+            label: this.$t("kzt"),
+            value: this.usdtstatus[this.currentSelectRow.reqStatus],
+          },
           { label: this.$t("bhly"), value: this.currentSelectRow.memo },
           { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
           { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
           { label: this.$t("hkqbdz"), value: this.currentSelectRow.tid },
+          { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
+          { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
           {
-            label: this.$t("zl"),
+            label: this.$t("hkpz"),
             value: pjDownUrl(this.currentSelectRow.reqProof),
             type: "link",
           },
-          { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
-          { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
         ];
         this.usdtdialogVisible = true;
       }

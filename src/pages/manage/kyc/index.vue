@@ -74,6 +74,13 @@
             min-width="180"
             show-overflow-tooltip
           />
+          <el-table-column prop="bankStatus" :label="$t('kzt')" min-width="120">
+            <template slot-scope="scope">
+              <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
+                {{ status[scope.row.bankStatus] }}
+              </el-tag>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="bankAccount"
             :label="$t('yhzh')"
@@ -86,13 +93,6 @@
             min-width="300"
             show-overflow-tooltip
           />
-          <el-table-column prop="bankStatus" :label="$t('kzt')" min-width="120">
-            <template slot-scope="scope">
-              <el-tag :type="typeOption[scope.row.bankStatus]" class="elTag">
-                {{ status[scope.row.bankStatus] }}
-              </el-tag>
-            </template>
-          </el-table-column>
           <el-table-column
             prop="createTime"
             :label="$t('cjsj')"
@@ -106,13 +106,6 @@
                 @click="passBankDialog(scope.row, 'detail')"
               >
                 {{ $t("xq") }}
-              </div>
-              <div
-                class="operation-btn"
-                @click="showUsdtForm(scope.row)"
-                v-if="scope.row.bankStatus == 1"
-              >
-                {{ $t("jmhb") }}
               </div>
               <div
                 v-if="scope.row.bankStatus == 0"
@@ -207,6 +200,13 @@
             min-width="180"
             show-overflow-tooltip
           />
+          <el-table-column prop="kycStatus" :label="$t('kzt')" min-width="120">
+            <template slot-scope="scope">
+              <el-tag :type="typeOption[scope.row.kycStatus]" class="elTag">
+                {{ status[scope.row.kycStatus] }}
+              </el-tag>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="businessAdd"
             :label="$t('qyjydz')"
@@ -219,13 +219,7 @@
             min-width="280"
             show-overflow-tooltip
           />
-          <el-table-column prop="kycStatus" :label="$t('kzt')" min-width="120">
-            <template slot-scope="scope">
-              <el-tag :type="typeOption[scope.row.kycStatus]" class="elTag">
-                {{ status[scope.row.kycStatus] }}
-              </el-tag>
-            </template>
-          </el-table-column>
+
           <el-table-column
             prop="createTime"
             :label="$t('cjsj')"
@@ -233,7 +227,7 @@
             show-overflow-tooltip
           />
 
-          <el-table-column :label="$t('cz')" width="105" fixed="right">
+          <el-table-column :label="$t('cz')" width="130" fixed="right">
             <template slot-scope="scope">
               <div>
                 <div
@@ -256,6 +250,13 @@
                 >
                   {{ $t("bh") }}
                 </div>
+                <div
+                class="operation-btn"
+                @click="showUsdtForm(scope.row)"
+                v-if="scope.row.kycStatus == 1"
+              >
+                {{ $t("jmhb") }}
+              </div>
                 <div
                   v-if="scope.row.kycStatus == 1"
                   class="operation-btn"
@@ -306,17 +307,21 @@
           })"
           :key="index"
         >
-          <div class="list-left">{{ item.label }}</div>
-          <div class="list-right">
-            <template v-if="item.type == 'link'">
-              <a :href="item.value" target="_blank">
-                {{ $t("yulan") }}
-              </a>
-            </template>
-            <template v-else>
-              {{ item.value }}
-            </template>
-          </div>
+        <div class="list-left list-link" v-if="item.type == 'link'">
+          <a :href="item.value" target="_blank">
+            {{ item.label }}
+            <span>
+              <i class="el-icon-folder-checked"></i>
+              {{$t('download')}}
+            </span>
+          </a>
+        </div>
+        <div class="list-left" v-else>
+          {{ item.label }}
+        </div>
+        <div class="list-right" v-if="!item.type">
+            {{ item.value }}
+        </div>
         </div>
       </div>
       <!-- <el-form
@@ -445,17 +450,21 @@
           })"
           :key="index"
         >
-          <div class="list-left">{{ item.label }}</div>
-          <div class="list-right">
-            <template v-if="item.type == 'link'">
-              <a :href="item.value" target="_blank">
-                {{ $t("yulan") }}
-              </a>
-            </template>
-            <template v-else>
-              {{ item.value }}
-            </template>
-          </div>
+        <div class="list-left list-link" v-if="item.type == 'link'">
+          <a :href="item.value" target="_blank">
+            {{ item.label }}
+            <span>
+              <i class="el-icon-folder-checked"></i>
+              {{$t('download')}}
+            </span>
+          </a>
+        </div>
+        <div class="list-left" v-else>
+          {{ item.label }}
+        </div>
+        <div class="list-right" v-if="!item.type">
+            {{ item.value }}
+        </div>
         </div>
       </div>
       <!-- <el-form
@@ -658,6 +667,7 @@
         <el-form-item :label="$t('bhly')">
           <el-input
             type="textarea"
+            :placeholder="$t('qsr')"
             v-model="currentSelectRow.reason"
           ></el-input>
         </el-form-item>
@@ -972,16 +982,17 @@ export default {
         { label: this.$t("jzdz"), value: data.accountAdd },
         { label: this.$t("ssgj"), value: getCountryName(data.country) },
         { label: this.$t("kzt"), value: this.status[data.bankStatus] },
+        { label: this.$t("bhly"), value: data.reason },
         { label: this.$t("swiftCode"), value: data.swiftCode },
         { label: this.$t("userId"), value: data.userId },
-        { label: this.$t("bhly"), value: data.reason },
+  
+        { label: this.$t("cjsj"), value: data.createTime },
+        { label: this.$t("xgsj"), value: data.modifiedTime },
         {
-          label: this.$t("zl"),
+          label: this.$t("zzd"),
           value: pjDownUrl(data.accountCer),
           type: "link",
         },
-        { label: this.$t("cjsj"), value: data.createTime },
-        { label: this.$t("xgsj"), value: data.modifiedTime },
       ];
     },
     passKycDialog(data, type) {
@@ -1002,6 +1013,9 @@ export default {
         { label: this.$t("dbjyed"), value: data.transactionLimit },
         { label: this.$t("ygyjybs"), value: data.transactionsMonth },
         { label: this.$t("bhly"), value: data.reason },
+        { label: this.$t("cjsj"), value: data.createTime },
+        { label: this.$t("xgsj"), value: data.modifiedTime },
+
         {
           label: this.$t("t1"),
           value: pjDownUrl(data.regCer),
@@ -1017,8 +1031,6 @@ export default {
           value: pjDownUrl(data.shareholder),
           type: "link",
         },
-        { label: this.$t("cjsj"), value: data.createTime },
-        { label: this.$t("xgsj"), value: data.modifiedTime },
       ];
     },
     async getlist() {

@@ -77,14 +77,9 @@
         v-loading="loading"
         v-if="moneyType == 'fabi'"
       >
-        <el-table-column
-          prop="accountName"
-          :label="$t('skzhmc')"
-          width="180"
-          show-overflow-tooltip
-        />
+       
+
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
-        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
@@ -92,6 +87,13 @@
             </el-tag>
           </template>
         </el-table-column>
+        <el-table-column
+        prop="accountName"
+        :label="$t('skzhmc')"
+        width="180"
+        show-overflow-tooltip
+      />
+      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
@@ -152,6 +154,13 @@
         v-if="moneyType == 'usdt'"
       >
         <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" />
+        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
+          <template slot-scope="scope">
+            <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
+              {{ usdtstatus[scope.row.reqStatus] }}
+            </el-tag>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="cryptAdd"
           :label="$t('skqbdz')"
@@ -162,13 +171,7 @@
         <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
         <!-- <el-table-column prop="witValue" :label="$t('yjdzje')" min-width="120" /> -->
         <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
-        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
-          <template slot-scope="scope">
-            <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
-              {{ usdtstatus[scope.row.reqStatus] }}
-            </el-tag>
-          </template>
-        </el-table-column>
+
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
@@ -238,17 +241,20 @@
         })"
         :key="index"
       >
-        <div class="list-left">{{ item.label }}</div>
-        <div class="list-right">
-          <template v-if="item.type == 'link'">
-            <a :href="item.value" target="_blank">
-              {{ $t("yulan") }}
-            </a>
-          </template>
-          <template v-else>
-            {{ item.value }}
-          </template>
-        </div>
+      <div class="list-left">{{ item.label }}</div>
+      <div class="list-right">
+        <template v-if="item.type == 'link'">
+          <a :href="item.value" target="_blank">
+            <span>
+              <i class="el-icon-folder-checked"></i>
+              {{$t('download')}}
+            </span>
+          </a>
+        </template>
+        <template v-else>
+          {{ item.value }}
+        </template>
+      </div>
       </div>
     </div>
       <!-- <el-form
@@ -358,17 +364,20 @@
         })"
         :key="index"
       >
-        <div class="list-left">{{ item.label }}</div>
-        <div class="list-right">
-          <template v-if="item.type == 'link'">
-            <a :href="item.value" target="_blank">
-              {{ $t("yulan") }}
-            </a>
-          </template>
-          <template v-else>
-            {{ item.value }}
-          </template>
-        </div>
+      <div class="list-left">{{ item.label }}</div>
+      <div class="list-right">
+        <template v-if="item.type == 'link'">
+          <a :href="item.value" target="_blank">
+            <span>
+              <i class="el-icon-folder-checked"></i>
+              {{$t('download')}}
+            </span>
+          </a>
+        </template>
+        <template v-else>
+          {{ item.value }}
+        </template>
+      </div>
       </div>
     </div>
       <!-- <el-form
@@ -461,7 +470,36 @@
           ></el-input>
         </el-form-item> -->
         <el-form-item :label="$t('hkpz')">
-          <el-upload
+          <div class="upload-item">
+            <div class="item-left">
+              <el-upload
+                action="null"
+                list-type="text"
+                accept=".pdf, .zip, .rar, image/*"
+                :before-upload="(e) => handlesuccess(e)"
+              >
+                <div class="load-cover">
+                  <i class="el-icon-folder-add" v-if="!currentSelectRow.withdrawProof"></i>
+                  <i class="el-icon-folder-checked" v-else></i>
+                </div>
+                <div slot="tip" class="el-upload__tip">
+                  {{ $t("scts") }}
+                </div>
+              </el-upload>
+            </div>
+            <div class="item-right">
+              <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
+              <div class="desc">{{ $t("hkzmdes") }}</div>
+              <a
+                :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof"
+                target="_blank"
+                class="down"
+                v-if="currentSelectRow.withdrawProof"
+                >{{ $t("download") }}</a
+              >
+            </div>
+          </div>
+          <!-- <el-upload
             class="upload-demo"
             action="null"
             list-type="text"
@@ -480,7 +518,7 @@
             v-else
             class="down-a"
             >{{ $t("yulan") }}</a
-          >
+          > -->
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -756,9 +794,9 @@ export default {
           {label: this.$t("sxfei"), value: this.currentSelectRow.commission},
           {label: this.$t("kzt"), value: this.status[this.currentSelectRow.reqStatus]},
           {label: this.$t("bhly"), value: this.currentSelectRow.memo},
-          {label: this.$t("zl"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
           {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
           {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
+          {label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
         ]
         this.dialogVisible = true;
       }
@@ -771,9 +809,9 @@ export default {
           // {label: this.$t("hkqbdz"), value: this.currentSelectRow.tid},
           {label: this.$t("kzt"), value: this.usdtstatus[this.currentSelectRow.reqStatus]},
           {label: this.$t("bhly"), value: this.currentSelectRow.memo},
-          {label: this.$t("zl"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
           {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
           {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
+          {label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
 
         ]
         this.usdtdialogVisible = true;

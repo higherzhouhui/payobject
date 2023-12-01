@@ -20,16 +20,18 @@
     >
       <el-input
         v-model="form.verCode"
-        :placeholder="$t('请输入验证码')"
-      ></el-input>
-      <el-button
-        class="send"
-        :class="loading && 'loading'"
-        @click="sendSms"
-        v-if="timer == '60'"
-        >发送</el-button
+        :placeholder="$t('qsryzm')"
       >
-      <span class="send timer" v-else>{{ timer }}</span>
+      <el-button
+      slot="append"
+      class="send"
+      :class="loading && 'loading'"
+      @click="sendSms"
+      v-if="timer == '60'"
+      >{{$t('send')}}</el-button
+    >
+    <el-button slot="append" class="send" v-else>{{ timer }}</el-button>
+    </el-input>
     </el-form-item>
   </div>
 </template>
@@ -123,27 +125,16 @@ export default {
 .form-wrapper {
   position: relative;
   .send {
-    position: absolute;
-    right: 0;
-    top: 0;
     padding: 0 16px;
-    top: 0;
-    height: 100%;
     color: #fff;
-    display: flex;
-    align-items: center;
-    background: $baseColor;
-    border: none;
-    @media screen and (max-width: 500px) {
-      height: calc(100% - 4px);
-      top: 2px;
-    }
   }
   .timer {
     color: #fff;
-    background: #adadad;
-
   }
+}
+::v-deep .el-input-group__append {
+  background: $baseColor;
+  border: 1px solid $baseColor;
 }
 ::v-deep .el-form-item__label {
   color: #fff;

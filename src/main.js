@@ -4,7 +4,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css';
 import store from '@/store/index'
-import './style/scssFile.scss'
+import '@/style/theme.scss'
+import '@/style/scssFile.scss'
 import router from './router/index.js'
 import i18n from "./lang/i18n";
 import { Local } from '@/utils/index'

@@ -69,6 +69,13 @@
         v-loading="loading"
       >
         <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
+        <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="120">
+          <template slot-scope="scope">
+            <el-tag :type="typeOption[scope.row.changeStatus]" class="elTag">
+              {{ status[scope.row.changeStatus] }}
+            </el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" />
         <el-table-column
           prop="targetCoin"
@@ -80,13 +87,7 @@
           :label="$t('yjdzje')"
           min-width="130"
         />
-        <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="120">
-          <template slot-scope="scope">
-            <el-tag :type="typeOption[scope.row.changeStatus]" class="elTag">
-              {{ status[scope.row.changeStatus] }}
-            </el-tag>
-          </template>
-        </el-table-column>
+
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"

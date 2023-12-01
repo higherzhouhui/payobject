@@ -2,6 +2,27 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
 import i18n from '@/lang/i18n'
+import { close, start } from '@/utils/nprogress';
+
+// 解决路由重复的报错
+let originPush =VueRouter.prototype.push;
+let originReplace =VueRouter.prototype.replace;
+VueRouter.prototype.push=function(location,resolve,reject){
+  if(resolve&&reject){
+    originPush.call(this,location,resolve,reject)    
+  }else{
+    originPush.call(this,location,()=>{},()=>{})
+  }
+}
+VueRouter.prototype.replace=function(location,resolve,reject){
+  if(resolve&&reject){
+    originReplace.call(this,location,resolve,reject)
+  }else{
+    originReplace.call(this,location,()=>{},()=>{})
+  }
+}
+
+
 //2. 调用Vue.use()函数，把VueRouter安装为Vue的插件
 Vue.use(VueRouter)
 
@@ -91,8 +112,9 @@ const router = new VueRouter({
 )
 
 router.beforeEach((to, from, next) => {
+    start();
     store.commit('SET_PATH', to)
-    return next()
+    next()
     // if (token) {
     //     next()
     // } else {
@@ -105,6 +127,11 @@ router.beforeEach((to, from, next) => {
     //     }
     // }
 })
+
+router.afterEach(() => {
+	// 关闭进度条
+	close();
+});
 //4. 向外共享路由的实例对象
 
 export default router

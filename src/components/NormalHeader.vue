@@ -194,9 +194,6 @@ export default {
     },
     to(path) {
       if (path) {
-        if (path == this.$store.state.path) {
-          return;
-        }
         this.$router.push(path);
       } else {
         if (this.path !== "/index") {

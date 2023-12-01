@@ -16,6 +16,7 @@
     "element-ui": "^2.15.13",
     "flag-icon-css": "^4.1.7",
     "identify": "^0.1.5",
+    "nprogress": "^0.2.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "shifty": "^3.0.1",

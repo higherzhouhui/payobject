@@ -110,14 +110,14 @@
               <div
                 v-if="scope.row.bankStatus == 0"
                 class="operation-btn pass-btn"
-                @click="passBankDialog(scope.row, 'pass')"
+                @click.stop="passBankDialog(scope.row, 'pass')"
               >
                 {{ $t("tg") }}
               </div>
               <div
                 v-if="scope.row.bankStatus == 0"
                 class="operation-btn reject-btn"
-                @click="rejectKyc(scope.row)"
+                @click.stop="rejectKyc(scope.row)"
               >
                 {{ $t("bh") }}
               </div>
@@ -240,20 +240,20 @@
                 <div
                   v-if="scope.row.kycStatus == 0"
                   class="operation-btn pass-btn"
-                  @click="passKycDialog(scope.row, 'pass')"
+                  @click.stop="passKycDialog(scope.row, 'pass')"
                 >
                   {{ $t("tg") }}
                 </div>
                 <div
                   v-if="scope.row.kycStatus == 0"
                   class="operation-btn reject-btn"
-                  @click="rejectKyc(scope.row)"
+                  @click.stop="rejectKyc(scope.row)"
                 >
                   {{ $t("bh") }}
                 </div>
                 <div
                   class="operation-btn edit-btn"
-                  @click="showUsdtForm(scope.row)"
+                  @click.stop="showUsdtForm(scope.row)"
                   v-if="scope.row.kycStatus == 1"
                 >
                   {{ $t("jmhb") }}
@@ -261,7 +261,7 @@
                 <div
                   v-if="scope.row.kycStatus == 1"
                   class="operation-btn"
-                  @click="showUserBalance(scope.row)"
+                  @click.stop="showUserBalance(scope.row)"
                 >
                   {{ $t("ye") }}
                 </div>

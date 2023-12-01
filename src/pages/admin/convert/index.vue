@@ -14,7 +14,7 @@
                 :placeholder="$t('enterAmount')"
                 v-model="form.reqValue"
                 class="input-amount"
-                @change="changeReqValue"
+                @input="changeReqValue"
                 :disabled="!form.coinCode"
               >
               </el-input>

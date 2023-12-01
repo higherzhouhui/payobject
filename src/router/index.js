@@ -84,6 +84,7 @@ const router = new VueRouter({
                 { path: 'info', component: () => import('@/pages/admin/info/index.vue'), meta: {title: i18n.t('grzl')} },
                 { path: 'reset', component: () => import('@/pages/admin/info/reset.vue'), meta: {title: i18n.t('resetPwd')} },
                 { path: 'paypass', component: () => import('@/pages/admin/info/paypass.vue'), meta: {title: i18n.t('paypass')} },
+                { path: 'safe', component: () => import('@/pages/admin/info/safe.vue'), meta: {title: i18n.t('safe')} },
             ]
         },
         {
@@ -97,6 +98,7 @@ const router = new VueRouter({
                 { path: 'withdraw', component: () => import('@/pages/admin/withdraw/list.vue'), meta: {title: i18n.t('cjlist')} },
                 { path: 'bill', component: () => import('@/pages/admin/record/exchangelist.vue'), meta: {title: i18n.t('jymx')} },
                 { path: 'blog', component: () => import('@/pages/manage/blog/index.vue'), meta: {title: i18n.t('newslist')} },
+                { path: 'safe', component: () => import('@/pages/admin/info/safe.vue'), meta: {title: i18n.t('safe')} },
             ]
         },
         {

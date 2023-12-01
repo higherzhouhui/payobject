@@ -110,19 +110,21 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-upload
+            <div @click.stop>
+              <el-upload
               class="upload-demo"
               action="null"
               list-type="text"
               accept=".pdf, .zip, .rar, image/*"
               :before-upload="(e) => handlesuccess(e, scope.row)"
-              multiple
               v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
             >
               <div class="operation-btn edit-btn">
                 {{ $t("schkpz") }}
               </div>
             </el-upload>
+            </div>
+      
             <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
@@ -133,13 +135,13 @@
               slot="reference"
               class="operation-btn pass-btn"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
-              @click="handleShowDetail(scope.row, 'pass')"
+              @click.stop="handleShowDetail(scope.row, 'pass')"
             >
               {{ $t("tg") }}
             </div>
             <div
               class="operation-btn reject-btn"
-              @click="rejectDeposit(scope.row)"
+              @click.stop="rejectDeposit(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}
@@ -190,23 +192,25 @@
           fixed="right"
         >
           <template slot-scope="scope">
+          <div @click.stop>
             <el-upload
-              class="upload-demo"
-              action="null"
-              list-type="text"
-              accept=".pdf, .zip, .rar, image/*"
-              :before-upload="(e) => handlesuccess(e, scope.row)"
-              multiple
-              v-if="
-                !scope.row.reqProof &&
-                !$store.state.userInfo.admin &&
-                scope.row.reqStatus == 1
-              "
-            >
-              <div class="operation-btn edit-btn">
-                {{ $t("schkpz") }}
-              </div>
-            </el-upload>
+            class="upload-demo"
+            action="null"
+            list-type="text"
+            accept=".pdf, .zip, .rar, image/*"
+            :before-upload="(e) => handlesuccess(e, scope.row)"
+            multiple
+            v-if="
+              !scope.row.reqProof &&
+              !$store.state.userInfo.admin &&
+              scope.row.reqStatus == 1
+            "
+          >
+            <div class="operation-btn edit-btn">
+              {{ $t("schkpz") }}
+            </div>
+          </el-upload>
+          </div>
             <!-- <div
               class="operation-btn"
               @click="handleShowDetail(scope.row, 'detail')"
@@ -221,13 +225,13 @@
                 $store.state.userInfo.admin &&
                 scope.row.reqStatus == 1
               "
-              @click="handleShowDetail(scope.row, 'pass')"
+              @click.stop="handleShowDetail(scope.row, 'pass')"
             >
               {{ $t("tg") }}
             </div>
             <div
               class="operation-btn reject-btn"
-              @click="rejectDeposit(scope.row)"
+              @click.stop="rejectDeposit(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}

@@ -351,7 +351,7 @@
     "duihuan": "兑换",
     "duihuanls": "兑换列表",
     "dhje": "兑换金额",
-    "ye": "余额",
+    "ye": "可用余额",
     "yhqb": "用户钱包",
     "dhmbbz": "兑换目标币种",
     "qxzdhmbbz": "请选择兑换目标币种",
@@ -412,7 +412,7 @@
     "noupload": "未上传",
     "qxzhkqbdz": "请选择汇款钱包地址",
     "qsxtxqbdz": "请选择提现钱包地址",
-    "addressMange": "地址管理",
+    "addressMange": "数字货币地址管理",
     "paypass": "支付密码",
     "timeplace": "年/月/日",
     "skzhhl": "收款账号/汇率管理",
@@ -429,5 +429,6 @@
     "hkzmdes": "请提供汇款的截图或汇款单据",
     "qycl": "企业材料",
     "frcl": "法人材料",
-    "gqcl": "股权材料"
+    "gqcl": "股权材料",
+    "safe": "安全设置"
 }

@@ -114,12 +114,12 @@
               >
                 {{ $t("xq") }}
               </div> -->
-              <div class="operation-btn edit-btn" @click="toDetail(scope.row)">
+              <div class="operation-btn edit-btn" @click.stop="toDetail(scope.row)">
                 {{ $t("xg") }}
               </div>
               <div
                 class="operation-btn reject-btn"
-                @click="handleShowDetail(scope.row, 'del')"
+                @click.stop="handleShowDetail(scope.row, 'del')"
               >
                 {{ $t("del") }}
               </div>
@@ -212,13 +212,13 @@
               </div> -->
                 <div
                   class="operation-btn edit-btn"
-                  @click="toDetail2(scope.row)"
+                  @click.stop="toDetail2(scope.row)"
                 >
                   {{ $t("xg") }}
                 </div>
                 <div
                   class="operation-btn reject-btn"
-                  @click="handleShowDetail(scope.row, 'del')"
+                  @click.stop="handleShowDetail(scope.row, 'del')"
                 >
                   {{ $t("del") }}
                 </div>

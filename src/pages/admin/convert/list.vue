@@ -109,7 +109,7 @@
 
             <div
               v-if="scope.row.changeStatus == 0 && !$store.state.userInfo.admin"
-              @click="handleShowDetail(scope.row, 'cancel')"
+              @click.stop="handleShowDetail(scope.row, 'cancel')"
               class="operation-btn reject-btn"
             >
               {{ $t("cancel") }}
@@ -118,14 +118,14 @@
             <div
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
               class="operation-btn pass-btn"
-              @click="handleShowDetail(scope.row, 'pass')"
+              @click.stop="handleShowDetail(scope.row, 'pass')"
             >
               {{ $t("tg") }}
             </div>
             <div
               v-if="scope.row.changeStatus == 0 && $store.state.userInfo.admin"
               class="operation-btn reject-btn"
-              @click="rejectConfirm(scope.row)"
+              @click.stop="rejectConfirm(scope.row)"
             >
               {{ $t("bh") }}
             </div>

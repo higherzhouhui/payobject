@@ -50,7 +50,7 @@
             </div>
             <div class="detail-item">
               <div class="left">{{$t("hblx")}}</div>
-              <div class="right" v-if="item.cry">{{$t("jmhb")}}</div>
+              <div class="right" v-if="item.outerType == 2">{{$t("jmhb")}}</div>
               <div class="right" v-else>{{$t("fdhb")}}</div>
             </div>
             <div class="detail-item" v-if="item.commission">

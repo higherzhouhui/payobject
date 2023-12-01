@@ -23,6 +23,12 @@
           show-overflow-tooltip
         />
         <el-table-column
+          prop="cryCode"
+          :label="$t('bz')"
+          min-width="80"
+          show-overflow-tooltip
+        />
+        <el-table-column
           prop="cryAdd"
           :label="$t('地址')"
           min-width="120"
@@ -55,7 +61,7 @@
           <template slot-scope="scope">
             <div
               class="operation-btn"
-              @click="toDetail(scope.row, 'update')"
+              @click.stop="toDetail(scope.row, 'update')"
             >
               {{ $t("xg") }}
             </div>
@@ -111,6 +117,18 @@
               :key="item.label"
               :label="item.label"
               :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('bz')">
+          <el-select style="width: 100%" v-model="form.cryCode">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in szList"
+              :key="item.label"
+              :label="item.name"
+              :value="item.coinCode"
             >
             </el-option>
           </el-select>
@@ -187,7 +205,7 @@
 </template>
 <script>
 import { outCryAccPage, setOutCryAcc, bankDel } from "@/api/bank";
-import { countries } from "@/api/login";
+import { countries, cryptocurrencies } from "@/api/login";
 import { Message } from "element-ui";
 import { upload } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
@@ -259,10 +277,12 @@ export default {
       detailVisible: false,
       detailList: [],
       operationType: '',
+      szList: [],
     };
   },
   created() {
     this.getInitData();
+    this.getSzList()
     // this.getAreaCode();
     const params = getHashParams();
     if (params.get("type") == "add") {
@@ -270,11 +290,23 @@ export default {
     }
   },
   methods: {
+    async getSzList() {
+      try {
+        let list = Local("szList");
+        if (list && list.length) {
+          return (this.szList = list);
+        }
+        let res = await cryptocurrencies();
+        this.szList = res.data;
+        Local("szList", res.data);
+      } catch (error) {}
+    },
     handleShowDetail(row, type) {
       this.detailVisible = true;
       this.operationType = type;
       this.detailList = [
         { label: this.$t("别名"), value: row.cryName },
+        { label: this.$t("bz"), value: row.cryCode },
         { label: this.$t("地址"), value: row.cryAdd },
         { label: this.$t("jmxy"), value: row.agreement},
         { label: this.$t("userId"), value: row.userId },

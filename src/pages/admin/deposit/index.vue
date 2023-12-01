@@ -551,7 +551,6 @@
             list-type="text"
             accept=".pdf, .zip, .rar, image/*"
             :before-upload="(e) => handlesuccess(e)"
-            multiple
             v-if="
               currentSelectRow.reqStatus == 1 || !currentSelectRow.reqStatus
             "

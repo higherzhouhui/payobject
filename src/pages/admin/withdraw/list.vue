@@ -114,7 +114,7 @@
             </div> -->
             <div
               class="operation-btn pass-btn"
-              @click="
+              @click.stop="
                 currentSelectRow = scope.row;
                 passConfirm();
               "
@@ -124,14 +124,14 @@
             </div>
             <div
               class="operation-btn reject-btn"
-              @click="rejectWithdraw(scope.row)"
+              @click.stop="rejectWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}
             </div>
             <div
               class="operation-btn pass-btn"
-              @click="passWithdraw(scope.row)"
+              @click.stop="passWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 2 && $store.state.userInfo.admin"
             >
               {{ $t("tg") }}
@@ -189,14 +189,14 @@
             </div> -->
             <div
               class="operation-btn pass-btn"
-              @click="passWithdraw(scope.row)"
+              @click.stop="passWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("tg") }}
             </div>
             <div
               class="operation-btn reject-btn"
-              @click="rejectWithdraw(scope.row)"
+              @click.stop="rejectWithdraw(scope.row)"
               v-if="scope.row.reqStatus == 1 && $store.state.userInfo.admin"
             >
               {{ $t("bh") }}

@@ -24,11 +24,11 @@
             <div class="label">{{ $t("txje") }}</div>
             <div class="input-with-select">
               <el-input
-                type="number"
                 :placeholder="$t('enterAmount')"
+                type="number"
                 v-model="form.reqValue"
                 class="input-amount"
-                @change="changeReqValue"
+                @input="changeReqValue"
                 :disabled="!form.coinCode"
               >
               </el-input>
@@ -56,13 +56,15 @@
                 type="number"
                 :placeholder="$t('enterAmount')"
                 v-model="usdtForm.reqValue"
-                @change="changeUsdtReqValue"
+                @input="changeUsdtReqValue"
                 class="input-amount"
+                :disabled="!usdtForm.srcCode"
               >
               </el-input>
               <el-select
                 class="input-select"
                 v-model="usdtForm.srcCode"
+                @change="getAddressList"
                 :placeholder="$t('qsz')"
               >
                 <el-option
@@ -681,7 +683,7 @@ export default {
     // this.getCJBZ();
     // this.getRJBZ();
     this.getSzList();
-    this.getAddressList()
+    // this.getAddressList()
     //   calculateRate({
     //       exFrom: 'CNY',
     //       exTarget: 'USDT',
@@ -691,7 +693,7 @@ export default {
   watch: {
     "form.coinCode": function () {
       this.form.targetCode = "";
-      this.getCJBZ();
+      // this.getCJBZ();
     },
     form: {
       deep: true,
@@ -728,7 +730,7 @@ export default {
     },
     async getAddressList() {
       try {
-        const res = await outCryAccPage({current: 1, size: 50})
+        const res = await outCryAccPage({current: 1, size: 50, cryCode: this.usdtForm.srcCode})
         const list = res.data.records
         list.push({
           id: 'add',
@@ -748,7 +750,10 @@ export default {
     changeReqValue(value) {
       const max = this.getReamin(this.form.coinCode)
       if (value * 1 > max) {
-        this.form.reqValue = max
+        this.form = {
+          ...this.form,
+          reqValue: max
+        }
       }
     },
     filterBalanceList() {

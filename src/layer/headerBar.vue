@@ -18,12 +18,15 @@
             <el-dropdown-item icon="el-icon-user" command="profile">
               {{$t("profile")}}
             </el-dropdown-item>
-            <el-dropdown-item icon="el-icon-lock" command="reset">
+            <el-dropdown-item icon="el-icon-setting" command="safe" v-if="!$store.state.userInfo.admin">
+              {{$t("safe")}}
+            </el-dropdown-item>
+            <!-- <el-dropdown-item icon="el-icon-lock" command="reset">
               {{$t("resetPwd")}}
             </el-dropdown-item>
             <el-dropdown-item icon="el-icon-key" command="paypass" v-if="!$store.state.userInfo.admin">
-              {{$t("支付密码")}}
-            </el-dropdown-item>
+              {{$t("paypass")}}
+            </el-dropdown-item> -->
             <el-dropdown-item icon="el-icon-switch-button" command="logout">
               {{$t("quitLogin")}}
             </el-dropdown-item>
@@ -86,6 +89,9 @@ export default {
       }
       if (command == 'paypass') {
         this.$router.push("/admin/paypass")
+      }
+      if (command == 'safe') {
+        this.$router.push("/admin/safe")
       }
       if (command == 'logout') {
         this.quit()

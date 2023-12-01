@@ -116,7 +116,7 @@
             <el-menu-item index="/admin/address/list">
                 <!-- <img class="icon" src="@/assets/images/home/zzzhgl.png" alt=""> -->
                 <svg-icon iconClass="bitcoin" className="icon-svg" />
-                <span slot="title">{{ $t('地址管理') }}</span>
+                <span slot="title">{{ $t('addressMange') }}</span>
             </el-menu-item>
             <el-menu-item index="/admin/kycverification">
                 <!-- <img class="icon" src="@/assets/images/home/grzx.png" alt=""> -->
@@ -127,6 +127,10 @@
                 <!-- <img class="icon" src="@/assets/images/home/jycx.png" alt=""> -->
                 <svg-icon iconClass="user-group-solid" className="icon-svg" />
                 <span slot="title">{{ $t('tjgpy') }}</span>
+            </el-menu-item>
+            <el-menu-item index="/admin/safe">
+                <svg-icon iconClass="gear-solid" className="icon-svg" />
+                <span slot="title">{{ $t('safe') }}</span>
             </el-menu-item>
         </el-menu>
         <el-menu @select="select" :default-active="path" :class="showMenu ? 'showMenu' : 'hideMenu'" v-if="!$store.state.userInfo.admin && !$store.state.userInfo.userStatus">

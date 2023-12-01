@@ -14,6 +14,7 @@
         :data="tableData"
         style="width: 100%"
         v-loading="loading"
+        @row-click="(e) => handleShowDetail(e, 'detail')"
       >
         <el-table-column
           prop="cryName"
@@ -135,6 +136,53 @@
         >
       </span>
     </el-dialog>
+    <el-dialog
+    :title="$t('xq')"
+    :visible.sync="detailVisible"
+    width="600px"
+    :before-close="
+      () => {
+        detailVisible = false;
+      }
+    "
+  >
+    <div class="formStyle">
+      <div
+        class="list"
+        v-for="(item, index) in detailList.filter((item) => {
+          return item.value;
+        })"
+        :key="index"
+      >
+        <div class="list-left list-link" v-if="item.type == 'link'">
+          <a :href="item.value" target="_blank">
+            {{ item.label }}
+            <span>
+              <i class="el-icon-folder-checked"></i>
+              {{ $t("download") }}
+            </span>
+          </a>
+        </div>
+        <div class="list-left" v-else>
+          {{ item.label }}
+        </div>
+        <div class="list-right" v-if="!item.type">
+          {{ item.value }}
+        </div>
+      </div>
+    </div>
+    <div slot="footer">
+      <el-button class="qx" @click="detailVisible = false">{{
+        $t("cancel")
+      }}</el-button>
+      <el-button
+        v-if="operationType == 'del'"
+        class="qd"
+        @click="delBank(currentSelectRow.id)"
+        >{{ $t("del") }}</el-button
+      >
+    </div>
+  </el-dialog>
   </div>
 </template>
 <script>
@@ -208,6 +256,9 @@ export default {
       current: 1,
       size: 10,
       total: 0,
+      detailVisible: false,
+      detailList: [],
+      operationType: '',
     };
   },
   created() {
@@ -219,6 +270,18 @@ export default {
     }
   },
   methods: {
+    handleShowDetail(row, type) {
+      this.detailVisible = true;
+      this.operationType = type;
+      this.detailList = [
+        { label: this.$t("别名"), value: row.cryName },
+        { label: this.$t("地址"), value: row.cryAdd },
+        { label: this.$t("jmxy"), value: row.agreement},
+        { label: this.$t("userId"), value: row.userId },
+        { label: this.$t("cjsj"), value: row.createTime },
+        { label: this.$t("xgsj"), value: row.modifiedTime },
+      ];
+    },
     handleSizeChange(val) {
       this.size = val;
       this.getInitData();

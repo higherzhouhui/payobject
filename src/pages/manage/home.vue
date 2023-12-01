@@ -3,10 +3,10 @@
     <div class="label" v-if="kycTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{$t('kycdsh')}}<span>{{ kycTotal }}</span>
+        {{ $t("kycdsh") }}<span>{{ kycTotal }}</span>
       </div>
       <div @click="to('/manage/kyc?type=second')" class="normal-btn">
-        {{$t('qsh')}}
+        {{ $t("qsh") }}
         <i class="el-icon-right" />
       </div>
     </div>
@@ -20,7 +20,8 @@
       <el-table-column
         prop="companyName"
         :label="$t('qymc')"
-        min- width="180"
+        min-
+        width="180"
         show-overflow-tooltip
       />
       <el-table-column
@@ -48,10 +49,10 @@
     <div class="label" v-if="bankTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{$t('yhkdsh')}}<span>{{ bankTotal }}</span>
+        {{ $t("yhkdsh") }}<span>{{ bankTotal }}</span>
       </div>
       <div @click="to('/manage/kyc?type=first')" class="normal-btn">
-        {{$t('qsh')}}
+        {{ $t("qsh") }}
         <i class="el-icon-right" />
       </div>
     </div>
@@ -93,10 +94,10 @@
     <div class="label" v-if="depositTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{$t('fdhbrjdsh')}}<span>{{ depositTotal }}</span>
+        {{ $t("fdhbrjdsh") }}<span>{{ depositTotal }}</span>
       </div>
       <div @click="to('/manage/deposit?type=fabi')" class="normal-btn">
-        {{$t('qsh')}}
+        {{ $t("qsh") }}
         <i class="el-icon-right" />
       </div>
     </div>
@@ -115,11 +116,7 @@
       <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
       <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
       <el-table-column prop="sendAccount" :label="$t('hkzh')" min-width="180" />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-      />
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -127,10 +124,10 @@
     <div class="label" v-if="cryptdepositTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{$t('jmhbrjdsh')}}<span>{{ cryptdepositTotal }}</span>
+        {{ $t("jmhbrjdsh") }}<span>{{ cryptdepositTotal }}</span>
       </div>
       <div @click="to('/manage/deposit?type=usdt')" class="normal-btn">
-        {{$t('qsh')}}
+        {{ $t("qsh") }}
         <i class="el-icon-right" />
       </div>
     </div>
@@ -141,19 +138,11 @@
       v-loading="cryptdepositLoading"
       v-if="cryptdepositTotal"
     >
-      <el-table-column
-        prop="cryptAdd"
-        :label="$t('skqbdz')"
-        min-width="180"
-      />
+      <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
       <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
       <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
       <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-      />
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -161,10 +150,10 @@
     <div class="label" v-if="withdrawTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{$t('fdhbcjdsh')}}<span>{{ withdrawTotal }}</span>
+        {{ $t("fdhbcjdsh") }}<span>{{ withdrawTotal }}</span>
       </div>
       <div @click="to('/manage/withdraw?type=fabi')" class="normal-btn">
-        {{$t('qsh')}}
+        {{ $t("qsh") }}
         <i class="el-icon-right" />
       </div>
     </div>
@@ -183,11 +172,7 @@
       />
       <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
       <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-      />
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -195,10 +180,10 @@
     <div class="label" v-if="cryptwithdrawTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{$t('jmhbcjdsh')}}<span>{{ cryptwithdrawTotal }}</span>
+        {{ $t("jmhbcjdsh") }}<span>{{ cryptwithdrawTotal }}</span>
       </div>
       <div @click="to('/manage/withdraw?type=usdt')" class="normal-btn">
-        {{$t('qsh')}}
+        {{ $t("qsh") }}
         <i class="el-icon-right" />
       </div>
     </div>
@@ -210,18 +195,41 @@
       v-if="cryptwithdrawTotal"
     >
       <el-table-column prop="srcCode" :label="$t('bz')" width="100" />
-      <el-table-column
-        prop="cryptAdd"
-        :label="$t('skqbdz')"
-        min-width="180"
-      />
+      <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
       <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
       <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+      <div slot="empty">
+        <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+      </div>
+    </el-table>
+    <div class="label" v-if="exchangeTotal">
+      <div class="desc">
+        <i class="el-icon-time" />
+        {{ $t("兑换待审核") }}<span>{{ exchangeTotal }}</span>
+      </div>
+      <div @click="to('/manage/convert')" class="normal-btn">
+        {{ $t("qsh") }}
+        <i class="el-icon-right" />
+      </div>
+    </div>
+    <el-table
+      class="tables"
+      :data="exchangeData"
+      style="width: 100%"
+      v-loading="exchangeLoading"
+      @row-click="(e) => handleShowDetail(e, 'detail')"
+    >
+      <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
+      <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" />
+      <el-table-column prop="targetCoin" :label="$t('mbbz')" min-width="100" />
       <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
+        prop="targetValue"
+        :label="$t('yjdzje')"
+        min-width="130"
       />
+
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -232,6 +240,7 @@
 import { getBankListPage, kycList } from "@/api/bank";
 import { depositList, cryptDepositList } from "@/api/out.js";
 import { withdrawList, cryptWithdrawList } from "@/api/out.js";
+import { changeDetails } from "@/api/convert.js";
 
 export default {
   name: "homeHide",
@@ -255,6 +264,9 @@ export default {
       cryptwithdrawData: [],
       cryptwithdrawLoading: true,
       cryptwithdrawTotal: 0,
+      exchangeData: [],
+      exchangeTotal: 0,
+      exchangeLoading: true,
     };
   },
   created() {
@@ -271,6 +283,7 @@ export default {
       this.getcryptdepositData();
       this.getwithdrawData();
       this.getcryptwithdrawData();
+      this.getExchangeData();
     },
     async getkycData() {
       try {
@@ -336,6 +349,17 @@ export default {
         this.cryptwithdrawLoading = false;
       } catch (error) {
         this.cryptwithdrawLoading = false;
+      }
+    },
+    async getExchangeData() {
+      try {
+        this.cryptwithdrawLoading = true;
+        let req = await changeDetails({ current: 1, size: 5, status: 0 });
+        this.exchangeData = req.data.records;
+        this.exchangeTotal = req.data.total;
+        this.exchangeLoading = false;
+      } catch (error) {
+        this.exchangeLoading = false;
       }
     },
   },

@@ -327,19 +327,18 @@
           })"
           :key="index"
         >
-        <div class="list-left list-link" v-if="item.type == 'link'">
+        <div class="list-left">
+          {{ item.label }}
+        </div>
+        <div class="list-right" v-if="item.type == 'link'">
           <a :href="item.value" target="_blank">
-            {{ item.label }}
             <span>
               <i class="el-icon-folder-checked"></i>
               {{$t('download')}}
             </span>
           </a>
         </div>
-        <div class="list-left" v-else>
-          {{ item.label }}
-        </div>
-        <div class="list-right" v-if="!item.type">
+        <div class="list-right" v-else>
             {{ item.value }}
         </div>
         </div>
@@ -473,11 +472,10 @@ export default {
         { label: this.$t("swift"), value: row.swiftCode },
         { label: this.$t("kzt"), value: this.status[row.bankStatus] },
         { label: this.$t("bhly"), value: row.reason },
-       
         { label: this.$t("cjsj"), value: row.createTime },
         { label: this.$t("xgsj"), value: row.modifiedTime },
         {
-          label: this.$t("zzd"),
+          label: this.$t("zmgr"),
           value: pjDownUrl(row.accountCer),
           type: "link",
         },

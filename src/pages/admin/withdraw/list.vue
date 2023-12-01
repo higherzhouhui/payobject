@@ -102,7 +102,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="95"
+          width="120"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -180,7 +180,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="95"
+          width="100"
           fixed="right"
         >
           <template slot-scope="scope">

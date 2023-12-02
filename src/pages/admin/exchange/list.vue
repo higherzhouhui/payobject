@@ -298,6 +298,9 @@
             >{{ $t("yulan") }}</a
           > -->
         </el-form-item>
+        <passwordVue
+          @changeData="componentDataChange"
+        />
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
@@ -342,6 +345,11 @@
             {{ item.value }}
         </div>
         </div>
+        <el-form v-if="operationType == 'del'">
+          <passwordVue
+          @changeData="componentDataChangedel"
+        />
+        </el-form>
       </div>
       <div slot="footer">
         <el-button class="qx" @click="detailVisible = false">{{
@@ -350,7 +358,7 @@
         <el-button
           v-if="operationType == 'del'"
           class="qd"
-          @click="delBank(currentSelectRow.id)"
+          @click="delBank(currentSelectRow)"
           >{{ $t("del") }}</el-button
         >
       </div>
@@ -361,12 +369,14 @@
 import { getBankListPage, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
-import { upload, downLoad } from "@/api/file";
+import { upload } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
 import { getCountryName, getFlagIcon, pjDownUrl } from "@/utils/common";
+import passwordVue from "@/components/common/password.vue"
 
 export default {
-  name: "transferAccountMangement",
+  name: "exchangeList",
+  components: {passwordVue},
   data() {
     return {
       detailVisible: false,
@@ -518,9 +528,14 @@ export default {
       } catch (error) {}
       return false;
     },
-    async delBank(id) {
+    async delBank(data) {
       try {
-        await bankDel({ bankId: id });
+        const delParams = {
+          bankId: data.id,
+          payPass: data.payPass,
+          verCode: data.verCode
+        }
+        await bankDel(delParams);
         Message({
           type: "success",
           message: this.$t("czcg"),
@@ -528,6 +543,18 @@ export default {
         this.detailVisible = false
         this.getlist();
       } catch (error) {}
+    },
+    componentDataChangedel(params) {
+      this.currentSelectRow = {
+        ...this.currentSelectRow,
+        ...params
+      }
+    },
+    componentDataChange(params) {
+      this.bankForm = {
+        ...this.bankForm,
+        ...params
+      }
     },
     async addBank() {
       if (this.bankloading) return;

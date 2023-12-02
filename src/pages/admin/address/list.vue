@@ -109,18 +109,6 @@
             :placeholder="$t('请输入别名')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('jmxy')">
-          <el-select style="width: 100%" v-model="form.agreement">
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in agreementList"
-              :key="item.label"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item :label="$t('bz')">
           <el-select style="width: 100%" v-model="form.cryCode">
             <el-option
@@ -129,6 +117,18 @@
               :key="item.label"
               :label="item.name"
               :value="item.coinCode"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('jmxy')">
+          <el-select style="width: 100%" v-model="form.agreement">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in agreementList"
+              :key="item.label"
+              :label="item.label"
+              :value="item.value"
             >
             </el-option>
           </el-select>

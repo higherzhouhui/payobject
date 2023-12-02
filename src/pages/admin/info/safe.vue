@@ -1,6 +1,54 @@
 <template>
   <div class="safe-container">
-    <div class="top">
+    <div class="admin-title">{{$t('safe')}}</div>
+    <div class="item">
+      <div class="item-top">
+        <div class="item-title">
+          {{$t('绑定手机号')}}
+          <span class="desc">{{$t('可登录')}}</span>
+        </div>
+        <div class="normal-btn dis" @click="routerTo()">{{$t('xg')}}</div>
+      </div>
+      <div class="itme-middle">
+         <span class="areacode">
+          {{ userInfo.areaCode }}
+         </span>
+         <span>{{userInfo.phone || $t('暂未绑定')}}</span>
+      </div>
+      <div class="desc">{{$t('交易时可能会发送短信验证码进行身份验证')}}</div>
+    </div>
+    <div class="item">
+      <div class="item-top">
+        <div class="item-title">
+          {{$t('绑定邮箱')}}
+          <span class="desc">{{$t('可登录')}}</span>
+        </div>
+        <div class="normal-btn dis" @click="routerTo()">{{$t('xg')}}</div>
+      </div>
+      <div class="itme-middle">
+         <span>{{userInfo.email || $t('暂未绑定')}}</span>
+      </div>
+      <div class="desc">{{$t('交易时可能会发送邮件验证码进行身份验证，您可以灵活修改安全邮箱')}}</div>
+    </div>
+    <div class="item">
+      <div class="item-top">
+        <div class="item-title">
+          {{$t('修改登录密码')}}
+        </div>
+        <div class="normal-btn" @click="routerTo('/admin/reset')">{{$t('xg')}}</div>
+      </div>
+      <div class="desc">{{$t('密码强度越高，账号安全级别越高，不易被非法利用')}}</div>
+    </div>
+    <div class="item">
+      <div class="item-top">
+        <div class="item-title">
+          {{$t('支付密码')}}
+        </div>
+        <div class="normal-btn" @click="routerTo('/admin/paypass')">{{$t('xg')}}</div>
+      </div>
+      <div class="desc">{{$t('添加提款账号、提款付款等操作时，需要输入支付密码进行二重验证以保证资金安全')}}</div>
+    </div>
+    <!-- <div class="top">
       <img src="@/assets/images/user/user-default.png" class="user-img"/>
       <div class="right">
         <p class="name">{{userInfo.email || userInfo.phone}}</p>
@@ -24,7 +72,7 @@
         {{$t('设置支付密码，在账户资金发生变动时，保证资金安全')}}
         <i class="el-icon-edit"></i>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -94,6 +142,50 @@ export default {
       &:hover i{
         color: $baseColor;
       }
+    }
+  }
+  .item {
+    padding: 2rem 0;
+    color: #fff;
+    border-bottom: 1px solid #c7b9b9;
+    .item-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .item-title {
+        font-weight: bold;
+        font-size: 1.3rem;
+        .desc {
+          margin-left: 12px;
+          color: $baseColor;
+          background: rgba($color: $bgColor, $alpha: 0.5);
+          padding: 4px 12px;
+          font-size: 1rem;
+          border-radius: 6px;
+        }
+      }
+      .btn {
+        background: rgba($color: $baseColor, $alpha: 0.2);
+        color: $baseColor;
+        border-radius: 4px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .dis {
+        color: #f3e9e9;
+        cursor: no-drop;
+      }
+    }
+    .itme-middle {
+      margin-top: 12px;
+      opacity: 0.9;
+      .areacode {
+        margin-right: 6px;
+      }
+    }
+    .desc {
+      margin-top: 12px;
+      opacity: 0.8;
     }
   }
 }

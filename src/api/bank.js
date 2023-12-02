@@ -26,7 +26,7 @@ export const subBank = (data) => service({
 export const bankDel = (data) => service({
     url: '/bankDel',
     data,
-    method: 'get'
+    method: 'post'
 })
 export const getBank = (data) => service({
     url: '/getBank',

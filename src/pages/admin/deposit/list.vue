@@ -804,7 +804,6 @@ export default {
       } catch (error) {}
     },
     handleShowDetail(row, type) {
-      console.log(row, 11111111111)
       this.currentSelectRow = row;
       this.operationType = type;
       if (this.moneyType == "fabi") {

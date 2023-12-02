@@ -531,7 +531,7 @@ export default {
     async delBank(data) {
       try {
         const delParams = {
-          bankId: data.id,
+          id: data.id,
           payPass: data.payPass,
           verCode: data.verCode
         }

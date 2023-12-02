@@ -138,8 +138,10 @@ export default {
 }
 ::v-deep .el-form-item__label {
   color: #fff;
+  font-size: 1rem;
 }
 ::v-deep .el-radio__label {
   color: #fff;
+  font-size: 1rem;
 }
 </style>

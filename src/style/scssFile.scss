@@ -467,7 +467,9 @@ html {
 .el-form--label-top .el-form-item__label {
     padding: 0;
 }
-
+.el-form-item__label {
+    font-size: 1rem;
+}
 .el-upload__tip {
     color: #fff;
     opacity: 0.8;

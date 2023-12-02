@@ -37,7 +37,7 @@
           </div>
           <ul class="list">
             <li v-if="rateDetail">{{ rateDetail }}</li>
-            <li>{{ $t("limitNum") }}</li>
+            <li>{{ $t("limitNum") }}{{form.coinCode}}</li>
           </ul>
           <div class="form-item" v-if="form.coinCode">
             <div class="label">{{ $t("dhmbbz") }}</div>

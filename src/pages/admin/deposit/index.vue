@@ -85,7 +85,7 @@
           </div>
         </div>
         <ul class="list">
-          <li>{{ $t("limitNum") }}</li>
+          <li>{{ $t("limitNum") }}{{moneyType == 'fabi' ? form.coinCode : usdtForm.coinCode}}</li>
         </ul>
         <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
           <div class="label">{{ $t("skqbdz") }}</div>

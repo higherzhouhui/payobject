@@ -96,7 +96,7 @@
             </div>
             <ul class="list">
               <li v-if="rateDetail">{{ rateDetail }}</li>
-              <li>{{ $t("limitNum") }}</li>
+              <li>{{ $t("limitNum") }}{{form.exFrom}}</li>
             </ul>
             <div class="form-item">
               <div class="label">{{ $t("skzh") }}</div>

@@ -121,7 +121,7 @@
             </div>
           </div> -->
           <ul class="list">
-            <li>{{ $t("limitNum") }}</li>
+            <li>{{ $t("limitNum") }}{{moneyType == 'fabi' ? form.coinCode : usdtForm.srcCode}}</li>
           </ul>
           <div class="form-item" v-if="moneyType == 'fabi'">
             <div class="label">{{ $t("txzh") }}</div>
@@ -193,7 +193,7 @@
               {{ $t("txje") }}
             </div>
             <div class="column-right">
-              {{ form.reqValue || 0 }}
+              {{ form.reqValue || 0 }}<span class="unit">{{ form.coinCode }}</span>
             </div>
           </div>
           <div class="divider" v-if="form.bankId" />
@@ -250,7 +250,7 @@
               {{ $t("txje") }}
             </div>
             <div class="column-right">
-              {{ usdtForm.reqValue || 0 }}
+              {{ usdtForm.reqValue || 0 }}<span class="unit">{{ usdtForm.srcCode }}</span>
             </div>
           </div>
           <div class="divider" v-if="usdtForm.agreement" />

@@ -3,7 +3,7 @@
     <NormalHeader v-if="normalHeader"/>
     <router-view></router-view>
     <el-backtop class="elbacktop" v-if="normalHeader"></el-backtop>
-    <div id="svgIcon" @click="scrollBottom">
+    <div id="svgIcon" @click="scrollBottom" v-if="!normalHeader">
       <svg-icon iconClass="angle-down-solid" className="down-arrow" />
     </div>
     <NormalFooter v-if="normalFooter"/>

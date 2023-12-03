@@ -45,6 +45,7 @@
               :placeholder="$t('enterAmount')"
               v-model="form.reqValue"
               class="input-amount"
+              :disabled="!form.coinCode"
             >
             </el-input>
             <el-select v-model="form.coinCode" class="input-select">
@@ -65,6 +66,7 @@
               :placeholder="$t('enterAmount')"
               v-model="usdtForm.reqValue"
               class="input-amount"
+              :disabled="!usdtForm.coinCode"
             >
             </el-input>
             <el-select
@@ -202,7 +204,7 @@
             {{ $t("czje") }}
           </div>
           <div class="column-right">
-            {{ usdtForm.reqValue || 0 }}
+            {{ usdtForm.reqValue || 0 }}<span class="unit">{{ usdtForm.coinCode }}</span>
           </div>
         </div>
         <div class="divider" v-if="usdtForm.cryptAdd" />

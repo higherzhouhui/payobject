@@ -77,7 +77,7 @@ export default {
   },
   data() {
     return {
-      typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('huanhui'), this.$t('huanhuidrz')],
+      typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('duihuan'), this.$t('duihuandrz')],
       getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],

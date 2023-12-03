@@ -3,9 +3,14 @@
     <NormalHeader v-if="normalHeader"/>
     <router-view></router-view>
     <el-backtop class="elbacktop" v-if="normalHeader"></el-backtop>
-    <div id="svgIcon" @click="scrollBottom" v-if="!normalHeader">
+
+    <div id="svgIconDown" @click="scrollBottom">
       <svg-icon iconClass="angle-down-solid" className="down-arrow" />
     </div>
+    <div id="svgIconUp" @click="scrollTop">
+      <svg-icon iconClass="angle-down-solid" className="down-arrow up-arrow" />
+    </div>
+
     <NormalFooter v-if="normalFooter"/>
   </div>
 </template>
@@ -46,11 +51,17 @@ export default {
           this.normalFooter = false
         }
       })
+      this.onScroll()
     },
   },
   methods: {
     scrollBottom() {
-      window.scrollTo({ behavior: 'smooth', top: 1000 });
+      const scrollY = window.scrollY;
+      window.scrollTo({ behavior: 'smooth', top: scrollY + window.screen.availHeight });
+    },
+    scrollTop() {
+      const scrollY = window.scrollY;
+      window.scrollTo({ behavior: 'smooth', top: scrollY -  window.screen.availHeight});
     },
     debounce(fn, delay) {
       let timer = null;
@@ -62,23 +73,33 @@ export default {
       }
     },
     onScroll() {
-      const svgIconDom = document.getElementById('svgIcon')
-      if (document.body.offsetWidth > 500) {
-        if (svgIconDom) {
-          svgIconDom.style.display = 'none'
+      const svgIconDownDom = document.getElementById('svgIconDown')
+      const svgIconUpDom = document.getElementById('svgIconUp')
+      if (document.body.offsetWidth > 500 || this.normalHeader) {
+        if (svgIconDownDom) {
+          svgIconDownDom.style.display = 'none'
+        }
+        if (svgIconUpDom) {
+          svgIconUpDom.style.display = 'none'
         }
         return
       }
       const avaheight = window.screen.availHeight;
       const scrollY = window.scrollY;
       const allHeight = document.body.offsetHeight
-      if (allHeight - avaheight == scrollY) {
-        if (svgIconDom) {
-          svgIconDom.style.display = 'none'
+      if (allHeight - avaheight - scrollY == 0) {
+        if (svgIconDownDom) {
+          svgIconDownDom.style.display = 'none'
+        }
+        if (svgIconUpDom) {
+          svgIconUpDom.style.display = 'block'
         }
       } else {
-        if (svgIconDom) {
-          svgIconDom.style.display = 'block'
+        if (svgIconDownDom) {
+          svgIconDownDom.style.display = 'block'
+        }
+        if (svgIconUpDom) {
+          svgIconUpDom.style.display = 'none'
         }
       }
     }
@@ -97,19 +118,17 @@ export default {
 ::v-deep .el-icon-caret-top {
   color: #fff;
 }
-#svgIcon {
-  display: none;
-  @media screen and (max-width: 500px) {
-    display: block;
-  }
-}
+
 .down-arrow {
   position: fixed;
-  bottom: 100px;
-  right: 30px;
+  bottom: 80px;
+  right: 20px;
   color: #fff!important;
   font-size: 2rem!important;
   cursor: pointer;
   z-index: 10001;
+}
+.up-arrow {
+  transform: rotate(180deg);
 }
 </style>

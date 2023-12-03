@@ -989,7 +989,6 @@ export default {
         { label: this.$t("kzt"), value: this.status[data.bankStatus] },
         { label: this.$t("bhly"), value: data.reason },
         { label: this.$t("swiftCode"), value: data.swiftCode },
-        { label: this.$t("userId"), value: data.userId },
 
         { label: this.$t("cjsj"), value: data.createTime },
         { label: this.$t("xgsj"), value: data.modifiedTime },
@@ -1013,7 +1012,6 @@ export default {
         { label: this.$t("kzt"), value: this.status[data.kycStatus] },
         { label: this.$t("zcrq"), value: data.regDate },
         { label: this.$t("qyyxq"), value: data.period },
-        { label: this.$t("userId"), value: data.userId },
         { label: this.$t("qygw"), value: data.webSite },
         { label: this.$t("dbjyed"), value: data.transactionLimit },
         { label: this.$t("ygyjybs"), value: data.transactionsMonth },

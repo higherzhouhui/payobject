@@ -309,7 +309,6 @@ export default {
         { label: this.$t("bz"), value: row.cryCode },
         { label: this.$t("地址"), value: row.cryAdd },
         { label: this.$t("jmxy"), value: row.agreement},
-        { label: this.$t("userId"), value: row.userId },
         { label: this.$t("cjsj"), value: row.createTime },
         { label: this.$t("xgsj"), value: row.modifiedTime },
       ];

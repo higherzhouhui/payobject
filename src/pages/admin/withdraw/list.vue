@@ -784,7 +784,6 @@ export default {
         this.detailList = [
           {label: this.$t("bz"), value: this.currentSelectRow.coinCode},
           {label: this.$t("ckje"), value: this.currentSelectRow.reqValue},
-          {label: this.$t("userId"), value: this.currentSelectRow.userId},
           {label: this.$t("skzhmc"), value: this.currentSelectRow.accountName},
           {label: this.$t("skzh"), value: this.currentSelectRow.outbankAccount},
           {label: this.$t("bankcode"), value: this.currentSelectRow.outbankCode},

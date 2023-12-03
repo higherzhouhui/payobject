@@ -863,7 +863,6 @@ export default {
             label: this.$t("bhly"),
             value: this.status[this.currentSelectRow.memo],
           },
-          { label: this.$t("userId"), value: this.currentSelectRow.userId },
           {
             label: this.$t("skzhmc"),
             value: this.currentSelectRow.accountName,

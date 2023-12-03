@@ -767,7 +767,7 @@ export default {
             exValue: 1,
           });
           this.rate = res.data.targetValue;
-          this.rateDetail = `Latest Currancy Rate 1 ${this.form.exFrom} = ${this.rate} ${this.form.exTarget}`;
+          this.rateDetail = `${this.$t('lastestRate')} 1 ${this.form.exFrom} = ${this.rate} ${this.form.exTarget}`;
         } else {
           this.rateDetail = "";
         }

@@ -213,7 +213,7 @@ export default {
           exValue: 1,
         });
         this.rate = res.data.targetValue;
-        this.rateDetail = `Latest Currancy Rate 1 ${this.form.coinCode} = ${this.rate} ${this.form.targetCode}`;
+        this.rateDetail = `${this.$t('lastestRate')} 1 ${this.form.coinCode} = ${this.rate} ${this.form.targetCode}`;
       } catch {}
     },
     async getSzList() {

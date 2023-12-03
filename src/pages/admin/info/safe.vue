@@ -174,6 +174,7 @@ export default {
       .dis {
         color: #f3e9e9;
         cursor: no-drop;
+        background: #8d8383;
       }
     }
     .itme-middle {

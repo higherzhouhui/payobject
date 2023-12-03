@@ -509,6 +509,35 @@
               >
             </div>
           </div>
+          <!-- <div class="upload-item">
+            <div class="item-left">
+              <el-upload
+                action="null"
+                list-type="text"
+                accept=".pdf, .zip, .rar, image/*"
+                :before-upload="(e) => handlesuccess(e)"
+              >
+                <div class="load-cover">
+                  <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
+                  <i class="el-icon-folder-checked" v-else></i>
+                </div>
+                <div slot="tip" class="el-upload__tip">
+                  {{ $t("scts") }}
+                </div>
+              </el-upload>
+            </div>
+            <div class="item-right">
+              <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
+              <div class="desc">{{ $t("hkzmdes") }}</div>
+              <a
+                :href="'/api/file/downLoad?url=' + form.reqProof"
+                target="_blank"
+                class="down"
+                v-if="form.reqProof"
+                >{{ $t("download") }}</a
+              >
+            </div> 
+          </div> -->
         </el-form-item>
       </el-form>
       <el-form
@@ -545,7 +574,36 @@
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('hkpz')">
-          <el-upload
+          <div class="upload-item">
+            <div class="item-left">
+              <el-upload
+                action="null"
+                list-type="text"
+                accept=".pdf, .zip, .rar, image/*"
+                :before-upload="(e) => handlesuccess(e)"
+              >
+                <div class="load-cover">
+                  <i class="el-icon-folder-add" v-if="!currentSelectRow.reqProof"></i>
+                  <i class="el-icon-folder-checked" v-else></i>
+                </div>
+                <div slot="tip" class="el-upload__tip">
+                  {{ $t("scts") }}
+                </div>
+              </el-upload>
+            </div>
+            <div class="item-right">
+              <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
+              <div class="desc">{{ $t("hkzmdes") }}</div>
+              <a
+                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+                target="_blank"
+                class="down"
+                v-if="currentSelectRow.reqProof"
+                >{{ $t("download") }}</a
+              >
+            </div>
+          </div>
+          <!-- <el-upload
             class="upload-demo"
             action="null"
             list-type="text"
@@ -570,7 +628,7 @@
               target="_blank"
               >{{ $t("yulan") }}</a
             ></el-button
-          >
+          > -->
         </el-form-item>
       </el-form>
       <div slot="footer">

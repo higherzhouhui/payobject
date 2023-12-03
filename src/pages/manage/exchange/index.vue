@@ -267,7 +267,10 @@
           <div class="list-right">
             <template v-if="item.type == 'link'">
               <a :href="item.value" target="_blank">
-                {{ $t("yulan") }}
+                <span>
+                  <i class="el-icon-folder-checked"></i>
+                  {{ $t("download") }}
+                </span>
               </a>
             </template>
             <template v-else>
@@ -409,8 +412,38 @@
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('zzd')">
-          <el-upload
+
+        <el-form-item :label="$t('zl')">
+          <div class="upload-item">
+            <div class="item-left">
+              <el-upload
+                action="null"
+                list-type="text"
+                accept=".pdf, .zip, .rar, image/*"
+                :before-upload="(e) => handlesuccess(e)"
+              >
+                <div class="load-cover">
+                  <i class="el-icon-folder-add" v-if="!bankForm.accountCer"></i>
+                  <i class="el-icon-folder-checked" v-else></i>
+                </div>
+                <div slot="tip" class="el-upload__tip">
+                  {{ $t("scts") }}
+                </div>
+              </el-upload>
+            </div>
+            <div class="item-right">
+              <div class="sub-title"><span>*</span>{{ $t("zzd") }}</div>
+              <div class="desc">{{ $t("zmgr") }}</div>
+              <a
+                :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+                target="_blank"
+                class="down"
+                v-if="bankForm.accountCer"
+                >{{ $t("download") }}</a
+              >
+            </div>
+          </div>
+          <!-- <el-upload
             class="upload-demo"
             action="null"
             list-type="text"
@@ -434,7 +467,7 @@
             :href="'/api/file/downLoad?url=' + bankForm.accountCer"
             target="_blank"
             >{{ $t("yulan") }}</a
-          >
+          > -->
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -646,11 +679,6 @@ export default {
           { label: this.$t("zhmc"), value: row.accountName },
           { label: this.$t("ssgj"), value: getCountryName(row.country) },
           { label: this.$t("jzdz"), value: row.accountAdd },
-          {
-            label: this.$t("zzd"),
-            value: pjDownUrl(row.accountCer),
-            type: "link",
-          },
           { label: this.$t("yhzh"), value: row.bankAccount },
           { label: this.$t("khdz"), value: row.bankAdd },
           { label: this.$t("bankcode"), value: row.bankCode },
@@ -658,6 +686,11 @@ export default {
           { label: this.$t("swift"), value: row.swiftCode },
           { label: this.$t("cjsj"), value: row.createTime },
           { label: this.$t("xgsj"), value: row.modifiedTime },
+          {
+            label: this.$t("zmgr"),
+            value: pjDownUrl(row.accountCer),
+            type: "link",
+          },
         ];
       } else {
         this.detailList = [

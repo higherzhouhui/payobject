@@ -60,7 +60,7 @@
         >
           <template slot-scope="scope">
             <div
-              class="operation-btn"
+              class="operation-btn edit-btn"
               @click.stop="toDetail(scope.row, 'update')"
             >
               {{ $t("xg") }}

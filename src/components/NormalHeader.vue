@@ -237,17 +237,17 @@ export default {
     },
     quit() {
       this.$confirm(this.$t("confirmQuit"), this.$t("hint"), {
-        confirmButtonText: this.$t("queding"),
-        cancelButtonText: this.$t("cancel"),
-        type: "warning",
+          confirmButtonText: this.$t("queding"),
+          cancelButtonText: this.$t("cancel"),
+          type: "warning",
+      }).then(() => {
+        this.$store.commit("SET_Logout", {})
+        this.email = ''
+        this.$router.push("/index");
+        // logout()
+      }).catch(() => {
+        console.log('取消')
       })
-        .then(() => {
-          this.$router.push("/index");
-          localStorage.clear();
-        })
-        .catch(() => {
-          console.log("取消");
-        });
     },
     handleTodashboard() {
       if (this.$store.state.userInfo.admin) {

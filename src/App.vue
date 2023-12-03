@@ -74,7 +74,9 @@ export default {
           svgIconDom.style.display = 'none'
         }
       } else {
-        svgIconDom.style.display = 'block'
+        if (svgIconDom) {
+          svgIconDom.style.display = 'block'
+        }
       }
     }
   }

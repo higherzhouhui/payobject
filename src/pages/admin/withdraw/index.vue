@@ -268,7 +268,7 @@
               {{ $t("txdqbdz") }}
             </div>
             <div class="column-right">
-              {{ usdtForm.tid }}
+              {{ usdtForm.cryptAdd }}
             </div>
           </div>
           <div class="divider" />

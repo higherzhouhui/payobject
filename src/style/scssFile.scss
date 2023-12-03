@@ -450,8 +450,9 @@ html {
     }
 }
 
-.el-message-box {
+.el-message-box, .el-message {
     max-width: 90%;
+    min-width: 360px;
 }
 
 .el-dialog__wrapper {

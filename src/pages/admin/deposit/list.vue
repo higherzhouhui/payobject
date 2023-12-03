@@ -452,6 +452,7 @@
     <el-dialog
       :title="operationType == 'detail' ? $t('xq') : $t('sh')"
       :visible.sync="usdtdialogVisible"
+      width="600px"
       :before-close="
         () => {
           usdtdialogVisible = false;

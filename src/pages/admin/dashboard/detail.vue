@@ -49,6 +49,10 @@
               <div class="right">{{item.id}}</div>
             </div>
             <div class="detail-item">
+              <div class="left">{{$t("ye")}}</div>
+              <div class="right">{{item.balance || 0}}</div>
+            </div>
+            <div class="detail-item">
               <div class="left">{{$t("hblx")}}</div>
               <div class="right" v-if="item.outerType == 2">{{$t("jmhb")}}</div>
               <div class="right" v-else>{{$t("fdhb")}}</div>

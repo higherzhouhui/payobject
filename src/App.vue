@@ -62,10 +62,13 @@ export default {
       }
     },
     onScroll() {
+      const svgIconDom = document.getElementById('svgIcon')
       if (document.body.offsetWidth > 500) {
+        if (svgIconDom) {
+          svgIconDom.style.display = 'none'
+        }
         return
       }
-      const svgIconDom = document.getElementById('svgIcon')
       const avaheight = window.screen.availHeight;
       const scrollY = window.scrollY;
       const allHeight = document.body.offsetHeight

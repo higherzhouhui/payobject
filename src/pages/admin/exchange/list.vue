@@ -144,7 +144,6 @@
       :title="bankForm.id ? `${$t('xq')}` : $t('zjzzzh')"
       :visible.sync="dialogVisible"
       width="636px"
-      top="3%"
       :before-close="
         () => {
           dialogVisible = false;
@@ -315,7 +314,7 @@
     <el-dialog
       :title="$t('xq')"
       :visible.sync="detailVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           detailVisible = false;

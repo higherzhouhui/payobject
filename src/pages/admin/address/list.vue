@@ -90,7 +90,7 @@
     <el-dialog
       :title="showObj.title"
       :visible.sync="dialogVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           dialogVisible = false;
@@ -157,7 +157,7 @@
     <el-dialog
     :title="$t('xq')"
     :visible.sync="detailVisible"
-    width="600px"
+    width="636px"
     :before-close="
       () => {
         detailVisible = false;

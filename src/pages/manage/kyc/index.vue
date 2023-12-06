@@ -605,7 +605,7 @@
     <el-dialog
       :title="$t('jmhb')"
       :visible.sync="dialogVisible3"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           dialogVisible3 = false;
@@ -652,7 +652,7 @@
     <el-dialog
       :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           rejectdialogVisible = false;
@@ -683,7 +683,7 @@
     <el-dialog
       :title="$t('yhqb')"
       :visible.sync="userBalanceDialog"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           userBalanceDialog = false;

@@ -642,7 +642,7 @@
     <el-dialog
       :title="$t('done')"
       :visible.sync="dialogVisibleSuccess"
-      width="500px"
+      width="636px"
       :before-close="
         () => {
           dialogVisibleSuccess = false;

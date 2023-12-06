@@ -111,7 +111,7 @@
     <el-dialog
       :title="$t('xq')"
       :visible.sync="detailVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           detailVisible = false;

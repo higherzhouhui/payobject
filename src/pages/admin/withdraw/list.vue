@@ -349,7 +349,7 @@
     <el-dialog
       :title="$t('xq')"
       :visible.sync="usdtdialogVisible"
-      width="650"
+      width="636px"
       :before-close="
         () => {
           usdtdialogVisible = false;
@@ -441,7 +441,7 @@
     <el-dialog
       :title="$t('cjqr')"
       :visible.sync="passdialogVisible"
-      width="650px"
+      width="636px"
       :before-close="
         () => {
           passdialogVisible = false;
@@ -537,7 +537,7 @@
     <el-dialog
       :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
-      width="650"
+      width="636px"
       :before-close="
         () => {
           rejectdialogVisible = false;

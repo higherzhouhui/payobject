@@ -452,7 +452,7 @@
     <el-dialog
       :title="operationType == 'detail' ? $t('xq') : $t('sh')"
       :visible.sync="usdtdialogVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           usdtdialogVisible = false;
@@ -580,7 +580,7 @@
     <el-dialog
       :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           rejectdialogVisible = false;

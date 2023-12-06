@@ -258,7 +258,7 @@
     <el-dialog
       :title="$t('bh')"
       :visible.sync="rejectdialogVisible"
-      width="650px"
+      width="636px"
       :before-close="
         () => {
           rejectdialogVisible = false;

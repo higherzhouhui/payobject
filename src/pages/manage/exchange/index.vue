@@ -248,7 +248,7 @@
     <el-dialog
       :title="$t('xq')"
       :visible.sync="detailVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           detailVisible = false;
@@ -294,7 +294,7 @@
     <el-dialog
       :title="bankForm.id ? $t('xg') : $t('add')"
       :visible.sync="dialogVisible"
-      width="600px"
+      width="636px"
       :before-close="
         () => {
           dialogVisible = false;

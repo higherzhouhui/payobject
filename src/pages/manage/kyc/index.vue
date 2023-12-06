@@ -961,7 +961,7 @@ export default {
           type: "success",
           message: this.$t("czcg"),
         });
-        this.getlist2();
+        this.getInitData();
       } catch (error) {}
     },
     async sh(id, type) {

@@ -96,6 +96,27 @@
         <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
           <div class="label">{{ $t("skqbdz") }}</div>
           <div class="input-with-select">
+            <el-select
+              class="input-transaction"
+              v-model="usdtForm.cryptAdd"
+              @change="changeskAddress"
+              :placeholder="$t('qxzskqbdz')"
+              ref="changeAgreementRef"
+            >
+              <el-option
+                v-for="item in skqbList"
+                :key="item.id"
+                :label="item.cryAdd"
+                :value="item.cryAdd"
+              >
+                <div class="el-option">
+                  <div class="left">{{item.cryAdd}}</div>
+                  <div class="right">{{item.agreement}}</div>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+          <!-- <div class="input-with-select">
             <el-input :value="usdtForm.cryptAdd" class="input-amount" readonly/>
             <el-select
               class="input-select"
@@ -113,7 +134,7 @@
               >
               </el-option>
             </el-select>
-          </div>
+          </div> -->
         </div>
         <div class="form-item" v-if="moneyType == 'usdt'">
           <div class="label">{{ $t("hkqbdz") }}</div>
@@ -746,6 +767,12 @@ export default {
     //   })
   },
   methods: {
+    changeskAddress(value) {
+      const list = this.skqbList.filter(item => {
+        return item.cryAdd == value
+      })
+      this.usdtForm.agreement = list[0].agreement
+    },
     changeAgreement(value) {
       const list = this.skqbList.filter(item => {
         return item.agreement == value

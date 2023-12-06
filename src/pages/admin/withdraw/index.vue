@@ -656,7 +656,6 @@ export default {
         reqValue: "",
         cryptAdd: "",
         srcCode: "",
-        tid: "0x",
         agreement: "",
       },
       moneyType: "fabi",

@@ -153,6 +153,7 @@
         @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'usdt'"
       >
+        <!-- <el-table-column prop="tid" :label="$t('tid')" min-width="100" /> -->
         <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" />
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
           <template slot-scope="scope">
@@ -463,12 +464,12 @@
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item :label="$t('hkqbdz')" v-if="moneyType == 'usdt'">
+        <el-form-item :label="$t('tid')" v-if="moneyType == 'usdt'">
           <el-input
             v-model="currentSelectRow.tid"
             :placeholder="$t('qsr')"
           ></el-input>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item :label="$t('hkpz')">
           <div class="upload-item">
             <div class="item-left">
@@ -682,6 +683,7 @@ export default {
         const data = {
           id: this.currentSelectRow.id,
           withdrawValue: this.currentSelectRow.withdrawValue,
+          tid: this.currentSelectRow.tid,
           commission: this.currentSelectRow.commission,
           proof: this.currentSelectRow.withdrawProof,
           pass: true,
@@ -802,10 +804,10 @@ export default {
       if (this.moneyType == "usdt") {
         this.detailList = [
           {label: this.$t("bz"), value: this.currentSelectRow.coinCode},
-          {label: this.$t("czje"), value: this.currentSelectRow.reqValue},
+          {label: this.$t("ckje"), value: this.currentSelectRow.reqValue},
           {label: this.$t("jmxy"), value: this.currentSelectRow.agreement},
           {label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd},
-          // {label: this.$t("hkqbdz"), value: this.currentSelectRow.tid},
+          {label: this.$t("tid"), value: this.currentSelectRow.tid},
           {label: this.$t("kzt"), value: this.usdtstatus[this.currentSelectRow.reqStatus]},
           {label: this.$t("bhly"), value: this.currentSelectRow.memo},
           {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},

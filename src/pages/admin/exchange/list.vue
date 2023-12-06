@@ -237,6 +237,7 @@
           <el-input
             v-model="bankForm.reason"
             type="textarea"
+            :rows="8"
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>

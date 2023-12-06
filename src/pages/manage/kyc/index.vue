@@ -663,6 +663,7 @@
         <el-form-item :label="$t('bhly')">
           <el-input
             type="textarea"
+            :rows="8"
             :placeholder="$t('qsr')"
             v-model="currentSelectRow.reason"
           ></el-input>

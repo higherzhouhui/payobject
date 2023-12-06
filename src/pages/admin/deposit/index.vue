@@ -33,6 +33,10 @@
                 :label="item.bankName"
                 :value="item.id.toString()"
               >
+              <div class="el-option">
+                <span class="left">{{ item.bankName }}</span>
+                <span class="right">{{ item.bankCode }}</span>
+              </div>
               </el-option>
             </el-select>
           </div>
@@ -171,10 +175,10 @@
         <div class="divider" v-if="form.sendBank" />
         <div class="column" v-if="form.sendBank">
           <div class="column-left">
-            {{ $t("hkyh") }}
+            {{ $t("zhmc") }}
           </div>
           <div class="column-right">
-            {{ getBankInfo(form.sendBank, "accountAdd") }}
+            {{ getBankInfo(form.sendBank, "accountName") }}
           </div>
         </div>
         <div class="divider" />

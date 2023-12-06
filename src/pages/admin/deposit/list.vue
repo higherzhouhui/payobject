@@ -592,6 +592,7 @@
           <el-input
             type="textarea"
             v-model="memo"
+            :rows="8"
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>

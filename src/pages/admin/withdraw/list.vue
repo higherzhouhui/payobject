@@ -546,7 +546,7 @@
     >
       <el-form label-position="top" ref="formss" :model="currentSelectRow">
         <el-form-item :label="$t('bhly')">
-          <el-input type="textarea" v-model="currentSelectRow.memo" :placeholder="$t('qsr')"></el-input>
+          <el-input type="textarea" :rows="8" v-model="currentSelectRow.memo" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -638,7 +638,7 @@ export default {
       status: [
         this.$t("all"),
         this.$t("shz"),
-        this.$t("clz"),
+        this.$t("huichu"),
         this.$t("done"),
         this.$t("qrdz"),
         this.$t("bh"),
@@ -795,7 +795,7 @@ export default {
           {label: this.$t("bhly"), value: this.currentSelectRow.memo},
           {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
           {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
-          {label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
+          {label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.withdrawProof), type: "link"},
         ]
         this.dialogVisible = true;
       }

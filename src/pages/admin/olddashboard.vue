@@ -143,7 +143,7 @@
                 <el-input v-model="userInfo.kyc.companyName" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qyjydz')" class="mb24">
-                <el-input type="textarea" v-model="userInfo.kyc.businessAdd" :readOnly="true"></el-input>
+                <el-input type="textarea" :rows="8" v-model="userInfo.kyc.businessAdd" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qylx')" class="mb24">
                 <el-select v-model="userInfo.kyc.busType" :readOnly="true" style="width: 100%">
@@ -172,7 +172,7 @@
                 <el-input v-model="userInfo.kyc.transactionLimit" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('ywcjsm')" class="mb24">
-                <el-input type="textarea" v-model="userInfo.kyc.businessScenario" :readOnly="true"></el-input>
+                <el-input type="textarea" :rows="8" v-model="userInfo.kyc.businessScenario" :readOnly="true"></el-input>
               </el-form-item>
               <el-form-item :label="$t('qygw')" class="mb24">
                 <el-input v-model="userInfo.kyc.webSite" :readOnly="true"></el-input>

@@ -138,6 +138,10 @@
                   :label="item.bankName"
                   :value="item.id.toString()"
                 >
+                <div class="el-option">
+                  <div class="left">{{ item.bankName }}</div>
+                  <div class="right">{{ item.bankCode }}</div>
+                </div>
                 </el-option>
               </el-select>
             </div>
@@ -208,10 +212,10 @@
           <div class="divider" v-if="form.bankId" />
           <div class="column" v-if="form.bankId">
             <div class="column-left">
-              {{ $t("txyh") }}
+              {{ $t("zhmc") }}
             </div>
             <div class="column-right">
-              {{ getBankInfo(form.bankId, "accountAdd") }}
+              {{ getBankInfo(form.bankId, "accountName") }}
             </div>
           </div>
           <div class="divider" />

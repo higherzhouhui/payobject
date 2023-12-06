@@ -121,6 +121,7 @@
           <el-input
             type="textarea"
             size="small"
+            :rows="8"
             v-model="form.businessScenario"
             :placeholder="$t('qsrywcjsm')"
           ></el-input>

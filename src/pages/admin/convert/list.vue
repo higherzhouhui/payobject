@@ -267,7 +267,7 @@
     >
       <el-form label-position="top" ref="formss">
         <el-form-item :label="$t('bhly')">
-          <el-input type="textarea" v-model="mime" :placeholder="$t('qsr')"></el-input>
+          <el-input type="textarea" :rows="8" v-model="mime" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -359,7 +359,6 @@ export default {
     this.getInitData();
     this.getRJBZ();
     this.getCJZH();
-    console.log(this.$store.state);
   },
   methods: {
     handleSizeChange(val) {

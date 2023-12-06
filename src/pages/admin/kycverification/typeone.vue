@@ -297,6 +297,7 @@ export default {
         regCer: "",
       },
       status: [this.$t("shz"), this.$t("ytg"), this.$t("bh")],
+      labels: ["", this.$t("gth"),this.$t("qy"), this.$t("hwgs"),],
       options: [
         {
           label: this.$t("gth"),
@@ -311,33 +312,40 @@ export default {
           value: 3,
         },
       ],
+      showEditForm: true,
       areaList: [],
     };
   },
   computed: {
-    showEditForm() {
-      const userInfo = this.$store.state.userInfo;
-      if (!userInfo.kyc) {
-        return true;
-      }
-      if (userInfo.kyc && userInfo.kyc.kycStatus == 2) {
-        return true;
-      }
-      return false;
-    },
+   
   },
   created() {
     this.form.busType = this.type;
     this.getAreaCode();
     this.getAccountKyc();
+    this.getCurrentStatus()
   },
   methods: {
+    getCurrentStatus() {
+      let flag = false
+      const userInfo = this.$store.state.userInfo;
+      if (!userInfo.kyc) {
+        flag = true;
+      }
+      if (userInfo.kyc && userInfo.kyc.kycStatus == 2) {
+        flag = true;
+      }
+      this.showEditForm = flag
+    },
     async sendForm() {
       if (this.loading) return;
       try {
         this.loading = true;
         await SubKyc(this.form);
+
         this.dialogVisibleSuccess = true;
+        this.getAccountKyc(this.form);
+        this.showEditForm = false
         this.loading = false;
       } catch (error) {
         this.loading = false;
@@ -380,9 +388,12 @@ export default {
         Local("areaList", res.data);
       } catch (error) {}
     },
-    getAccountKyc() {
-      const accountKyc = this.$store.state.userInfo || {};
-      if (accountKyc.kyc && accountKyc.kyc.kycStatus) {
+    getAccountKyc(data) {
+      let accountKyc = this.$store.state.userInfo || {};
+      if (data) {
+        accountKyc.kyc = {...data, kycStatus: 0}
+      }
+      if (accountKyc.kyc && (accountKyc.kyc.kycStatus || accountKyc.kyc.kycStatus == 0)) {
         this.form = accountKyc.kyc;
         if (!isNaN(this.form.regDate * 1)) {
           this.form.regDate = "2023/10/11";
@@ -395,7 +406,7 @@ export default {
           { label: this.$t("qyjydz"), value: this.form.businessAdd },
           {
             label: this.$t("qylx"),
-            value: this.options[this.form.busType].label,
+            value: this.labels[this.form.busType],
           },
           {
             label: this.$t("qyzcszd"),

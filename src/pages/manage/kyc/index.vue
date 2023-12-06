@@ -596,7 +596,7 @@
           v-if="operationType == 'pass'"
           class="qd"
           size="small"
-          @click="sh2(bankForm.id, true)"
+          @click="sh2(bankForm2.id, true)"
         >
           {{ $t("tg") }}
         </el-button>
@@ -767,7 +767,7 @@ export default {
       dialogVisible2: false,
       bankForm2: {},
       addressForm: {},
-      options2: ["", "gth", "qy", "hwgs"],
+      options2: ["", this.$t("gth"), this.$t("qy"), this.$t("hwgs")],
       type: "first",
       dialogVisible: false,
       tableData: [],
@@ -1003,10 +1003,11 @@ export default {
       this.dialogVisible2 = true;
       this.$set(this, "bankForm2", data);
       this.operationType = type;
-      this.detailList = [
+      try {
+        this.detailList = [
         { label: this.$t("qymc"), value: data.companyName },
         { label: this.$t("qyjydz"), value: data.businessAdd },
-        { label: this.$t("qylx"), value: this.options3[data.busType].label },
+        { label: this.$t("qylx"), value: this.options2[data.busType] },
         { label: this.$t("ywcjsm"), value: data.businessScenario },
         { label: this.$t("ssgj"), value: getCountryName(data.country) },
         { label: this.$t("kzt"), value: this.status[data.kycStatus] },
@@ -1018,7 +1019,6 @@ export default {
         { label: this.$t("bhly"), value: data.reason },
         { label: this.$t("cjsj"), value: data.createTime },
         { label: this.$t("xgsj"), value: data.modifiedTime },
-
         {
           label: this.$t("qycl"),
           value: pjDownUrl(data.regCer),
@@ -1035,6 +1035,10 @@ export default {
           type: "link",
         },
       ];
+      } catch (error) {
+        console.error(error)
+      }
+   
     },
     async getlist() {
       try {

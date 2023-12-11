@@ -848,7 +848,7 @@ export default {
     async showUserBalance(row) {
       try {
         this.loading = true;
-        const res = await userBalanceList({ id: row.id });
+        const res = await userBalanceList({ id: row.userId });
         this.loading = false;
         this.userBalanceDetail = res.data;
         this.userBalanceDialog = true;

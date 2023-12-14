@@ -38,7 +38,6 @@
             style="padding: 0 10px"
             v-for="item in tempList"
             :key="item.id"
-            :label="lang.areaCode"
             :value="item.areaCode"
           >
             <div class="country">
@@ -218,6 +217,7 @@ export default {
         phone: "",
         password: "",
         areaCode: "+86",
+        countries: "CN",
         repassWord: "",
         inviteCode: "",
         checkCode: "",
@@ -236,10 +236,13 @@ export default {
       this.form.inviteCode = hashArray[1];
     }
   },
-  mounted() {},
   methods: {
-    changeAraeSelect() {
-      // this.tempList = this.areaList;
+    changeAraeSelect(value) {
+      this.tempList.forEach(item => {
+        if (item.areaCode == value) {
+          this.form.countries = item.code
+        }
+      })
     },
     changeAraeCode(newValue) {
       if (!newValue) {
@@ -285,6 +288,7 @@ export default {
         password,
         repassWord,
         code,
+        countries,
         checkCode,
         inviteCode,
       } = this.form;
@@ -323,6 +327,7 @@ export default {
         password,
         areaCode,
         inviteCode,
+        countries,
       };
       if (this.type == 1) {
         param.phone = phone;

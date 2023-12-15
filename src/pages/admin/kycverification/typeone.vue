@@ -404,7 +404,6 @@ export default {
         }
         this.detailList = [
           { label: this.$t("qymc"), value: this.form.companyName },
-          { label: this.$t("qyjydz"), value: this.form.businessAdd },
           {
             label: this.$t("qylx"),
             value: this.labels[this.form.busType],
@@ -418,8 +417,9 @@ export default {
           { label: this.$t("ygyhkje"), value: this.form.monthlyRemittance },
           { label: this.$t("ygyjybs"), value: this.form.transactionsMonth },
           { label: this.$t("dbjyed"), value: this.form.transactionLimit },
+          { label: this.$t("qyjydz"), value: this.form.businessAdd },
           { label: this.$t("ywcjsm"), value: this.form.businessScenario },
-          { label: this.$t("qymc"), value: this.form.webSite },
+          { label: this.$t("qygw"), value: this.form.webSite },
           { label: this.$t("kzt"), value: this.status[this.form.kycStatus] },
           { label: this.$t("bhly"), value: this.form.reason },
           { label: this.$t("cjsj"), value: this.form.createTime },

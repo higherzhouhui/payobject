@@ -918,7 +918,7 @@ ul::-webkit-scrollbar-thumb {
 }
 
 .el-tooltip__popper {
-    width: 500px;
+    max-width: 500px;
 }
 
 .down-a {

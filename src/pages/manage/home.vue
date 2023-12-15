@@ -217,6 +217,7 @@
       class="tables"
       :data="exchangeData"
       style="width: 100%"
+      v-if="exchangeTotal"
       v-loading="exchangeLoading"
       @row-click="(e) => handleShowDetail(e, 'detail')"
     >

@@ -121,7 +121,7 @@ export default {
         this.$store.commit("SET_USERINFO", userInfo);
         Message({
           type: "success",
-          message: this.$t("zccg"),
+          message: this.$t("czcg"),
         });
       } catch (error) {
         this.randomT();

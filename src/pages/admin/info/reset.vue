@@ -171,7 +171,7 @@ export default {
         await resetPwd(params);
         Message({
           type: "success",
-          message: this.$t("zccg"),
+          message: this.$t("czcg"),
         });
       } catch (error) {
         this.randomT();

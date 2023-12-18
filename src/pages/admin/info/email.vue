@@ -73,7 +73,7 @@ export default {
   created() {
   },
   mounted() {
-    if (this.form.phone.includes('@')) {
+    if (this.$store.state.userInfo.email.includes('@')) {
       this.type = 2
     } else {
       this.type = 1

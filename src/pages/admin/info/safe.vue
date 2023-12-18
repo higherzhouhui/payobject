@@ -1,7 +1,7 @@
 <template>
   <div class="safe-container">
     <div class="admin-title">{{$t('safe')}}</div>
-    <div class="item">
+    <!-- <div class="item">
       <div class="item-top">
         <div class="item-title">
           {{$t('绑定手机号')}}
@@ -16,14 +16,14 @@
          <span>{{userInfo.phone || $t('暂未绑定')}}</span>
       </div>
       <div class="desc">{{$t('交易时可能会发送短信验证码进行身份验证')}}</div>
-    </div>
+    </div> -->
     <div class="item">
       <div class="item-top">
         <div class="item-title">
           {{$t('绑定邮箱')}}
           <span class="desc">{{$t('可登录')}}</span>
         </div>
-        <div class="normal-btn dis" @click="routerTo()">{{$t('xg')}}</div>
+        <div class="normal-btn" @click="routerTo('/admin/email')">{{$t('xg')}}</div>
       </div>
       <div class="itme-middle">
          <span>{{userInfo.email || $t('暂未绑定')}}</span>

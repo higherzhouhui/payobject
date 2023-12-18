@@ -9,7 +9,7 @@
     </div>
     <div class="form">
       <h2>{{ $t("createProfile") }}</h2>
-      <div class="flex tabs">
+      <!-- <div class="flex tabs">
         <div
           class="item"
           :class="type == 1 && 'baseColor active'"
@@ -24,7 +24,7 @@
         >
           {{ $t("email") }}
         </div>
-      </div>
+      </div> -->
       <div class="line" v-if="type == 1">
         <img class="icon" src="@/assets/images/user/area.png" alt="user" />
         <el-select

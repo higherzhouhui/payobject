@@ -2,15 +2,24 @@
   <div class="login_box">
     <div class="form">
       <div class="admin-title">
-        {{$store.state.userInfo.hasPayPass ? $t("修改支付密码") : $t("设置支付密码")}}
-         <span>{{$t('定期更改支付密码有利于账户安全')}}</span>
+        {{ $t("修改已绑定邮箱") }}
       </div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="user" />
         <el-input
           class="input"
-          v-model="form.phone"
+          :value="$store.state.userInfo.email"
           disabled
+        >
+        </el-input>
+      </div>
+      <div class="line">
+        <img class="icon" src="@/assets/images/user/user.png" alt="user" />
+        <el-input
+          class="input"
+          v-model="form.email"
+          :placeholder="$t('qsryxhm')"
+          clearable
         >
         </el-input>
       </div>
@@ -21,60 +30,39 @@
           :placeholder="$t('qsryzm')"
           v-model="form.checkCode"
         />
-        <el-button class="send_btn" type="primary" @click="sendSms">
+        <el-button class="send_btn" :class="codeloading && 'loading'" type="primary" @click="sendSms">
           {{ timer == 60 ? $t("send") : timer }}
         </el-button>
-      </div>
-      <div class="line">
-        <img class="icon" src="@/assets/images/user/password.png" alt="" />
-        <el-input
-          class="input"
-          show-password
-          :placeholder="$t('qsrmm')"
-          v-model="form.password"
-        />
-      </div>
-      <div class="line">
-        <img class="icon" src="@/assets/images/user/password.png" alt="" />
-        <el-input
-          class="input"
-          show-password
-          :placeholder="$t('qzcsrmm')"
-          v-model="form.newPass"
-          @keyup.enter.native="setPayPwd"
-        />
       </div>
 
       <el-button
         class="btn normal-btn"
         type="primary"
         :class="loading && 'loading'"
-        @click="setPayPwd"
+        @click="resetEmail"
         >{{ $t("queding") }}</el-button
       >
     </div>
   </div>
 </template>
 <script>
-import { sendCheckCode, setPayPwdReq } from "@/api/login";
+import { sendCheckCode, resetEmailReq } from "@/api/login";
 import { Message } from "element-ui";
 
 export default {
-  name: "payPass",
+  name: "changeEmail",
   data() {
     return {
-      input3: "",
       t: Math.random(),
       imgLoading: true,
       loading: false,
+      codeloading: false,
       timer: 60,
       type: 2,
       checked: true,
       areaList: [],
       form: {
-        phone: this.$store.state.userInfo.email || this.$store.state.userInfo.phone,
-        newPass: "",
-        password: "",
+        email: "",
         checkCode: "",
       },
     };
@@ -102,19 +90,14 @@ export default {
     },
     valid() {
       let {
-        password,
+        email,
         checkCode,
-        newPass,
       } = this.form;
       let msg = "";
-      if (!checkCode) {
+      if (!email) {
+        msg = "qsryxhm";
+      } else if (!checkCode) {
         msg = "qsryzm";
-      } else if (!password) {
-        msg = "qsrmm";
-      } else if (!newPass) {
-        msg = "qzcsrmm";
-      } else if (password != newPass) {
-        msg = "repassError";
       }
       if (msg) {
         Message({
@@ -123,27 +106,18 @@ export default {
         });
         return false;
       }
-      const params = {
-        checkCode: this.form.checkCode,
-        newPass: this.form.newPass
-      }
-      return params;
+      return this.form;
     },
-    async setPayPwd() {
+    async resetEmail() {
       if (this.loading) return;
       let params = this.valid();
       if (!params) return;
       try {
         this.loading = true;
-        if (this.form.phone.includes('@')) {
-          params.email = this.form.phone
-        } else {
-          params.phone = this.form.phone
-        }
-        await setPayPwdReq(params);
+        await resetEmailReq(params);
         this.loading = false
         const userInfo = this.$store.state.userInfo
-        userInfo.hasPayPass = true
+        userInfo.email = params.email
         this.$store.commit("SET_USERINFO", userInfo);
         Message({
           type: "success",
@@ -156,8 +130,8 @@ export default {
     },
     async sendSms() {
       if (this.timer != 60) return;
-      let { phone, areaCode } = this.form;
-      if (!phone) {
+      let { email } = this.form;
+      if (!email) {
         let msg = "qsrsjhm";
         if (this.type == 2) {
           msg = "qsryxhm";
@@ -167,17 +141,11 @@ export default {
           message: this.$t(msg),
         });
       }
-      
+      this.codeloading = true
       try {
-        let param = {
-          areaCode,
-        };
-        if (this.type == 1) {
-          param.phone = phone;
-        } else {
-          param.email = phone;
-        }
+        let param = {email: email};
         const result = await sendCheckCode(param);
+        this.codeloading = false
         if (result.code === 200) {
           this.timer--;
           this.tt = setInterval(() => {
@@ -195,6 +163,7 @@ export default {
         } else {
         }
       } catch (error) {
+        this.codeloading = false
       }
     },
   },

@@ -41,8 +41,14 @@ export const resetPwd = (data) => service({
     method: 'post'
 })
 
-export const setPayPwd = (data) => service({
+export const setPayPwdReq = (data) => service({
     url: '/setPayPwd',
+    data,
+    method: 'post'
+})
+
+export const resetEmailReq = (data) => service({
+    url: '/resetEmail',
     data,
     method: 'post'
 })

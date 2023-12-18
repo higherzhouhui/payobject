@@ -2185,6 +2185,7 @@ export default {
     .user-info {
         display: flex;
         align-items: center;
+        justify-content: center;
     }
     .avatar img {
       width: 3.5rem;

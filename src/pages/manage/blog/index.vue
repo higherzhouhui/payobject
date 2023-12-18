@@ -3,7 +3,7 @@
     <div class="search-container">
       <div class="admin-title">
         {{ $store.state.title }}
-        <el-button type="primary normal-btn" @click="showDialog" class="primary"
+        <el-button type="primary normal-btn" @click="showDialog()" class="primary"
           ><i class="el-icon-plus"></i>{{ $t("add") }}</el-button
         >
       </div>
@@ -117,7 +117,7 @@
       <el-dialog
         :title="blogForm.id ? $t('xg') : $t('add')"
         :visible.sync="dialogVisible"
-        width="636px"
+        width="800px"
         :before-close="
           () => {
             dialogVisible = false;
@@ -189,7 +189,7 @@
       <el-dialog
       :title="$t('xq')"
       :visible.sync="detailVisible"
-      width="636px"
+      width="800px"
       :before-close="
         () => {
           detailVisible = false;
@@ -261,7 +261,7 @@ export default {
     return {
       langList: [
         {label: '中文', value: 'zh'},
-        {label: 'Englist', value: 'en'},
+        {label: 'English', value: 'en'},
       ],
       tableData: [],
       options: [],

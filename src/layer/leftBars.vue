@@ -139,6 +139,10 @@
                 <svg-icon iconClass="user-check-solid" className="icon-svg" />
                 <span slot="title">{{ $t('kycyz') }}</span>
             </el-menu-item>
+            <el-menu-item index="/admin/safe">
+                <svg-icon iconClass="gear-solid" className="icon-svg" />
+                <span slot="title">{{ $t('safe') }}</span>
+            </el-menu-item>
         </el-menu>
         <div class="footer">
             <a href="https://www.facebook.com/profile.php?id=61552592069646" target="_blank">

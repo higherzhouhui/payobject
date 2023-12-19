@@ -20,6 +20,11 @@ export const countries = (data) => service({
     data,
     method: 'get'
 })
+export const getCoinList = (data) => service({
+    url: '/allCoin',
+    data,
+    method: 'get'
+})
 export const cryptocurrencies = (data) => service({
     url: '/cryptocurrencies',
     data,

@@ -9,51 +9,30 @@
       <div class="search-container">
         <div class="admin-title">
           {{ $store.state.title }}
-          <el-button type="primary normal-btn" @click="showAdd1" class="primary"
-            ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
-          >
+          <el-button type="primary normal-btn" @click="showAdd1" class="primary"><i class="el-icon-plus"></i>{{
+            $t("addskzh") }}</el-button>
         </div>
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
         </el-radio-group>
-        <el-form
-          v-model="form"
-          :inline="true"
-          label-position="top"
-          class="search-form four-column"
-        >
+        <el-form v-model="form" :inline="true" label-position="top" class="search-form four-column">
           <el-form-item :label="$t('bankname')">
-            <el-input
-              :placeholder="$t('bankname')"
-              v-model="form.bankName"
-            ></el-input>
+            <el-input :placeholder="$t('bankname')" v-model="form.bankName"></el-input>
           </el-form-item>
           <el-form-item :label="$t('yhzh')">
-            <el-input
-              :placeholder="$t('yhzh')"
-              v-model="form.bankAccount"
-            ></el-input>
+            <el-input :placeholder="$t('yhzh')" v-model="form.bankAccount"></el-input>
           </el-form-item>
           <el-form-item :label="$t('kzt')">
             <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
-              <el-option
-                style="padding: 0 20px"
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
+              <el-option style="padding: 0 20px" v-for="item in options" :key="item.value" :label="item.label"
+                :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
             <label class="el-form-item__label"></label>
-            <el-button
-              type="primary"
-              @click="getlist"
-              class="primary normal-btn"
-            >
+            <el-button type="primary" @click="getlist" class="primary normal-btn">
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
             <!-- <el-button class="primary">
@@ -63,50 +42,15 @@
         </el-form>
       </div>
       <div class="content">
-        <el-table
-          class="tables"
-          :data="tableData"
-          style="width: 100%"
-          v-loading="loading"
-          @row-click="(e) => handleShowDetail(e, 'detail')"
-        >
+        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading"
+          @row-click="(e) => handleShowDetail(e, 'detail')">
           <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
-          <el-table-column
-            prop="accountName"
-            :label="$t('zhmc')"
-            min-width="180"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="bankName"
-            :label="$t('bankname')"
-            min-width="180"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="bankAccount"
-            :label="$t('yhzh')"
-            min-width="200"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="accountAdd"
-            :label="$t('jzdz')"
-            min-width="180"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="createTime"
-            :label="$t('cjsj')"
-            min-width="180"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="name"
-            :label="$t('cz')"
-            width="70"
-            fixed="right"
-          >
+          <el-table-column prop="accountName" :label="$t('zhmc')" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="bankName" :label="$t('bankname')" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="bankAccount" :label="$t('yhzh')" min-width="200" show-overflow-tooltip />
+          <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
             <template slot-scope="scope">
               <!-- <div
                 class="operation-btn"
@@ -114,38 +58,21 @@
               >
                 {{ $t("xq") }}
               </div> -->
-              <div
-                class="operation-btn edit-btn"
-                @click.stop="toDetail(scope.row)"
-              >
+              <div class="operation-btn edit-btn" @click.stop="toDetail(scope.row)">
                 {{ $t("xg") }}
               </div>
-              <div
-                class="operation-btn reject-btn"
-                @click.stop="handleShowDetail(scope.row, 'del')"
-              >
+              <div class="operation-btn reject-btn" @click.stop="handleShowDetail(scope.row, 'del')">
                 {{ $t("del") }}
               </div>
             </template>
           </el-table-column>
           <div slot="empty">
-            <el-empty
-              :description="$t('nodata')"
-              style="padding: 50px"
-            ></el-empty>
+            <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
           </div>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="current"
-          :page-sizes="[10, 50, 100, 500]"
-          :page-size="size"
-          layout="prev, pager, next"
-          small
-          :total="total"
-          class="elPagination"
-        >
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]" :page-size="size" layout="prev, pager, next" small :total="total"
+          class="elPagination">
         </el-pagination>
       </div>
     </template>
@@ -153,9 +80,8 @@
       <div class="search-container">
         <div class="admin-title">
           {{ $store.state.title }}
-          <el-button type="primary" @click="showAdd" class="primary normal-btn"
-            ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
-          >
+          <el-button type="primary" @click="showAdd" class="primary normal-btn"><i class="el-icon-plus"></i>{{ $t("zjhld")
+          }}</el-button>
         </div>
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
@@ -163,20 +89,13 @@
         </el-radio-group>
       </div>
       <div class="content">
-        <el-table
-          class="tables"
-          :data="tableData2"
-          style="width: 100%"
-          v-loading="loading"
-          @row-click="(e) => handleShowDetail(e, 'detail')"
-        >
+        <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading"
+          @row-click="(e) => handleShowDetail(e, 'detail')">
           <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
-                <span
-                  :class="`flag-icon flag-icon-${scope.row.fromCountry.toLocaleLowerCase()}`"
-                  v-if="scope.row.exFrom != 'USDT'"
-                ></span>
+                <span :class="`flag-icon flag-icon-${scope.row.fromCountry.toLocaleLowerCase()}`"
+                  v-if="scope.row.exFrom != 'USDT'"></span>
                 <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
                 {{ scope.row.exFrom }}
               </div>
@@ -186,26 +105,15 @@
           <el-table-column prop="exTarget" :label="$t('dhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
-                <span
-                  :class="`flag-icon flag-icon-${scope.row.targetCountry.toLocaleLowerCase()}`"
-                  v-if="scope.row.exTarget != 'USDT'"
-                ></span>
+                <span :class="`flag-icon flag-icon-${scope.row.targetCountry.toLocaleLowerCase()}`"
+                  v-if="scope.row.exTarget != 'USDT'"></span>
                 <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
                 {{ scope.row.exTarget }}
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="createTime"
-            :label="$t('cjsj')"
-            min-width="180"
-          />
-          <el-table-column
-            prop="createTime"
-            :label="$t('cz')"
-            width="70"
-            fixed="right"
-          >
+          <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+          <el-table-column prop="createTime" :label="$t('cz')" width="70" fixed="right">
             <template slot-scope="scope">
               <!-- <div
                 class="operation-btn"
@@ -213,59 +121,32 @@
               >
                 {{ $t("xq") }}
               </div> -->
-              <div
-                class="operation-btn edit-btn"
-                @click.stop="toDetail2(scope.row)"
-              >
+              <div class="operation-btn edit-btn" @click.stop="toDetail2(scope.row)">
                 {{ $t("xg") }}
               </div>
-              <div
-                class="operation-btn reject-btn"
-                @click.stop="handleShowDetail(scope.row, 'del')"
-              >
+              <div class="operation-btn reject-btn" @click.stop="handleShowDetail(scope.row, 'del')">
                 {{ $t("del") }}
               </div>
             </template>
           </el-table-column>
           <div slot="empty">
-            <el-empty
-              :description="$t('nodata')"
-              style="padding: 50px"
-            ></el-empty>
+            <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
           </div>
         </el-table>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="current"
-          :page-sizes="[10, 50, 100, 500]"
-          :page-size="size"
-          layout="prev, pager, next"
-          small
-          :total="total"
-          class="elPagination"
-        >
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]" :page-size="size" layout="prev, pager, next" small :total="total"
+          class="elPagination">
         </el-pagination>
       </div>
     </template>
-    <el-dialog
-      :title="$t('xq')"
-      :visible.sync="detailVisible"
-      width="636px"
-      :before-close="
-        () => {
-          detailVisible = false;
-        }
-      "
-    >
+    <el-dialog :title="$t('xq')" :visible.sync="detailVisible" width="636px" :before-close="() => {
+        detailVisible = false;
+      }
+      ">
       <div class="formStyle">
-        <div
-          class="list"
-          v-for="(item, index) in detailList.filter((item) => {
-            return item.value;
-          })"
-          :key="index"
-        >
+        <div class="list" v-for="(item, index) in detailList.filter((item) => {
+          return item.value;
+        })" :key="index">
           <div class="list-left">{{ item.label }}</div>
           <div class="list-right">
             <template v-if="item.type == 'link'">
@@ -286,174 +167,90 @@
         <el-button class="qx" @click="detailVisible = false">{{
           $t("cancel")
         }}</el-button>
-        <el-button
-          v-if="operationType == 'del'"
-          class="qd"
-          @click="deleteRow"
-          >{{ $t("del") }}</el-button
-        >
+        <el-button v-if="operationType == 'del'" class="qd" @click="deleteRow">{{ $t("del") }}</el-button>
       </div>
     </el-dialog>
-    <el-dialog
-      :title="bankForm.id ? $t('xg') : $t('add')"
-      :visible.sync="dialogVisible"
-      width="636px"
-      :before-close="
-        () => {
-          dialogVisible = false;
-        }
-      "
-    >
-      <el-form
-        label-position="top"
-        ref="formss"
-        :model="bankForm"
-        class="formStyle"
-      >
+    <el-dialog :title="bankForm.id ? $t('xg') : $t('add')" :visible.sync="dialogVisible" width="636px" :before-close="() => {
+        dialogVisible = false;
+      }
+      ">
+      <el-form label-position="top" ref="formss" :model="bankForm" class="formStyle">
         <el-form-item :label="$t('bz')">
           <el-select v-model="bankForm.coinCode" class="elSelect" filterable>
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in areaList"
-              :key="item.value"
-              :value="item.coinCode"
-              :label="item.coinCode"
-            >
-            <div class="el-option">
-              <div class="left">
-                <span
-                  :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                  v-if="item.coinCode != 'USDT'"
-                ></span>
-                <img
-                  src="@/assets/images/usdt.png"
-                  v-else
-                  class="usdt-inner"
-                />
-                {{ lang == "zh" ? item.name : item.enName }}
+            <el-option style="padding: 0 10px" v-for="item in areaList" :key="item.value" :value="item.coinCode"
+              :label="item.coinCode">
+              <div class="el-option">
+                <div class="left">
+                  <flagIconVue :code="item.coinCode" />
+                  {{ lang == "zh" ? item.name : item.enName }}
+                </div>
+                <div class="right">{{ item.coinCode }}</div>
               </div>
-              <div class="right">{{ item.coinCode }}</div>
-            </div>
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item :label="$t('zhmc')">
-          <el-input
-            v-model="bankForm.accountName"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.accountName" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')">
           <!-- <el-input
             v-model="bankForm.country"
           ></el-input> -->
           <el-select v-model="bankForm.country" class="elSelect" filterable>
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in areaList"
-              :key="item.value"
-              :value="item.areaCode"
-              :label="item.areaCode"
-            >
-            <div class="el-option">
-              <div class="left">
-                <span
-                  :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                  v-if="item.coinCode != 'USDT'"
-                ></span>
-                <img
-                  src="@/assets/images/usdt.png"
-                  v-else
-                  class="usdt-inner"
-                />
-                {{ lang == "zh" ? item.name : item.enName }}
+            <el-option style="padding: 0 10px" v-for="item in areaList" :key="item.value" :value="item.areaCode"
+              :label="item.areaCode">
+              <div class="el-option">
+                <div class="left">
+                  <flagIconVue :code="item.coinCode" />
+                  {{ lang == "zh" ? item.name : item.enName }}
+                </div>
+                <div class="right">{{ item.areaCode }}</div>
               </div>
-              <div class="right">{{ item.areaCode }}</div>
-            </div>
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')">
-          <el-input
-            v-model="bankForm.accountAdd"
-            type="textarea"
-            :rows="5"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.accountAdd" type="textarea" :rows="5" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')">
-          <el-input
-            v-model="bankForm.bankName"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.bankName" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('swift')">
-          <el-input
-            v-model="bankForm.swiftCode"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.swiftCode" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcode')">
-          <el-input
-            v-model="bankForm.bankCode"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.bankCode" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcount')">
-          <el-input
-            v-model="bankForm.bankAccount"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.bankAccount" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')">
           <!-- <el-input
             v-model="bankForm.bankCountry"
           ></el-input> -->
           <el-select v-model="bankForm.bankCountry" class="elSelect" filterable>
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in areaList"
-              :key="item.value"
-              :value="item.areaCode"
-              :label="item.areaCode"
-            >
-            <div class="el-option">
-              <div class="left">
-                <span
-                  :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                  v-if="item.coinCode != 'USDT'"
-                ></span>
-                <img
-                  src="@/assets/images/usdt.png"
-                  v-else
-                  class="usdt-inner"
-                />
-                {{ lang == "zh" ? item.name : item.enName }}
+            <el-option style="padding: 0 10px" v-for="item in areaList" :key="item.value" :value="item.areaCode"
+              :label="item.areaCode">
+              <div class="el-option">
+                <div class="left">
+                  <flagIconVue :code="item.coinCode" />
+                  {{ lang == "zh" ? item.name : item.enName }}
+                </div>
+                <div class="right">{{ item.areaCode }}</div>
               </div>
-              <div class="right">{{ item.areaCode }}</div>
-            </div>
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')">
-          <el-input
-            v-model="bankForm.bankAdd"
-            type="textarea"
-            :rows="5"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm.bankAdd" type="textarea" :rows="5" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
 
         <el-form-item :label="$t('zl')">
           <div class="upload-item">
             <div class="item-left">
-              <el-upload
-                    action="/api/file/upload"
-                list-type="text"
-                accept=".pdf, .zip, .rar, image/*"
-                :on-success="(e) => handlesuccess(e)"
-              >
+              <el-upload action="/api/file/upload" list-type="text" accept=".pdf, .zip, .rar, image/*"
+                :on-success="(e) => handlesuccess(e)">
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!bankForm.accountCer"></i>
                   <i class="el-icon-folder-checked" v-else></i>
@@ -466,13 +263,8 @@
             <div class="item-right">
               <div class="sub-title"><span>*</span>{{ $t("zzd") }}</div>
               <div class="desc">{{ $t("zmgr") }}</div>
-              <a
-                :href="'/api/file/downLoad?url=' + bankForm.accountCer"
-                target="_blank"
-                class="down"
-                v-if="bankForm.accountCer"
-                >{{ $t("download") }}</a
-              >
+              <a :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank" class="down"
+                v-if="bankForm.accountCer">{{ $t("download") }}</a>
             </div>
           </div>
           <!-- <el-upload
@@ -504,50 +296,21 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
-        <el-button
-          type="primary"
-          :class="bankloading && 'loading'"
-          @click="sh"
-          >{{ $t("sure") }}</el-button
-        >
+        <el-button type="primary" :class="bankloading && 'loading'" @click="sh">{{ $t("sure") }}</el-button>
       </span>
     </el-dialog>
-    <el-dialog
-      :title="bankForm2.id ? $t('xg') : $t('zjhld')"
-      :visible.sync="dialogVisible2"
-      width="636px"
-      :before-close="
-        () => {
-          dialogVisible2 = false;
-        }
-      "
-    >
+    <el-dialog :title="bankForm2.id ? $t('xg') : $t('zjhld')" :visible.sync="dialogVisible2" width="636px" :before-close="() => {
+        dialogVisible2 = false;
+      }
+      ">
       <el-form label-position="top" ref="formss" :model="bankForm2">
         <el-form-item :label="$t('bdhbz')">
-          <el-select
-            v-model="bankForm2.exFrom"
-            class="elSelect"
-            @change="changeExformCoin"
-            filterable
-          >
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in getAllCoin()"
-              :key="item.id"
-              :value="item.coinCode"
-              :label="item.coinCode"
-            >
+          <el-select v-model="bankForm2.exFrom" class="elSelect" @change="changeExformCoin" filterable>
+            <el-option style="padding: 0 10px" v-for="item in coinList" :key="item.id" :value="item.coinCode"
+              :label="item.coinCode">
               <div class="el-option">
                 <div class="left">
-                  <span
-                    :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                    v-if="item.coinCode != 'USDT'"
-                  ></span>
-                  <img
-                    src="@/assets/images/usdt.png"
-                    v-else
-                    class="usdt-inner"
-                  />
+                  <flagIconVue :code="item.coinCode" />
                   {{ lang == "zh" ? item.name : item.enName }}
                 </div>
                 <div class="right">{{ item.coinCode }}</div>
@@ -562,24 +325,11 @@
         </el-form-item>
         <el-form-item :label="$t('dhbz')">
           <el-select v-model="bankForm2.exTarget" class="elSelect" filterable>
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in targetCoinList"
-              :key="item.id"
-              :value="item.coinCode"
-              :label="item.coinCode"
-            >
+            <el-option style="padding: 0 10px" v-for="item in targetCoinList" :key="item.id" :value="item.coinCode"
+              :label="item.coinCode">
               <div class="el-option">
                 <div class="left">
-                  <span
-                    :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                    v-if="item.coinCode != 'USDT'"
-                  ></span>
-                  <img
-                    src="@/assets/images/usdt.png"
-                    v-else
-                    class="usdt-inner"
-                  />
+                  <flagIconVue :code="item.coinCode" />
                   {{ lang == "zh" ? item.name : item.enName }}
                 </div>
                 <div class="right">{{ item.coinCode }}</div>
@@ -588,16 +338,9 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('hl')">
-          <el-input
-            v-model="bankForm2.exRate"
-            type="number"
-            :placeholder="$t('qsr')"
-          ></el-input>
+          <el-input v-model="bankForm2.exRate" type="number" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
-        <el-form-item
-          class="preview"
-          v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate"
-        >
+        <el-form-item class="preview" v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate">
           {{
             `1(${bankForm2.exFrom}) = ${bankForm2.exRate}(${bankForm2.exTarget})`
           }}
@@ -607,12 +350,7 @@
         <el-button @click="dialogVisible2 = false">{{
           $t("cancel")
         }}</el-button>
-        <el-button
-          type="primary"
-          :class="bankloading && 'loading'"
-          @click="sh2"
-          >{{ $t("sure") }}</el-button
-        >
+        <el-button type="primary" :class="bankloading && 'loading'" @click="sh2">{{ $t("sure") }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -627,12 +365,16 @@ import {
   delExchange,
 } from "@/api/exchange";
 import { Message } from "element-ui";
-import { upload } from "@/api/file";
 import { Local } from "@/utils/index";
-import { countries, cryptocurrencies } from "@/api/login";
+import { countries, cryptocurrencies, getCoinList } from "@/api/login";
 import { getFlagIcon, getCountryName, pjDownUrl } from "@/utils/common";
+import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
+  name: 'exchangeMange',
+  components: {
+    flagIconVue
+  },
   data() {
     return {
       detailVisible: false,
@@ -693,6 +435,7 @@ export default {
       size: 10,
       current: 1,
       total: 0,
+      coinList: [],
     };
   },
   watch: {
@@ -772,7 +515,7 @@ export default {
         });
         this.detailVisible = false;
         this.getlist();
-      } catch (error) {}
+      } catch (error) { }
     },
     async del2(id) {
       try {
@@ -783,7 +526,7 @@ export default {
         });
         this.detailVisible = false;
         this.getlist2();
-      } catch (error) {}
+      } catch (error) { }
     },
     getNewareaList(list) {
       if (list.length) {
@@ -796,17 +539,14 @@ export default {
       }
       return [];
     },
-    getAllCoin() {
-      if (this.areaList.length) {
-        let arr = this.areaList.filter((obj, index, self) => {
-          return (
-            self.findIndex((obj1) => obj1.coinCode === obj.coinCode) === index
-          );
-        });
-        arr = arr.concat(this.szList);
-        return arr;
+    async getAllCoin() {
+      try {
+        const res = await getCoinList()
+        this.coinList = res.data
+      } catch {
+        console.error('error')
       }
-      return [];
+
     },
     changeExformCoin() {
       // if (this.bankForm2.exFrom == "USDT") {
@@ -817,7 +557,7 @@ export default {
       //     return item.coinCode !== this.bankForm2.exFrom;
       //   });
       // }
-      const all = this.getNewareaList(this.areaList);
+      const all = this.getNewareaList(this.coinList);
       this.targetCoinList = all.filter((item) => {
         return item.coinCode !== this.bankForm2.exFrom;
       });
@@ -834,7 +574,7 @@ export default {
         let res = await countries();
         this.areaList = res.data;
         Local("areaList", res.data);
-      } catch (error) {}
+      } catch (error) { }
     },
     async getSzList() {
       try {
@@ -845,7 +585,7 @@ export default {
         let res = await cryptocurrencies();
         this.szList = res.data;
         Local("szList", res.data);
-      } catch (error) {}
+      } catch (error) { }
     },
     showAdd() {
       this.dialogVisible2 = true;
@@ -869,7 +609,7 @@ export default {
         } else {
           this.$message.error(req.msg)
         }
-      } catch (error) {}
+      } catch (error) { }
       return false;
     },
     async sh2() {
@@ -893,7 +633,7 @@ export default {
           });
           this.getlist2();
         }
-      } catch (error) {}
+      } catch (error) { }
     },
     async sh() {
       try {
@@ -904,7 +644,7 @@ export default {
         });
         this.getlist();
         this.dialogVisible = false;
-      } catch (error) {}
+      } catch (error) { }
     },
     toDetail(data) {
       this.dialogVisible = true;
@@ -936,7 +676,7 @@ export default {
         });
         this.tableData = req.data.records;
         this.total = req.data.total;
-      } catch (error) {}
+      } catch (error) { }
     },
     async getlist2() {
       try {
@@ -948,13 +688,14 @@ export default {
         this.loading = false;
         this.tableData2 = req.data.records;
         this.total = req.data.total;
-      } catch (error) {}
+      } catch (error) { }
     },
   },
   created() {
     this.getlist();
     this.getFbList();
     this.getSzList();
+    this.getAllCoin()
   },
 };
 </script>
@@ -965,42 +706,52 @@ export default {
     background: $contentColor;
     border-radius: 4px;
   }
+
   .normal-btn {
     height: 40px;
   }
+
   .flag-warpper {
     display: flex;
     align-content: center;
   }
 }
+
 .duihuan {
   text-align: center;
   font-weight: bold;
   color: #fff;
   font-size: 1.5rem !important;
+
   .svg-icon {
     color: #fff;
   }
 }
+
 .preview {
   color: #fff;
   letter-spacing: 2px;
   text-align: center;
 }
+
 .elSelect {
   width: 100%;
 }
+
 .btn {
   padding: 4px 8px;
 }
+
 .el-option {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   .left {
     display: flex;
     align-items: center;
   }
+
   .right {
     color: $baseColor;
     font-weight: bold;

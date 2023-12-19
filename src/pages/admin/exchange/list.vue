@@ -369,7 +369,6 @@
 import { getBankListPage, subBank, bankDel } from "@/api/bank";
 import { countries } from "@/api/login";
 import { Message } from "element-ui";
-import { upload } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
 import { getCountryName, getFlagIcon, pjDownUrl } from "@/utils/common";
 import passwordVue from "@/components/common/password.vue"

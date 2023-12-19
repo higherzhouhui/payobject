@@ -2,8 +2,7 @@
   <div class="dashboard-container">
     <div class="balance-wrapper">
       <div class="balance-item">
-        <span :class="`flag-icon ${getFlagIcon(coinCode)}`" v-if="coinCode != 'USDT'"></span>
-        <img src="@/assets/images/usdt.png" v-else class="usdt-pic" />
+        <flagIconVue :code="coinCode" :dashboard="true"/>
         <h3>{{ balance }}<span>{{ coinCode }}</span></h3>
       </div>
     </div>
@@ -73,16 +72,19 @@
 import { balanceList } from "@/api/out"
 import { getBillDetails } from "@/api/manage"
 import { getHashParams } from "@/utils/index"
-import { getFlagIcon } from "@/utils/common"
+import flagIconVue from "@/components/common/flagicon.vue";
+
 export default {
   name: 'DashBoard',
   props: {
     msg: String
   },
+  components: {
+    flagIconVue
+  },
   data() {
     return {
       typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('duihuan'), this.$t('duihuandrz')],
-      getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],
       current: 1,

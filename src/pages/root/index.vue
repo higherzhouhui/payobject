@@ -45,15 +45,7 @@
                     :value="item.coinCode"
                     :label="item.coinCode"
                   >
-                    <span
-                      :class="`flag-icon ${getFlagIcon(item.coinCode, flagList)}`"
-                      v-if="item.coinCode != 'USDT'"
-                    ></span>
-                    <img
-                      src="@/assets/images/usdt.png"
-                      v-else
-                      class="usdt-inner"
-                    />
+                    <flagIconVue :code="item.coinCode" :flagList="flagList" />
                     {{ lang == "zh" ? item.name : item.enName }}
                   </el-option>
                 </el-select>
@@ -80,15 +72,7 @@
                     :key="item.code"
                     :value="item.coinCode"
                   >
-                    <span
-                      :class="`flag-icon ${getFlagIcon(item.coinCode, flagList)}`"
-                      v-if="item.coinCode != 'USDT'"
-                    ></span>
-                    <img
-                      src="@/assets/images/usdt.png"
-                      v-else
-                      class="usdt-inner"
-                    />
+                    <flagIconVue :code="item.coinCode" :flagList="flagList" />
                     {{ lang == "zh" ? item.name : item.enName }}
                   </el-option>
                 </el-select>
@@ -290,11 +274,7 @@
           <h3>{{ $t("allpaymentDesc") }}</h3>
           <div class="country">
             <div class="country-item" v-for="item in areaList" :key="item.id">
-              <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode, flagList)}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              <flagIconVue :code="item.coinCode" :flagList="flagList" />
               <span class="country-name">{{
                 lang == "zh" ? item.name : item.enName
               }}</span>
@@ -461,7 +441,7 @@
 </template>
 <script>
 import { Local } from "@/utils/index";
-import { countries } from '@/api/login'
+import { countries } from '@/api/login';
 import {
   getSourceCoin,
   getTargetCoin,
@@ -469,8 +449,13 @@ import {
   getCalculateRate,
 } from "@/api/common";
 import { getFlagIcon } from "@/utils/common";
+import flagIconVue from "@/components/common/flagicon.vue";
+
 export default {
   name: "indexVue",
+  components: {
+    flagIconVue
+  },
   data() {
     return {
       country: "",

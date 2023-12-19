@@ -276,7 +276,6 @@
   </div>
 </template>
 <script>
-import { upload } from "@/api/file";
 import { SubKyc } from "@/api/user";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";

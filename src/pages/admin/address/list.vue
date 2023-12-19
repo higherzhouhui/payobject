@@ -209,7 +209,6 @@ import { countries, cryptocurrencies } from "@/api/login";
 import { Message } from "element-ui";
 import { upload } from "@/api/file";
 import { getHashParams, Local } from "@/utils/index";
-import { getFlagIcon } from "@/utils/common";
 import passwordVue from "@/components/common/password.vue";
 
 export default {
@@ -227,7 +226,6 @@ export default {
         title: this.$t("add"),
         btn: this.$t("sure"),
       },
-      getFlagIcon: getFlagIcon,
       languge: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,

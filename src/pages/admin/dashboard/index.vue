@@ -7,16 +7,14 @@
         class="content-swiper">
           <swiper-slide v-for="item in balanceArrapy" :key="item.id" class="item">
               <div class="balance-item" @click="routerToDetail(item)">
-                <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`" v-if="item.coinCode != 'USDT'"></span>
-                <img src="@/assets/images/usdt.png" v-else class="usdt-pic" />
+                <flagIconVue :code="item.coinCode" :dashboard="true"/>
                 <h3>{{ item.balance.toFixed(2) }}<span>{{ item.coinCode }}</span></h3>
               </div>
           </swiper-slide>
       </swiper>
       <div v-if="!balanceLoading && !balanceArrapy.length">
         <div class="balance-item">
-          <span :class="`flag-icon ${getFlagIcon('USD')}`" v-if="'USD' != 'USDT'"></span>
-          <img src="@/assets/images/usdt.png" v-else class="usdt-pic" />
+          <flagIconVue :code="'USD'" :dashboard="true"/>
           <h3>0.00<span>{{ 'USD' }}</span></h3>
           <div class="qcz" @click="$router.push('/admin/deposit/index')">
             <img src="@/assets/images/home/recharge.png" />
@@ -78,16 +76,18 @@
 <script>
 import { balanceList } from "@/api/out"
 import { getBillDetails } from "@/api/manage"
-import { getFlagIcon } from "@/utils/common"
+import flagIconVue from "@/components/common/flagicon.vue";
 export default {
   name: 'DashBoard',
   props: {
     msg: String
   },
+  components: {
+    flagIconVue
+  },
   data() {
     return {
       typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('duihuan'), this.$t('duihuandrz')],
-      getFlagIcon: getFlagIcon,
       balanceArrapy: [],
       billArray: [],
       current: 1,
@@ -270,11 +270,6 @@ h1 {
     font-size: 36px;
     margin-bottom: 6px;
     height: 30px;
-  }
-  .usdt-pic {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 6px;
   }
   h3 {
     font-size: 1.5rem;

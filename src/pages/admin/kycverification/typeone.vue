@@ -134,10 +134,10 @@
         <div class="upload-item">
           <div class="item-left">
             <el-upload
-              action="null"
+                  action="/api/file/upload"
               list-type="text"
               accept=".pdf, .zip, .rar"
-              :before-upload="(e) => handlesuccess(e, 'regCer')"
+              :on-success="(e) => handlesuccess(e, 'regCer')"
             >
               <div class="load-cover">
                 <i class="el-icon-folder-add" v-if="!form.regCer"></i>
@@ -163,10 +163,10 @@
         <div class="upload-item">
           <div class="item-left">
             <el-upload
-              action="null"
+                  action="/api/file/upload"
               list-type="text"
               accept=".pdf, .zip, .rar"
-              :before-upload="(e) => handlesuccess(e, 'legal')"
+              :on-success="(e) => handlesuccess(e, 'legal')"
             >
               <div class="load-cover">
                 <i class="el-icon-folder-add" v-if="!form.legal"></i>
@@ -192,10 +192,10 @@
         <div class="upload-item" v-if="form.busType != 1">
           <div class="item-left">
             <el-upload
-              action="null"
+                  action="/api/file/upload"
               list-type="text"
               accept=".pdf, .zip, .rar"
-              :before-upload="(e) => handlesuccess(e, 'shareholder')"
+              :on-success="(e) => handlesuccess(e, 'shareholder')"
             >
               <div class="load-cover">
                 <i class="el-icon-folder-add" v-if="!form.shareholder"></i>
@@ -353,19 +353,8 @@ export default {
         this.loading = false;
       }
     },
-    async handlesuccess(e, type) {
-      const size = e.size;
-      if (size > 20 * 1024 * 1024) {
-        Message({
-          type: "error",
-          message: this.$t("sizeOver"),
-        });
-        return;
-      }
-      const formData = new FormData();
-      formData.append("file", e);
+    async handlesuccess(req, type) {
       try {
-        const req = await upload(formData);
         if (req.code === 200) {
           this.form[type] = req.data[0];
           Message({

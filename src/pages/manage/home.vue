@@ -390,4 +390,9 @@ export default {
     margin-bottom: 2rem;
   }
 }
+.tables {
+  padding: 1rem;
+  background: $contentColor;
+  border-radius: 4px;
+}
 </style>

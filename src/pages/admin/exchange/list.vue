@@ -245,10 +245,10 @@
           <div class="upload-item">
             <div class="item-left">
               <el-upload
-                action="null"
+                    action="/api/file/upload"
                 list-type="text"
                 accept=".pdf, .zip, .rar, image/*"
-                :before-upload="(e) => handlesuccess(e)"
+                :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!bankForm.accountCer"></i>
@@ -273,7 +273,7 @@
           </div>
           <!-- <el-upload
             class="upload-demo"
-            action="null"
+                action="/api/file/upload"
             list-type="text"
             accept=".pdf, .zip, .rar"
             :before-upload="(e) => handlesuccess(e, 'shareholder')"
@@ -511,12 +511,8 @@ export default {
       this.dialogVisible = true;
       this.bankForm = {};
     },
-    handleClick() {},
-    async handlesuccess(e) {
-      const formData = new FormData();
-      formData.append("file", e);
+    async handlesuccess(req) {
       try {
-        let req = await upload(formData);
         this.bankForm = {
           ...this.bankForm,
           accountCer: req.data[0],

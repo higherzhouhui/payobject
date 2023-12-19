@@ -46,7 +46,7 @@
                     :label="item.coinCode"
                   >
                     <span
-                      :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                      :class="`flag-icon ${getFlagIcon(item.coinCode, flagList)}`"
                       v-if="item.coinCode != 'USDT'"
                     ></span>
                     <img
@@ -81,7 +81,7 @@
                     :value="item.coinCode"
                   >
                     <span
-                      :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                      :class="`flag-icon ${getFlagIcon(item.coinCode, flagList)}`"
                       v-if="item.coinCode != 'USDT'"
                     ></span>
                     <img
@@ -291,7 +291,7 @@
           <div class="country">
             <div class="country-item" v-for="item in areaList" :key="item.id">
               <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                :class="`flag-icon ${getFlagIcon(item.coinCode, flagList)}`"
                 v-if="item.coinCode != 'USDT'"
               ></span>
               <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
@@ -461,6 +461,7 @@
 </template>
 <script>
 import { Local } from "@/utils/index";
+import { countries } from '@/api/login'
 import {
   getSourceCoin,
   getTargetCoin,
@@ -638,11 +639,13 @@ export default {
       showMenu: false,
       blogList: [],
       rate: 1,
+      flagList: [],
     };
   },
   created() {
     this.getAreaCode();
     this.getBlogsList();
+    this.getCountries()
   },
   watch: {
     form: {
@@ -701,6 +704,17 @@ export default {
     // window.removeEventListener("wheel", this.onWheel);
   },
   methods: {
+    getCountries() {
+      const larealist = Local("areaList")
+      if (larealist) {
+        this.flagList = larealist
+      } else {
+        countries().then(res => {
+        this.flagList = res.data
+        Local("areaList", res.data);
+      })
+      }
+    },
     routerToBlogDetail(id) {
         this.$router.push(`/blog/detail?id=${id}`)
     },

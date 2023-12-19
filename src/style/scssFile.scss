@@ -670,61 +670,60 @@ html {
     }
 }
 
-html::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
-}
+// html::-webkit-scrollbar-track-piece {
+//     background: $bgColor;
+// }
 
-html::-webkit-scrollbar {
-    width: 6px;
-    height: 20px;
-}
+// html::-webkit-scrollbar {
+//     width: 6px;
+//     height: 20px;
+// }
 
-html::-webkit-scrollbar-thumb {
-    background: $bgColor;
+// html::-webkit-scrollbar-thumb {
+//     background: #d3dce6;
+// }
 
-}
+// form::-webkit-scrollbar-track-piece {
+//     background: #d3dce6;
+// }
 
-form::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
-}
+// form::-webkit-scrollbar {
+//     width: 6px;
+//     height: 20px;
+// }
 
-form::-webkit-scrollbar {
-    width: 6px;
-    height: 20px;
-}
+// form::-webkit-scrollbar-thumb {
+//     background: $bgColor;
 
-form::-webkit-scrollbar-thumb {
-    background: $bgColor;
+// }
 
-}
+// div::-webkit-scrollbar-track-piece {
+//     background: #d3dce6;
+// }
 
-div::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
-}
+// div::-webkit-scrollbar {
+//     width: 6px;
+//     height: 20px;
+// }
 
-div::-webkit-scrollbar {
-    width: 6px;
-    height: 20px;
-}
+// div::-webkit-scrollbar-thumb {
+//     background: $bgColor;
 
-div::-webkit-scrollbar-thumb {
-    background: $bgColor;
+// }
 
-}
+// ul::-webkit-scrollbar-track-piece {
+//     background: #d3dce6;
+// }
 
-ul::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
-}
+// ul::-webkit-scrollbar {
+//     width: 6px;
+//     height: 20px;
+// }
 
-ul::-webkit-scrollbar {
-    width: 6px;
-    height: 20px;
-}
+// ul::-webkit-scrollbar-thumb {
+//     background: $bgColor;
 
-ul::-webkit-scrollbar-thumb {
-    background: $bgColor;
-
-}
+// }
 
 .elPagination {
     margin-top: 10px;

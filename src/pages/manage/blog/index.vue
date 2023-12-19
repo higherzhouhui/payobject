@@ -154,10 +154,10 @@
           <el-form-item :label="$t('cover')">
             <el-upload
               class="upload-demo"
-              action="null"
+                  action="/api/file/upload"
               list-type="text"
               accept="image/*"
-              :before-upload="(e) => handlesuccess(e)"
+              :on-success="(e) => handlesuccess(e)"
             >
               <el-button size="small" type="primary" class="btn">{{
                 blogForm.cover ? $t("ysccxsc") : $t("djsc")
@@ -346,19 +346,8 @@ export default {
         this.loading = false;
       }
     },
-    async handlesuccess(e) {
-      const size = e.size;
-      if (size > 20 * 1024 * 1024) {
-        Message({
-          type: "error",
-          message: this.$t("sizeOver"),
-        });
-        return;
-      }
-      const formData = new FormData();
-      formData.append("file", e);
+    async handlesuccess(req) {
       try {
-        const req = await upload(formData);
         if (req.code === 200) {
           this.blogForm = {
             ...this.blogForm,

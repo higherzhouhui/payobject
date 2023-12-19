@@ -510,10 +510,10 @@
           <div class="upload-item">
             <div class="item-left">
               <el-upload
-                action="null"
-                list-type="text"
+              action="/api/file/upload"
+              list-type="text"
                 accept=".pdf, .zip, .rar, image/*"
-                :before-upload="(e) => handlesuccess(e)"
+                :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
@@ -539,7 +539,7 @@
           <!-- <div class="upload-item">
             <div class="item-left">
               <el-upload
-                action="null"
+                    action="/api/file/upload"
                 list-type="text"
                 accept=".pdf, .zip, .rar, image/*"
                 :before-upload="(e) => handlesuccess(e)"
@@ -604,10 +604,10 @@
           <div class="upload-item">
             <div class="item-left">
               <el-upload
-                action="null"
+                action="/api/file/upload"
                 list-type="text"
                 accept=".pdf, .zip, .rar, image/*"
-                :before-upload="(e) => handlesuccess(e)"
+                :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!currentSelectRow.reqProof"></i>
@@ -632,7 +632,7 @@
           </div>
           <!-- <el-upload
             class="upload-demo"
-            action="null"
+                action="/api/file/upload"
             list-type="text"
             accept=".pdf, .zip, .rar, image/*"
             :before-upload="(e) => handlesuccess(e)"
@@ -827,19 +827,8 @@ export default {
       // this.usdtForm.hkAgreement = res.data.agreement;
       // this.usdtForm.userId = res.data.userId;
     },
-    async handlesuccess(e) {
-      const size = e.size;
-      if (size > 20 * 1024 * 1024) {
-        Message({
-          type: "error",
-          message: this.$t("sizeOver"),
-        });
-        return;
-      }
-      const formData = new FormData();
-      formData.append("file", e);
+    async handlesuccess(req) {
       try {
-        const req = await upload(formData);
         if (req.code === 200) {
           // data.reqProof = req.data[0];
           // data.reqStatus = 2

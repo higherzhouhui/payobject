@@ -24,7 +24,7 @@ export default new Vuex.Store({
     },
     SET_Logout: (state, userInfo) => {
       state.userInfo = userInfo
-      Local('userInfo', userInfo)
+      localStorage.clear()
     },
   },
   actions: {

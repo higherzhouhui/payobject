@@ -94,9 +94,7 @@
           <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
-                <span :class="`flag-icon flag-icon-${scope.row.fromCountry.toLocaleLowerCase()}`"
-                  v-if="scope.row.exFrom != 'USDT'"></span>
-                <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+                <flagIconVue :code="scope.row.exFrom" />
                 {{ scope.row.exFrom }}
               </div>
             </template>
@@ -105,9 +103,7 @@
           <el-table-column prop="exTarget" :label="$t('dhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
-                <span :class="`flag-icon flag-icon-${scope.row.targetCountry.toLocaleLowerCase()}`"
-                  v-if="scope.row.exTarget != 'USDT'"></span>
-                <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+                <flagIconVue :code="scope.row.exTarget" />
                 {{ scope.row.exTarget }}
               </div>
             </template>
@@ -614,12 +610,15 @@ export default {
     },
     async sh2() {
       try {
-        let fromCountry = getFlagIcon(this.bankForm2.exFrom) || "USDT";
-        let targetCountry = getFlagIcon(this.bankForm2.exTarget) || "USDT";
-        fromCountry = fromCountry.replace("flag-icon-", "").toLocaleUpperCase();
-        targetCountry = targetCountry
-          .replace("flag-icon-", "")
-          .toLocaleUpperCase();
+        let fromCountry, targetCountry;
+        this.coinList.forEach(item => {
+          if (item.coinCode == this.bankForm2.exFrom) {
+            fromCountry = item.code
+          }
+          if (item.coinCode == this.bankForm2.exTarget) {
+            targetCountry = item.code
+          }
+        })
         const res = await setExchange({
           ...this.bankForm2,
           fromCountry,

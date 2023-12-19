@@ -304,9 +304,11 @@ html {
         }
     }
 }
+
 .el-table .cell {
-    padding: 0 0 0 2px!important;
+    padding: 0 0 0 2px !important;
 }
+
 .el-table .el-table__header-wrapper,
 .el-table__fixed-right {
     // background-color: $contentColor !important;
@@ -450,7 +452,8 @@ html {
     }
 }
 
-.el-message-box, .el-message {
+.el-message-box,
+.el-message {
     max-width: 90%;
     min-width: 360px;
 }
@@ -468,9 +471,11 @@ html {
 .el-form--label-top .el-form-item__label {
     padding: 0;
 }
+
 .el-form-item__label {
     font-size: 1rem;
 }
+
 .el-upload__tip {
     color: #fff;
     opacity: 0.8;
@@ -540,41 +545,51 @@ html {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         a {
-          text-decoration: none;
-          color: #fff;
+            text-decoration: none;
+            color: #fff;
         }
+
         .list-left,
         .list-right {
-          line-height: 1.8em;
-          color: #fff;
-          word-break: break-all;
-          display: flex;
-          align-items: center;
-          span {
-            color: $baseColor;
-          }
-          .el-icon-folder-checked {
-            font-size: 18px;
-          }
+            line-height: 1.8em;
+            color: #fff;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+
+            span {
+                color: $baseColor;
+            }
+
+            .el-icon-folder-checked {
+                font-size: 18px;
+            }
         }
+
         .list-left::after {
-          content: ":";
+            content: ":";
         }
+
         .list-link::after {
-          content: none;
+            content: none;
         }
+
         .list-link {
-          max-width: 100%!important;
+            max-width: 100% !important;
         }
+
         .list-right {
-          max-width: 80%;
-          padding-left: 10px;
+            max-width: 80%;
+            padding-left: 10px;
         }
+
         .list-left {
-          max-width: 80%;
+            max-width: 80%;
         }
-      }
+    }
+
     .el-form-item__label {
         color: #fff;
     }
@@ -670,60 +685,58 @@ html {
     }
 }
 
-// html::-webkit-scrollbar-track-piece {
-//     background: $bgColor;
-// }
+html::-webkit-scrollbar-track-piece {
+    background: #fff;
+}
 
-// html::-webkit-scrollbar {
-//     width: 6px;
-//     height: 20px;
-// }
+html::-webkit-scrollbar {
+    width: 6px;
+    height: 20px;
+}
 
-// html::-webkit-scrollbar-thumb {
-//     background: #d3dce6;
-// }
+html::-webkit-scrollbar-thumb {
+    background: #afa9a9;
+}
 
-// form::-webkit-scrollbar-track-piece {
-//     background: #d3dce6;
-// }
+form::-webkit-scrollbar-track-piece {
+    background: #fff;
+}
 
-// form::-webkit-scrollbar {
-//     width: 6px;
-//     height: 20px;
-// }
+form::-webkit-scrollbar {
+    width: 6px;
+    height: 20px;
+}
 
-// form::-webkit-scrollbar-thumb {
-//     background: $bgColor;
+form::-webkit-scrollbar-thumb {
+    background: #afa9a9;
+}
 
-// }
+div::-webkit-scrollbar-track-piece {
+    background: #fff;
+}
 
-// div::-webkit-scrollbar-track-piece {
-//     background: #d3dce6;
-// }
+div::-webkit-scrollbar {
+    width: 6px;
+    height: 20px;
+}
 
-// div::-webkit-scrollbar {
-//     width: 6px;
-//     height: 20px;
-// }
+div::-webkit-scrollbar-thumb {
+    background: #afa9a9;
+}
 
-// div::-webkit-scrollbar-thumb {
-//     background: $bgColor;
+ul::-webkit-scrollbar-track-piece {
+    background: #fff;
+}
 
-// }
+ul::-webkit-scrollbar {
+    width: 6px;
+    height: 20px;
+}
 
-// ul::-webkit-scrollbar-track-piece {
-//     background: #d3dce6;
-// }
+ul::-webkit-scrollbar-thumb {
+    background: #afa9a9;
 
-// ul::-webkit-scrollbar {
-//     width: 6px;
-//     height: 20px;
-// }
-
-// ul::-webkit-scrollbar-thumb {
-//     background: $bgColor;
-
-// }
+}
 
 .elPagination {
     margin-top: 10px;
@@ -786,6 +799,7 @@ html {
                 padding: 0;
                 display: flex;
                 position: relative;
+
                 ::v-deep .input-amount .el-input__inner {
                     border: none;
                     height: 3rem;
@@ -817,7 +831,7 @@ html {
                     color: #fff;
                     background: $baseColor;
                     border-radius: 0 4px 4px 0;
-                    
+
                     &::placeholder {
                         color: #fff;
                     }
@@ -1019,62 +1033,72 @@ html {
 .el-radio-button__inner:hover {
     color: $baseColor;
 }
+
 .upload-item {
     display: flex;
     margin-top: 12px;
+
     .load-cover {
-      width: 100px;
-      height: 80px;
-      border-radius: 4px;
-      background: rgb(151, 163, 177);
-      margin-right: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 14px;
-      i {
-        font-size: 32px;
-        color: $bgColor;
-      }
-    }
-    .el-upload__tip {
-      margin-top: 6px;
-      width: 100px;
-      word-break: break-all;
-      text-align: center;
-      opacity: 0.7;
-      line-height: 19px;
-    }
-    .item-right {
-      color: #fff;
-      .sub-title {
-        font-size: 15px;
+        width: 100px;
+        height: 80px;
+        border-radius: 4px;
+        background: rgb(151, 163, 177);
+        margin-right: 20px;
         display: flex;
+        justify-content: center;
         align-items: center;
-        span {
-          color: rgb(223, 28, 51);
-          font-size: 19px;
-          margin: 8px 8px 0 0;
+        font-size: 14px;
+
+        i {
+            font-size: 32px;
+            color: $bgColor;
         }
-      }
-      .desc {
-        font-size: 12px;
-        opacity: 0.9;
-        margin-top: 12px;
-      }
-      .down {
-        padding: 0 12px!important;
-        font-size: 12px;
-        background: $baseColor;
-        color: #fff;
-        text-decoration: none;
-        margin-top: 32px;
-        display: inline-block;
-        height: 24px!important;
-        line-height: 24px;
-      }
     }
-  }
-  #nprogress .bar {
+
+    .el-upload__tip {
+        margin-top: 6px;
+        width: 100px;
+        word-break: break-all;
+        text-align: center;
+        opacity: 0.7;
+        line-height: 19px;
+    }
+
+    .item-right {
+        color: #fff;
+
+        .sub-title {
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+
+            span {
+                color: rgb(223, 28, 51);
+                font-size: 19px;
+                margin: 8px 8px 0 0;
+            }
+        }
+
+        .desc {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 12px;
+        }
+
+        .down {
+            padding: 0 12px !important;
+            font-size: 12px;
+            background: $baseColor;
+            color: #fff;
+            text-decoration: none;
+            margin-top: 32px;
+            display: inline-block;
+            height: 24px !important;
+            line-height: 24px;
+        }
+    }
+}
+
+#nprogress .bar {
     background: $baseColor;
-  }
+}

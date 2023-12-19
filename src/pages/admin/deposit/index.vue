@@ -830,8 +830,6 @@ export default {
     async handlesuccess(req) {
       try {
         if (req.code === 200) {
-          // data.reqProof = req.data[0];
-          // data.reqStatus = 2
           this.currentSelectRow = {
             ...this.currentSelectRow,
             reqProof: req.data[0],
@@ -848,6 +846,8 @@ export default {
             this.dialogVisible = false;
             this.dialogVisibleSuccess = true;
           }
+        } else {
+          this.$message.error(req.msg)
         }
       } catch (error) {
         console.log(error);

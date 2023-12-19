@@ -513,7 +513,8 @@ export default {
     },
     async handlesuccess(req) {
       try {
-        this.bankForm = {
+        if (req.code == 200) {
+          this.bankForm = {
           ...this.bankForm,
           accountCer: req.data[0],
         };
@@ -521,6 +522,10 @@ export default {
           type: "success",
           message: this.$t("czcg"),
         });
+        } else {
+          this.$message.error(req.msg)
+        }
+    
       } catch (error) {}
       return false;
     },

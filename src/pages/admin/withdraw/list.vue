@@ -856,6 +856,8 @@ export default {
             type: "success",
             message: this.$t("sccg"),
           });
+        } else {
+          this.$message.error(req.msg)
         }
       } catch (error) {
         console.log(error);

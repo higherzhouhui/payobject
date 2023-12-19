@@ -1,101 +1,119 @@
 <template>
   <div class="info-container">
     <div class="refer-container">
-      <h1>{{$t("grzl")}}</h1>
-      <div class="label" v-if="userInfo.email">{{$t("email")}}</div>
-      <div class="code" v-if="userInfo.email" @click="copyText2(userInfo.email)">
-        <div class="number">{{userInfo.email}}</div>
-        <img src="@/assets/images/home/copy.png"/>
+      <h1>{{ $t("grzl") }}</h1>
+      <div class="label" v-if="userInfo.email">{{ $t("email") }}</div>
+      <div
+        class="code"
+        v-if="userInfo.email"
+        @click="copyText2(userInfo.email)"
+      >
+        <div class="number">{{ userInfo.email }}</div>
+        <img src="@/assets/images/home/copy.png" />
       </div>
-      <div class="label" v-if="userInfo.phone">{{$t("phone")}}</div>
-      <div class="code" v-if="userInfo.phone" @click="copyText2(userInfo.phone)">
-        <div class="number">{{userInfo.phone}}</div>
-        <img src="@/assets/images/home/copy.png"/>
+      <div class="label" v-if="userInfo.phone">{{ $t("phone") }}</div>
+      <div
+        class="code"
+        v-if="userInfo.phone"
+        @click="copyText2(userInfo.phone)"
+      >
+        <div class="number">{{ userInfo.phone }}</div>
+        <img src="@/assets/images/home/copy.png" />
       </div>
-      <div class="label">{{$t("sjyqm")}}</div>
+      <div class="label">{{ $t("sjyqm") }}</div>
       <div class="code" @click="copyText2(userInfo.inviteCode)">
-        <div class="number">{{userInfo.inviteCode}}</div>
-        <img src="@/assets/images/home/copy.png"/>
+        <div class="number">{{ userInfo.inviteCode }}</div>
+        <img src="@/assets/images/home/copy.png" />
       </div>
-      <div class="label">{{$t("wdyqm")}}</div>
+      <div class="label">{{ $t("wdyqm") }}</div>
       <div class="code" @click="copyText2(userInfo.providerId)">
-        <div class="number">{{userInfo.providerId}}</div>
-        <img src="@/assets/images/home/copy.png"/>
+        <div class="number">{{ userInfo.providerId }}</div>
+        <img src="@/assets/images/home/copy.png" />
       </div>
-      <div class="label">{{$t("zhlx")}}</div>
+      <div class="label">{{ $t("zhlx") }}</div>
       <div class="code">
-        <div class="number">{{userInfo.admin ? $t("gly") : $t("ptyh")}}</div>
+        <div class="number">{{ userInfo.admin ? $t("gly") : $t("ptyh") }}</div>
       </div>
-      <div class="label">{{$t("cjsj")}}</div>
+      <div class="label">{{ $t("cjsj") }}</div>
       <div class="code">
-        <div class="number">{{userInfo.createTime}}</div>
+        <div class="number">{{ userInfo.createTime }}</div>
       </div>
-      <div class="label">{{$t("xgsj")}}</div>
+      <div class="label">{{ $t("xgsj") }}</div>
       <div class="code">
-        <div class="number">{{userInfo.modifiedTime}}</div>
+        <div class="number">{{ userInfo.modifiedTime }}</div>
       </div>
     </div>
     <div class="right">
-      <img src="@/assets/images/user/user-default.png" class="user-img"/>
+      <img src="@/assets/images/user/user-default.png" class="user-img" />
       <div class="list" v-if="userInfo.email">
-        <div class="list-left">{{$t('email')}}</div>
-        <div class="list-right">{{userInfo.email}}</div>
+        <div class="list-left">{{ $t("email") }}</div>
+        <div class="list-right">{{ userInfo.email }}</div>
       </div>
       <div class="list" v-if="userInfo.phone">
-        <div class="list-left">{{$t('phone')}}</div>
-        <div class="list-right">{{userInfo.phone}}</div>
+        <div class="list-left">{{ $t("phone") }}</div>
+        <div class="list-right">{{ userInfo.phone }}</div>
       </div>
       <div class="list">
-        <div class="list-left">{{$t('sjyqm')}}</div>
-        <div class="list-right">{{userInfo.inviteCode}}</div>
+        <div class="list-left">{{ $t("sjyqm") }}</div>
+        <div class="list-right">{{ userInfo.inviteCode }}</div>
       </div>
       <div class="list">
-        <div class="list-left">{{$t('wdyqm')}}</div>
-        <div class="list-right">{{userInfo.providerId}}</div>
+        <div class="list-left">{{ $t("wdyqm") }}</div>
+        <div class="list-right">{{ userInfo.providerId }}</div>
       </div>
       <div class="list">
-        <div class="list-left">{{$t('zhlx')}}</div>
-        <div class="list-right">{{userInfo.admin ? $t("gly") : $t("ptyh")}}</div>
+        <div class="list-left">{{ $t("zhlx") }}</div>
+        <div class="list-right">
+          {{ userInfo.admin ? $t("gly") : $t("ptyh") }}
+        </div>
       </div>
       <div class="list">
-        <div class="list-left">{{$t('cjsj')}}</div>
-        <div class="list-right">{{userInfo.createTime}}</div>
+        <div class="list-left">{{ $t("cjsj") }}</div>
+        <div class="list-right">{{ userInfo.createTime }}</div>
       </div>
       <div class="list">
-        <div class="list-left">{{$t('xgsj')}}</div>
-        <div class="list-right">{{userInfo.modifiedTime}}</div>
+        <div class="list-left">{{ $t("xgsj") }}</div>
+        <div class="list-right">{{ userInfo.modifiedTime }}</div>
       </div>
     </div>
   </div>
- 
 </template>
 
 <script>
 export default {
-  name: 'InfoProfile',
+  name: "InfoProfile",
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
       userInfo: this.$store.state.userInfo,
-    }
+    };
   },
   created() {
-    console.log(this.userInfo)
+    console.log(this.userInfo);
   },
   methods: {
     copyText2(word) {
-      navigator.clipboard.writeText(word)
-      .then(() => {
-        this.$message.success('复制成功')
-      })
-      .catch(() => {
-        this.$message.error('复制失败')
-      })
-    }
-  }
-}
+      let textArea = document.createElement("textarea");
+      textArea.value = word;
+      // 使text area不在viewport，同时设置不可见
+      textArea.style.position = "absolute";
+      textArea.style.opacity = 0;
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise((res, rej) => {
+        // 执行复制命令并移除文本框
+        document.execCommand("copy") ? res() : rej();
+        this.$message.success(this.$t("fzcg"))
+        textArea.remove();
+      });
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -170,7 +188,7 @@ export default {
     border-radius: 4px;
     padding: 8px 4px;
     .list-left::after {
-      content: ':';
+      content: ":";
     }
   }
 }

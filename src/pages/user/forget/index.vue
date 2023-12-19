@@ -88,17 +88,13 @@
           </div>
         </div>
       </el-form-item> -->
-      <div class="flex btn_group">
         <el-button
           class="btn normal-btn"
           type="primary"
+          :class="loading && 'loading'"
           @click="submitForm('form')"
           >{{ $t("sure") }}</el-button
         >
-        <el-button class="btn" @click="to('/user/login')">{{
-          $t("back")
-        }}</el-button>
-      </div>
     </el-form>
   </div>
 </template>
@@ -106,10 +102,8 @@
 import { Local } from "@/utils/index";
 import { forgotPwd, sendCheckCode } from "@/api/login";
 import { Message } from "element-ui";
-import Ecode from "@/components/common/ecode.vue";
 export default {
   name: "userRegister",
-  components: { Ecode },
   data() {
     return {
       imgLoading: true,
@@ -313,9 +307,8 @@ export default {
       top: 24px;
     }
     .btn {
-      margin-top: 16px;
-      padding: 16px 0;
-      width: 26.58%;
+      margin-top: 32px;
+      width: 100%;
     }
 
     .btn_group {

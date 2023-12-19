@@ -873,6 +873,9 @@ export default {
       if (cn) {
         cn = cn.replace("flag-icon-", "").toLocaleUpperCase();
       }
+      if (this.form.exFrom == 'USDT') {
+        cn = 'USDT'
+      }
       try {
         let res = await getTargetCoin({ source: cn });
         const arr = res.data.filter((obj, index, self) => {

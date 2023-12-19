@@ -3,7 +3,7 @@
     <el-form-item :label="$t('验证方式')">
       <el-radio v-model="form.pwdType" label="payPass">支付密码</el-radio>
       <el-radio class="radio" v-model="form.pwdType" label="verCode"
-        >手机或邮箱验证码</el-radio
+        >电子邮箱验证码</el-radio
       >
     </el-form-item>
     <el-form-item :label="$t('支付密码')" v-if="form.pwdType == 'payPass'">
@@ -11,7 +11,10 @@
         v-model="form.payPass"
         show-password
         :placeholder="$t('请输入支付密码')"
-      ></el-input>
+        class="form-wrapper"
+      >
+      <el-button slot="append" class="send" @click="to('/admin/paypass')">{{ $store.state.userInfo.hasPayPass ? $t("忘记支付密码？") : $t("去设置") }}</el-button>
+    </el-input>
     </el-form-item>
     <el-form-item
       :label="$t('验证码')"
@@ -92,6 +95,9 @@ export default {
     }
   },
   methods: {
+    to(path) {
+      this.$router.push(path)
+    }, 
     async sendSms() {
       try {
         this.loading = true;

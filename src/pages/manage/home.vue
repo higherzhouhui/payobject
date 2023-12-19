@@ -355,7 +355,7 @@ export default {
     async getExchangeData() {
       try {
         this.cryptwithdrawLoading = true;
-        let req = await changeDetails({ current: 1, size: 5, status: 0 });
+        let req = await changeDetails({ current: 1, size: 5, changeStatus: 0 });
         this.exchangeData = req.data.records;
         this.exchangeTotal = req.data.total;
         this.exchangeLoading = false;

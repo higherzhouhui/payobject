@@ -487,7 +487,7 @@ export default {
     }
 
     .btn {
-      margin-top: 16px;
+      margin-top: 32px;
       padding: 16px 0;
       width: 100%;
     }

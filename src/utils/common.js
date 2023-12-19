@@ -43,13 +43,13 @@ export const getFlagIcon = (coinCode) => {
       let list = Local("areaList");
       if (list && list.length) {
          getName(list)
-         return icon
+         return `${icon}(${code})`
       }
       countries().then(res => {
         list = res.data;
         Local("areaList", res.data);
         getName(list)
-        return icon
+        return `${icon}(${code})`
       });
     } catch (error) {
         console.log(error)

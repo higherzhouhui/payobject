@@ -32,7 +32,7 @@ export const cmsPageReq = (data) => service({
 export const cmsRecommend = (data) => service({
   url: '/cmsRecommend',
   data,
-  method: 'post'
+  method: 'get'
 })
 
 export const cmsSaveReq = (data) => service({

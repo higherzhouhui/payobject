@@ -33,7 +33,7 @@
         </el-form-item>
         <el-form-item :label="$t('kzt')">
           <el-select
-            v-model="searchForm.status"
+            v-model="searchForm.changeStatus"
             :placeholder="$t('kzt')"
             clearable
           >

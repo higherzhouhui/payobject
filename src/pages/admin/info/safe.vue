@@ -44,7 +44,7 @@
         <div class="item-title">
           {{$t('支付密码')}}
         </div>
-        <div class="normal-btn" @click="routerTo('/admin/paypass')">{{$t('xg')}}</div>
+        <div class="normal-btn" @click="routerTo('/admin/paypass')">{{$store.state.userInfo.hasPayPass ? $t('xg') : $t('sz')}}</div>
       </div>
       <div class="desc">{{$t('添加提款账号、提款付款等操作时，需要输入支付密码进行二重验证以保证资金安全')}}</div>
     </div>

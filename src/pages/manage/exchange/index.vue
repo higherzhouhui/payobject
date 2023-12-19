@@ -114,7 +114,10 @@
               >
                 {{ $t("xq") }}
               </div> -->
-              <div class="operation-btn edit-btn" @click.stop="toDetail(scope.row)">
+              <div
+                class="operation-btn edit-btn"
+                @click.stop="toDetail(scope.row)"
+              >
                 {{ $t("xg") }}
               </div>
               <div
@@ -204,24 +207,24 @@
             fixed="right"
           >
             <template slot-scope="scope">
-                <!-- <div
+              <!-- <div
                 class="operation-btn"
                 @click="handleShowDetail(scope.row, 'detail')"
               >
                 {{ $t("xq") }}
               </div> -->
-                <div
-                  class="operation-btn edit-btn"
-                  @click.stop="toDetail2(scope.row)"
-                >
-                  {{ $t("xg") }}
-                </div>
-                <div
-                  class="operation-btn reject-btn"
-                  @click.stop="handleShowDetail(scope.row, 'del')"
-                >
-                  {{ $t("del") }}
-                </div>
+              <div
+                class="operation-btn edit-btn"
+                @click.stop="toDetail2(scope.row)"
+              >
+                {{ $t("xg") }}
+              </div>
+              <div
+                class="operation-btn reject-btn"
+                @click.stop="handleShowDetail(scope.row, 'del')"
+              >
+                {{ $t("del") }}
+              </div>
             </template>
           </el-table-column>
           <div slot="empty">
@@ -316,12 +319,21 @@
               :value="item.coinCode"
               :label="item.coinCode"
             >
-              <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
-              {{ lang == "zh" ? item.name : item.enName }}
+            <div class="el-option">
+              <div class="left">
+                <span
+                  :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                  v-if="item.coinCode != 'USDT'"
+                ></span>
+                <img
+                  src="@/assets/images/usdt.png"
+                  v-else
+                  class="usdt-inner"
+                />
+                {{ lang == "zh" ? item.name : item.enName }}
+              </div>
+              <div class="right">{{ item.coinCode }}</div>
+            </div>
             </el-option>
           </el-select>
         </el-form-item>
@@ -342,14 +354,23 @@
               v-for="item in areaList"
               :key="item.value"
               :value="item.areaCode"
-              :label="lang == 'zh' ? item.name : item.enName"
+              :label="item.areaCode"
             >
-              <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
-              {{ lang == "zh" ? item.name : item.enName }}
+            <div class="el-option">
+              <div class="left">
+                <span
+                  :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                  v-if="item.coinCode != 'USDT'"
+                ></span>
+                <img
+                  src="@/assets/images/usdt.png"
+                  v-else
+                  class="usdt-inner"
+                />
+                {{ lang == "zh" ? item.name : item.enName }}
+              </div>
+              <div class="right">{{ item.areaCode }}</div>
+            </div>
             </el-option>
           </el-select>
         </el-form-item>
@@ -357,6 +378,7 @@
           <el-input
             v-model="bankForm.accountAdd"
             type="textarea"
+            :rows="5"
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
@@ -394,14 +416,23 @@
               v-for="item in areaList"
               :key="item.value"
               :value="item.areaCode"
-              :label="lang == 'zh' ? item.name : item.enName"
+              :label="item.areaCode"
             >
-              <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
-              {{ lang == "zh" ? item.name : item.enName }}
+            <div class="el-option">
+              <div class="left">
+                <span
+                  :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                  v-if="item.coinCode != 'USDT'"
+                ></span>
+                <img
+                  src="@/assets/images/usdt.png"
+                  v-else
+                  class="usdt-inner"
+                />
+                {{ lang == "zh" ? item.name : item.enName }}
+              </div>
+              <div class="right">{{ item.areaCode }}</div>
+            </div>
             </el-option>
           </el-select>
         </el-form-item>
@@ -409,6 +440,7 @@
           <el-input
             v-model="bankForm.bankAdd"
             type="textarea"
+            :rows="5"
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
@@ -503,13 +535,23 @@
               v-for="item in getAllCoin()"
               :key="item.id"
               :value="item.coinCode"
+              :label="item.coinCode"
             >
-              <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
-              {{ lang == "zh" ? item.name : item.enName }}
+              <div class="el-option">
+                <div class="left">
+                  <span
+                    :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                    v-if="item.coinCode != 'USDT'"
+                  ></span>
+                  <img
+                    src="@/assets/images/usdt.png"
+                    v-else
+                    class="usdt-inner"
+                  />
+                  {{ lang == "zh" ? item.name : item.enName }}
+                </div>
+                <div class="right">{{ item.coinCode }}</div>
+              </div>
             </el-option>
           </el-select>
         </el-form-item>
@@ -525,13 +567,23 @@
               v-for="item in targetCoinList"
               :key="item.id"
               :value="item.coinCode"
+              :label="item.coinCode"
             >
-              <span
-                :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
-              {{ lang == "zh" ? item.name : item.enName }}
+              <div class="el-option">
+                <div class="left">
+                  <span
+                    :class="`flag-icon ${getFlagIcon(item.coinCode)}`"
+                    v-if="item.coinCode != 'USDT'"
+                  ></span>
+                  <img
+                    src="@/assets/images/usdt.png"
+                    v-else
+                    class="usdt-inner"
+                  />
+                  {{ lang == "zh" ? item.name : item.enName }}
+                </div>
+                <div class="right">{{ item.coinCode }}</div>
+              </div>
             </el-option>
           </el-select>
         </el-form-item>
@@ -672,7 +724,7 @@ export default {
     handleShowDetail(row, type) {
       this.currentSelectRow = row;
       this.detailVisible = true;
-      this.operationType = type
+      this.operationType = type;
       if (this.type == "first") {
         this.detailList = [
           { label: this.$t("bz"), value: row.coinCode },
@@ -694,7 +746,7 @@ export default {
         ];
       } else {
         this.detailList = [
-          { label: this.$t("bdhbz"), value: row.exFrom }, 
+          { label: this.$t("bdhbz"), value: row.exFrom },
           { label: this.$t("bdhgj"), value: getCountryName(row.fromCountry) },
           { label: this.$t("dhbz"), value: row.exTarget },
           { label: this.$t("dhgj"), value: getCountryName(row.targetCountry) },
@@ -766,9 +818,9 @@ export default {
       //   });
       // }
       const all = this.getNewareaList(this.areaList);
-        this.targetCoinList = all.filter((item) => {
-          return item.coinCode !== this.bankForm2.exFrom;
-        });
+      this.targetCoinList = all.filter((item) => {
+        return item.coinCode !== this.bankForm2.exFrom;
+      });
       if (this.bankForm2.exTarget) {
         this.bankForm2.exTarget = "";
       }
@@ -824,8 +876,8 @@ export default {
     },
     async sh2() {
       try {
-        let fromCountry = getFlagIcon(this.bankForm2.exFrom);
-        let targetCountry = getFlagIcon(this.bankForm2.exTarget);
+        let fromCountry = getFlagIcon(this.bankForm2.exFrom) || "USDT";
+        let targetCountry = getFlagIcon(this.bankForm2.exTarget) || "USDT";
         fromCountry = fromCountry.replace("flag-icon-", "").toLocaleUpperCase();
         targetCountry = targetCountry
           .replace("flag-icon-", "")
@@ -863,6 +915,10 @@ export default {
     toDetail2(data) {
       this.dialogVisible2 = true;
       this.$set(this, "bankForm2", data);
+      const all = this.getNewareaList(this.areaList);
+      this.targetCoinList = all.filter((item) => {
+        return item.coinCode !== data.exFrom;
+      });
     },
     async getlist() {
       try {
@@ -938,5 +994,18 @@ export default {
 }
 .btn {
   padding: 4px 8px;
+}
+.el-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .left {
+    display: flex;
+    align-items: center;
+  }
+  .right {
+    color: $baseColor;
+    font-weight: bold;
+  }
 }
 </style>

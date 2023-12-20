@@ -115,7 +115,7 @@
               class="upload-demo"
               action="/api/file/upload"
               list-type="text"
-              accept=".pdf, .zip, .rar, image/*"
+              accept=".pdf, image/*"
               :on-success="(res) => handlesuccess(res, scope.row)"
               v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
             >
@@ -612,7 +612,6 @@
   </div>
 </template>
 <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import {
   depositList,
   cryptDepositList,
@@ -623,7 +622,6 @@ import {
   perDeposit,
   perCryptDeposit,
 } from "@/api/out.js";
-import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank";
 import { getHashParams } from "@/utils/index";
@@ -631,7 +629,6 @@ import { getCountryName, pjDownUrl } from "@/utils/common";
 
 export default {
   name: "userMoneyManagementTransfer",
-  components: { LinkPath },
   data() {
     return {
       rejectdialogVisible: false,

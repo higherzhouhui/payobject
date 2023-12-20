@@ -161,6 +161,7 @@
     "ysccxsc": "已上传（点击重新上传）",
     "djsc": "点击上传",
     "scts": "支持PDF或压缩文件(zip,rar),20M以内",
+    "uploaddes": "支持PDF或图片,20M以内",
     "qymc": "企业名称",
     "qsrqymc": "请输入企业名称",
     "qyywmc": "企业英文名称",
@@ -434,5 +435,12 @@
     "tid": "交易ID",
     "sz": "设置",
     "fzcg": "复制成功",
-    "qxzskqbdz": "请选择收款钱包地址"
+    "qxzskqbdz": "请选择收款钱包地址",
+    "limitdeposit": "充值最小金额不小于10",
+    "limitduihuan": "兑换最小金额不小于10",
+    "limitwithdraw": "提款最小金额不小于10",
+    "qscdkpz": "请上传汇款凭证",
+    "hksdjt": "转账水单截图或者PDF上传",
+    "hksdjtdes": "如关闭本页面，可在充值申请列表中补充汇款凭证完成本次申请",
+    "tuihui": "退回"
 }

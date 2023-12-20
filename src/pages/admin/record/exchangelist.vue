@@ -67,7 +67,7 @@
         <el-table-column prop="billType" :label="$t('lx')" min-width="100">
           <template slot-scope="scope">
             <el-tag class="elTag" :type="typeStyle[scope.row.billType]">
-              {{ typeOption[scope.row.billType] }}
+              {{ scope.row.billBack ? $t('tuihui') : typeOption[scope.row.billType] }}
             </el-tag>
           </template>
         </el-table-column>

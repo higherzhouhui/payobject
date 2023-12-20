@@ -155,7 +155,31 @@
         ref="formss"
         :model="bankForm"
         class="formStyle"
+        :class="loading && 'loading'"
       >
+      <el-form-item :label="$t('bz')">
+        <el-select
+          style="width: 100%"
+          v-model="bankForm.bindCoins"
+          multiple
+          filterable
+        >
+          <el-option
+            style="padding: 0 10px"
+            v-for="item in coinList"
+            :key="item"
+            :value="item"
+            :label="item"
+          >
+          <div class="el-option">
+            <div class="left">
+              <flagIconVue :code="item" />
+              {{ item }}
+            </div>
+          </div>
+          </el-option>
+        </el-select>
+      </el-form-item>
         <el-form-item :label="$t('zhmc')">
           <el-input v-model="bankForm.accountName" :placeholder="$t('qsr')"></el-input>
         </el-form-item>
@@ -322,7 +346,9 @@
         }
       "
     >
-      <div class="formStyle">
+      <div class="formStyle"
+      :class="loading && 'loading'"
+      >
         <div
           class="list"
           v-for="(item, index) in detailList.filter((item) => {
@@ -366,16 +392,17 @@
   </div>
 </template>
 <script>
-import { getBankListPage, subBank, bankDel } from "@/api/bank";
-import { countries } from "@/api/login";
+import { getBankListPage, subBank, bankDel, getBank } from "@/api/bank";
+import { countries, getSupCoinList } from "@/api/login";
 import { Message } from "element-ui";
 import { getHashParams, Local } from "@/utils/index";
 import { getCountryName, getFlagIcon, pjDownUrl } from "@/utils/common";
 import passwordVue from "@/components/common/password.vue"
+import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
   name: "exchangeList",
-  components: {passwordVue},
+  components: {passwordVue, flagIconVue},
   data() {
     return {
       detailVisible: false,
@@ -442,17 +469,23 @@ export default {
         accountCer: null,
       },
       areaList: [],
+      coinList: [],
     };
   },
   created() {
     this.getlist();
     this.getAreaCode();
+    this.getAllcoinList();
     const params = getHashParams();
     if (params.get("type") == "add") {
       this.showAdd();
     }
   },
   methods: {
+    async getAllcoinList() {
+      const res = await getSupCoinList()
+      this.coinList = res.data
+    },
     handleSizeChange(val) {
       this.size = val;
       this.getInitData();
@@ -465,11 +498,17 @@ export default {
       this.current = 1;
       this.getInitData();
     },
-    handleShowDetail(row, type) {
+    async handleShowDetail(row, type) {
       this.currentSelectRow = row;
       this.detailVisible = true;
       this.operationType = type;
+      this.detailList = []
+      this.loading = true
+      const res = await getBank({bankId: row.id})
+      const data= res.data || {}
+      this.loading = false
       this.detailList = [
+        { label: this.$t("bz"), value: data.bindCoins },
         { label: this.$t("zhmc"), value: row.accountName },
         { label: this.$t("jzdz"), value: row.accountAdd },
         { label: this.$t("ssgj"), value: getCountryName(row.country) },
@@ -501,10 +540,15 @@ export default {
         Local("areaList", res.data);
       } catch (error) {}
     },
-    toDetail(data) {
+    async toDetail(data) {
       this.dialogVisible = true;
-      this.$set(this, "bankForm", data);
-      //   this.bankForm = dat ;
+      this.loading = true
+      const res = await getBank({bankId: data.id})
+      this.loading = false
+      this.bankForm = {
+        ...data,
+        bindCoins: res.data.bindCoins
+      }
     },
     showAdd() {
       this.dialogVisible = true;
@@ -606,12 +650,26 @@ export default {
     }
   }
 }
-
 .deleteColor {
   color: red;
 }
 
 .btn {
   padding: 4px 10px;
+}
+.el-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
+
+  .right {
+    color: $baseColor;
+    font-weight: bold;
+  }
 }
 </style>

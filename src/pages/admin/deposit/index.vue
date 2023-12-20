@@ -4,7 +4,7 @@
     <!-- <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" /> -->
     <div class="money-wrapper">
       <div class="money-left">
-        <div class="admin-title">{{$t('chongzhi')}}</div>
+        <div class="admin-title">{{ $store.state.title }}</div>
         <div class="form-item">
           <div class="label">{{ $t("hblx") }}</div>
           <div class="input-with-select">
@@ -19,29 +19,6 @@
           </div>
         </div>
         <div class="form-item" v-if="moneyType == 'fabi'">
-          <div class="label">{{ $t("hkzh") }}</div>
-          <div class="input-with-select">
-            <el-select
-              class="input-transaction"
-              v-model="form.sendBank"
-              :placeholder="$t('qszhkzh')"
-              @change="changehkAccount"
-            >
-              <el-option
-                v-for="item in outZHList"
-                :key="item.id"
-                :label="item.bankName"
-                :value="item.id.toString()"
-              >
-              <div class="el-option">
-                <span class="left">{{ item.bankName }}</span>
-                <span class="right">{{ item.bankCode }}</span>
-              </div>
-              </el-option>
-            </el-select>
-          </div>
-        </div>
-        <div class="form-item" v-if="moneyType == 'fabi'">
           <div class="label">{{ $t("czje") }}</div>
           <div class="input-with-select">
             <el-input
@@ -52,7 +29,11 @@
               :disabled="!form.coinCode"
             >
             </el-input>
-            <el-select v-model="form.coinCode" class="input-select">
+            <el-select
+              v-model="form.coinCode"
+              class="input-select"
+              @change="getCjZh"
+            >
               <el-option
                 v-for="item in inCoinList"
                 :label="item.coinCode"
@@ -90,9 +71,41 @@
             </el-select>
           </div>
         </div>
-        <ul class="list">
-          <li>{{ $t("limitNum") }}{{moneyType == 'fabi' ? form.coinCode : usdtForm.coinCode}}</li>
+        <ul
+          class="list"
+          v-if="
+            (moneyType == 'fabi' && form.coinCode) ||
+            (moneyType == 'usdt' && usdtForm.coinCode)
+          "
+        >
+          <li>
+            {{ $t("limitdeposit")
+            }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.coinCode }}
+          </li>
         </ul>
+        <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
+          <div class="label">{{ $t("hkzh") }}</div>
+          <div class="input-with-select">
+            <el-select
+              class="input-transaction"
+              v-model="form.sendBank"
+              :placeholder="$t('qszhkzh')"
+              @change="changehkAccount"
+            >
+              <el-option
+                v-for="item in outZHList"
+                :key="item.id"
+                :label="item.bankName"
+                :value="item.id.toString()"
+              >
+                <div class="el-option">
+                  <span class="left">{{ item.bankName }}</span>
+                  <span class="right">{{ item.bankCode }}</span>
+                </div>
+              </el-option>
+            </el-select>
+          </div>
+        </div>
         <div class="form-item" v-if="moneyType == 'usdt' && usdtForm.coinCode">
           <div class="label">{{ $t("skqbdz") }}</div>
           <div class="input-with-select">
@@ -110,8 +123,8 @@
                 :value="item.cryAdd"
               >
                 <div class="el-option">
-                  <div class="left">{{item.cryAdd}}</div>
-                  <div class="right">{{item.agreement}}</div>
+                  <div class="left">{{ item.cryAdd }}</div>
+                  <div class="right">{{ item.agreement }}</div>
                 </div>
               </el-option>
             </el-select>
@@ -152,8 +165,8 @@
                 :value="item.cryAdd"
               >
                 <div class="el-option">
-                  <div class="left">{{item.cryAdd}}</div>
-                  <div class="right">{{item.agreement}}</div>
+                  <div class="left">{{ item.cryAdd }}</div>
+                  <div class="right">{{ item.agreement }}</div>
                 </div>
               </el-option>
             </el-select>
@@ -184,24 +197,44 @@
             }}<span class="unit">{{ form.coinCode }}</span>
           </div>
         </div>
-        <div class="divider" v-if="form.sendBank" />
-        <div class="column" v-if="form.sendBank">
-          <div class="column-left">
-            {{ $t("hkzhao") }}
+        <template v-if="form.coinCode">
+          <div class="divider" />
+          <div class="column">
+            <div class="column-left">
+              {{ $t("skzhmc") }}
+            </div>
+            <div class="column-right">
+              {{ getBankInfo(form.coinCode, "accountName") }}
+            </div>
           </div>
-          <div class="column-right">
-            {{ getBankInfo(form.sendBank, "bankCode") }}
+          <div class="divider" />
+          <div class="column">
+            <div class="column-left">
+              {{ $t("bankname") }}
+            </div>
+            <div class="column-right">
+              {{ getBankInfo(form.coinCode, "bankName") }}
+            </div>
           </div>
-        </div>
-        <div class="divider" v-if="form.sendBank" />
-        <div class="column" v-if="form.sendBank">
-          <div class="column-left">
-            {{ $t("zhmc") }}
+          <div class="divider" />
+          <div class="column">
+            <div class="column-left">
+              {{ $t("bankcount") }}
+            </div>
+            <div class="column-right">
+              {{ getBankInfo(form.coinCode, "bankCode") }}
+            </div>
           </div>
-          <div class="column-right">
-            {{ getBankInfo(form.sendBank, "accountName") }}
+          <div class="divider" />
+          <div class="column">
+            <div class="column-left">
+              {{ $t("khdz") }}
+            </div>
+            <div class="column-right">
+              {{ getBankInfo(form.coinCode, "bankAdd") }}
+            </div>
           </div>
-        </div>
+        </template>
         <div class="divider" />
         <div class="column">
           <div class="column-left">
@@ -229,7 +262,8 @@
             {{ $t("czje") }}
           </div>
           <div class="column-right">
-            {{ usdtForm.reqValue || 0 }}<span class="unit">{{ usdtForm.coinCode }}</span>
+            {{ usdtForm.reqValue || 0
+            }}<span class="unit">{{ usdtForm.coinCode }}</span>
           </div>
         </div>
         <div class="divider" v-if="usdtForm.cryptAdd" />
@@ -404,9 +438,9 @@
       </div>
     </div> -->
     <el-dialog
-      :title="$t('xq')"
+      :title="$t('qscdkpz')"
       :visible.sync="dialogVisible"
-      :width="moneyType === 'fabi' ? '1000px' : '600px'"
+      width="636px"
       :before-close="
         () => {
           dialogVisible = false;
@@ -417,10 +451,9 @@
         label-position="top"
         ref="formss"
         :model="currentSelectRow"
-        class="formStyle moreDetail"
-        v-if="moneyType == 'fabi'"
+        class="formStyle"
       >
-        <el-form-item :label="$t('bz')">
+        <!-- <el-form-item :label="$t('bz')">
           <el-input
             v-model="currentSelectRow.coinCode"
             :readOnly="true"
@@ -505,28 +538,28 @@
             v-model="currentSelectRow.outswiftCode"
             :readOnly="true"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="$t('hkpz')">
           <div class="upload-item">
             <div class="item-left">
               <el-upload
-              action="/api/file/upload"
-              list-type="text"
-                accept=".pdf, .zip, .rar, image/*"
-                :on-success="(e) => handlesuccess(e)"
+                action="/api/file/upload"
+                list-type="text"
+                accept=".pdf, image/*"
+                :on-success="(e) => handlesuccess(e)" 
               >
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
                   <i class="el-icon-folder-checked" v-else></i>
                 </div>
                 <div slot="tip" class="el-upload__tip">
-                  {{ $t("scts") }}
+                  {{ $t("uploaddes") }}
                 </div>
               </el-upload>
             </div>
             <div class="item-right">
-              <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
-              <div class="desc">{{ $t("hkzmdes") }}</div>
+              <div class="sub-title"><span>*</span>{{ $t("hksdjt") }}</div>
+              <div class="desc" style="color: #ff4d39">{{ $t("hksdjtdes") }}</div>
               <a
                 :href="'/api/file/downLoad?url=' + form.reqProof"
                 target="_blank"
@@ -536,38 +569,9 @@
               >
             </div>
           </div>
-          <!-- <div class="upload-item">
-            <div class="item-left">
-              <el-upload
-                    action="/api/file/upload"
-                list-type="text"
-                accept=".pdf, .zip, .rar, image/*"
-                :before-upload="(e) => handlesuccess(e)"
-              >
-                <div class="load-cover">
-                  <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
-                  <i class="el-icon-folder-checked" v-else></i>
-                </div>
-                <div slot="tip" class="el-upload__tip">
-                  {{ $t("scts") }}
-                </div>
-              </el-upload>
-            </div>
-            <div class="item-right">
-              <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
-              <div class="desc">{{ $t("hkzmdes") }}</div>
-              <a
-                :href="'/api/file/downLoad?url=' + form.reqProof"
-                target="_blank"
-                class="down"
-                v-if="form.reqProof"
-                >{{ $t("download") }}</a
-              >
-            </div> 
-          </div> -->
         </el-form-item>
       </el-form>
-      <el-form
+      <!-- <el-form
         label-position="top"
         ref="formss"
         :model="currentSelectRow"
@@ -610,7 +614,10 @@
                 :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
-                  <i class="el-icon-folder-add" v-if="!currentSelectRow.reqProof"></i>
+                  <i
+                    class="el-icon-folder-add"
+                    v-if="!currentSelectRow.reqProof"
+                  ></i>
                   <i class="el-icon-folder-checked" v-else></i>
                 </div>
                 <div slot="tip" class="el-upload__tip">
@@ -630,37 +637,14 @@
               >
             </div>
           </div>
-          <!-- <el-upload
-            class="upload-demo"
-                action="/api/file/upload"
-            list-type="text"
-            accept=".pdf, .zip, .rar, image/*"
-            :before-upload="(e) => handlesuccess(e)"
-            v-if="
-              currentSelectRow.reqStatus == 1 || !currentSelectRow.reqStatus
-            "
-          >
-            <el-button size="small" type="primary" class="normal-btn">
-              {{ $t("schkpz") }}
-            </el-button>
-          </el-upload>
-          <el-button
-            style="padding: 4px 20px"
-            size="small"
-            type="primary"
-            class="normal-btn"
-            v-else
-            ><a
-              :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
-              target="_blank"
-              >{{ $t("yulan") }}</a
-            ></el-button
-          > -->
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
-        <el-button type="primary" class="qd" @click="dialogVisible = false">
-          {{ $t("done") }}
+        <el-button class="qx" @click="dialogVisible = false">
+          {{ $t("cancel") }}
+        </el-button>
+        <el-button class="qd" :class="loading && 'loading'" @click="confirmPz">
+          {{ $t("sure") }}
         </el-button>
       </div>
     </el-dialog>
@@ -693,17 +677,15 @@
   <script>
 import LinkPath from "@/components/common/linkPath.vue";
 import {
-  withdrawAccounts,
+  coinBanks,
   depCoins,
   withdrawCoins,
   balanceList,
   putWithdraw,
-  calculateRate,
   putDeposit,
   putCryptDeposit,
 } from "@/api/out";
 import { getCryAdd } from "@/api/exchange";
-import { upload } from "@/api/file";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
@@ -754,7 +736,6 @@ export default {
     };
   },
   created() {
-    this.getCjZh();
     this.getBalanceList();
     // this.getCJBZ();
     this.getRJBZ();
@@ -768,28 +749,28 @@ export default {
   },
   methods: {
     changeskAddress(value) {
-      const list = this.skqbList.filter(item => {
-        return item.cryAdd == value
-      })
-      this.usdtForm.agreement = list[0].agreement
+      const list = this.skqbList.filter((item) => {
+        return item.cryAdd == value;
+      });
+      this.usdtForm.agreement = list[0].agreement;
     },
     changeAgreement(value) {
-      const list = this.skqbList.filter(item => {
-        return item.agreement == value
-      })
-      this.usdtForm.cryptAdd = list[0].cryAdd
+      const list = this.skqbList.filter((item) => {
+        return item.agreement == value;
+      });
+      this.usdtForm.cryptAdd = list[0].cryAdd;
     },
     async getAddressList() {
       try {
-        const res = await outCryAccPage({current: 1, size: 50})
-        const list = res.data.records
+        const res = await outCryAccPage({ current: 1, size: 50 });
+        const list = res.data.records;
         list.push({
-          id: 'add',
-          cryAdd: this.$t('add')
-        })
-        this.hkAddressList = list
+          id: "add",
+          cryAdd: this.$t("add"),
+        });
+        this.hkAddressList = list;
       } catch {
-        console.log('error')
+        console.log("error");
       }
     },
     changehkAccount(id) {
@@ -798,13 +779,13 @@ export default {
       }
     },
     changehkAddress(id) {
-      if (id == this.$t('add')) {
+      if (id == this.$t("add")) {
         this.$router.push("/admin/address/list?type=add");
       } else {
-        const list = this.hkAddressList.filter(item => {
-          return item.cryAdd == id
-        })
-        this.usdtForm.agreement = list[0].agreement
+        const list = this.hkAddressList.filter((item) => {
+          return item.cryAdd == id;
+        });
+        this.usdtForm.agreement = list[0].agreement;
       }
     },
     async getSzList() {
@@ -820,7 +801,7 @@ export default {
     },
     async getUsdtAddress() {
       const res = await getCryAdd({ cryCode: this.usdtForm.coinCode });
-      this.skqbList = res.data
+      this.skqbList = res.data;
       this.$refs.changeAgreementRef.toggleMenu();
 
       // this.usdtForm.cryptAdd = res.data.cryAdd;
@@ -835,93 +816,119 @@ export default {
             reqProof: req.data[0],
             reqStatus: 2,
           };
-          let res;
-          if (this.moneyType == "fabi") {
-            res = await putDeposit(this.currentSelectRow);
-          }
-          if (this.moneyType == "usdt") {
-            res = await putCryptDeposit(this.currentSelectRow);
-          }
-          if (res.code === 200) {
-            this.dialogVisible = false;
-            this.dialogVisibleSuccess = true;
-          }
         } else {
-          this.$message.error(req.msg)
+          this.$message.error(req.msg);
         }
       } catch (error) {
         console.log(error);
       }
       return false;
     },
-    async handleUsdtPutDeposit() {
-      if (
-        !this.usdtForm.coinCode ||
-        !this.usdtForm.reqValue ||
-        !this.usdtForm.tid
-      ) {
-        Message({
-          type: "warning",
-          message: this.$t("qwsxx"),
-        });
-        return;
+    async confirmPz() {
+      if (this.loading) {
+        return
       }
-
-      this.loading = true;
-      const res = await putCryptDeposit({ ...this.usdtForm });
-      this.loading = false;
-      if (res.code === 200) {
-        this.currentSelectRow = {
-          id: res.data.id,
-          ...this.usdtForm,
-        };
-        this.dialogVisible = true;
+      try {
+          let res;
+          this.loading = true
+          if (this.moneyType == "fabi") {
+            res = await putDeposit(this.currentSelectRow);
+          }
+          if (this.moneyType == "usdt") {
+            res = await putCryptDeposit(this.currentSelectRow);
+          }
+          this.loading = false
+          if (res.code === 200) {
+            this.dialogVisible = false;
+          }
+      } catch (error) {
+        console.error(error)
+        this.loading = false
       }
     },
-    async handlePutDeposit() {
-      if (!this.form.coinCode || !this.form.reqValue || !this.form.sendBank) {
-        Message({
-          type: "warning",
-          message: this.$t("qwsxx"),
-        });
-        return;
-      }
-      this.inCoinList.forEach((item) => {
-        if (item.coinCode == this.form.coinCode) {
-          this.form.bankId = item.bankId;
+    async handleUsdtPutDeposit() {
+      try {
+        if (
+          !this.usdtForm.coinCode ||
+          !this.usdtForm.reqValue ||
+          !this.usdtForm.tid
+        ) {
+          Message({
+            type: "warning",
+            message: this.$t("qwsxx"),
+          });
+          return;
         }
-      });
-      this.loading = true;
-      const res = await putDeposit({ ...this.form });
-      this.loading = false;
-      if (res.code === 200) {
-        const inlist = this.inCoinList.filter((item) => {
-          return item.coinCode == this.form.coinCode;
+
+        this.loading = true;
+        const res = await putCryptDeposit({
+          ...this.usdtForm,
+          reqValue: this.usdtForm.reqValue * 1,
         });
-        const outlist = this.outZHList.filter((item) => {
-          return item.id == this.form.sendBank;
-        });
-        if (inlist.length && outlist.length) {
+        this.loading = false;
+        if (res.code === 200) {
           this.currentSelectRow = {
-            ...this.form,
             id: res.data.id,
-            accountName: inlist[0].bank.bankName,
-            inbankAccount: inlist[0].bank.bankAccount,
-            inbankCode: inlist[0].bank.bankCode,
-            inbankCountry: inlist[0].bank.bankCountry,
-            inbankAdd: inlist[0].bank.bankAdd,
-            inswiftCode: inlist[0].bank.swiftCode,
-            sendAccount: outlist[0].bankName,
-            outbankAccount: outlist[0].bankAccount,
-            outbankCode: outlist[0].bankCode,
-            outbankCountry: outlist[0].bankCountry,
-            outbankAdd: outlist[0].bankAdd,
-            outswiftCode: outlist[0].swiftCode,
+            ...this.usdtForm,
           };
           this.dialogVisible = true;
         }
+      } catch (error) {
+        console.error(error);
+        this.loading = false;
       }
-      console.log(res);
+    },
+    async handlePutDeposit() {
+      try {
+        if (!this.form.coinCode || !this.form.reqValue || !this.form.sendBank) {
+          Message({
+            type: "warning",
+            message: this.$t("qwsxx"),
+          });
+          return;
+        }
+        this.inCoinList.forEach((item) => {
+          if (item.coinCode == this.form.coinCode) {
+            this.form.bankId = item.bankId;
+          }
+        });
+        this.loading = true;
+        const res = await putDeposit({
+          ...this.form,
+          reqValue: this.form.reqValue * 1,
+        });
+        this.loading = false;
+        if (res.code === 200) {
+          const inlist = this.inCoinList.filter((item) => {
+            return item.coinCode == this.form.coinCode;
+          });
+          const outlist = this.outZHList.filter((item) => {
+            return item.id == this.form.sendBank;
+          });
+          if (inlist.length && outlist.length) {
+            this.currentSelectRow = {
+              ...this.form,
+              id: res.data.id,
+              accountName: inlist[0].bank.bankName,
+              inbankAccount: inlist[0].bank.bankAccount,
+              inbankCode: inlist[0].bank.bankCode,
+              inbankCountry: inlist[0].bank.bankCountry,
+              inbankAdd: inlist[0].bank.bankAdd,
+              inswiftCode: inlist[0].bank.swiftCode,
+              sendAccount: outlist[0].bankName,
+              outbankAccount: outlist[0].bankAccount,
+              outbankCode: outlist[0].bankCode,
+              outbankCountry: outlist[0].bankCountry,
+              outbankAdd: outlist[0].bankAdd,
+              outswiftCode: outlist[0].swiftCode,
+            };
+            this.dialogVisible = true;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        this.loading = false;
+      }
     },
     handleDeposit() {
       if (this.moneyType == "fabi") {
@@ -943,13 +950,13 @@ export default {
       });
       return balance;
     },
-    getBankInfo(bankId, attr) {
+    getBankInfo(coinCode, attr) {
       let info = {};
-      const newArr = this.outZHList.filter((item) => {
-        return item.id == bankId;
+      const newArr = this.inCoinList.filter((item) => {
+        return item.coinCode == coinCode;
       });
       if (newArr.length) {
-        info = newArr[0];
+        info = newArr[0].bank;
       }
       return info[attr];
     },
@@ -958,14 +965,15 @@ export default {
         await putWithdraw(this.form);
       } catch (error) {}
     },
-    // 获取汇款账户
+    // 获取指定汇款账户
     async getCjZh() {
       try {
-        const res = await withdrawAccounts();
+        const res = await coinBanks({ coin: this.form.coinCode });
         res.data.push({
           id: "add",
           bankName: this.$t("add"),
         });
+        this.form.sendBank = "";
         this.outZHList = res.data;
       } catch (error) {}
     },

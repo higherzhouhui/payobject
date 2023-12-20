@@ -63,6 +63,16 @@ export const depositLGet = (data) => service({
     data,
     method: 'get'
 })
+
+
+// 加密入金相关 
+// 入金申请详情
+
+export const cryptWithdrawGet = (data) => service({
+    url: '/cryptWithdrawGet',
+    data,
+    method: 'get'
+})
 // 入金申请列表
 /** id
  *  coinCode 法币入金货币代码，必选，只能选择法币货币代码 必填
@@ -165,4 +175,11 @@ export const perCryptWithdraw = (data) => service({
     url: '/perCryptWithdraw',
     data,
     method: 'post'
+})
+
+//  选择要充值的法币货币、要提取的法币货币时，通过GET /api/coinBanks，参数为coin获取支持该货币的银行账户供用户选择
+export const coinBanks = (data) => service({
+    url: '/coinBanks',
+    data,
+    method: 'get'
 })

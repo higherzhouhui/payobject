@@ -6,7 +6,7 @@
     <div class="user_withdrawmanagement_withdraw_contianer">
       <div class="money-wrapper">
         <div class="money-left">
-          <div class="admin-title">{{$t('tx')}}</div>
+          <div class="admin-title">{{ $t("tx") }}</div>
           <div class="form-item">
             <div class="label">{{ $t("hblx") }}</div>
             <div class="input-with-select">
@@ -46,7 +46,8 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{ $t("ye") }}<span>{{ getReamin(form.coinCode) }}</span>{{form.coinCode}}
+              {{ $t("ye") }}<span>{{ getReamin(form.coinCode) }}</span
+              >{{ form.coinCode }}
             </div>
           </div>
           <div class="form-item" v-else>
@@ -78,7 +79,8 @@
               </el-select>
             </div>
             <div class="remain" v-if="usdtForm.srcCode">
-              {{ $t("ye") }}<span>{{ getReamin(usdtForm.srcCode) }}</span>{{usdtForm.srcCode}}
+              {{ $t("ye") }}<span>{{ getReamin(usdtForm.srcCode) }}</span
+              >{{ usdtForm.srcCode }}
             </div>
           </div>
           <!-- <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
@@ -120,8 +122,17 @@
               </el-select>
             </div>
           </div> -->
-          <ul class="list">
-            <li>{{ $t("limitNum") }}{{moneyType == 'fabi' ? form.coinCode : usdtForm.srcCode}}</li>
+          <ul
+            class="list"
+            v-if="
+              (moneyType == 'fabi' && form.coinCode) ||
+              (moneyType == 'usdt' && usdtForm.srcCode)
+            "
+          >
+            <li>
+              {{ $t("limitwithdraw")
+              }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.srcCode }}
+            </li>
           </ul>
           <div class="form-item" v-if="moneyType == 'fabi'">
             <div class="label">{{ $t("txzh") }}</div>
@@ -131,17 +142,17 @@
                 v-model="form.bankId"
                 :placeholder="$t('qsztxzh')"
                 @change="changehkAccount"
-                >
+              >
                 <el-option
                   v-for="item in outZHList"
                   :key="item.id"
                   :label="item.bankName"
                   :value="item.id.toString()"
                 >
-                <div class="el-option">
-                  <div class="left">{{ item.bankName }}</div>
-                  <div class="right">{{ item.bankCode }}</div>
-                </div>
+                  <div class="el-option">
+                    <div class="left">{{ item.bankName }}</div>
+                    <div class="right">{{ item.bankCode }}</div>
+                  </div>
                 </el-option>
               </el-select>
             </div>
@@ -162,8 +173,8 @@
                   :value="item.cryAdd"
                 >
                   <div class="el-option">
-                    <div class="left">{{item.cryAdd}}</div>
-                    <div class="right">{{item.agreement}}</div>
+                    <div class="left">{{ item.cryAdd }}</div>
+                    <div class="right">{{ item.agreement }}</div>
                   </div>
                 </el-option>
               </el-select>
@@ -173,7 +184,8 @@
             label-position="top"
             ref="forms"
             :model="form"
-            class="withdraw-password">
+            class="withdraw-password"
+          >
             <passwordVue @changeData="componentDataChange" />
           </el-form>
           <div class="normal-btn" @click="handleWithDraw" v-loading="loading">
@@ -197,7 +209,8 @@
               {{ $t("txje") }}
             </div>
             <div class="column-right">
-              {{ form.reqValue || 0 }}<span class="unit">{{ form.coinCode }}</span>
+              {{ form.reqValue || 0
+              }}<span class="unit">{{ form.coinCode }}</span>
             </div>
           </div>
           <div class="divider" v-if="form.bankId" />
@@ -254,7 +267,8 @@
               {{ $t("txje") }}
             </div>
             <div class="column-right">
-              {{ usdtForm.reqValue || 0 }}<span class="unit">{{ usdtForm.srcCode }}</span>
+              {{ usdtForm.reqValue || 0
+              }}<span class="unit">{{ usdtForm.srcCode }}</span>
             </div>
           </div>
           <div class="divider" v-if="usdtForm.agreement" />
@@ -634,7 +648,7 @@ import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
 import { outCryAccPage } from "@/api/bank";
-import passwordVue from '@/components/common/password.vue';
+import passwordVue from "@/components/common/password.vue";
 
 export default {
   name: "userWithdrawManagementWithdraw",
@@ -712,69 +726,73 @@ export default {
   },
   methods: {
     componentDataChange(params) {
-      if (this.moneyType == 'fabi') {
+      if (this.moneyType == "fabi") {
         this.form = {
           ...this.form,
-          ...params
-        }
+          ...params,
+        };
       } else {
-        this.usdtForm = {...this.usdtForm, ...params}
+        this.usdtForm = { ...this.usdtForm, ...params };
       }
     },
     changehkAddress(id) {
-      if (id == this.$t('add')) {
+      if (id == this.$t("add")) {
         this.$router.push("/admin/address/list?type=add");
       } else {
-        const list = this.hkAddressList.filter(item => {
-          return item.cryAdd == id
-        })
-        this.usdtForm.agreement = list[0].agreement
+        const list = this.hkAddressList.filter((item) => {
+          return item.cryAdd == id;
+        });
+        this.usdtForm.agreement = list[0].agreement;
       }
     },
     async getAddressList() {
       try {
-        const res = await outCryAccPage({current: 1, size: 50, cryCode: this.usdtForm.srcCode})
-        const list = res.data.records
+        const res = await outCryAccPage({
+          current: 1,
+          size: 50,
+          cryCode: this.usdtForm.srcCode,
+        });
+        const list = res.data.records;
         list.push({
-          id: 'add',
-          cryAdd: this.$t('add')
-        })
-        this.hkAddressList = list
+          id: "add",
+          cryAdd: this.$t("add"),
+        });
+        this.hkAddressList = list;
       } catch {
-        console.log('error')
+        console.log("error");
       }
     },
     changeUsdtReqValue(value) {
-      const max = this.getReamin(this.usdtForm.coinCode)
+      const max = this.getReamin(this.usdtForm.coinCode);
       if (value * 1 > max) {
-        this.usdtForm.reqValue = max
+        this.usdtForm.reqValue = max;
       }
     },
     changeReqValue(value) {
-      const max = this.getReamin(this.form.coinCode)
+      const max = this.getReamin(this.form.coinCode);
       if (value * 1 > max) {
         this.form = {
           ...this.form,
-          reqValue: max
-        }
+          reqValue: max,
+        };
       }
     },
     filterBalanceList() {
-      let arr = []
-      if (this.moneyType == 'fabi') {
-        arr = this.bankListBalance.filter(item => {
-          return item.balType == 1
-        })
+      let arr = [];
+      if (this.moneyType == "fabi") {
+        arr = this.bankListBalance.filter((item) => {
+          return item.balType == 1;
+        });
       } else {
-        arr = this.bankListBalance.filter(item => {
-          return item.balType == 2
-        })
+        arr = this.bankListBalance.filter((item) => {
+          return item.balType == 2;
+        });
       }
-      return arr
+      return arr;
     },
     changehkAccount(id) {
-      if (id == 'add') {
-        this.$router.push('/admin/exchange/list?type=add')
+      if (id == "add") {
+        this.$router.push("/admin/exchange/list?type=add");
       }
     },
     getReamin(coinCode) {
@@ -811,7 +829,7 @@ export default {
     },
 
     async handleUsdtPutDeposit() {
-      console.log(this.usdtForm)
+      console.log(this.usdtForm);
       if (
         !this.usdtForm.reqValue ||
         !this.usdtForm.cryptAdd ||
@@ -890,9 +908,9 @@ export default {
       try {
         const res = await withdrawAccounts();
         res.data.push({
-          id: 'add',
-          bankName: this.$t('add'),
-        })
+          id: "add",
+          bankName: this.$t("add"),
+        });
         this.outZHList = res.data;
       } catch (error) {}
     },

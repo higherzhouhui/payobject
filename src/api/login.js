@@ -25,6 +25,11 @@ export const getCoinList = (data) => service({
     data,
     method: 'get'
 })
+export const getSupCoinList = (data) => service({
+    url: '/allCoins',
+    data,
+    method: 'get'
+})
 export const cryptocurrencies = (data) => service({
     url: '/cryptocurrencies',
     data,

@@ -90,7 +90,7 @@ async function request(options) {
             }
             execOnce = true
             store.commit("SET_Logout", {})
-            router.push("/user/login")
+            router.push("/index")
             return
         } else if (data.code != 200 && data.code != 0) {
             Message({

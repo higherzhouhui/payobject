@@ -1,93 +1,129 @@
 <template>
   <div class="dashboard-container">
     <div class="balance-wrapper" :class="balanceLoading && 'loading'">
-      <div class="admin-title">{{$t("wdqb")}}</div>
-      <swiper ref="refSwiper"
-        :options="swiperOption"
-        class="content-swiper">
-          <swiper-slide v-for="item in balanceArrapy" :key="item.id" class="item">
-              <div class="balance-item" @click="routerToDetail(item)">
-                <flagIconVue :code="item.coinCode" :dashboard="true"/>
-                <h3>{{ item.balance.toFixed(2) }}<span>{{ item.coinCode }}</span></h3>
-              </div>
-          </swiper-slide>
+      <div class="admin-title">{{ $t("wdqb") }}</div>
+      <swiper ref="refSwiper" :options="swiperOption" class="content-swiper">
+        <swiper-slide v-for="item in balanceArrapy" :key="item.id" class="item">
+          <div class="balance-item" @click="routerToDetail(item)">
+            <flagIconVue
+              :code="item.coinCode"
+              :flagList="flagList"
+              :dashboard="true"
+            />
+            <h3>
+              {{ item.balance.toFixed(2) }}<span>{{ item.coinCode }}</span>
+            </h3>
+          </div>
+        </swiper-slide>
       </swiper>
       <div v-if="!balanceLoading && !balanceArrapy.length">
         <div class="balance-item">
-          <flagIconVue :code="'USD'" :dashboard="true"/>
-          <h3>0.00<span>{{ 'USD' }}</span></h3>
+          <flagIconVue :code="'USD'" :flagList="flagList" :dashboard="true" />
+          <h3>
+            0.00<span>{{ "USD" }}</span>
+          </h3>
           <div class="qcz" @click="$router.push('/admin/deposit/index')">
             <img src="@/assets/images/home/recharge.png" />
-            {{$t("qcz")}}
+            {{ $t("qcz") }}
           </div>
         </div>
       </div>
     </div>
     <div class="transaction-wrapper">
-      <h1>{{$t('近期交易记录')}}</h1>
-      <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto" :class="billLoading && 'loading'">
-        <div class="list-wrapper" v-for="(item, index) in billArray" :key="item.id" @click="handleShow(index)">
+      <h1>{{ $t("近期交易记录") }}</h1>
+      <ul
+        class="infinite-list"
+        v-infinite-scroll="load"
+        style="overflow: auto"
+        :class="billLoading && 'loading'"
+      >
+        <div
+          class="list-wrapper"
+          v-for="(item, index) in billArray"
+          :key="item.id"
+          @click="handleShow(index)"
+        >
           <div class="list-item">
             <div class="left">
-              <i class="el-icon-bottom-left recive" v-if="item.billType == 1"/>
-              <i class="el-icon-top-right send" v-if="item.billType == 2"/>
-              <i class="el-icon-refresh send" v-if="item.billType == 3"/>
-              <i class="el-icon-sort recive" v-if="item.billType == 4"/>
+              <i class="el-icon-bottom-left recive" v-if="item.billType == 1" />
+              <i class="el-icon-top-right send" v-if="item.billType == 2" />
+              <i class="el-icon-refresh send" v-if="item.billType == 3" />
+              <i class="el-icon-sort recive" v-if="item.billType == 4" />
+              <i class="el-icon-refresh-right recive" v-if="item.billType == 5" />
               <div class="type-wrapper">
-                <div class="type">{{typeOption[item.billType]}}</div>
-                <div class="desc">{{item.coinCode}}</div>
+                <div class="type">{{ typeOption[item.billType] }}</div>
+                <div class="desc">{{ item.coinCode }}</div>
               </div>
             </div>
             <div class="right">
               <div class="type-wrapper">
-                <div class="desc">{{item.createTime}}</div>
-                <div class="type" :class="item.billType == 2 || item.billType == 3 ? 'send' : 'recive'">${{item.billValue}}</div>
+                <div class="desc">{{ item.createTime }}</div>
+                <div
+                  class="type"
+                  :class="
+                    item.billType == 2 || item.billType == 3 ? 'send' : 'recive'
+                  "
+                >
+                  ${{ item.billValue }}
+                </div>
               </div>
             </div>
           </div>
           <div class="detail" :class="item.show ? 'expand' : 'scale'">
             <div class="detail-item">
-              <div class="left">{{$t("jyid")}}</div>
-              <div class="right">{{item.id}}</div>
+              <div class="left">{{ $t("jyid") }}</div>
+              <div class="right">{{ item.id }}</div>
             </div>
             <div class="detail-item">
-              <div class="left">{{$t("ye")}}</div>
-              <div class="right">{{item.balance || 0}}</div>
+              <div class="left">{{ $t("ye") }}</div>
+              <div class="right">{{ item.balance || 0 }}</div>
             </div>
             <div class="detail-item">
-              <div class="left">{{$t("hblx")}}</div>
-              <div class="right" v-if="item.outerType == 2">{{$t("jmhb")}}</div>
-              <div class="right" v-else>{{$t("fdhb")}}</div>
+              <div class="left">{{ $t("hblx") }}</div>
+              <div class="right" v-if="item.outerType == 2">
+                {{ $t("jmhb") }}
+              </div>
+              <div class="right" v-else>{{ $t("fdhb") }}</div>
             </div>
             <div class="detail-item" v-if="item.commission">
-              <div class="left">{{$t("sxfei")}}</div>
-              <div class="right">${{item.commission}}</div>
+              <div class="left">{{ $t("sxfei") }}</div>
+              <div class="right">${{ item.commission }}</div>
             </div>
           </div>
         </div>
       </ul>
       <div v-if="!billLoading && !billArray.length" class="empty">
-        {{$t('nodata')}}
+        {{ $t("nodata") }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { balanceList } from "@/api/out"
-import { getBillDetails } from "@/api/manage"
+import { balanceList } from "@/api/out";
+import { getBillDetails } from "@/api/manage";
+import { countries } from "@/api/login";
+import { Local } from "@/utils/index";
 import flagIconVue from "@/components/common/flagicon.vue";
+
 export default {
-  name: 'DashBoard',
+  name: "DashBoard",
   props: {
-    msg: String
+    msg: String,
   },
   components: {
-    flagIconVue
+    flagIconVue,
   },
   data() {
     return {
-      typeOption: ['', this.$t('ruzhang'), this.$t('chuzhang'), this.$t('duihuan'), this.$t('duihuandrz')],
+      typeOption: [
+        "",
+        this.$t("ruzhang"),
+        this.$t("chuzhang"),
+        this.$t("duihuan"),
+        this.$t("duihuandrz"),
+        this.$t("tuihui"),
+      ],
       balanceArrapy: [],
       billArray: [],
       current: 1,
@@ -97,26 +133,26 @@ export default {
       billLoading: false,
       swiperOption: {
         // 设置垂直轮播vertical,  水平轮播 horizontal
-        direction: "horizontal", 
+        direction: "horizontal",
         // 轮播图间距
         spaceBetween: 10,
-        slidesPerView : 1,
-        breakpoints: { 
-            //当宽度大于等于480
-            320: { 
-                slidesPerView: 2,
-                spaceBetween: 14
-            },
-            //当宽度大于等于640
-            900: {
-                slidesPerView: 3,
-                spaceBetween: 18
-            },
-            //当宽度大于等于640
-            1400: {
-                slidesPerView: 4,
-                spaceBetween: 26
-            }
+        slidesPerView: 1,
+        breakpoints: {
+          //当宽度大于等于480
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 14,
+          },
+          //当宽度大于等于640
+          900: {
+            slidesPerView: 3,
+            spaceBetween: 18,
+          },
+          //当宽度大于等于640
+          1400: {
+            slidesPerView: 4,
+            spaceBetween: 26,
+          },
         },
         // 循环模式选项
         loop: false,
@@ -138,68 +174,92 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
+        flagList: [],
       },
-    }
+    };
   },
   created() {
-    this.initData()
+    this.initData();
+    this.getCountries();
   },
   methods: {
+    getCountries() {
+      const larealist = Local("areaList");
+      if (larealist) {
+        this.flagList = larealist;
+      } else {
+        countries().then((res) => {
+          this.flagList = res.data;
+          Local("areaList", res.data);
+        });
+      }
+    },
     routerToDetail(item) {
-      this.$router.push(`/admin/detail?coinCode=${item.coinCode}&balance=${item.balance}`)
+      this.$router.push(
+        `/admin/detail?coinCode=${item.coinCode}&balance=${item.balance}`
+      );
     },
     initData() {
-      this.getBalanceList()
-      this.getBillList()
+      this.getBalanceList();
+      this.getBillList();
     },
     getBalanceList() {
       if (this.balanceLoading) {
-        return
+        return;
       }
-      this.balanceLoading = true
-      balanceList().then(res => {
-        this.balanceLoading = false
-        if (res.code === 200) {
-          this.balanceArrapy = res.data
-        }
-      }).catch(() =>  {
-        this.balanceLoading = false
-      })
+      this.balanceLoading = true;
+      balanceList()
+        .then((res) => {
+          this.balanceLoading = false;
+          if (res.code === 200) {
+            this.balanceArrapy = res.data;
+          }
+        })
+        .catch(() => {
+          this.balanceLoading = false;
+        });
     },
     getBillList() {
       if (this.billLoading) {
-        return
+        return;
       }
-      this.billLoading = true
+      this.billLoading = true;
       if (this.noMore) {
-        this.billLoading = false
-        return
+        this.billLoading = false;
+        return;
       }
-      getBillDetails({current: this.current, size: this.size}).then(res => {
-          this.billLoading = false
-          const records = res.data.records
+      getBillDetails({ current: this.current, size: this.size })
+        .then((res) => {
+          this.billLoading = false;
+          const records = res.data.records;
+          records.forEach(item => {
+            if (item.billBack == 1) {
+              item.billType = 5
+            }
+          })
           if (this.size * this.current > res.data.total) {
-            this.noMore = false
+            this.noMore = false;
           }
           if (res.data.current == 1) {
-            this.billArray = records
+            this.billArray = records;
           } else {
-            this.billArray = this.billArray.concat(records)
-            this.current = this.current + 1
+            this.billArray = this.billArray.concat(records);
+            this.current = this.current + 1;
           }
-        }).catch(() =>  {
-          this.billLoading = false
         })
+        .catch(() => {
+          this.billLoading = false;
+        });
     },
     handleShow(index) {
-      this.billArray[index].show = !this.billArray[index].show 
-      this.$forceUpdate();  
+      this.billArray[index].show = !this.billArray[index].show;
+      this.$forceUpdate();
     },
     load() {
       // this.getBillList()
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

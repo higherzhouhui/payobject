@@ -3,14 +3,12 @@
   <img
     v-if="code == 'USDT'"
     src="@/assets/images/usdt.png"
-    class="usdt-inner"
-    :class="dashboard && 'usdt-pic'"
+    :class="dashboard ? 'usdt-pic' : 'usdt-inner'"
   />
   <img
     v-else-if="code == 'EUR'"
     src="@/assets/images/eu.png"
-    class="usdt-inner"
-    :class="dashboard && 'usdt-pic'"
+    :class="dashboard ? 'usdt-pic' : 'usdt-inner'"
   />
   <span
   v-else-if="getFlagIcon(code, flagList)"

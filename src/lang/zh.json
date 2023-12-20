@@ -151,6 +151,7 @@
     "ssgj": "账户持有人所属国家",
     "jzdz": "账户持有人居住地址",
     "bankname": "银行名称",
+    "skyh": "收款银行",
     "swift": "swift代码",
     "bankcode": "银行代码",
     "bankcount": "银行账户号码",
@@ -439,8 +440,11 @@
     "limitdeposit": "充值最小金额不小于10",
     "limitduihuan": "兑换最小金额不小于10",
     "limitwithdraw": "提款最小金额不小于10",
-    "qscdkpz": "请上传汇款凭证",
+    "sqtjcg": "已发起申请",
     "hksdjt": "转账水单截图或者PDF上传",
     "hksdjtdes": "如关闭本页面，可在充值申请列表中补充汇款凭证完成本次申请",
-    "tuihui": "退回"
+    "tuihui": "退回",
+    "pleaseuse": "请使用",
+    "pleaseusedes": "向以下收款银行账户发起汇款，完成汇款后请上传汇款凭证",
+    "pleaseuseusdt": "向收款钱包地址起汇款，完成汇款后请上传汇款凭证"
 }

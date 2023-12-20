@@ -197,7 +197,7 @@
             }}<span class="unit">{{ form.coinCode }}</span>
           </div>
         </div>
-        <template v-if="form.coinCode">
+        <template v-if="form.coinCode && moneyType == 'fabi'">
           <div class="divider" />
           <div class="column">
             <div class="column-left">
@@ -222,7 +222,7 @@
               {{ $t("bankcount") }}
             </div>
             <div class="column-right">
-              {{ getBankInfo(form.coinCode, "bankCode") }}
+              {{ getBankInfo(form.coinCode, "bankAccount") }}
             </div>
           </div>
           <div class="divider" />
@@ -438,7 +438,7 @@
       </div>
     </div> -->
     <el-dialog
-      :title="$t('qscdkpz')"
+      :title="$t('sqtjcg')"
       :visible.sync="dialogVisible"
       width="636px"
       :before-close="
@@ -452,8 +452,9 @@
         ref="formss"
         :model="currentSelectRow"
         class="formStyle"
+        v-if="moneyType == 'fabi'"
       >
-        <!-- <el-form-item :label="$t('bz')">
+        <el-form-item :label="$t('bz')">
           <el-input
             v-model="currentSelectRow.coinCode"
             :readOnly="true"
@@ -465,15 +466,35 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('skzhmc')">
+        <h2>{{$t('pleaseuse')}}</h2>
+        <el-form-item :label="$t('hkzh')">
           <el-input
-            v-model="currentSelectRow.accountName"
+            v-model="currentSelectRow.outbankAccount"
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('hkzhmc')">
+        <el-form-item :label="$t('hkyh')">
           <el-input
-            v-model="currentSelectRow.sendAccount"
+            v-model="currentSelectRow.outbankName"
+            :readOnly="true"
+          ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('hkzhao')">
+          <el-input
+            v-model="currentSelectRow.outbankCode"
+            :readOnly="true"
+          ></el-input>
+        </el-form-item>
+        <h2>{{$t('pleaseusedes')}}</h2>
+        <el-form-item :label="$t('skzhmc')">
+          <el-input
+            v-model="currentSelectRow.inAccount"
+            :readOnly="true"
+          ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('skyh')">
+          <el-input
+            v-model="currentSelectRow.inbankName"
             :readOnly="true"
           ></el-input>
         </el-form-item>
@@ -483,47 +504,9 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('hkzhao')">
-          <el-input
-            v-model="currentSelectRow.outbankAccount"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
         <el-form-item :label="$t('skbankcode')">
           <el-input
             v-model="currentSelectRow.inbankCode"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('hkbankcode')">
-          <el-input
-            v-model="currentSelectRow.outbankCode"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('skyhssgj')">
-          <el-input
-            v-model="currentSelectRow.inbankCountry"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('hkyhssgj')">
-          <el-input
-            v-model="currentSelectRow.outbankCountry"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('skyhszdz')">
-          <el-input
-            type="textarea"
-            v-model="currentSelectRow.inbankAdd"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('hkyhssdz')">
-          <el-input
-            type="textarea"
-            v-model="currentSelectRow.outbankAdd"
             :readOnly="true"
           ></el-input>
         </el-form-item>
@@ -533,12 +516,20 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('hksdm')">
+        <el-form-item :label="$t('skyhssgj')">
           <el-input
-            v-model="currentSelectRow.outswiftCode"
+            v-model="currentSelectRow.inbankCountry"
             :readOnly="true"
           ></el-input>
-        </el-form-item> -->
+        </el-form-item>
+
+        <el-form-item :label="$t('skyhszdz')">
+          <el-input
+            type="textarea"
+            v-model="currentSelectRow.inbankAdd"
+            :readOnly="true"
+          ></el-input>
+        </el-form-item>
         <el-form-item :label="$t('hkpz')">
           <div class="upload-item">
             <div class="item-left">
@@ -546,7 +537,7 @@
                 action="/api/file/upload"
                 list-type="text"
                 accept=".pdf, image/*"
-                :on-success="(e) => handlesuccess(e)" 
+                :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
@@ -559,7 +550,9 @@
             </div>
             <div class="item-right">
               <div class="sub-title"><span>*</span>{{ $t("hksdjt") }}</div>
-              <div class="desc" style="color: #ff4d39">{{ $t("hksdjtdes") }}</div>
+              <div class="desc" style="color: #ff4d39">
+                {{ $t("hksdjtdes") }}
+              </div>
               <a
                 :href="'/api/file/downLoad?url=' + form.reqProof"
                 target="_blank"
@@ -571,9 +564,10 @@
           </div>
         </el-form-item>
       </el-form>
-      <!-- <el-form
+      <el-form
         label-position="top"
         ref="formss"
+        class="formStyle"
         :model="currentSelectRow"
         v-if="moneyType == 'usdt'"
       >
@@ -583,13 +577,7 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('skqbdz')">
-          <el-input
-            v-model="currentSelectRow.cryptAdd"
-            :readOnly="true"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('je')">
+        <el-form-item :label="$t('czje')">
           <el-input
             v-model="currentSelectRow.reqValue"
             :readOnly="true"
@@ -601,8 +589,16 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
+        <h2>{{$t('pleaseuse')}}</h2>
         <el-form-item :label="$t('hkqbdz')">
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
+        </el-form-item>
+        <h2>{{$t('pleaseuseusdt')}}</h2>
+        <el-form-item :label="$t('skqbdz')">
+          <el-input
+            v-model="currentSelectRow.cryptAdd"
+            :readOnly="true"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('hkpz')">
           <div class="upload-item">
@@ -610,35 +606,34 @@
               <el-upload
                 action="/api/file/upload"
                 list-type="text"
-                accept=".pdf, .zip, .rar, image/*"
+                accept=".pdf, image/*"
                 :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
-                  <i
-                    class="el-icon-folder-add"
-                    v-if="!currentSelectRow.reqProof"
-                  ></i>
+                  <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
                   <i class="el-icon-folder-checked" v-else></i>
                 </div>
                 <div slot="tip" class="el-upload__tip">
-                  {{ $t("scts") }}
+                  {{ $t("uploaddes") }}
                 </div>
               </el-upload>
             </div>
             <div class="item-right">
-              <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
-              <div class="desc">{{ $t("hkzmdes") }}</div>
+              <div class="sub-title"><span>*</span>{{ $t("hksdjt") }}</div>
+              <div class="desc" style="color: #ff4d39">
+                {{ $t("hksdjtdes") }}
+              </div>
               <a
-                :href="'/api/file/downLoad?url=' + currentSelectRow.reqProof"
+                :href="'/api/file/downLoad?url=' + form.reqProof"
                 target="_blank"
                 class="down"
-                v-if="currentSelectRow.reqProof"
+                v-if="form.reqProof"
                 >{{ $t("download") }}</a
               >
             </div>
           </div>
         </el-form-item>
-      </el-form> -->
+      </el-form>
       <div slot="footer">
         <el-button class="qx" @click="dialogVisible = false">
           {{ $t("cancel") }}
@@ -675,7 +670,6 @@
   </div>
 </template>
   <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import {
   coinBanks,
   depCoins,
@@ -690,10 +684,10 @@ import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
 import { outCryAccPage } from "@/api/bank";
+import { getCountryName } from "@/utils/common";
 
 export default {
   name: "userWithdrawManagementWithdraw",
-  components: { LinkPath },
   data() {
     return {
       agreementList: [
@@ -816,6 +810,10 @@ export default {
             reqProof: req.data[0],
             reqStatus: 2,
           };
+          Message({
+              type: "success",
+              message: this.$t("sccg"),
+            });
         } else {
           this.$message.error(req.msg);
         }
@@ -826,24 +824,24 @@ export default {
     },
     async confirmPz() {
       if (this.loading) {
-        return
+        return;
       }
       try {
-          let res;
-          this.loading = true
-          if (this.moneyType == "fabi") {
-            res = await putDeposit(this.currentSelectRow);
-          }
-          if (this.moneyType == "usdt") {
-            res = await putCryptDeposit(this.currentSelectRow);
-          }
-          this.loading = false
-          if (res.code === 200) {
-            this.dialogVisible = false;
-          }
+        let res;
+        this.loading = true;
+        if (this.moneyType == "fabi") {
+          res = await putDeposit(this.currentSelectRow);
+        }
+        if (this.moneyType == "usdt") {
+          res = await putCryptDeposit(this.currentSelectRow);
+        }
+        this.loading = false;
+        if (res.code === 200) {
+          this.dialogVisible = false;
+        }
       } catch (error) {
-        console.error(error)
-        this.loading = false
+        console.error(error);
+        this.loading = false;
       }
     },
     async handleUsdtPutDeposit() {
@@ -909,15 +907,16 @@ export default {
             this.currentSelectRow = {
               ...this.form,
               id: res.data.id,
-              accountName: inlist[0].bank.bankName,
+              inbankName: inlist[0].bank.bankName,
               inbankAccount: inlist[0].bank.bankAccount,
+              inAccount: inlist[0].bank.accountName,
               inbankCode: inlist[0].bank.bankCode,
-              inbankCountry: inlist[0].bank.bankCountry,
+              inbankCountry: getCountryName(inlist[0].bank.bankCountry),
               inbankAdd: inlist[0].bank.bankAdd,
               inswiftCode: inlist[0].bank.swiftCode,
-              sendAccount: outlist[0].bankName,
-              outbankAccount: outlist[0].bankAccount,
-              outbankCode: outlist[0].bankCode,
+              outbankName: outlist[0].bankName,
+              outbankAccount: outlist[0].accountName,
+              outbankCode: outlist[0].bankAccount,
               outbankCountry: outlist[0].bankCountry,
               outbankAdd: outlist[0].bankAdd,
               outswiftCode: outlist[0].swiftCode,

@@ -5,7 +5,7 @@
     <div class="user_withdrawmanagement_withdraw_contianer">
       <div class="money-wrapper">
         <div class="money-left">
-          <div class="admin-title">{{$t('duihuan')}}</div>
+          <div class="admin-title">{{ $t("duihuan") }}</div>
           <div class="form-item">
             <div class="label">{{ $t("dhje") }}</div>
             <div class="input-with-select">
@@ -32,12 +32,21 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{$t('ye')}}<span>{{getReamin()}}</span>{{form.coinCode}}
+              {{ $t("ye") }}<span>{{ getReamin() }}</span
+              >{{ form.coinCode }}
             </div>
           </div>
           <ul class="list">
             <li v-if="rateDetail">{{ rateDetail }}</li>
-            <li v-if="form.coinCode">{{ $t("limitduihuan") }}{{form.coinCode}}</li>
+            <li v-if="limitObj.coinMin">
+              {{ $t("limitduihuanmin") }}&nbsp;&nbsp;{{ limitObj.coinMin }}{{ limitObj.coinCode }}
+            </li>
+            <li v-if="limitObj.coinMax">
+              {{ $t("limitduihuanmax") }}&nbsp;&nbsp;{{ limitObj.coinMax }}{{ form.coinCode }}
+            </li>
+            <li v-if="limitObj.noSub">
+              {{ $t("zwkf") }}
+            </li>
           </ul>
           <div class="form-item" v-if="form.coinCode">
             <div class="label">{{ $t("dhmbbz") }}</div>
@@ -85,6 +94,17 @@
               }}<span class="unit">{{ form.targetCode }}</span>
             </div>
           </div>
+          <div class="divider" />
+          <div class="column">
+            <div class="column-left">
+              {{ $t("sxfei") }}
+            </div>
+            <div class="column-right">
+              {{
+                form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+              }}<span class="unit" v-if="limitObj.commission">{{ form.coinCode }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -114,7 +134,6 @@
   </div>
 </template>
 <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import {
   withdrawAccounts,
   depCoins,
@@ -126,11 +145,12 @@ import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
 import { changeReq } from "@/api/convert";
+import { getLimit } from "@/api/exchange";
 export default {
   name: "userConverntManagementWithdraw",
-  components: { LinkPath },
   data() {
     return {
+      limitObj: {},
       dialogVisibleSuccess: false,
       form: {
         coinCode: "",
@@ -175,9 +195,9 @@ export default {
   watch: {
     "form.coinCode": function () {
       this.form.targetCode = "";
-      this.form.reqValue = ""
-      this.form.rateDetail = ""
-      this.rate = ""
+      this.form.reqValue = "";
+      this.form.rateDetail = "";
+      this.rate = "";
       this.getCJBZ();
     },
     form: {
@@ -186,24 +206,24 @@ export default {
         if (this.form.coinCode && this.form.targetCode) {
           this.calculateRateMoney();
         } else {
-          this.rate = 0
-          this.rateDetail = ''
+          this.rate = 0;
+          this.rateDetail = "";
         }
       },
     },
   },
   methods: {
     changeReqValue(value) {
-      const max = this.getReamin(this.form.coinCode)
+      const max = this.getReamin(this.form.coinCode);
       if (value * 1 > max) {
-        this.form.reqValue = max
+        this.form.reqValue = max;
       }
     },
     getReamin() {
-      const rarr = this.bankListBalance.filter(item => {
-        return item.coinCode == this.form.coinCode
-      })
-      return rarr[0].balance
+      const rarr = this.bankListBalance.filter((item) => {
+        return item.coinCode == this.form.coinCode;
+      });
+      return rarr[0].balance;
     },
     async calculateRateMoney() {
       try {
@@ -213,7 +233,9 @@ export default {
           exValue: 1,
         });
         this.rate = res.data.targetValue;
-        this.rateDetail = `${this.$t('lastestRate')} 1 ${this.form.coinCode} = ${this.rate} ${this.form.targetCode}`;
+        this.rateDetail = `${this.$t("lastestRate")} 1 ${
+          this.form.coinCode
+        } = ${this.rate} ${this.form.targetCode}`;
       } catch {}
     },
     async getSzList() {
@@ -291,6 +313,13 @@ export default {
         res = await withdrawCoins({ code: this.form.coinCode });
         this.outCoinList = res.data;
         this.$refs.targetselectRef.toggleMenu();
+
+        const limitRes = await getLimit({
+          coin: this.form.coinCode,
+          act: "c",
+        });
+        // 如果没有数据就不能提交
+        this.limitObj = limitRes.data || { noSub: true };
       } catch (error) {}
     },
     // 获取入金币种

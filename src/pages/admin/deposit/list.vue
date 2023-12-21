@@ -725,6 +725,10 @@ export default {
         this.loading = false;
         if (res.code === 200) {
           this.uploaddialogVisible = false;
+          Message({
+            type: "success",
+            message: this.$t("czcg"),
+          });
         }
       } catch (error) {
         console.error(error);

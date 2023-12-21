@@ -78,9 +78,16 @@
             (moneyType == 'usdt' && usdtForm.coinCode)
           "
         >
-          <li>
-            {{ $t("limitdeposit")
+          <li v-if="limitObj.coinMin">
+            {{ $t("limitdepositmin") }}&nbsp;&nbsp;{{ limitObj.coinMin
             }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.coinCode }}
+          </li>
+          <li v-if="limitObj.coinMax">
+            {{ $t("limitdepositmax") }}&nbsp;&nbsp;{{ limitObj.coinMax
+            }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.coinCode }}
+          </li>
+          <li v-if="limitObj.noSub">
+            {{ $t("zwkf") }}
           </li>
         </ul>
         <div class="form-item" v-if="moneyType == 'fabi' && form.coinCode">
@@ -241,7 +248,9 @@
             {{ $t("sxfei") }}
           </div>
           <div class="column-right">
-            {{ $t("dqr") }}
+            {{
+              form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+            }}<span class="unit" v-if="limitObj.commission">{{ form.coinCode }}</span>
           </div>
         </div>
       </div>
@@ -299,7 +308,11 @@
             {{ $t("sxfei") }}
           </div>
           <div class="column-right">
-            {{ $t("dqr") }}
+            {{
+              usdtForm.coinCode
+                ? limitObj.commission || $t("nosxf")
+                : $t("dqr")
+            }}<span class="unit" v-if="limitObj.commission">{{ usdtForm.coinCode }}</span>
           </div>
         </div>
       </div>
@@ -466,7 +479,7 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <h2>{{$t('pleaseuse')}}</h2>
+        <h2>{{ $t("pleaseuse") }}</h2>
         <el-form-item :label="$t('hkzh')">
           <el-input
             v-model="currentSelectRow.outbankAccount"
@@ -485,7 +498,7 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <h2>{{$t('pleaseusedes')}}</h2>
+        <h2>{{ $t("pleaseusedes") }}</h2>
         <el-form-item :label="$t('skzhmc')">
           <el-input
             v-model="currentSelectRow.inAccount"
@@ -589,11 +602,11 @@
             :readOnly="true"
           ></el-input>
         </el-form-item>
-        <h2>{{$t('pleaseuse')}}</h2>
+        <h2>{{ $t("pleaseuse") }}</h2>
         <el-form-item :label="$t('hkqbdz')">
           <el-input v-model="currentSelectRow.tid" :readOnly="true"></el-input>
         </el-form-item>
-        <h2>{{$t('pleaseuseusdt')}}</h2>
+        <h2>{{ $t("pleaseuseusdt") }}</h2>
         <el-form-item :label="$t('skqbdz')">
           <el-input
             v-model="currentSelectRow.cryptAdd"
@@ -679,7 +692,7 @@ import {
   putDeposit,
   putCryptDeposit,
 } from "@/api/out";
-import { getCryAdd } from "@/api/exchange";
+import { getCryAdd, getLimit } from "@/api/exchange";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
@@ -727,6 +740,11 @@ export default {
       currentSelectRow: {},
       szList: [],
       skqbList: [],
+      limitObj: {
+        coinMax: 0,
+        coinMin: 0,
+        commission: 0,
+      },
     };
   },
   created() {
@@ -797,7 +815,12 @@ export default {
       const res = await getCryAdd({ cryCode: this.usdtForm.coinCode });
       this.skqbList = res.data;
       this.$refs.changeAgreementRef.toggleMenu();
-
+      const limitRes = await getLimit({
+        coin: this.usdtForm.coinCode,
+        act: "dp",
+      });
+      // 如果没有数据就不能提交
+      this.limitObj = limitRes.data || { noSub: true };
       // this.usdtForm.cryptAdd = res.data.cryAdd;
       // this.usdtForm.hkAgreement = res.data.agreement;
       // this.usdtForm.userId = res.data.userId;
@@ -811,9 +834,9 @@ export default {
             reqStatus: 2,
           };
           Message({
-              type: "success",
-              message: this.$t("sccg"),
-            });
+            type: "success",
+            message: this.$t("sccg"),
+          });
         } else {
           this.$message.error(req.msg);
         }
@@ -838,6 +861,7 @@ export default {
         this.loading = false;
         if (res.code === 200) {
           this.dialogVisible = false;
+          this.dialogVisibleSuccess = true;
         }
       } catch (error) {
         console.error(error);
@@ -974,6 +998,12 @@ export default {
         });
         this.form.sendBank = "";
         this.outZHList = res.data;
+        const limitRes = await getLimit({
+          coin: this.form.coinCode,
+          act: "dp",
+        });
+        // 如果没有数据就不能提交
+        this.limitObj = limitRes.data || { noSub: true };
       } catch (error) {}
     },
     // 获取出金币种

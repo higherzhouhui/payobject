@@ -41,9 +41,23 @@ export const setCryAcc = (data) => service({
     data,
     method: 'post'
 })
-// 添加钱包
+// 获取钱包地址
 export const getCryAdd = (data) => service({
     url: '/getCryAdd',
+    data,
+    method: 'get'
+})
+
+// 获取限额
+export const getLimitSetting = (data) => service({
+    url: '/limit/pageLimit',
+    data,
+    method: 'post'
+})
+
+// 获取限额详情coin  就是coinCode, act是操作类型，充值申请是dp, 提款是wd，兑换是c
+export const getLimit = (data) => service({
+    url: '/limit/getLimit',
     data,
     method: 'get'
 })

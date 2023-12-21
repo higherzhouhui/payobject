@@ -36,6 +36,7 @@
                 v-model="form.coinCode"
                 class="input-select"
                 ref="selectRef"
+                @change="getLimitCoin"
               >
                 <el-option
                   v-for="item in filterBalanceList()"
@@ -129,9 +130,16 @@
               (moneyType == 'usdt' && usdtForm.srcCode)
             "
           >
-            <li>
-              {{ $t("limitwithdraw")
+            <li v-if="limitObj.coinMin">
+              {{ $t("limitwithdrawmin") }}&nbsp;&nbsp;{{ limitObj.coinMin
               }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.srcCode }}
+            </li>
+            <li v-if="limitObj.max">
+              {{ $t("limitwithdrawmax") }}&nbsp;&nbsp;{{ limitObj.max
+              }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.srcCode }}
+            </li>
+            <li v-if="limitObj.noSub">
+              {{ $t("zwkf") }}
             </li>
           </ul>
           <div class="form-item" v-if="moneyType == 'fabi'">
@@ -237,7 +245,9 @@
               {{ $t("sxfei") }}
             </div>
             <div class="column-right">
-              {{ $t("dqr") }}
+              {{
+                form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+              }}<span class="unit" v-if="limitObj.commission">{{ form.coinCode }}</span>
             </div>
           </div>
           <div class="divider" v-if="calculateMoney" />
@@ -295,7 +305,9 @@
               {{ $t("sxfei") }}
             </div>
             <div class="column-right">
-              {{ $t("dqr") }}
+              {{
+                usdtForm.srcCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+              }}<span class="unit" v-if="limitObj.commission">{{ usdtForm.srcCode }}</span>
             </div>
           </div>
         </div>
@@ -633,7 +645,6 @@
   </div>
 </template>
 <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import {
   withdrawAccounts,
   depCoins,
@@ -643,7 +654,7 @@ import {
   calculateRate,
   putCryptWithdraw,
 } from "@/api/out";
-import { getCryAdd } from "@/api/exchange";
+import { getCryAdd, getLimit } from "@/api/exchange";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
@@ -652,9 +663,10 @@ import passwordVue from "@/components/common/password.vue";
 
 export default {
   name: "userWithdrawManagementWithdraw",
-  components: { LinkPath, passwordVue },
+  components: { passwordVue },
   data() {
     return {
+      limitObj: {},
       agreementList: [
         { label: "TRC20", value: "TRC20" },
         { label: "ERC20", value: "ERC20" },
@@ -725,6 +737,19 @@ export default {
     },
   },
   methods: {
+    async getLimitCoin() {
+      const coin = this.moneyType == 'fabi' ? this.form.coinCode : this.usdtForm.srcCode
+      try {
+        const limitRes = await getLimit({
+        coin: coin,
+        act: "wd",
+      });
+      // 如果没有数据就不能提交
+      this.limitObj = limitRes.data || { noSub: true };
+      } catch {
+        console.error('error')
+      }
+    },
     componentDataChange(params) {
       if (this.moneyType == "fabi") {
         this.form = {
@@ -758,6 +783,7 @@ export default {
           cryAdd: this.$t("add"),
         });
         this.hkAddressList = list;
+        this.getLimitCoin()
       } catch {
         console.log("error");
       }

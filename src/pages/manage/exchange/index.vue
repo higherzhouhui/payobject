@@ -9,30 +9,52 @@
       <div class="search-container">
         <div class="admin-title">
           {{ $store.state.title }}
-          <el-button type="primary normal-btn" @click="showAdd1" class="primary"><i class="el-icon-plus"></i>{{
-            $t("addskzh") }}</el-button>
+          <el-button type="primary normal-btn" @click="showAdd1" class="primary"
+            ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
+          >
         </div>
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
+          <el-radio-button label="third">{{ $t("xesz") }}</el-radio-button>
         </el-radio-group>
-        <el-form v-model="form" :inline="true" label-position="top" class="search-form four-column">
+        <el-form
+          v-model="form"
+          :inline="true"
+          label-position="top"
+          class="search-form four-column"
+        >
           <el-form-item :label="$t('bankname')">
-            <el-input :placeholder="$t('bankname')" v-model="form.bankName"></el-input>
+            <el-input
+              :placeholder="$t('bankname')"
+              v-model="form.bankName"
+            ></el-input>
           </el-form-item>
           <el-form-item :label="$t('yhzh')">
-            <el-input :placeholder="$t('yhzh')" v-model="form.bankAccount"></el-input>
+            <el-input
+              :placeholder="$t('yhzh')"
+              v-model="form.bankAccount"
+            ></el-input>
           </el-form-item>
           <el-form-item :label="$t('kzt')">
             <el-select v-model="form.bankStatus" :placeholder="$t('zhbdzt')">
-              <el-option style="padding: 0 20px" v-for="item in options" :key="item.value" :label="item.label"
-                :value="item.value">
+              <el-option
+                style="padding: 0 20px"
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
             <label class="el-form-item__label"></label>
-            <el-button type="primary" @click="getlist" class="primary normal-btn">
+            <el-button
+              type="primary"
+              @click="handleChangeSearch"
+              class="primary normal-btn"
+            >
               <i class="el-icon-search"></i>{{ $t("search") }}
             </el-button>
             <!-- <el-button class="primary">
@@ -42,15 +64,50 @@
         </el-form>
       </div>
       <div class="content">
-        <el-table class="tables" :data="tableData" style="width: 100%" v-loading="loading"
-          @row-click="(e) => handleShowDetail(e, 'detail')">
+        <el-table
+          class="tables"
+          :data="tableData"
+          style="width: 100%"
+          v-loading="loading"
+          @row-click="(e) => handleShowDetail(e, 'detail')"
+        >
           <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
-          <el-table-column prop="accountName" :label="$t('zhmc')" min-width="180" show-overflow-tooltip />
-          <el-table-column prop="bankName" :label="$t('bankname')" min-width="180" show-overflow-tooltip />
-          <el-table-column prop="bankAccount" :label="$t('yhzh')" min-width="200" show-overflow-tooltip />
-          <el-table-column prop="accountAdd" :label="$t('jzdz')" min-width="180" show-overflow-tooltip />
-          <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip />
-          <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
+          <el-table-column
+            prop="accountName"
+            :label="$t('zhmc')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="bankName"
+            :label="$t('bankname')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="bankAccount"
+            :label="$t('yhzh')"
+            min-width="200"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="accountAdd"
+            :label="$t('jzdz')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjsj')"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            prop="name"
+            :label="$t('cz')"
+            width="70"
+            fixed="right"
+          >
             <template slot-scope="scope">
               <!-- <div
                 class="operation-btn"
@@ -58,21 +115,38 @@
               >
                 {{ $t("xq") }}
               </div> -->
-              <div class="operation-btn edit-btn" @click.stop="toDetail(scope.row)">
+              <div
+                class="operation-btn edit-btn"
+                @click.stop="toDetail(scope.row)"
+              >
                 {{ $t("xg") }}
               </div>
-              <div class="operation-btn reject-btn" @click.stop="handleShowDetail(scope.row, 'del')">
+              <div
+                class="operation-btn reject-btn"
+                @click.stop="handleShowDetail(scope.row, 'del')"
+              >
                 {{ $t("del") }}
               </div>
             </template>
           </el-table-column>
           <div slot="empty">
-            <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+            <el-empty
+              :description="$t('nodata')"
+              style="padding: 50px"
+            ></el-empty>
           </div>
         </el-table>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="current"
-          :page-sizes="[10, 50, 100, 500]" :page-size="size" layout="prev, pager, next" small :total="total"
-          class="elPagination">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="prev, pager, next"
+          small
+          :total="total"
+          class="elPagination"
+        >
         </el-pagination>
       </div>
     </template>
@@ -80,17 +154,24 @@
       <div class="search-container">
         <div class="admin-title">
           {{ $store.state.title }}
-          <el-button type="primary" @click="showAdd" class="primary normal-btn"><i class="el-icon-plus"></i>{{ $t("zjhld")
-          }}</el-button>
+          <el-button type="primary" @click="showAdd" class="primary normal-btn"
+            ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
+          >
         </div>
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
+          <el-radio-button label="third">{{ $t("限额设置") }}</el-radio-button>
         </el-radio-group>
       </div>
       <div class="content">
-        <el-table class="tables" :data="tableData2" style="width: 100%" v-loading="loading"
-          @row-click="(e) => handleShowDetail(e, 'detail')">
+        <el-table
+          class="tables"
+          :data="tableData"
+          style="width: 100%"
+          v-loading="loading"
+          @row-click="(e) => handleShowDetail(e, 'detail')"
+        >
           <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
@@ -108,8 +189,17 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
-          <el-table-column prop="createTime" :label="$t('cz')" width="70" fixed="right">
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjsj')"
+            min-width="180"
+          />
+          <el-table-column
+            prop="createTime"
+            :label="$t('cz')"
+            width="70"
+            fixed="right"
+          >
             <template slot-scope="scope">
               <!-- <div
                 class="operation-btn"
@@ -117,32 +207,133 @@
               >
                 {{ $t("xq") }}
               </div> -->
-              <div class="operation-btn edit-btn" @click.stop="toDetail2(scope.row)">
+              <div
+                class="operation-btn edit-btn"
+                @click.stop="toDetail2(scope.row)"
+              >
                 {{ $t("xg") }}
               </div>
-              <div class="operation-btn reject-btn" @click.stop="handleShowDetail(scope.row, 'del')">
+              <div
+                class="operation-btn reject-btn"
+                @click.stop="handleShowDetail(scope.row, 'del')"
+              >
                 {{ $t("del") }}
               </div>
             </template>
           </el-table-column>
           <div slot="empty">
-            <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
+            <el-empty
+              :description="$t('nodata')"
+              style="padding: 50px"
+            ></el-empty>
           </div>
         </el-table>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="current"
-          :page-sizes="[10, 50, 100, 500]" :page-size="size" layout="prev, pager, next" small :total="total"
-          class="elPagination">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="prev, pager, next"
+          small
+          :total="total"
+          class="elPagination"
+        >
         </el-pagination>
       </div>
     </template>
-    <el-dialog :title="$t('xq')" :visible.sync="detailVisible" width="636px" :before-close="() => {
-        detailVisible = false;
-      }
-      ">
+    <template v-if="type == 'third'">
+      <div class="search-container">
+        <div class="admin-title">
+          {{ $store.state.title }}
+          <!-- <el-button type="primary" @click="showAdd" class="primary normal-btn"><i class="el-icon-plus"></i>
+            {{ $t("zjhld")}}
+        </el-button> -->
+        </div>
+        <el-radio-group v-model="type">
+          <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
+          <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
+          <el-radio-button label="third">{{ $t("限额设置") }}</el-radio-button>
+        </el-radio-group>
+      </div>
+      <div class="content">
+        <el-table
+          class="tables"
+          :data="tableData"
+          style="width: 100%"
+          v-loading="loading"
+          @row-click="(e) => handleShowDetail(e, 'detail')"
+        >
+          <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
+          <el-table-column prop="optType" :label="$t('lx')" min-width="80">
+            <template slot-scope="scope">
+              <el-tag :type="limitObj[scope.row.optType].type" class="elTag">
+                {{ limitObj[scope.row.optType].label }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="coinMin" :label="$t('min')" min-width="80">
+            <template slot-scope="scope">
+              {{ scope.row.coinMin || 0 }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="coinMax" :label="$t('max')" min-width="80">
+            <template slot-scope="scope">
+              {{ scope.row.coinMax || $t("bxz") }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="commission"
+            :label="$t('sxfei')"
+            min-width="80"
+          >
+            <template slot-scope="scope">
+              {{ scope.row.commission || 0 }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :label="$t('cjsj')"
+            min-width="180"
+          />
+          <el-table-column
+            prop="createTime"
+            :label="$t('xgsj')"
+            min-width="180"
+          />
+        </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="current"
+          :page-sizes="[10, 50, 100, 500]"
+          :page-size="size"
+          layout="prev, pager, next"
+          small
+          :total="total"
+          class="elPagination"
+        >
+        </el-pagination>
+      </div>
+    </template>
+    <el-dialog
+      :title="$t('xq')"
+      :visible.sync="detailVisible"
+      width="636px"
+      :before-close="
+        () => {
+          detailVisible = false;
+        }
+      "
+    >
       <div class="formStyle">
-        <div class="list" v-for="(item, index) in detailList.filter((item) => {
-          return item.value;
-        })" :key="index">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
           <div class="list-left">{{ item.label }}</div>
           <div class="list-right">
             <template v-if="item.type == 'link'">
@@ -163,18 +354,39 @@
         <el-button class="qx" @click="detailVisible = false">{{
           $t("cancel")
         }}</el-button>
-        <el-button v-if="operationType == 'del'" class="qd" @click="deleteRow">{{ $t("del") }}</el-button>
+        <el-button
+          v-if="operationType == 'del'"
+          class="qd"
+          @click="deleteRow"
+          >{{ $t("del") }}</el-button
+        >
       </div>
     </el-dialog>
-    <el-dialog :title="bankForm.id ? $t('xg') : $t('add')" :visible.sync="dialogVisible" width="636px" :before-close="() => {
-        dialogVisible = false;
-      }
-      ">
-      <el-form label-position="top" ref="formss" :model="bankForm" class="formStyle">
+    <el-dialog
+      :title="bankForm.id ? $t('xg') : $t('add')"
+      :visible.sync="dialogVisible"
+      width="636px"
+      :before-close="
+        () => {
+          dialogVisible = false;
+        }
+      "
+    >
+      <el-form
+        label-position="top"
+        ref="formss"
+        :model="bankForm"
+        class="formStyle"
+      >
         <el-form-item :label="$t('bz')">
           <el-select v-model="bankForm.coinCode" class="elSelect" filterable>
-            <el-option style="padding: 0 10px" v-for="item in areaList" :key="item.value" :value="item.coinCode"
-              :label="item.coinCode">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in areaList"
+              :key="item.value"
+              :value="item.coinCode"
+              :label="item.coinCode"
+            >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
@@ -185,17 +397,24 @@
             </el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item :label="$t('zhmc')">
-          <el-input v-model="bankForm.accountName" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.accountName"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('ssgj')">
           <!-- <el-input
             v-model="bankForm.country"
           ></el-input> -->
           <el-select v-model="bankForm.country" class="elSelect" filterable>
-            <el-option style="padding: 0 10px" v-for="item in areaList" :key="item.value" :value="item.areaCode"
-              :label="item.areaCode">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in areaList"
+              :key="item.value"
+              :value="item.areaCode"
+              :label="item.areaCode"
+            >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
@@ -207,27 +426,49 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('jzdz')">
-          <el-input v-model="bankForm.accountAdd" type="textarea" :rows="5" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.accountAdd"
+            type="textarea"
+            :rows="5"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankname')">
-          <el-input v-model="bankForm.bankName" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.bankName"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('swift')">
-          <el-input v-model="bankForm.swiftCode" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.swiftCode"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcode')">
-          <el-input v-model="bankForm.bankCode" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.bankCode"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bankcount')">
-          <el-input v-model="bankForm.bankAccount" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.bankAccount"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
         <el-form-item :label="$t('khgj')">
           <!-- <el-input
             v-model="bankForm.bankCountry"
           ></el-input> -->
           <el-select v-model="bankForm.bankCountry" class="elSelect" filterable>
-            <el-option style="padding: 0 10px" v-for="item in areaList" :key="item.value" :value="item.areaCode"
-              :label="item.areaCode">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in areaList"
+              :key="item.value"
+              :value="item.areaCode"
+              :label="item.areaCode"
+            >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
@@ -239,14 +480,22 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('khdz')">
-          <el-input v-model="bankForm.bankAdd" type="textarea" :rows="5" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm.bankAdd"
+            type="textarea"
+            :rows="5"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
-
         <el-form-item :label="$t('zl')">
           <div class="upload-item">
             <div class="item-left">
-              <el-upload action="/api/file/upload" list-type="text" accept=".pdf, .zip, .rar, image/*"
-                :on-success="(e) => handlesuccess(e)">
+              <el-upload
+                action="/api/file/upload"
+                list-type="text"
+                accept=".pdf, .zip, .rar, image/*"
+                :on-success="(e) => handlesuccess(e)"
+              >
                 <div class="load-cover">
                   <i class="el-icon-folder-add" v-if="!bankForm.accountCer"></i>
                   <i class="el-icon-folder-checked" v-else></i>
@@ -259,51 +508,52 @@
             <div class="item-right">
               <div class="sub-title"><span>*</span>{{ $t("zzd") }}</div>
               <div class="desc">{{ $t("zmgr") }}</div>
-              <a :href="'/api/file/downLoad?url=' + bankForm.accountCer" target="_blank" class="down"
-                v-if="bankForm.accountCer">{{ $t("download") }}</a>
+              <a
+                :href="'/api/file/downLoad?url=' + bankForm.accountCer"
+                target="_blank"
+                class="down"
+                v-if="bankForm.accountCer"
+                >{{ $t("download") }}</a
+              >
             </div>
           </div>
-          <!-- <el-upload
-            class="upload-demo"
-                action="/api/file/upload"
-            list-type="text"
-            accept=".pdf, .zip, .rar"
-            :on-success="(e) => handlesuccess(e, 'shareholder')"
-          >
-            <el-button
-              style="padding: 4px 20px"
-              size="small"
-              type="primary"
-              class="btn"
-              >{{ bankForm.accountCer ? $t("ysccxsc") : $t("djsc") }}</el-button
-            >
-            <div slot="tip" class="el-upload__tip">
-              {{ $t("scts") }}
-            </div>
-          </el-upload>
-          <a
-            v-if="bankForm.accountCer"
-            class="down-a"
-            :href="'/api/file/downLoad?url=' + bankForm.accountCer"
-            target="_blank"
-            >{{ $t("yulan") }}</a
-          > -->
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t("cancel") }}</el-button>
-        <el-button type="primary" :class="bankloading && 'loading'" @click="sh">{{ $t("sure") }}</el-button>
+        <el-button
+          type="primary"
+          :class="bankloading && 'loading'"
+          @click="sh"
+          >{{ $t("sure") }}</el-button
+        >
       </span>
     </el-dialog>
-    <el-dialog :title="bankForm2.id ? $t('xg') : $t('zjhld')" :visible.sync="dialogVisible2" width="636px" :before-close="() => {
-        dialogVisible2 = false;
-      }
-      ">
+    <el-dialog
+      :title="bankForm2.id ? $t('xg') : $t('zjhld')"
+      :visible.sync="dialogVisible2"
+      width="636px"
+      :before-close="
+        () => {
+          dialogVisible2 = false;
+        }
+      "
+    >
       <el-form label-position="top" ref="formss" :model="bankForm2">
         <el-form-item :label="$t('bdhbz')">
-          <el-select v-model="bankForm2.exFrom" class="elSelect" @change="changeExformCoin" filterable>
-            <el-option style="padding: 0 10px" v-for="item in coinList" :key="item.id" :value="item.coinCode"
-              :label="item.coinCode">
+          <el-select
+            v-model="bankForm2.exFrom"
+            class="elSelect"
+            @change="changeExformCoin"
+            filterable
+          >
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in coinList"
+              :key="item.id"
+              :value="item.coinCode"
+              :label="item.coinCode"
+            >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
@@ -321,8 +571,13 @@
         </el-form-item>
         <el-form-item :label="$t('dhbz')">
           <el-select v-model="bankForm2.exTarget" class="elSelect" filterable>
-            <el-option style="padding: 0 10px" v-for="item in targetCoinList" :key="item.id" :value="item.coinCode"
-              :label="item.coinCode">
+            <el-option
+              style="padding: 0 10px"
+              v-for="item in targetCoinList"
+              :key="item.id"
+              :value="item.coinCode"
+              :label="item.coinCode"
+            >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
@@ -334,9 +589,16 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('hl')">
-          <el-input v-model="bankForm2.exRate" type="number" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            v-model="bankForm2.exRate"
+            type="number"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
-        <el-form-item class="preview" v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate">
+        <el-form-item
+          class="preview"
+          v-if="bankForm2.exFrom && bankForm2.exTarget && bankForm2.exRate"
+        >
           {{
             `1(${bankForm2.exFrom}) = ${bankForm2.exRate}(${bankForm2.exTarget})`
           }}
@@ -346,7 +608,12 @@
         <el-button @click="dialogVisible2 = false">{{
           $t("cancel")
         }}</el-button>
-        <el-button type="primary" :class="bankloading && 'loading'" @click="sh2">{{ $t("sure") }}</el-button>
+        <el-button
+          type="primary"
+          :class="bankloading && 'loading'"
+          @click="sh2"
+          >{{ $t("sure") }}</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -359,6 +626,7 @@ import {
   setDeposit,
   delDeposit,
   delExchange,
+  getLimitSetting,
 } from "@/api/exchange";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
@@ -367,9 +635,9 @@ import { getFlagIcon, getCountryName, pjDownUrl } from "@/utils/common";
 import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
-  name: 'exchangeMange',
+  name: "exchangeMange",
   components: {
-    flagIconVue
+    flagIconVue,
   },
   data() {
     return {
@@ -432,6 +700,20 @@ export default {
       current: 1,
       total: 0,
       coinList: [],
+      limitObj: {
+        dp: {
+          label: this.$t("chongzhi"),
+          type: "success",
+        },
+        wd: {
+          label: this.$t("tx"),
+          type: "danger",
+        },
+        c: {
+          label: this.$t("duihuan"),
+          type: "warning",
+        },
+      },
     };
   },
   watch: {
@@ -453,11 +735,42 @@ export default {
       this.current = 1;
       this.getInitData();
     },
-    getInitData() {
-      if (this.type == "first") {
-        this.getlist();
-      } else {
-        this.getlist2();
+    async getInitData() {
+      try {
+        let req = {};
+        this.loading = true;
+
+        if (this.type == "first") {
+          req = await getDeposits({
+            ...this.form,
+            current: this.current,
+            size: this.size,
+          });
+          req.data.records.forEach((item) => {
+            Object.keys(item.bank).forEach((key) => {
+              if (key !== "coinCode") {
+                item[key] = item.bank[key];
+              }
+            });
+          });
+        }
+        if (this.type == "second") {
+          req = await getExchanges({
+            current: this.current,
+            size: this.size,
+          });
+        }
+        if (this.type == "third") {
+          req = await getLimitSetting({
+            current: this.current,
+            size: this.size,
+          });
+        }
+        this.loading = false;
+        this.tableData = req.data.records;
+        this.total = req.data.total;
+      } catch (error) {
+        this.loading = false;
       }
     },
     handleShowDetail(row, type) {
@@ -483,13 +796,23 @@ export default {
             type: "link",
           },
         ];
-      } else {
+      } else if (this.type == "second") {
         this.detailList = [
           { label: this.$t("bdhbz"), value: row.exFrom },
           { label: this.$t("bdhgj"), value: getCountryName(row.fromCountry) },
           { label: this.$t("dhbz"), value: row.exTarget },
           { label: this.$t("dhgj"), value: getCountryName(row.targetCountry) },
           { label: this.$t("hl"), value: row.exRate },
+          { label: this.$t("cjsj"), value: row.createTime },
+          { label: this.$t("xgsj"), value: row.modifiedTime },
+        ];
+      } else if (this.type == "third") {
+        this.detailList = [
+          { label: this.$t("bz"), value: row.coinCode },
+          { label: this.$t("lx"), value: this.limitObj[row.optType].label },
+          { label: this.$t("min"), value: row.coinMin || 0 },
+          { label: this.$t("max"), value: row.coinMax || this.$t('bxz') },
+          { label: this.$t("sxfei"), value: row.commission || 0 },
           { label: this.$t("cjsj"), value: row.createTime },
           { label: this.$t("xgsj"), value: row.modifiedTime },
         ];
@@ -510,8 +833,8 @@ export default {
           message: this.$t("czcg"),
         });
         this.detailVisible = false;
-        this.getlist();
-      } catch (error) { }
+        this.getInitData();
+      } catch (error) {}
     },
     async del2(id) {
       try {
@@ -521,8 +844,8 @@ export default {
           message: this.$t("czcg"),
         });
         this.detailVisible = false;
-        this.getlist2();
-      } catch (error) { }
+        this.getInitData();
+      } catch (error) {}
     },
     getNewareaList(list) {
       if (list.length) {
@@ -537,12 +860,11 @@ export default {
     },
     async getAllCoin() {
       try {
-        const res = await getCoinList()
-        this.coinList = res.data
+        const res = await getCoinList();
+        this.coinList = res.data;
       } catch {
-        console.error('error')
+        console.error("error");
       }
-
     },
     changeExformCoin() {
       // if (this.bankForm2.exFrom == "USDT") {
@@ -570,7 +892,7 @@ export default {
         let res = await countries();
         this.areaList = res.data;
         Local("areaList", res.data);
-      } catch (error) { }
+      } catch (error) {}
     },
     async getSzList() {
       try {
@@ -581,7 +903,7 @@ export default {
         let res = await cryptocurrencies();
         this.szList = res.data;
         Local("szList", res.data);
-      } catch (error) { }
+      } catch (error) {}
     },
     showAdd() {
       this.dialogVisible2 = true;
@@ -603,22 +925,22 @@ export default {
             message: this.$t("sccg"),
           });
         } else {
-          this.$message.error(req.msg)
+          this.$message.error(req.msg);
         }
-      } catch (error) { }
+      } catch (error) {}
       return false;
     },
     async sh2() {
       try {
         let fromCountry, targetCountry;
-        this.coinList.forEach(item => {
+        this.coinList.forEach((item) => {
           if (item.coinCode == this.bankForm2.exFrom) {
-            fromCountry = item.code
+            fromCountry = item.code;
           }
           if (item.coinCode == this.bankForm2.exTarget) {
-            targetCountry = item.code
+            targetCountry = item.code;
           }
-        })
+        });
         const res = await setExchange({
           ...this.bankForm2,
           fromCountry,
@@ -630,9 +952,9 @@ export default {
             type: "success",
             message: this.$t("czcg"),
           });
-          this.getlist2();
+          this.getInitData();
         }
-      } catch (error) { }
+      } catch (error) {}
     },
     async sh() {
       try {
@@ -641,9 +963,9 @@ export default {
           type: "success",
           message: this.$t("czcg"),
         });
-        this.getlist();
+        this.getInitData();
         this.dialogVisible = false;
-      } catch (error) { }
+      } catch (error) {}
     },
     toDetail(data) {
       this.dialogVisible = true;
@@ -657,44 +979,12 @@ export default {
         return item.coinCode !== data.exFrom;
       });
     },
-    async getlist() {
-      try {
-        this.loading = true;
-        let req = await getDeposits({
-          ...this.form,
-          current: this.current,
-          size: this.size,
-        });
-        this.loading = false;
-        req.data.records.forEach((item) => {
-          Object.keys(item.bank).forEach((key) => {
-            if (key !== "coinCode") {
-              item[key] = item.bank[key];
-            }
-          });
-        });
-        this.tableData = req.data.records;
-        this.total = req.data.total;
-      } catch (error) { }
-    },
-    async getlist2() {
-      try {
-        this.loading = true;
-        let req = await getExchanges({
-          current: this.current,
-          size: this.size,
-        });
-        this.loading = false;
-        this.tableData2 = req.data.records;
-        this.total = req.data.total;
-      } catch (error) { }
-    },
   },
   created() {
-    this.getlist();
+    this.getInitData();
     this.getFbList();
-    this.getSzList();
-    this.getAllCoin()
+    // this.getSzList();
+    this.getAllCoin();
   },
 };
 </script>

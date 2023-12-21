@@ -835,10 +835,11 @@ export default {
             return item.id == row.sendBank;
           });
           if (inlist.length && outlist.length) {
+          console.log(inlist[0], outlist[0])
             this.currentSelectRow = {
               ...this.currentSelectRow,
-              inbankName: inlist[0].bank.bankName,
-              inAccount: inlist[0].bank.accountName,
+              inbankName: inlist[0].bankName,
+              inAccount: inlist[0].accountName,
               inbankAccount: inlist[0].bankAccount,
               inbankCode: inlist[0].bankCode,
               inbankCountry: inlist[0].bankCountry,

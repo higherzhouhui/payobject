@@ -229,7 +229,7 @@ export default {
         { label: this.$t("bz"), value: row.coinCode },
         { label: this.$t("je"), value: row.billValue },
         { label: this.$t("ye"), value: row.balance || 0},
-        { label: this.$t("lx"), value: this.typeOption[row.billType] },
+        { label: this.$t("lx"), value: row.billBack ? this.$t('tuihui') : this.typeOption[row.billType] },
         { label: this.$t("cjsj"), value: row.createTime },
         { label: this.$t("xgsj"), value: row.modifiedTime },
       ];

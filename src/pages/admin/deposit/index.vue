@@ -248,9 +248,10 @@
             {{ $t("sxfei") }}
           </div>
           <div class="column-right">
-            {{
-              form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
-            }}<span class="unit" v-if="limitObj.commission">{{ form.coinCode }}</span>
+            {{ form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+            }}<span class="unit" v-if="limitObj.commission">{{
+              form.coinCode
+            }}</span>
           </div>
         </div>
       </div>
@@ -312,7 +313,9 @@
               usdtForm.coinCode
                 ? limitObj.commission || $t("nosxf")
                 : $t("dqr")
-            }}<span class="unit" v-if="limitObj.commission">{{ usdtForm.coinCode }}</span>
+            }}<span class="unit" v-if="limitObj.commission">{{
+              usdtForm.coinCode
+            }}</span>
           </div>
         </div>
       </div>
@@ -465,9 +468,8 @@
         ref="formss"
         :model="currentSelectRow"
         class="formStyle"
-        v-if="moneyType == 'fabi'"
       >
-        <el-form-item :label="$t('bz')">
+        <!-- <el-form-item :label="$t('bz')">
           <el-input
             v-model="currentSelectRow.coinCode"
             :readOnly="true"
@@ -542,7 +544,7 @@
             v-model="currentSelectRow.inbankAdd"
             :readOnly="true"
           ></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="$t('hkpz')">
           <div class="upload-item">
             <div class="item-left">
@@ -564,7 +566,8 @@
             <div class="item-right">
               <div class="sub-title"><span>*</span>{{ $t("hksdjt") }}</div>
               <div class="desc" style="color: #ff4d39">
-                {{ $t("hksdjtdes") }}
+                *{{ $t("hkdes") }} <br/>
+                *{{ $t("hksdjtdes") }}
               </div>
               <a
                 :href="'/api/file/downLoad?url=' + form.reqProof"
@@ -576,8 +579,30 @@
             </div>
           </div>
         </el-form-item>
+        <div
+        class="list"
+        v-for="(item, index) in detailList.filter((item) => {
+          return item.value;
+        })"
+        :key="index"
+      >
+        <div class="list-left">{{ item.label }}</div>
+        <div class="list-right">
+          <template v-if="item.type == 'link'">
+            <a :href="item.value" target="_blank">
+              <span>
+                <i class="el-icon-folder-checked"></i>
+                {{ $t("download") }}
+              </span>
+            </a>
+          </template>
+          <template v-else>
+            {{ item.value }}
+          </template>
+        </div>
+      </div>
       </el-form>
-      <el-form
+      <!-- <el-form
         label-position="top"
         ref="formss"
         class="formStyle"
@@ -646,7 +671,7 @@
             </div>
           </div>
         </el-form-item>
-      </el-form>
+      </el-form> -->
       <div slot="footer">
         <el-button class="qx" @click="dialogVisible = false">
           {{ $t("cancel") }}
@@ -745,6 +770,7 @@ export default {
         coinMin: 0,
         commission: 0,
       },
+      detailList: [],
     };
   },
   created() {
@@ -894,6 +920,13 @@ export default {
             ...this.usdtForm,
           };
           this.dialogVisible = true;
+          this.detailList = [
+          { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
+          { label: this.$t("czje"), value: this.currentSelectRow.reqValue },
+          { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
+          { label: this.$t("hkqbdz"), value: this.currentSelectRow.tid },
+          { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
+        ];
         }
       } catch (error) {
         console.error(error);
@@ -939,12 +972,56 @@ export default {
               inbankAdd: inlist[0].bank.bankAdd,
               inswiftCode: inlist[0].bank.swiftCode,
               outbankName: outlist[0].bankName,
-              outbankAccount: outlist[0].accountName,
-              outbankCode: outlist[0].bankAccount,
+              outbankAccount: outlist[0].bankAccount,
+              outbankCode: outlist[0].bankCode,
               outbankCountry: outlist[0].bankCountry,
               outbankAdd: outlist[0].bankAdd,
               outswiftCode: outlist[0].swiftCode,
             };
+            this.detailList = [
+              { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
+              { label: this.$t("czje"), value: this.currentSelectRow.reqValue },
+              {
+                label: this.$t("hkzh"),
+                value: this.currentSelectRow.outbankAccount,
+              },
+              {
+                label: this.$t("hkyh"),
+                value: this.currentSelectRow.outbankName,
+              },
+              {
+                label: this.$t("hkbankcode"),
+                value: this.currentSelectRow.outbankCode,
+              },
+              {
+                label: this.$t("skzhmc"),
+                value: this.currentSelectRow.accountName,
+              },
+              {
+                label: this.$t("skyh"),
+                value: this.currentSelectRow.inbankName,
+              },
+              {
+                label: this.$t("skzh"),
+                value: this.currentSelectRow.inbankAccount,
+              },
+              {
+                label: this.$t("skbankcode"),
+                value: this.currentSelectRow.inbankCode,
+              },
+              {
+                label: this.$t("skyhssgj"),
+                value: this.currentSelectRow.inbankCountry,
+              },
+              {
+                label: this.$t("skyhszdz"),
+                value: this.currentSelectRow.inbankAdd,
+              },
+              {
+                label: this.$t("sksdm"),
+                value: this.currentSelectRow.inswiftCode,
+              },
+            ];
             this.dialogVisible = true;
           }
         }

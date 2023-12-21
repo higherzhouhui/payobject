@@ -103,12 +103,7 @@
           :label="$t('cjsj')"
           min-width="180"
         />
-        <el-table-column
-          prop="name"
-          :label="$t('cz')"
-          width="70"
-          fixed="right"
-        >
+        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">
             <!-- <div @click.stop>
               <el-upload
@@ -163,7 +158,6 @@
         @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'usdt'"
       >
-       
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
@@ -173,10 +167,10 @@
           </template>
         </el-table-column>
         <el-table-column
-        prop="cryptAdd"
-        :label="$t('skqbdz')"
-        min-width="180"
-      />
+          prop="cryptAdd"
+          :label="$t('skqbdz')"
+          min-width="180"
+        />
         <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
         <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
         <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
@@ -185,14 +179,9 @@
           :label="$t('cjsj')"
           min-width="180"
         />
-        <el-table-column
-          prop="name"
-          :label="$t('cz')"
-          width="70"
-          fixed="right"
-        >
+        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">
-          <!-- <div @click.stop>
+            <!-- <div @click.stop>
             <el-upload
             class="upload-demo"
             action="/api/file/upload"
@@ -215,10 +204,10 @@
               class="operation-btn edit-btn"
               @click.stop="handleShowDetail(scope.row, 'upload')"
               v-if="
-              !scope.row.reqProof &&
-              !$store.state.userInfo.admin &&
-              scope.row.reqStatus == 1
-            "
+                !scope.row.reqProof &&
+                !$store.state.userInfo.admin &&
+                scope.row.reqStatus == 1
+              "
             >
               {{ $t("schkpz") }}
             </div>
@@ -288,7 +277,7 @@
               <a :href="item.value" target="_blank">
                 <span>
                   <i class="el-icon-folder-checked"></i>
-                  {{$t('download')}}
+                  {{ $t("download") }}
                 </span>
               </a>
             </template>
@@ -311,23 +300,77 @@
       </div>
     </el-dialog>
     <el-dialog
-    :title="$t('sqtjcg')"
-    :visible.sync="uploaddialogVisible"
-    width="636px"
-    :before-close="
-      () => {
-        uploaddialogVisible = false;
-      }
-    "
-  >
-    <el-form
-      label-position="top"
-      ref="formss"
-      :model="currentSelectRow"
-      class="formStyle"
-      v-if="moneyType == 'fabi'"
+      :title="$t('sqtjcg')"
+      :visible.sync="uploaddialogVisible"
+      width="636px"
+      :before-close="
+        () => {
+          uploaddialogVisible = false;
+        }
+      "
     >
-      <el-form-item :label="$t('bz')">
+      <el-form
+        label-position="top"
+        ref="formss"
+        :model="currentSelectRow"
+        class="formStyle"
+      >
+      <el-form-item :label="$t('hkpz')">
+        <div class="upload-item">
+          <div class="item-left">
+            <el-upload
+              action="/api/file/upload"
+              list-type="text"
+              accept=".pdf, image/*"
+              :on-success="(e) => handlesuccess(e)"
+            >
+              <div class="load-cover">
+                <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
+                <i class="el-icon-folder-checked" v-else></i>
+              </div>
+              <div slot="tip" class="el-upload__tip">
+                {{ $t("uploaddes") }}
+              </div>
+            </el-upload>
+          </div>
+          <div class="item-right">
+            <div class="sub-title"><span>*</span>{{ $t("hksdjt") }}</div>
+            <div class="desc" style="color: #ff4d39">
+              {{ $t("hkdes") }}
+            </div>
+            <a
+              :href="'/api/file/downLoad?url=' + form.reqProof"
+              target="_blank"
+              class="down"
+              v-if="form.reqProof"
+              >{{ $t("download") }}</a
+            >
+          </div>
+        </div>
+      </el-form-item>
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value && !item.upHide;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                <span>
+                  <i class="el-icon-folder-checked"></i>
+                  {{ $t("download") }}
+                </span>
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
+        <!-- <el-form-item :label="$t('bz')">
         <el-input
           v-model="currentSelectRow.coinCode"
           :readOnly="true"
@@ -394,50 +437,16 @@
           v-model="currentSelectRow.inbankCountry"
           :readOnly="true"
         ></el-input>
-      </el-form-item>
-
+      </el-form-item> 
       <el-form-item :label="$t('skyhszdz')">
         <el-input
           type="textarea"
           v-model="currentSelectRow.inbankAdd"
           :readOnly="true"
         ></el-input>
-      </el-form-item>
-      <el-form-item :label="$t('hkpz')">
-        <div class="upload-item">
-          <div class="item-left">
-            <el-upload
-              action="/api/file/upload"
-              list-type="text"
-              accept=".pdf, image/*"
-              :on-success="(e) => handlesuccess(e)"
-            >
-              <div class="load-cover">
-                <i class="el-icon-folder-add" v-if="!form.reqProof"></i>
-                <i class="el-icon-folder-checked" v-else></i>
-              </div>
-              <div slot="tip" class="el-upload__tip">
-                {{ $t("uploaddes") }}
-              </div>
-            </el-upload>
-          </div>
-          <div class="item-right">
-            <div class="sub-title"><span>*</span>{{ $t("hksdjt") }}</div>
-            <div class="desc" style="color: #ff4d39">
-              {{ $t("hksdjtdes") }}
-            </div>
-            <a
-              :href="'/api/file/downLoad?url=' + form.reqProof"
-              target="_blank"
-              class="down"
-              v-if="form.reqProof"
-              >{{ $t("download") }}</a
-            >
-          </div>
-        </div>
-      </el-form-item>
-    </el-form>
-    <el-form
+      </el-form-item>-->
+      </el-form>
+      <!-- <el-form
       label-position="top"
       ref="formss"
       class="formStyle"
@@ -506,16 +515,16 @@
           </div>
         </div>
       </el-form-item>
-    </el-form>
-    <div slot="footer">
-      <el-button class="qx" @click="uploaddialogVisible = false">
-        {{ $t("cancel") }}
-      </el-button>
-      <el-button class="qd" :class="loading && 'loading'" @click="confirmPz">
-        {{ $t("sure") }}
-      </el-button>
-    </div>
-  </el-dialog>
+    </el-form> -->
+      <div slot="footer">
+        <el-button class="qx" @click="uploaddialogVisible = false">
+          {{ $t("cancel") }}
+        </el-button>
+        <el-button class="qd" :class="loading && 'loading'" @click="confirmPz">
+          {{ $t("sure") }}
+        </el-button>
+      </div>
+    </el-dialog>
     <el-dialog
       :title="operationType == 'detail' ? $t('xq') : $t('sh')"
       :visible.sync="usdtdialogVisible"
@@ -534,20 +543,20 @@
           })"
           :key="index"
         >
-        <div class="list-left">{{ item.label }}</div>
-        <div class="list-right">
-          <template v-if="item.type == 'link'">
-            <a :href="item.value" target="_blank">
-              <span>
-                <i class="el-icon-folder-checked"></i>
-                {{$t('download')}}
-              </span>
-            </a>
-          </template>
-          <template v-else>
-            {{ item.value }}
-          </template>
-        </div>
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                <span>
+                  <i class="el-icon-folder-checked"></i>
+                  {{ $t("download") }}
+                </span>
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
         </div>
       </div>
       <div slot="footer">
@@ -875,12 +884,14 @@ export default {
           {
             label: this.$t("kzt"),
             value: this.status[this.currentSelectRow.reqStatus],
+            upHide: true,
           },
           {
             label: this.$t("bhly"),
             value: this.status[this.currentSelectRow.memo],
+            upHide: true,
           },
-        
+
           { label: this.$t("hkzh"), value: this.currentSelectRow.sendAccount },
           { label: this.$t("hkyh"), value: this.currentSelectRow.outbankName },
           {
@@ -890,30 +901,34 @@ export default {
           {
             label: this.$t("hkbankcode"),
             value: this.currentSelectRow.outbankCode,
+            upHide: true,
           },
           {
             label: this.$t("hkyhssgj"),
             value: getCountryName(this.currentSelectRow.outbankCountry),
+            upHide: true,
           },
           {
             label: this.$t("hkyhssdz"),
             value: this.currentSelectRow.outbankAdd,
+            upHide: true,
           },
           {
             label: this.$t("hksdm"),
             value: this.currentSelectRow.outswiftCode,
+            upHide: true,
           },
           {
             label: this.$t("skzhmc"),
             value: this.currentSelectRow.accountName,
           },
           {
-            label: this.$t("skzh"),
-            value: this.currentSelectRow.inbankAccount,
-          },
-          {
             label: this.$t("skyh"),
             value: this.currentSelectRow.inbankName,
+          },
+          {
+            label: this.$t("skzh"),
+            value: this.currentSelectRow.inbankAccount,
           },
           {
             label: this.$t("skbankcode"),
@@ -929,11 +944,18 @@ export default {
           },
           { label: this.$t("sksdm"), value: this.currentSelectRow.inswiftCode },
           { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
-          { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
-          { label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.reqProof), type: 'link' },
-          
+          {
+            label: this.$t("xgsj"),
+            value: this.currentSelectRow.modifiedTime,
+            upHide: true,
+          },
+          {
+            label: this.$t("hkpz"),
+            value: pjDownUrl(this.currentSelectRow.reqProof),
+            type: "link",
+          },
         ];
-        if (type == 'detail') {
+        if (type == "detail") {
           this.dialogVisible = true;
         } else {
           this.uploaddialogVisible = true;
@@ -946,20 +968,25 @@ export default {
           {
             label: this.$t("kzt"),
             value: this.usdtstatus[this.currentSelectRow.reqStatus],
+            upHide: true,
           },
           { label: this.$t("bhly"), value: this.currentSelectRow.memo },
           { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
           { label: this.$t("hkqbdz"), value: this.currentSelectRow.tid },
           { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
           { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
-          { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
+          {
+            label: this.$t("xgsj"),
+            value: this.currentSelectRow.modifiedTime,
+            upHide: true,
+          },
           {
             label: this.$t("hkpz"),
             value: pjDownUrl(this.currentSelectRow.reqProof),
             type: "link",
           },
         ];
-        if (type == 'detail') {
+        if (type == "detail") {
           this.usdtdialogVisible = true;
         } else {
           this.uploaddialogVisible = true;
@@ -999,14 +1026,14 @@ export default {
           this.currentSelectRow = {
             ...this.currentSelectRow,
             reqProof: req.data[0],
-            reqStatus: 2
-          }
+            reqStatus: 2,
+          };
           Message({
-              type: "success",
-              message: this.$t("sccg"),
-            });
+            type: "success",
+            message: this.$t("sccg"),
+          });
         } else {
-          this.$message.error(req.msg)
+          this.$message.error(req.msg);
         }
       } catch (error) {
         console.log(error);

@@ -20,8 +20,7 @@
       <el-table-column
         prop="companyName"
         :label="$t('qymc')"
-        min-
-        width="180"
+        min-width="180"
         show-overflow-tooltip
       />
       <el-table-column
@@ -194,7 +193,7 @@
       v-loading="cryptwithdrawLoading"
       v-if="cryptwithdrawTotal"
     >
-      <el-table-column prop="srcCode" :label="$t('bz')" width="100" />
+      <el-table-column prop="srcCode" :label="$t('bz')" min-width="80" />
       <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
       <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
       <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
@@ -221,7 +220,7 @@
       v-loading="exchangeLoading"
       @row-click="(e) => handleShowDetail(e, 'detail')"
     >
-      <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
+      <el-table-column prop="depCoin" :label="$t('bz')" min-width="80" />
       <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" />
       <el-table-column prop="targetCoin" :label="$t('mbbz')" min-width="100" />
       <el-table-column

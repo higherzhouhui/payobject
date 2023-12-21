@@ -90,7 +90,7 @@
         <el-table-column
         prop="accountName"
         :label="$t('skzhmc')"
-        width="180"
+        min-width="180"
         show-overflow-tooltip
       />
       <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />

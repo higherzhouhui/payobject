@@ -835,7 +835,6 @@ export default {
             return item.id == row.sendBank;
           });
           if (inlist.length && outlist.length) {
-          console.log(inlist[0], outlist[0])
             this.currentSelectRow = {
               ...this.currentSelectRow,
               inbankName: inlist[0].bankName,
@@ -958,8 +957,10 @@ export default {
         ];
         if (type == "detail") {
           this.dialogVisible = true;
-        } else {
+        } else if (type == "upload") {
           this.uploaddialogVisible = true;
+        } else if (type == "pass") {
+          this.dialogVisible = true
         }
       }
       if (this.moneyType == "usdt") {
@@ -989,8 +990,10 @@ export default {
         ];
         if (type == "detail") {
           this.usdtdialogVisible = true;
-        } else {
+        } else if (type == "upload") {
           this.uploaddialogVisible = true;
+        } else if (type == "pass") {
+          this.usdtdialogVisible = true
         }
       }
     },

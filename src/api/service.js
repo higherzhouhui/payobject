@@ -94,9 +94,20 @@ async function request(options) {
             return
         } else if (data.code != 200 && data.code != 0) {
             if (data.data) {
+                let str = ''
+                try {
+                    data.data.forEach((item,index) => {
+                        str += item.errMsg
+                        if (index !== data.data.length - 1) {
+                            str += ','
+                        }
+                    })
+                } catch {
+                    console.error(data.data)
+                }
                 Message({
                     type: 'error',
-                    message: data.data
+                    message: str || data.data
                 })
             } else {
                 Message({

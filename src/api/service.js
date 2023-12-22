@@ -99,7 +99,7 @@ async function request(options) {
                     data.data.forEach((item,index) => {
                         str += item.errMsg
                         if (index !== data.data.length - 1) {
-                            str += ','
+                            str += '<br/>'
                         }
                     })
                 } catch {
@@ -107,7 +107,8 @@ async function request(options) {
                 }
                 Message({
                     type: 'error',
-                    message: str || data.data
+                    message: str || data.data,
+                    dangerouslyUseHTMLString: true,
                 })
             } else {
                 Message({

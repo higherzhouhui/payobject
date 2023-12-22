@@ -93,10 +93,17 @@ async function request(options) {
             router.push("/index")
             return
         } else if (data.code != 200 && data.code != 0) {
-            Message({
-                type: 'error',
-                message: data.msg
-            })
+            if (data.data) {
+                Message({
+                    type: 'error',
+                    message: data.data
+                })
+            } else {
+                Message({
+                    type: 'error',
+                    message: data.msg
+                })
+            }
             return Promise.reject(data.msg);
         }
         execOnce = false

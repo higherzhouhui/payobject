@@ -412,15 +412,15 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
-              :value="item.areaCode"
-              :label="item.areaCode"
+              :value="item.code"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
                   {{ lang == "zh" ? item.name : item.enName }}
                 </div>
-                <div class="right">{{ item.areaCode }}</div>
+                <div class="right">{{ item.code }}</div>
               </div>
             </el-option>
           </el-select>
@@ -466,15 +466,15 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.value"
-              :value="item.areaCode"
-              :label="item.areaCode"
+              :value="item.code"
+              :label="lang == 'zh' ? item.name : item.enName"
             >
               <div class="el-option">
                 <div class="left">
                   <flagIconVue :code="item.coinCode" />
                   {{ lang == "zh" ? item.name : item.enName }}
                 </div>
-                <div class="right">{{ item.areaCode }}</div>
+                <div class="right">{{ item.code }}</div>
               </div>
             </el-option>
           </el-select>
@@ -631,7 +631,7 @@ import {
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { countries, cryptocurrencies, getCoinList } from "@/api/login";
-import { getFlagIcon, getCountryName, pjDownUrl } from "@/utils/common";
+import { getCountryName, pjDownUrl } from "@/utils/common";
 import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
@@ -645,7 +645,6 @@ export default {
       detailList: [],
       operationType: "",
       currentSelectRow: {},
-      getFlagIcon: getFlagIcon,
       dialogVisible2: false,
       lang: Local("lang") || "zh",
       bankloading: false,

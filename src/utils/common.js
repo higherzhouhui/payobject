@@ -4,7 +4,7 @@ import { Local } from '@/utils/index'
 export const getFlagIcon = (coinCode, areaList) => {
     let icon = ''
     const thelist = Local("areaList") || areaList || []
-    const mlist = thelist.filter(item => { return item.coinCode == coinCode || item.name === coinCode || item.enName == coinCode})
+    const mlist = thelist.filter(item => { return item.code == coinCode || item.coinCode == coinCode || item.name === coinCode || item.enName == coinCode})
     if (mlist.length) {
         icon += 'flag-icon-' + mlist[0].code.toLocaleLowerCase()
     }

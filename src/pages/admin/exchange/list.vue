@@ -193,10 +193,10 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
-              :value="item.areaCode"
+              :value="item.code"
               :label="lang == 'zh' ? item.name : item.enName"
             >
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+              <flagIconVue :code="item.coinCode" />
               {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
@@ -242,10 +242,10 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
-              :value="item.areaCode"
+              :value="item.code"
               :label="lang == 'zh' ? item.name : item.enName"
             >
-              <span :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></span>
+              <flagIconVue :code="item.coinCode" />
               {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
@@ -396,7 +396,7 @@ import { getBankListPage, subBank, bankDel, getBank } from "@/api/bank";
 import { countries, getSupCoinList } from "@/api/login";
 import { Message } from "element-ui";
 import { getHashParams, Local } from "@/utils/index";
-import { getCountryName, getFlagIcon, pjDownUrl } from "@/utils/common";
+import { getCountryName, pjDownUrl } from "@/utils/common";
 import passwordVue from "@/components/common/password.vue"
 import flagIconVue from "@/components/common/flagicon.vue";
 
@@ -409,7 +409,6 @@ export default {
       detailList: [],
       operationType: "",
       currentSelectRow: {},
-      getFlagIcon: getFlagIcon,
       lang: Local("lang") || "zh",
       dialogVisible: false,
       bankloading: false,
@@ -508,7 +507,7 @@ export default {
       const data= res.data || {}
       this.loading = false
       this.detailList = [
-        { label: this.$t("bz"), value: data.bindCoins },
+        { label: this.$t("bz"), value: data.bindCoins ? data.bindCoins.join(",") : ""},
         { label: this.$t("zhmc"), value: row.accountName },
         { label: this.$t("jzdz"), value: row.accountAdd },
         { label: this.$t("ssgj"), value: getCountryName(row.country) },

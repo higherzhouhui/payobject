@@ -10,6 +10,11 @@
     src="@/assets/images/eu.png"
     :class="dashboard ? 'usdt-pic' : 'usdt-inner'"
   />
+  <img
+    v-else-if="code == 'ANG'"
+    src="@/assets/images/an.png"
+    :class="dashboard ? 'usdt-pic' : 'usdt-inner'"
+  />
   <span
   v-else-if="getFlagIcon(code, flagList)"
   :class="`flag-icon ${getFlagIcon(code, flagList)}`"

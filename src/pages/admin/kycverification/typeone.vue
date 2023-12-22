@@ -63,10 +63,10 @@
               style="padding: 0 10px"
               v-for="item in areaList"
               :key="item.id"
-              :value="item.areaCode"
+              :value="item.code"
               :label="lang == 'zh' ? item.name : item.enName"
             >
-              <div :class="`flag-icon ${getFlagIcon(item.coinCode)}`"></div>
+              <flagIconVue :code="item.coinCode" />
               {{ lang == "zh" ? item.name : item.enName }}
             </el-option>
           </el-select>
@@ -280,15 +280,18 @@ import { SubKyc } from "@/api/user";
 import { Message } from "element-ui";
 import { Local } from "@/utils/index";
 import { countries } from "@/api/login";
-import { getCountryName, getFlagIcon, pjDownUrl } from "@/utils/common";
+import { getCountryName, pjDownUrl } from "@/utils/common";
+import flagIconVue from "@/components/common/flagicon.vue";
 export default {
   name: "verifiedOne",
+  components: {
+    flagIconVue
+  },
   props: ["type"],
   data() {
     return {
       detailList: [],
       dialogVisibleSuccess: false,
-      getFlagIcon: getFlagIcon,
       loading: false,
       lang: Local("lang") || "zh",
       form: {

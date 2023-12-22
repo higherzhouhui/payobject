@@ -699,13 +699,7 @@
         >
           <div class="list">
             <div class="list-left">
-              <span
-                :class="`flag-icon ${getFlagIcon(
-                  userBalanceDetail[index].coinCode
-                )}`"
-                v-if="item.coinCode != 'USDT'"
-              ></span>
-              <img src="@/assets/images/usdt.png" v-else class="usdt-inner" />
+              <flagIconVue :code="userBalanceDetail[index].coinCode"/>
               {{ userBalanceDetail[index].coinCode }}
             </div>
             <div class="list-right">
@@ -748,13 +742,16 @@ import { setCryAcc, getCryAdd } from "@/api/exchange";
 import { cryptocurrencies, countries } from "@/api/login";
 import { Local, getHashParams } from "@/utils/index";
 import { Message } from "element-ui";
-import { getCountryName, pjDownUrl, getFlagIcon } from "@/utils/common";
+import { getCountryName, pjDownUrl } from "@/utils/common";
+import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
   name: "KYCPage",
+  components: {
+    flagIconVue
+  },
   data() {
     return {
-      getFlagIcon: getFlagIcon,
       searchForm: {},
       agreementList: [
         { label: "TRC20", value: "TRC20" },

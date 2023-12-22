@@ -176,10 +176,18 @@
           min-width="180"
         />
         <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
-        <!-- <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" /> -->
         <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-        <!-- <el-table-column prop="witValue" :label="$t('yjdzje')" min-width="120" /> -->
-        <el-table-column prop="tid" :label="$t('tid')" width="120" />
+        <el-table-column
+        prop="commission"
+        :label="$t('sxfei')"
+        min-width="110"
+      />
+      <el-table-column
+        prop="withdrawValue"
+        :label="$t('dzje')"
+        min-width="120"
+      />
+        <el-table-column prop="tid" :label="$t('tid')" min-width="120" show-overflow-tooltip/>
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
@@ -452,14 +460,22 @@
       "
     >
       <el-form label-position="top" ref="formss" :model="currentSelectRow" :class="operationLoading && 'loading'">
-        <el-form-item :label="$t('sjdzje')" v-if="moneyType == 'fabi'">
+        <el-form-item :label="$t('ckje')">
+          <el-input
+            type="number"
+            v-model="currentSelectRow.reqValue"
+            :placeholder="$t('qsr')"
+            readonly
+          ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('sjdzje')">
           <el-input
             type="number"
             v-model="currentSelectRow.withdrawValue"
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('sxfei')" v-if="moneyType == 'fabi'">
+        <el-form-item :label="$t('sxfei')">
           <el-input
             type="number"
             v-model="currentSelectRow.commission"
@@ -799,6 +815,7 @@ export default {
         if (outlist.length) {
           this.currentSelectRow = {
             ...this.currentSelectRow,
+            outbankName: outlist[0].bankName,
             outbankAccount: outlist[0].bankAccount,
             outbankCode: outlist[0].bankCode,
             outbankCountry: outlist[0].bankCountry,
@@ -814,6 +831,10 @@ export default {
           {
             label: this.$t("skzhmc"),
             value: this.currentSelectRow.accountName,
+          },
+          {
+            label: this.$t("skyh"),
+            value: this.currentSelectRow.outbankName,
           },
           {
             label: this.$t("skzh"),

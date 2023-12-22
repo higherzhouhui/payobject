@@ -77,8 +77,6 @@
         @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'fabi'"
       >
-       
-
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
@@ -88,23 +86,33 @@
           </template>
         </el-table-column>
         <el-table-column
-        prop="accountName"
-        :label="$t('skzhmc')"
-        min-width="180"
-        show-overflow-tooltip
-      />
-      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+          prop="accountName"
+          :label="$t('skzhmc')"
+          min-width="180"
+          show-overflow-tooltip
+        />
+        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+        <el-table-column
+          prop="commission"
+          :label="$t('sxfei')"
+          min-width="110"
+        />
+        <el-table-column
+          prop="withdrawValue"
+          :label="$t('dzje')"
+          min-width="120"
+        />
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
           min-width="180"
         />
         <el-table-column
-          prop="name"
-          :label="$t('cz')"
-          width="95"
-          fixed="right"
-        >
+          prop="modifiedTime"
+          :label="$t('xgsj')"
+          min-width="180"
+        />
+        <el-table-column prop="name" :label="$t('cz')" width="95" fixed="right">
           <template slot-scope="scope">
             <!-- <div
               class="operation-btn"
@@ -171,19 +179,13 @@
         <!-- <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" /> -->
         <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
         <!-- <el-table-column prop="witValue" :label="$t('yjdzje')" min-width="120" /> -->
-        <!-- <el-table-column prop="tid" :label="$t('汇款钱包地址')" width="180" /> -->
-
+        <el-table-column prop="tid" :label="$t('tid')" width="120" />
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
           min-width="180"
         />
-        <el-table-column
-          prop="name"
-          :label="$t('cz')"
-          width="70"
-          fixed="right"
-        >
+        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">
             <!-- <div class="operation-btn" @click="handleShowDetail(scope.row)">
               {{ $t("xq") }}
@@ -234,30 +236,30 @@
         }
       "
     >
-    <div class="formStyle">
-      <div
-        class="list"
-        v-for="(item, index) in detailList.filter((item) => {
-          return item.value;
-        })"
-        :key="index"
-      >
-      <div class="list-left">{{ item.label }}</div>
-      <div class="list-right">
-        <template v-if="item.type == 'link'">
-          <a :href="item.value" target="_blank">
-            <span>
-              <i class="el-icon-folder-checked"></i>
-              {{$t('download')}}
-            </span>
-          </a>
-        </template>
-        <template v-else>
-          {{ item.value }}
-        </template>
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                <span>
+                  <i class="el-icon-folder-checked"></i>
+                  {{ $t("download") }}
+                </span>
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
       <!-- <el-form
         label-position="top"
         ref="formss"
@@ -357,30 +359,30 @@
         }
       "
     >
-    <div class="formStyle">
-      <div
-        class="list"
-        v-for="(item, index) in detailList.filter((item) => {
-          return item.value;
-        })"
-        :key="index"
-      >
-      <div class="list-left">{{ item.label }}</div>
-      <div class="list-right">
-        <template v-if="item.type == 'link'">
-          <a :href="item.value" target="_blank">
-            <span>
-              <i class="el-icon-folder-checked"></i>
-              {{$t('download')}}
-            </span>
-          </a>
-        </template>
-        <template v-else>
-          {{ item.value }}
-        </template>
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                <span>
+                  <i class="el-icon-folder-checked"></i>
+                  {{ $t("download") }}
+                </span>
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value }}
+            </template>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
       <!-- <el-form
         label-position="top"
         ref="formss"
@@ -449,7 +451,7 @@
         }
       "
     >
-      <el-form label-position="top" ref="formss" :model="currentSelectRow">
+      <el-form label-position="top" ref="formss" :model="currentSelectRow" :class="operationLoading && 'loading'">
         <el-form-item :label="$t('sjdzje')" v-if="moneyType == 'fabi'">
           <el-input
             type="number"
@@ -474,13 +476,16 @@
           <div class="upload-item">
             <div class="item-left">
               <el-upload
-                    action="/api/file/upload"
+                action="/api/file/upload"
                 list-type="text"
                 accept=".pdf, .zip, .rar, image/*"
                 :on-success="(e) => handlesuccess(e)"
               >
                 <div class="load-cover">
-                  <i class="el-icon-folder-add" v-if="!currentSelectRow.withdrawProof"></i>
+                  <i
+                    class="el-icon-folder-add"
+                    v-if="!currentSelectRow.withdrawProof"
+                  ></i>
                   <i class="el-icon-folder-checked" v-else></i>
                 </div>
                 <div slot="tip" class="el-upload__tip">
@@ -492,7 +497,9 @@
               <div class="sub-title"><span>*</span>{{ $t("hkzmcl") }}</div>
               <div class="desc">{{ $t("hkzmdes") }}</div>
               <a
-                :href="'/api/file/downLoad?url=' + currentSelectRow.withdrawProof"
+                :href="
+                  '/api/file/downLoad?url=' + currentSelectRow.withdrawProof
+                "
                 target="_blank"
                 class="down"
                 v-if="currentSelectRow.withdrawProof"
@@ -547,7 +554,12 @@
     >
       <el-form label-position="top" ref="formss" :model="currentSelectRow">
         <el-form-item :label="$t('bhly')">
-          <el-input type="textarea" :rows="8" v-model="currentSelectRow.memo" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            type="textarea"
+            :rows="8"
+            v-model="currentSelectRow.memo"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -571,7 +583,6 @@
   </div>
 </template>
   <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import {
   withdrawList,
   cryptWithdrawList,
@@ -580,14 +591,13 @@ import {
   withdrawAccounts,
   perCryptWithdraw,
 } from "@/api/out.js";
-import { upload } from "@/api/file";
+import { getLimit } from "@/api/exchange";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank.js";
 import { getHashParams } from "@/utils/index";
 import { pjDownUrl, getCountryName } from "@/utils/common";
 export default {
   name: "widthDrawl",
-  components: { LinkPath },
   data() {
     return {
       pickerOptions: {
@@ -732,6 +742,19 @@ export default {
     passWithdraw(row) {
       this.currentSelectRow = row;
       this.passdialogVisible = true;
+      try {
+        getLimit({
+        coin: row.coinCode,
+        act: "wd",
+      }).then(res => {
+        this.currentSelectRow = {
+          ...this.currentSelectRow,
+          commission: res.data ? res.data.commission || '' : ''
+        }
+      })
+    } catch {
+      console.error('error')
+    }
     },
     rejectWithdraw(row) {
       this.currentSelectRow = row;
@@ -768,7 +791,7 @@ export default {
     },
     handleShowDetail(row, type) {
       this.currentSelectRow = row;
-      this.operationType = type
+      this.operationType = type;
       if (this.moneyType == "fabi") {
         const outlist = this.outCoinList.filter((item) => {
           return item.id == row.bankId;
@@ -784,37 +807,72 @@ export default {
           };
         }
         this.detailList = [
-          {label: this.$t("bz"), value: this.currentSelectRow.coinCode},
-          {label: this.$t("ckje"), value: this.currentSelectRow.reqValue},
-          {label: this.$t("skzhmc"), value: this.currentSelectRow.accountName},
-          {label: this.$t("skzh"), value: this.currentSelectRow.outbankAccount},
-          {label: this.$t("bankcode"), value: this.currentSelectRow.outbankCode},
-          {label: this.$t("skyhszdz"), value: this.currentSelectRow.outbankAdd},
-          {label: this.$t("khgj"), value: getCountryName(this.currentSelectRow.outbankCountry)},
-          {label: this.$t("sksdm"), value: this.currentSelectRow.outswiftCode},
-          {label: this.$t("sxfei"), value: this.currentSelectRow.commission},
-          {label: this.$t("kzt"), value: this.status[this.currentSelectRow.reqStatus]},
-          {label: this.$t("bhly"), value: this.currentSelectRow.memo},
-          {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
-          {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
-          {label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.withdrawProof), type: "link"},
-        ]
+          { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
+          { label: this.$t("ckje"), value: this.currentSelectRow.reqValue },
+          { label: this.$t("sxfei"), value: this.currentSelectRow.commission },
+          { label: this.$t("dzje"), value: this.currentSelectRow.withdrawValue },
+          {
+            label: this.$t("skzhmc"),
+            value: this.currentSelectRow.accountName,
+          },
+          {
+            label: this.$t("skzh"),
+            value: this.currentSelectRow.outbankAccount,
+          },
+          {
+            label: this.$t("bankcode"),
+            value: this.currentSelectRow.outbankCode,
+          },
+          {
+            label: this.$t("skyhszdz"),
+            value: this.currentSelectRow.outbankAdd,
+          },
+          {
+            label: this.$t("khgj"),
+            value: getCountryName(this.currentSelectRow.outbankCountry),
+          },
+          {
+            label: this.$t("sksdm"),
+            value: this.currentSelectRow.outswiftCode,
+          },
+          { label: this.$t("sxfei"), value: this.currentSelectRow.commission },
+          {
+            label: this.$t("kzt"),
+            value: this.status[this.currentSelectRow.reqStatus],
+          },
+          { label: this.$t("bhly"), value: this.currentSelectRow.memo },
+          { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
+          { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
+          {
+            label: this.$t("hkpz"),
+            value: pjDownUrl(this.currentSelectRow.withdrawProof),
+            type: "link",
+          },
+        ];
         this.dialogVisible = true;
       }
       if (this.moneyType == "usdt") {
         this.detailList = [
-          {label: this.$t("bz"), value: this.currentSelectRow.coinCode},
-          {label: this.$t("ckje"), value: this.currentSelectRow.reqValue},
-          {label: this.$t("jmxy"), value: this.currentSelectRow.agreement},
-          {label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd},
-          {label: this.$t("tid"), value: this.currentSelectRow.tid},
-          {label: this.$t("kzt"), value: this.usdtstatus[this.currentSelectRow.reqStatus]},
-          {label: this.$t("bhly"), value: this.currentSelectRow.memo},
-          {label: this.$t("cjsj"), value: this.currentSelectRow.createTime},
-          {label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime},
-          {label: this.$t("hkpz"), value: pjDownUrl(this.currentSelectRow.reqProof), type: "link"},
-
-        ]
+          { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
+          { label: this.$t("ckje"), value: this.currentSelectRow.reqValue },
+          { label: this.$t("sxfei"), value: this.currentSelectRow.commission },
+          { label: this.$t("dzje"), value: this.currentSelectRow.withdrawValue },
+          { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
+          { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
+          { label: this.$t("tid"), value: this.currentSelectRow.tid },
+          {
+            label: this.$t("kzt"),
+            value: this.usdtstatus[this.currentSelectRow.reqStatus],
+          },
+          { label: this.$t("bhly"), value: this.currentSelectRow.memo },
+          { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
+          { label: this.$t("xgsj"), value: this.currentSelectRow.modifiedTime },
+          {
+            label: this.$t("hkpz"),
+            value: pjDownUrl(this.currentSelectRow.reqProof),
+            type: "link",
+          },
+        ];
         this.usdtdialogVisible = true;
       }
     },
@@ -857,7 +915,7 @@ export default {
             message: this.$t("sccg"),
           });
         } else {
-          this.$message.error(req.msg)
+          this.$message.error(req.msg);
         }
       } catch (error) {
         console.log(error);

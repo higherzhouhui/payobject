@@ -195,3 +195,8 @@ export const cancelDeposit = (data) => service({
     data,
     method: 'get'
 })
+export const cancelCryptWithdraw = (data) => service({
+    url: '/cancelCryptWithdraw',
+    data,
+    method: 'get'
+})

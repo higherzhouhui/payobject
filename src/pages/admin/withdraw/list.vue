@@ -193,9 +193,13 @@
         />
         <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">
-            <!-- <div class="operation-btn" @click="handleShowDetail(scope.row)">
-              {{ $t("xq") }}
-            </div> -->
+            <div
+            class="operation-btn reject-btn"
+            @click.stop="handleShowDetail(scope.row, 'cancel')"
+            v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
+          >
+            {{ $t("cancel") }}
+          </div>
             <div
               class="operation-btn pass-btn"
               @click.stop="passWithdraw(scope.row)"
@@ -312,6 +316,9 @@
       <div slot="footer">
         <el-button class="qx" @click="usdtdialogVisible = false">{{
           $t("cancel")
+        }}</el-button>
+        <el-button class="qd" v-if="operationType == 'cancel'" @click="cancelConfirm">{{
+          $t("qrqx")
         }}</el-button>
       </div>
     </el-dialog>
@@ -453,6 +460,7 @@ import {
   withdrawAccounts,
   perCryptWithdraw,
   cancelWithdraw,
+  cancelCryptWithdraw,
 } from "@/api/out.js";
 import { getLimit } from "@/api/exchange";
 import { Message } from "element-ui";
@@ -507,6 +515,7 @@ export default {
         this.$t("shz"),
         this.$t("done"),
         this.$t("bh"),
+        this.$t("yqx"),
       ],
       usdttypeOption: ["", "info", "success", "danger", "danger", "danger",],
       status: [
@@ -516,7 +525,7 @@ export default {
         this.$t("done"),
         this.$t("qrdz"),
         this.$t("bh"),
-        this.$t("cancel"),
+        this.$t("yqx"),
       ],
       typeOption: ["", "info", "warning", "success", "danger", "danger", "danger"],
       dialogVisible: false,
@@ -569,6 +578,19 @@ export default {
           console.error('cancelWithdraw')
         }
       }
+    },
+    async cancelConfirm() {
+      try {
+          await cancelCryptWithdraw({cryptId: this.currentSelectRow.id})
+          Message({
+            type: "success",
+            message: this.$t("czcg"),
+          });
+          this.usdtdialogVisible = false;
+          this.getInitData();
+        } catch {
+          console.error('cancelCryptWithdraw')
+        }
     },
     async passConfirm() {
       try {

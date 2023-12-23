@@ -658,7 +658,7 @@ export default {
         this.$t("cwsh"),
         this.$t("done"),
         this.$t("bh"),
-        this.$t("cancel"),
+        this.$t("yqx"),
       ],
       typeOption: ["", "info", "warning", "", "success", "danger", "danger"],
       usdtstatus: [

@@ -517,7 +517,7 @@ export default {
         this.$t("bh"),
         this.$t("yqx"),
       ],
-      usdttypeOption: ["", "info", "success", "danger", "danger", "danger",],
+      usdttypeOption: ["", "info", "success", "danger", "danger", "warning",],
       status: [
         this.$t("all"),
         this.$t("shz"),
@@ -527,7 +527,7 @@ export default {
         this.$t("bh"),
         this.$t("yqx"),
       ],
-      typeOption: ["", "info", "warning", "success", "danger", "danger", "danger"],
+      typeOption: ["", "info", "warning", "success", "danger", "danger", "warning"],
       dialogVisible: false,
       currentSelectRow: {},
       inCoinList: [],

@@ -660,7 +660,7 @@ export default {
         this.$t("bh"),
         this.$t("yqx"),
       ],
-      typeOption: ["", "info", "warning", "", "success", "danger", "danger"],
+      typeOption: ["", "info", "warning", "", "success", "danger", "warning"],
       usdtstatus: [
         this.$t("all"),
         this.$t("tjsq"),

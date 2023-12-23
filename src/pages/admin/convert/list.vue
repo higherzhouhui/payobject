@@ -290,7 +290,6 @@
   </div>
 </template>
   <script>
-import LinkPath from "@/components/common/linkPath.vue";
 import { perWithdraw, depCoins, withdrawAccounts } from "@/api/out.js";
 import { changeCancel, changeDetails, changePer } from "@/api/convert.js";
 import { upload } from "@/api/file";
@@ -298,7 +297,6 @@ import { Message } from "element-ui";
 
 export default {
   name: "userMoneyManagementTransfer",
-  components: { LinkPath },
   data() {
     return {
       operationType: "",

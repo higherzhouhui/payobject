@@ -103,7 +103,7 @@
           :label="$t('cjsj')"
           min-width="180"
         />
-        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
+        <el-table-column prop="name" :label="$t('cz')" width="90" fixed="right">
           <template slot-scope="scope">
             <!-- <div @click.stop>
               <el-upload
@@ -120,12 +120,19 @@
             </el-upload>
             </div> -->
             <div
-              class="operation-btn edit-btn"
+              class="operation-btn reject-btn"
               v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
-              @click.stop="handleShowDetail(scope.row, 'upload')"
+              @click.stop="handleShowDetail(scope.row, 'cancel')"
             >
-              {{ $t("schkpz") }}
+              {{ $t("cancel") }}
             </div>
+            <div
+            class="operation-btn edit-btn"
+            v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
+            @click.stop="handleShowDetail(scope.row, 'upload')"
+          >
+            {{ $t("schkpz") }}
+          </div>
             <div
               slot="reference"
               class="operation-btn pass-btn"
@@ -254,7 +261,7 @@
     </div>
 
     <el-dialog
-      :title="operationType == 'detail' ? $t('xq') : $t('sh')"
+      :title="$t('xq')"
       :visible.sync="dialogVisible"
       width="636px"
       :before-close="
@@ -297,6 +304,12 @@
           @click="passDeposit(currentSelectRow)"
           >{{ $t("tg") }}</el-button
         >
+        <el-button
+        v-if="operationType == 'cancel'"
+        class="qd"
+        @click="cancelConfirm(currentSelectRow)"
+        >{{ $t("qrqx") }}</el-button
+      >
       </div>
     </el-dialog>
     <el-dialog
@@ -615,6 +628,7 @@ import {
   putCryptDeposit,
   perDeposit,
   perCryptDeposit,
+  cancelDeposit,
 } from "@/api/out.js";
 import { Message } from "element-ui";
 import { getBankList } from "@/api/bank";
@@ -644,8 +658,9 @@ export default {
         this.$t("cwsh"),
         this.$t("done"),
         this.$t("bh"),
+        this.$t("cancel"),
       ],
-      typeOption: ["", "info", "warning", "", "success", "danger"],
+      typeOption: ["", "info", "warning", "", "success", "danger", "danger"],
       usdtstatus: [
         this.$t("all"),
         this.$t("tjsq"),
@@ -734,6 +749,7 @@ export default {
         this.loading = false;
         if (res.code === 200) {
           this.uploaddialogVisible = false;
+          this.getInitData()
           Message({
             type: "success",
             message: this.$t("czcg"),
@@ -769,6 +785,19 @@ export default {
         });
         this.getInitData();
         this.rejectdialogVisible = false;
+      }
+    },
+    async cancelConfirm(row) {
+      try {
+        await cancelDeposit({reqId: row.id})
+        this.dialogVisible = false
+        Message({
+          type: "success",
+          message: this.$t("czcg"),
+        });
+        this.getInitData();
+      } catch {
+        console.error('cancledeposit')
       }
     },
     async passDeposit(row) {
@@ -955,12 +984,10 @@ export default {
             type: "link",
           },
         ];
-        if (type == "detail") {
+        if (type == "detail" || type == "pass" || type == "cancel") {
           this.dialogVisible = true;
         } else if (type == "upload") {
           this.uploaddialogVisible = true;
-        } else if (type == "pass") {
-          this.dialogVisible = true
         }
       }
       if (this.moneyType == "usdt") {

@@ -183,3 +183,15 @@ export const coinBanks = (data) => service({
     data,
     method: 'get'
 })
+
+export const cancelWithdraw = (data) => service({
+    url: '/cancelWithdraw',
+    data,
+    method: 'get'
+})
+
+export const cancelDeposit = (data) => service({
+    url: '/cancelDeposit',
+    data,
+    method: 'get'
+})

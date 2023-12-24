@@ -111,11 +111,12 @@
         prop="accountName"
         :label="$t('skzhmc')"
         min-width="180"
+        show-overflow-tooltip
       />
-      <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
-      <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
-      <el-table-column prop="sendAccount" :label="$t('hkzh')" min-width="180" />
-      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+      <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" show-overflow-tooltip/>
+      <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" show-overflow-tooltip/>
+      <el-table-column prop="sendAccount" :label="$t('hkzh')" min-width="180" show-overflow-tooltip/>
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip/>
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -137,11 +138,11 @@
       v-loading="cryptdepositLoading"
       v-if="cryptdepositTotal"
     >
-      <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
-      <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" />
-      <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
-      <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
-      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+      <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" show-overflow-tooltip/>
+      <el-table-column prop="coinCode" :label="$t('bz')" min-width="120" show-overflow-tooltip/>
+      <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" show-overflow-tooltip/>
+      <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" show-overflow-tooltip/>
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip/>
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -169,9 +170,9 @@
         min-width="180"
         show-overflow-tooltip
       />
-      <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
-      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+      <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" show-overflow-tooltip/>
+      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" show-overflow-tooltip/>
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip/>
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -193,11 +194,11 @@
       v-loading="cryptwithdrawLoading"
       v-if="cryptwithdrawTotal"
     >
-      <el-table-column prop="srcCode" :label="$t('bz')" min-width="80" />
-      <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" />
-      <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" />
-      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
-      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+      <el-table-column prop="srcCode" :label="$t('bz')" min-width="80" show-overflow-tooltip/>
+      <el-table-column prop="cryptAdd" :label="$t('skqbdz')" min-width="180" show-overflow-tooltip/>
+      <el-table-column prop="coinCode" :label="$t('mbbz')" min-width="100" show-overflow-tooltip/>
+      <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" show-overflow-tooltip/>
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip/>
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -220,16 +221,17 @@
       v-loading="exchangeLoading"
       @row-click="(e) => handleShowDetail(e, 'detail')"
     >
-      <el-table-column prop="depCoin" :label="$t('bz')" min-width="80" />
-      <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" />
-      <el-table-column prop="targetCoin" :label="$t('mbbz')" min-width="100" />
+      <el-table-column prop="depCoin" :label="$t('bz')" min-width="80" show-overflow-tooltip/>
+      <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" show-overflow-tooltip/>
+      <el-table-column prop="targetCoin" :label="$t('mbbz')" min-width="100" show-overflow-tooltip/>
       <el-table-column
         prop="targetValue"
         :label="$t('yjdzje')"
         min-width="130"
+        show-overflow-tooltip
       />
 
-      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" />
+      <el-table-column prop="createTime" :label="$t('cjsj')" min-width="180" show-overflow-tooltip/>
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>

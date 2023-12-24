@@ -91,16 +91,18 @@
           min-width="180"
           show-overflow-tooltip
         />
-        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" show-overflow-tooltip/>
         <el-table-column
           prop="commission"
           :label="$t('sxfei')"
           min-width="110"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="withdrawValue"
           :label="$t('dzje')"
           min-width="120"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="createTime"
@@ -160,7 +162,7 @@
         v-if="moneyType == 'usdt'"
       >
         <!-- <el-table-column prop="tid" :label="$t('tid')" min-width="100" /> -->
-        <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" />
+        <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" show-overflow-tooltip/>
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
           <template slot-scope="scope">
             <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
@@ -171,18 +173,21 @@
         <el-table-column
           prop="cryptAdd"
           :label="$t('skqbdz')"
+          show-overflow-tooltip
           min-width="180"
         />
-        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
-        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" />
+        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" show-overflow-tooltip/>
+        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" show-overflow-tooltip/>
         <el-table-column
         prop="commission"
         :label="$t('sxfei')"
         min-width="110"
+        show-overflow-tooltip
       />
       <el-table-column
         prop="withdrawValue"
         :label="$t('dzje')"
+        show-overflow-tooltip
         min-width="120"
       />
         <el-table-column prop="tid" :label="$t('tid')" min-width="120" show-overflow-tooltip/>
@@ -190,6 +195,7 @@
           prop="createTime"
           :label="$t('cjsj')"
           min-width="180"
+          show-overflow-tooltip
         />
         <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">

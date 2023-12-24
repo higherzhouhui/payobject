@@ -78,7 +78,6 @@
         v-if="moneyType == 'fabi'"
       >
         <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
-
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
@@ -86,17 +85,18 @@
             </el-tag>
           </template>
         </el-table-column>
-
         <el-table-column
           prop="sendAccount"
           :label="$t('hkzh')"
           min-width="120"
+          show-overflow-tooltip
         />
         <el-table-column prop="reqValue" :label="$t('czje')" min-width="100" />
         <el-table-column
           prop="accountName"
           :label="$t('skzhmc')"
           min-width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="createTime"
@@ -176,14 +176,16 @@
         <el-table-column
           prop="cryptAdd"
           :label="$t('skqbdz')"
+          show-overflow-tooltip
           min-width="180"
         />
-        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" />
-        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" />
-        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" />
+        <el-table-column prop="reqValue" :label="$t('czje')" min-width="180" show-overflow-tooltip/>
+        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" show-overflow-tooltip/>
+        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" show-overflow-tooltip/>
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
+          show-overflow-tooltip
           min-width="180"
         />
         <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">

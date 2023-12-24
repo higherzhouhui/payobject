@@ -76,22 +76,25 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" />
+        <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" show-overflow-tooltip/>
         <el-table-column
           prop="targetCoin"
           :label="$t('mbbz')"
           min-width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="targetValue"
           :label="$t('yjdzje')"
           min-width="130"
+          show-overflow-tooltip
         />
 
         <el-table-column
           prop="createTime"
           :label="$t('cjsj')"
           min-width="180"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="name"

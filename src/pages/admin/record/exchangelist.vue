@@ -61,9 +61,9 @@
     </div>
     <div class="content">
       <el-table class="tables" :data="tableData" v-loading="loading" @row-click="(e) => handleShowDetail(e, 'detail')">
-        <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
-        <el-table-column prop="billValue" :label="$t('je')" min-width="100" />
-        <el-table-column prop="balance" :label="$t('ye')" min-width="100" />
+        <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" show-overflow-tooltip/>
+        <el-table-column prop="billValue" :label="$t('je')" min-width="100" show-overflow-tooltip/>
+        <el-table-column prop="balance" :label="$t('ye')" min-width="100" show-overflow-tooltip/>
         <el-table-column prop="billType" :label="$t('lx')" min-width="100">
           <template slot-scope="scope">
             <el-tag class="elTag" :type="typeStyle[scope.row.billType]">

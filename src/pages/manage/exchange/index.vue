@@ -71,7 +71,7 @@
           v-loading="loading"
           @row-click="(e) => handleShowDetail(e, 'detail')"
         >
-          <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
+          <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" show-overflow-tooltip/>
           <el-table-column
             prop="accountName"
             :label="$t('zhmc')"
@@ -180,7 +180,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="exRate" :label="$t('hl')" min-width="120" />
+          <el-table-column prop="exRate" :label="$t('hl')" min-width="120" show-overflow-tooltip/>
           <el-table-column prop="exTarget" :label="$t('dhbz')" min-width="100">
             <template slot-scope="scope">
               <div class="flag-warpper">
@@ -193,6 +193,7 @@
             prop="createTime"
             :label="$t('cjsj')"
             min-width="180"
+            show-overflow-tooltip
           />
           <el-table-column
             prop="createTime"
@@ -264,7 +265,7 @@
           v-loading="loading"
           @row-click="(e) => handleShowDetail(e, 'detail')"
         >
-          <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" />
+          <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" show-overflow-tooltip/>
           <el-table-column prop="optType" :label="$t('lx')" min-width="80">
             <template slot-scope="scope">
               <el-tag :type="limitObj[scope.row.optType].type" class="elTag">
@@ -286,6 +287,7 @@
             prop="commission"
             :label="$t('sxfei')"
             min-width="80"
+            show-overflow-tooltip
           >
             <template slot-scope="scope">
               {{ scope.row.commission || 0 }}
@@ -295,11 +297,13 @@
             prop="createTime"
             :label="$t('cjsj')"
             min-width="180"
+            show-overflow-tooltip
           />
           <el-table-column
             prop="createTime"
             :label="$t('xgsj')"
             min-width="180"
+            show-overflow-tooltip
           />
         </el-table>
         <el-pagination

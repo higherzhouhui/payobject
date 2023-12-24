@@ -20,7 +20,7 @@
       >
         <el-table-column
           prop="email"
-          :label="$t('邮箱/手机号')"
+          :label="$t('email')"
           min-width="120"
           show-overflow-tooltip
         >

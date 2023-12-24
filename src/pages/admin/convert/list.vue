@@ -297,6 +297,7 @@ import { perWithdraw, depCoins, withdrawAccounts } from "@/api/out.js";
 import { changeCancel, changeDetails, changePer } from "@/api/convert.js";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
+import { getHashParams } from "@/utils/index";
 
 export default {
   name: "userMoneyManagementTransfer",
@@ -357,7 +358,13 @@ export default {
     };
   },
   created() {
-    this.getInitData();
+    const params = getHashParams();
+    if (params && params.get("type")) {
+      this.searchForm = {
+        changeStatus: 0
+      }
+    }
+    this.getInitData(); 
     this.getRJBZ();
     this.getCJZH();
   },

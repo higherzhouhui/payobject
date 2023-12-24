@@ -21,20 +21,20 @@
           <el-form-item :label="$t('bankname')">
             <el-input
               :placeholder="$t('bankname')"
-              v-model="form.bankName"
+              v-model="searchForm.bankName"
               clearable
             ></el-input>
           </el-form-item>
           <el-form-item :label="$t('yhzh')">
             <el-input
               :placeholder="$t('yhzh')"
-              v-model="form.bankAccount"
+              v-model="searchForm.bankAccount"
               clearable
             ></el-input>
           </el-form-item>
           <el-form-item :label="$t('kzt')">
             <el-select
-              v-model="form.bankStatus"
+              v-model="searchForm.bankStatus"
               :placeholder="$t('zhbdzt')"
               clearable
             >
@@ -159,7 +159,7 @@
         >
           <el-form-item :label="$t('kzt')">
             <el-select
-              v-model="form.kycStatus"
+              v-model="searchForm.kycStatus"
               :placeholder="$t('zhbdzt')"
               clearable
             >
@@ -790,10 +790,6 @@ export default {
         },
       ],
       status: [this.$t("shz"), this.$t("ytg"), this.$t("bh")],
-
-      form: {
-        bankStatus: "",
-      },
       current: 1,
       size: 10,
       total: 0,
@@ -1042,7 +1038,7 @@ export default {
       try {
         this.loading = true;
         let req = await getBankListPage({
-          ...this.form,
+          ...this.searchForm,
           current: this.current,
           size: this.size,
         });
@@ -1055,7 +1051,7 @@ export default {
       try {
         this.loading = true;
         let req = await kycList({
-          ...this.form,
+          ...this.searchForm,
           current: this.current,
           size: this.size,
         });
@@ -1076,6 +1072,18 @@ export default {
   created() {
     const params = getHashParams();
     this.type = params.get("type") || "first";
+    if (params.get("type")) {
+      console.log(this.type)
+      if (this.type == "first") {
+        this.searchForm = {
+          bankStatus: 0
+        }
+      } else {
+        this.searchForm = {
+          kycStatus: 0
+        }
+      }
+    }
     this.getlist();
     this.getSzList();
     this.getAreaCode();

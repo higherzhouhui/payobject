@@ -718,6 +718,15 @@ export default {
     const params = getHashParams();
     if (params && params.get("type")) {
       const mt = params.get("type");
+      if (mt == 'fabi') {
+        this.searchForm = {
+          status: 2
+        }
+      } else {
+        this.searchForm = {
+          status: 1
+        }
+      }
       this.moneyType = mt;
     }
     this.getInitData();
@@ -1038,14 +1047,14 @@ export default {
           current: this.current,
           size: this.size,
         });
-        this.selectOption = this.status;
+        this.selectOption = [...this.status];
       } else if (this.moneyType == "usdt") {
         res = await cryptDepositList({
           ...this.searchForm,
           current: this.current,
           size: this.size,
         });
-        this.selectOption = this.usdtstatus;
+        this.selectOption = [...this.usdtstatus];
       }
       this.loading = false;
       if (res.code === 200) {

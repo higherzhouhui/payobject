@@ -553,6 +553,9 @@ export default {
   created() {
     const params = getHashParams();
     if (params && params.get("type")) {
+      this.searchForm = {
+        status: 1
+      }
       const mt = params.get("type");
       this.moneyType = mt;
     }

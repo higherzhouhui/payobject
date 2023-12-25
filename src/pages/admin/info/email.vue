@@ -2,7 +2,7 @@
   <div class="login_box">
     <div class="form">
       <div class="admin-title">
-        {{ $t("修改已绑定邮箱") }}
+        {{ $t("xgybdyx") }}
       </div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="user" />

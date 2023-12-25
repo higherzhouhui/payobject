@@ -161,7 +161,7 @@
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
-          <el-radio-button label="third">{{ $t("限额设置") }}</el-radio-button>
+          <el-radio-button label="third">{{ $t("xesz") }}</el-radio-button>
         </el-radio-group>
       </div>
       <div class="content">
@@ -254,7 +254,7 @@
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("skzh") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("hlgl") }}</el-radio-button>
-          <el-radio-button label="third">{{ $t("限额设置") }}</el-radio-button>
+          <el-radio-button label="third">{{ $t("xesz") }}</el-radio-button>
         </el-radio-group>
       </div>
       <div class="content">

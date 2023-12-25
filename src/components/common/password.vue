@@ -1,23 +1,23 @@
 <template>
   <div class="password-auth">
-    <el-form-item :label="$t('验证方式')">
-      <el-radio v-model="form.pwdType" label="payPass">支付密码</el-radio>
+    <el-form-item :label="$t('yzfs')">
+      <el-radio v-model="form.pwdType" label="payPass">{{$t('paypass')}}</el-radio>
       <el-radio class="radio" v-model="form.pwdType" label="verCode"
-        >电子邮箱验证码</el-radio
+        >{{$t('yxyzm')}}</el-radio
       >
     </el-form-item>
-    <el-form-item :label="$t('支付密码')" v-if="form.pwdType == 'payPass'">
+    <el-form-item :label="$t('paypass')" v-if="form.pwdType == 'payPass'">
       <el-input
         v-model="form.payPass"
         show-password
-        :placeholder="$t('请输入支付密码')"
+        :placeholder="$t('qsrpaypass')"
         class="form-wrapper"
       >
-      <el-button slot="append" class="send" @click="to('/admin/paypass')">{{ $store.state.userInfo.hasPayPass ? $t("忘记支付密码？") : $t("去设置") }}</el-button>
+      <el-button slot="append" class="send" @click="to('/admin/paypass')">{{ $store.state.userInfo.hasPayPass ? $t("wjzfmm") : $t("qshezhi") }}</el-button>
     </el-input>
     </el-form-item>
     <el-form-item
-      :label="$t('验证码')"
+      :label="$t('yzm')"
       v-if="form.pwdType == 'verCode'"
       class="form-wrapper"
     >

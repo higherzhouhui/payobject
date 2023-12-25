@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="ziliao-wrapper">
-        <div class="title">{{ $t("相关材料") }}</div>
+        <div class="title">{{ $t("xgcl") }}</div>
         <div class="upload-wrapper">
         <div class="upload-item">
           <div class="item-left">
@@ -149,7 +149,7 @@
             </el-upload>
           </div>
           <div class="item-right">
-            <div class="sub-title"><span>*</span>{{ $t("企业材料") }}</div>
+            <div class="sub-title"><span>*</span>{{ $t("qycl") }}</div>
             <div class="desc">{{ $t("t1") }}</div>
             <a
               :href="'/api/file/downLoad?url=' + form.regCer"
@@ -178,7 +178,7 @@
             </el-upload>
           </div>
           <div class="item-right">
-            <div class="sub-title"><span>*</span>{{ $t("法人材料") }}</div>
+            <div class="sub-title"><span>*</span>{{ $t("frcl") }}</div>
             <div class="desc">{{ $t("t2") }}</div>
             <a
               :href="'/api/file/downLoad?url=' + form.legal"
@@ -207,7 +207,7 @@
             </el-upload>
           </div>
           <div class="item-right">
-            <div class="sub-title"><span>*</span>{{ $t("股权材料") }}</div>
+            <div class="sub-title"><span>*</span>{{ $t("gqcl") }}</div>
             <div class="desc">{{ $t("t3") }}</div>
             <a
               :href="'/api/file/downLoad?url=' + form.shareholder"

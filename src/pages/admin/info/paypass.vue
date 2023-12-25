@@ -2,7 +2,7 @@
   <div class="login_box">
     <div class="form">
       <div class="admin-title">
-        {{$store.state.userInfo.hasPayPass ? $t("修改支付密码") : $t("设置支付密码")}}
+        {{$store.state.userInfo.hasPayPass ? $t("xgzfmm") : $t("szzfmm")}}
          <span>{{$t('定期更改支付密码有利于账户安全')}}</span>
       </div>
       <div class="line">

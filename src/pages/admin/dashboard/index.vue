@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="transaction-wrapper">
-      <h1>{{ $t("近期交易记录") }}</h1>
+      <h1>{{ $t("jqjyjl") }}</h1>
       <ul
         class="infinite-list"
         v-infinite-scroll="load"

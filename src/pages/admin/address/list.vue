@@ -4,7 +4,7 @@
       <div class="admin-title">
         <span>{{ $store.state.title }}</span>
         <el-button type="primary" @click="showAdd" class="normal-btn"
-          ><i class="el-icon-plus"></i>{{ $t("新增地址") }}</el-button
+          ><i class="el-icon-plus"></i>{{ $t("xzdd") }}</el-button
         >
       </div>
     </div>
@@ -18,7 +18,7 @@
       >
         <el-table-column
           prop="cryName"
-          :label="$t('别名')"
+          :label="$t('bieming')"
           min-width="80"
           show-overflow-tooltip
         />
@@ -30,7 +30,7 @@
         />
         <el-table-column
           prop="cryAdd"
-          :label="$t('地址')"
+          :label="$t('qbdz')"
           min-width="120"
           show-overflow-tooltip
         />
@@ -103,10 +103,10 @@
         :model="form"
         class="formStyle"
       >
-        <el-form-item :label="$t('别名')">
+        <el-form-item :label="$t('bieming')">
           <el-input
             v-model="form.cryName"
-            :placeholder="$t('请输入别名')"
+            :placeholder="$t('qsrbieming')"
           ></el-input>
         </el-form-item>
         <el-form-item :label="$t('bz')">
@@ -133,10 +133,10 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('地址')">
+        <el-form-item :label="$t('qbdz')">
           <el-input
             v-model="form.cryAdd"
-            :placeholder="$t('请输入地址')"
+            :placeholder="$t('qsrqbdz')"
           ></el-input>
         </el-form-item>
         <passwordVue
@@ -303,9 +303,9 @@ export default {
       this.detailVisible = true;
       this.operationType = type;
       this.detailList = [
-        { label: this.$t("别名"), value: row.cryName },
+        { label: this.$t("bieming"), value: row.cryName },
         { label: this.$t("bz"), value: row.cryCode },
-        { label: this.$t("地址"), value: row.cryAdd },
+        { label: this.$t("qbdz"), value: row.cryAdd },
         { label: this.$t("jmxy"), value: row.agreement},
         { label: this.$t("cjsj"), value: row.createTime },
         { label: this.$t("xgsj"), value: row.modifiedTime },

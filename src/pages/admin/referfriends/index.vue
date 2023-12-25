@@ -4,14 +4,18 @@
       <div class="admin-title">{{ $store.state.title }}</div>
       <div class="list">
         <div class="list-left">{{ $t("wdyqm") }}</div>
-        <div class="list-right" @click="copyText2(userInfo.providerId)" style="cursor: pointer">
+        <div
+          class="list-right"
+          @click="copyText2(userInfo.providerId)"
+          style="cursor: pointer"
+        >
           {{ userInfo.providerId }}
           <i class="el-icon-document-copy"></i>
         </div>
       </div>
     </div>
     <div class="table-wrapper">
-      <div class="admin-title">{{$t('推荐列表')}}</div>
+      <div class="admin-title">{{ $t("tjlb") }}</div>
       <el-table
         class="tables"
         :data="tableData"
@@ -47,8 +51,9 @@
         :current-page.sync="current"
         :page-sizes="[10, 50, 100, 500]"
         :page-size="size"
-      layout="prev, pager, next"
-      small        :total="total"
+        layout="prev, pager, next"
+        small
+        :total="total"
         class="elPagination"
       >
       </el-pagination>
@@ -109,7 +114,7 @@ export default {
       return new Promise((res, rej) => {
         // 执行复制命令并移除文本框
         document.execCommand("copy") ? res() : rej();
-        this.$message.success(this.$t("fzcg"))
+        this.$message.success(this.$t("fzcg"));
         textArea.remove();
       });
     },
@@ -159,7 +164,7 @@ export default {
     border-radius: 4px;
     padding: 8px 4px;
     .list-left::after {
-      content: ':';
+      content: ":";
     }
   }
 }

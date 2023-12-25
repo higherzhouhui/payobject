@@ -291,7 +291,7 @@
     <div class="label" v-if="exchangeTotal">
       <div class="desc">
         <i class="el-icon-time" />
-        {{ $t("兑换待审核") }}<span>{{ exchangeTotal }}</span>
+        {{ $t("dhdsh") }}<span>{{ exchangeTotal }}</span>
       </div>
       <div @click="to('/manage/convert?type=search')" class="normal-btn">
         {{ $t("qsh") }}

@@ -20,33 +20,33 @@
     <div class="item">
       <div class="item-top">
         <div class="item-title">
-          {{$t('绑定邮箱')}}
-          <span class="desc">{{$t('可登录')}}</span>
+          {{$t('bdyx')}}
+          <span class="desc">{{$t('kdl')}}</span>
         </div>
         <div class="normal-btn" @click="routerTo('/admin/email')">{{$t('xg')}}</div>
       </div>
       <div class="itme-middle">
-         <span>{{userInfo.email || $t('暂未绑定')}}</span>
+         <span>{{userInfo.email || $t('zwbd')}}</span>
       </div>
-      <div class="desc">{{$t('交易时可能会发送邮件验证码进行身份验证，您可以灵活修改安全邮箱')}}</div>
+      <div class="desc">{{$t('bdyxdesc')}}</div>
     </div>
     <div class="item">
       <div class="item-top">
         <div class="item-title">
-          {{$t('修改登录密码')}}
+          {{$t('xgdlmm')}}
         </div>
         <div class="normal-btn" @click="routerTo('/admin/reset')">{{$t('xg')}}</div>
       </div>
-      <div class="desc">{{$t('密码强度越高，账号安全级别越高，不易被非法利用')}}</div>
+      <div class="desc">{{$t('xgmmdesc')}}</div>
     </div>
     <div class="item">
       <div class="item-top">
         <div class="item-title">
-          {{$t('支付密码')}}
+          {{$t('paypass')}}
         </div>
         <div class="normal-btn" @click="routerTo('/admin/paypass')">{{$store.state.userInfo.hasPayPass ? $t('xg') : $t('sz')}}</div>
       </div>
-      <div class="desc">{{$t('添加提款账号、提款付款等操作时，需要输入支付密码进行二重验证以保证资金安全')}}</div>
+      <div class="desc">{{$t('passdesc')}}</div>
     </div>
     <!-- <div class="top">
       <img src="@/assets/images/user/user-default.png" class="user-img"/>

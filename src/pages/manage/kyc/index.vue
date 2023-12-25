@@ -624,13 +624,13 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('ERC20钱包地址')">
+        <el-form-item :label="$t('ercqbdz')">
           <el-input
             v-model="addressForm.ercAdd"
             :placeholder="$t('qsr')"
           ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('TRC20钱包地址')">
+        <el-form-item :label="$t('trcqbdz')">
           <el-input
             v-model="addressForm.trcAdd"
             :placeholder="$t('qsr')"

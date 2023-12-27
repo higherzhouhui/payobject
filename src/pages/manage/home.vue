@@ -20,7 +20,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -65,7 +65,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -110,7 +110,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -162,7 +162,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -214,7 +214,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -259,7 +259,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
 
@@ -305,7 +305,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        min-width="170"
+        width="170"
         show-overflow-tooltip
       />
       <el-table-column

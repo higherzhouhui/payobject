@@ -20,7 +20,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -65,7 +65,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -110,7 +110,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -162,7 +162,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -214,7 +214,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -259,7 +259,7 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
 
@@ -305,13 +305,13 @@
       <el-table-column
         prop="createTime"
         :label="$t('cjsj')"
-        width="170"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
         prop="depValue"
         :label="$t('dhje')"
-        min-width="100"
+        min-width="180"
         show-overflow-tooltip
       >
         <template slot-scope="scope">
@@ -322,7 +322,7 @@
       <el-table-column
         prop="targetValue"
         :label="$t('yjdzje')"
-        min-width="130"
+        min-width="180"
         show-overflow-tooltip
       >
         <template slot-scope="scope">

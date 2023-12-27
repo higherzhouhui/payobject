@@ -11,7 +11,7 @@
               :dashboard="true"
             />
             <h3>
-              {{ item.balance.toFixed(2) }}<span>{{ item.coinCode }}</span>
+              {{ shiftNumberToPrice(item.balance) }}<span>{{ item.coinCode }}</span>
             </h3>
           </div>
         </swiper-slide>
@@ -64,7 +64,7 @@
                     item.billType == 2 || item.billType == 3 ? 'send' : 'recive'
                   "
                 >
-                  ${{ item.billValue }}
+                  ${{ shiftNumberToPrice(item.billValue) }}
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@
             </div>
             <div class="detail-item">
               <div class="left">{{ $t("ye") }}</div>
-              <div class="right">{{ item.balance || 0 }}</div>
+              <div class="right">{{ shiftNumberToPrice(item.balance || 0) }}</div>
             </div>
             <div class="detail-item">
               <div class="left">{{ $t("hblx") }}</div>
@@ -103,7 +103,7 @@
 import { balanceList } from "@/api/out";
 import { getBillDetails } from "@/api/manage";
 import { countries } from "@/api/login";
-import { Local } from "@/utils/index";
+import { Local, shiftNumberToPrice } from "@/utils/index";
 import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
@@ -116,6 +116,7 @@ export default {
   },
   data() {
     return {
+      shiftNumberToPrice: shiftNumberToPrice,
       typeOption: [
         "",
         this.$t("ruzhang"),

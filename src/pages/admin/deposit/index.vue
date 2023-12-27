@@ -79,11 +79,11 @@
           "
         >
           <li v-if="limitObj.coinMin">
-            {{ $t("limitdepositmin") }}&nbsp;&nbsp;{{ limitObj.coinMin
+            {{ $t("limitdepositmin") }}&nbsp;&nbsp;{{ shiftNumberToPrice(limitObj.coinMin)
             }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.coinCode }}
           </li>
           <li v-if="limitObj.coinMax">
-            {{ $t("limitdepositmax") }}&nbsp;&nbsp;{{ limitObj.coinMax
+            {{ $t("limitdepositmax") }}&nbsp;&nbsp;{{ shiftNumberToPrice(limitObj.coinMax)
             }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.coinCode }}
           </li>
           <li v-if="limitObj.noSub">
@@ -200,7 +200,7 @@
             {{ $t("czje") }}
           </div>
           <div class="column-right">
-            {{ form.reqValue || 0
+            {{ shiftNumberToPrice(form.reqValue || 0)
             }}<span class="unit">{{ form.coinCode }}</span>
           </div>
         </div>
@@ -272,7 +272,7 @@
             {{ $t("czje") }}
           </div>
           <div class="column-right">
-            {{ usdtForm.reqValue || 0
+            {{ shiftNumberToPrice(usdtForm.reqValue || 0)
             }}<span class="unit">{{ usdtForm.coinCode }}</span>
           </div>
         </div>
@@ -388,7 +388,7 @@
             </a>
           </template>
           <template v-else>
-            {{ item.value }}
+            {{ item.value }}<span class="unit" v-if="item.unit">{{ item.unit }}</span>
           </template>
         </div>
       </div>
@@ -440,7 +440,7 @@ import {
 } from "@/api/out";
 import { getCryAdd, getLimit } from "@/api/exchange";
 import { Message } from "element-ui";
-import { Local } from "@/utils/index";
+import { Local, shiftNumberToPrice } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
 import { outCryAccPage } from "@/api/bank";
 import { getCountryName } from "@/utils/common";
@@ -449,6 +449,7 @@ export default {
   name: "userWithdrawManagementWithdraw",
   data() {
     return {
+      shiftNumberToPrice: shiftNumberToPrice,
       agreementList: [
         { label: "TRC20", value: "TRC20" },
         { label: "ERC20", value: "ERC20" },
@@ -642,8 +643,7 @@ export default {
           };
           this.dialogVisible = true;
           this.detailList = [
-          { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
-          { label: this.$t("czje"), value: this.currentSelectRow.reqValue },
+          { label: this.$t("czje"), value: this.shiftNumberToPrice(this.currentSelectRow.reqValue), unit: this.currentSelectRow.coinCode },
           { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
           { label: this.$t("hkqbdz"), value: this.currentSelectRow.tid },
           { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
@@ -700,8 +700,7 @@ export default {
               outswiftCode: outlist[0].swiftCode,
             };
             this.detailList = [
-              { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
-              { label: this.$t("czje"), value: this.currentSelectRow.reqValue },
+              { label: this.$t("czje"), value: this.shiftNumberToPrice(this.currentSelectRow.reqValue), unit: this.currentSelectRow.coinCode },
               {
                 label: this.$t("hkzh"),
                 value: this.currentSelectRow.outbankAccount,

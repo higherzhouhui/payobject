@@ -82,6 +82,12 @@
             </template>
           </el-table-column>
           <el-table-column
+          prop="bankName"
+          :label="$t('bankname')"
+          min-width="150"
+          show-overflow-tooltip
+        />
+          <el-table-column
             prop="bankAccount"
             :label="$t('yhzh')"
             min-width="200"
@@ -96,7 +102,7 @@
           <el-table-column
             prop="createTime"
             :label="$t('cjsj')"
-            min-width="160"
+            min-width="170"
             show-overflow-tooltip
           />
           <el-table-column :label="$t('cz')" width="70" fixed="right">
@@ -224,7 +230,7 @@
           <el-table-column
             prop="createTime"
             :label="$t('cjsj')"
-            min-width="160"
+            min-width="170"
             show-overflow-tooltip
           />
 
@@ -983,7 +989,6 @@ export default {
         { label: this.$t("kzt"), value: this.status[data.bankStatus] },
         { label: this.$t("bhly"), value: data.reason },
         { label: this.$t("swiftCode"), value: data.swiftCode },
-
         { label: this.$t("cjsj"), value: data.createTime },
         { label: this.$t("xgsj"), value: data.modifiedTime },
         {

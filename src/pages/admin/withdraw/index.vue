@@ -47,7 +47,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{ $t("ye") }}<span>{{ getReamin(form.coinCode) }}</span
+              {{ $t("ye") }}<span>{{ shiftNumberToPrice(getReamin(form.coinCode)) }}</span
               >{{ form.coinCode }}
             </div>
           </div>
@@ -80,7 +80,7 @@
               </el-select>
             </div>
             <div class="remain" v-if="usdtForm.srcCode">
-              {{ $t("ye") }}<span>{{ getReamin(usdtForm.srcCode) }}</span
+              {{ $t("ye") }}<span>{{ shiftNumberToPrice(getReamin(usdtForm.srcCode)) }}</span
               >{{ usdtForm.srcCode }}
             </div>
           </div>
@@ -131,11 +131,11 @@
             "
           >
             <li v-if="limitObj.coinMin">
-              {{ $t("limitwithdrawmin") }}&nbsp;&nbsp;{{ limitObj.coinMin
+              {{ $t("limitwithdrawmin") }}&nbsp;&nbsp;{{ shiftNumberToPrice(limitObj.coinMin)
               }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.srcCode }}
             </li>
-            <li v-if="limitObj.max">
-              {{ $t("limitwithdrawmax") }}&nbsp;&nbsp;{{ limitObj.max
+            <li v-if="limitObj.coinMax">
+              {{ $t("limitwithdrawmax") }}&nbsp;&nbsp;{{ shiftNumberToPrice(limitObj.coinMax)
               }}{{ moneyType == "fabi" ? form.coinCode : usdtForm.srcCode }}
             </li>
             <li v-if="limitObj.noSub">
@@ -217,7 +217,7 @@
               {{ $t("txje") }}
             </div>
             <div class="column-right">
-              {{ form.reqValue || 0
+              {{ shiftNumberToPrice(form.reqValue || 0)
               }}<span class="unit">{{ form.coinCode }}</span>
             </div>
           </div>
@@ -246,7 +246,7 @@
             </div>
             <div class="column-right">
               {{
-                form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+                form.coinCode ? shiftNumberToPrice(limitObj.commission) || $t("nosxf") : $t("dqr")
               }}<span class="unit" v-if="limitObj.commission">{{ form.coinCode }}</span>
             </div>
           </div>
@@ -277,7 +277,7 @@
               {{ $t("txje") }}
             </div>
             <div class="column-right">
-              {{ usdtForm.reqValue || 0
+              {{ shiftNumberToPrice(usdtForm.reqValue || 0)
               }}<span class="unit">{{ usdtForm.srcCode }}</span>
             </div>
           </div>
@@ -306,7 +306,7 @@
             </div>
             <div class="column-right">
               {{
-                usdtForm.srcCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+                usdtForm.srcCode ? shiftNumberToPrice(limitObj.commission) || $t("nosxf") : $t("dqr")
               }}<span class="unit" v-if="limitObj.commission">{{ usdtForm.srcCode }}</span>
             </div>
           </div>
@@ -656,7 +656,7 @@ import {
 } from "@/api/out";
 import { getCryAdd, getLimit } from "@/api/exchange";
 import { Message } from "element-ui";
-import { Local } from "@/utils/index";
+import { Local, shiftNumberToPrice } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
 import { outCryAccPage } from "@/api/bank";
 import passwordVue from "@/components/common/password.vue";
@@ -667,6 +667,7 @@ export default {
   data() {
     return {
       limitObj: {},
+      shiftNumberToPrice: shiftNumberToPrice,
       agreementList: [
         { label: "TRC20", value: "TRC20" },
         { label: "ERC20", value: "ERC20" },

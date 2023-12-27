@@ -954,8 +954,9 @@ ul::-webkit-scrollbar-thumb {
 
 .unit {
     margin-left: 4px;
-    font-size: 12px;
-    color: red;
+    font-size: inherit;
+    color: $baseColor;
+    font-weight: bold;
 }
 
 .poper-scrollbar-show {

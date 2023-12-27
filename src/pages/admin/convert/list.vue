@@ -68,7 +68,34 @@
         v-loading="loading"
         @row-click="(e) => handleShowDetail(e, 'detail')"
       >
-        <el-table-column prop="depCoin" :label="$t('bz')" min-width="100" />
+        <el-table-column
+          prop="createTime"
+          :label="$t('cjsj')"
+          min-width="170"
+          show-overflow-tooltip
+        />
+        <el-table-column
+          prop="depValue"
+          :label="$t('dhje')"
+          min-width="100"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            {{ shiftNumberToPrice(scope.row.depValue)
+            }}<span class="unit">{{ scope.row.depCoin }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="targetValue"
+          :label="$t('yjdzje')"
+          min-width="130"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            {{ shiftNumberToPrice(scope.row.targetValue)
+            }}<span class="unit">{{ scope.row.targetCoin }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.changeStatus]" class="elTag">
@@ -76,32 +103,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="depValue" :label="$t('dhje')" min-width="100" show-overflow-tooltip/>
-        <el-table-column
-          prop="targetCoin"
-          :label="$t('mbbz')"
-          min-width="100"
-          show-overflow-tooltip
-        />
-        <el-table-column
-          prop="targetValue"
-          :label="$t('yjdzje')"
-          min-width="130"
-          show-overflow-tooltip
-        />
-
-        <el-table-column
-          prop="createTime"
-          :label="$t('cjsj')"
-          min-width="180"
-          show-overflow-tooltip
-        />
-        <el-table-column
-          prop="name"
-          :label="$t('cz')"
-          width="70"
-          fixed="right"
-        >
+        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">
             <!-- <div
               class="operation-btn"
@@ -156,7 +158,13 @@
     </div>
 
     <el-dialog
-      :title="operationType == 'detail' ? $t('xq') : operationType == 'pass' ? $t('sh') : $t('cancel')"
+      :title="
+        operationType == 'detail'
+          ? $t('xq')
+          : operationType == 'pass'
+          ? $t('sh')
+          : $t('cancel')
+      "
       :visible.sync="dialogVisible"
       width="636px"
       :before-close="
@@ -165,27 +173,28 @@
         }
       "
     >
-    <div class="formStyle">
-      <div
-        class="list"
-        v-for="(item, index) in detailList.filter((item) => {
-          return item.value;
-        })"
-        :key="index"
-      >
-        <div class="list-left">{{ item.label }}</div>
-        <div class="list-right">
-          <template v-if="item.type == 'link'">
-            <a :href="item.value" target="_blank">
-              {{ $t("yulan") }}
-            </a>
-          </template>
-          <template v-else>
-            {{ item.value }}
-          </template>
+      <div class="formStyle">
+        <div
+          class="list"
+          v-for="(item, index) in detailList.filter((item) => {
+            return item.value;
+          })"
+          :key="index"
+        >
+          <div class="list-left">{{ item.label }}</div>
+          <div class="list-right">
+            <template v-if="item.type == 'link'">
+              <a :href="item.value" target="_blank">
+                {{ $t("yulan") }}
+              </a>
+            </template>
+            <template v-else>
+              {{ item.value
+              }}<span class="unit" v-if="item.unit">{{ item.unit }}</span>
+            </template>
+          </div>
         </div>
       </div>
-    </div>
       <!-- <el-form
         label-position="top"
         ref="formss"
@@ -253,8 +262,12 @@
         <el-button class="qx" @click="dialogVisible = false">{{
           $t("cancel")
         }}</el-button>
-        <el-button class="qd" @click="handleDialogQd" v-if="operationType !== 'detail'">
-          {{ operationType == 'pass' ?  $t("tg") : $t('queding') }}
+        <el-button
+          class="qd"
+          @click="handleDialogQd"
+          v-if="operationType !== 'detail'"
+        >
+          {{ operationType == "pass" ? $t("tg") : $t("queding") }}
         </el-button>
       </div>
     </el-dialog>
@@ -270,7 +283,12 @@
     >
       <el-form label-position="top" ref="formss">
         <el-form-item :label="$t('bhly')">
-          <el-input type="textarea" :rows="8" v-model="mime" :placeholder="$t('qsr')"></el-input>
+          <el-input
+            type="textarea"
+            :rows="8"
+            v-model="mime"
+            :placeholder="$t('qsr')"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -297,14 +315,15 @@ import { perWithdraw, depCoins, withdrawAccounts } from "@/api/out.js";
 import { changeCancel, changeDetails, changePer } from "@/api/convert.js";
 import { upload } from "@/api/file";
 import { Message } from "element-ui";
-import { getHashParams } from "@/utils/index";
+import { getHashParams, shiftNumberToPrice } from "@/utils/index";
 
 export default {
-  name: "userMoneyManagementTransfer",
+  name: "convertList",
   data() {
     return {
       operationType: "",
       detailList: [],
+      shiftNumberToPrice: shiftNumberToPrice,
       rejectdialogVisible: false,
       pickerOptions: {
         disabledDate(time) {
@@ -361,10 +380,10 @@ export default {
     const params = getHashParams();
     if (params && params.get("type")) {
       this.searchForm = {
-        changeStatus: 0
-      }
+        changeStatus: 0,
+      };
     }
-    this.getInitData(); 
+    this.getInitData();
     this.getRJBZ();
     this.getCJZH();
   },
@@ -415,10 +434,10 @@ export default {
       } catch {}
     },
     handleDialogQd() {
-      if (this.operationType == 'pass') {
-        this.confirmPass(this.currentSelectRow)
+      if (this.operationType == "pass") {
+        this.confirmPass(this.currentSelectRow);
       } else {
-        this.cancelReq(this.currentSelectRow)
+        this.cancelReq(this.currentSelectRow);
       }
     },
     confirmPass(row) {
@@ -431,7 +450,7 @@ export default {
           type: "success",
           message: this.$t("czcg"),
         });
-        this.dialogVisible = false
+        this.dialogVisible = false;
       } catch (err) {
         this.loading = false;
       }
@@ -442,25 +461,31 @@ export default {
         changeCancel({ id: row.id });
         this.loading = false;
         row.changeStatus = 2;
-        this.dialogVisible = false
+        this.dialogVisible = false;
       } catch (err) {
         this.loading = false;
       }
     },
     handleShowDetail(row, type) {
       this.currentSelectRow = row;
-      this.operationType = type
+      this.operationType = type;
       this.dialogVisible = true;
       this.detailList = [
-        {label: this.$t('bz'), value: row.depCoin},
-        {label: this.$t('dhje'), value: row.depValue},
-        {label: this.$t('mbbz'), value: row.targetCoin},
-        {label: this.$t('kzt'), value: this.status[row.changeStatus]},
-        {label: this.$t('hl'), value: row.changeRate},
-        {label: this.$t('yjdzje'), value: row.targetValue},
-        {label: this.$t('cjsj'), value: row.createTime},
-        {label: this.$t('xgsj'), value: row.modifiedTime},
-      ]
+        {
+          label: this.$t("dhje"),
+          value: this.shiftNumberToPrice(row.depValue),
+          unit: row.depCoin,
+        },
+        {
+          label: this.$t("yjdzje"),
+          value: this.shiftNumberToPrice(row.targetValue),
+          unit: row.targetCoin,
+        },
+        { label: this.$t("hl"), value: row.changeRate },
+        { label: this.$t("kzt"), value: this.status[row.changeStatus] },
+        { label: this.$t("cjsj"), value: row.createTime },
+        { label: this.$t("xgsj"), value: row.modifiedTime },
+      ];
     },
     async getInitData() {
       this.loading = true;

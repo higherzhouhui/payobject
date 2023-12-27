@@ -61,33 +61,45 @@
     </div>
     <div class="content">
       <el-table class="tables" :data="tableData" v-loading="loading" @row-click="(e) => handleShowDetail(e, 'detail')">
-        <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" show-overflow-tooltip/>
-        <el-table-column prop="billValue" :label="$t('je')" min-width="100" show-overflow-tooltip/>
-        <el-table-column prop="balance" :label="$t('ye')" min-width="100" show-overflow-tooltip/>
-        <el-table-column prop="billType" :label="$t('lx')" min-width="100">
-          <template slot-scope="scope">
-            <el-tag class="elTag" :type="typeStyle[scope.row.billType]">
-              {{ scope.row.billBack ? $t('tuihui') : typeOption[scope.row.billType] }}
-            </el-tag>
+        <el-table-column
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
+        show-overflow-tooltip
+      />
+      <el-table-column prop="billType" :label="$t('lx')" min-width="100">
+        <template slot-scope="scope">
+          <el-tag class="elTag" :type="typeStyle[scope.row.billType]">
+            {{ scope.row.billBack ? $t('tuihui') : typeOption[scope.row.billType] }}
+          </el-tag>
+        </template>
+      </el-table-column>
+        <el-table-column prop="billValue" :label="$t('lrje')" min-width="120" show-overflow-tooltip>
+          <template slot-scope="scope" v-if="scope.row.liuru">
+            <b>{{ shiftNumberToPrice(scope.row.liuru)
+            }}</b>
+            <span class="unit">{{ scope.row.coinCode }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="billValue" :label="$t('lcje')" min-width="120" show-overflow-tooltip>
+          <template slot-scope="scope" v-if="scope.row.liuchu">
+            <b>{{ shiftNumberToPrice(scope.row.liuchu)
+            }}</b><span class="unit">{{ scope.row.coinCode }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="balance" :label="$t('ye')" min-width="100" show-overflow-tooltip>
+          <template slot-scope="scope" v-if="scope.row.balance">
+            <b>{{ shiftNumberToPrice(scope.row.balance)
+            }}</b><span class="unit">{{ scope.row.coinCode }}</span>
+          </template>
+        </el-table-column>
+
         <!-- <el-table-column prop="commission" :label="$t('sxfei')" min-width="100">
           <template slot-scope="scope">
             {{ scope.row.commission || 0 }}
           </template>
         </el-table-column> -->
-        <el-table-column
-          prop="createTime"
-          :label="$t('cjsj')"
-          min-width="180"
-          show-overflow-tooltip
-        />
-        <el-table-column
-          prop="modifiedTime"
-          :label="$t('xgsj')"
-          min-width="180"
-          show-overflow-tooltip
-        />
+
         <div slot="empty">
           <el-empty
             :description="$t('nodata')"
@@ -137,7 +149,7 @@
             {{ item.label }}
           </div>
           <div class="list-right" v-if="!item.type">
-            {{ item.value }}
+            {{ item.value }}<span class="unit" v-if="item.unit">{{item.unit}}</span>
           </div>
         </div>
       </div>
@@ -158,10 +170,12 @@
 <script>
 import { getBillDetails } from "@/api/manage";
 import { depCoins } from "@/api/out";
+import { shiftNumberToPrice } from "@/utils";
 export default {
-  name: "transactionInquiry",
+  name: "recodrDetailList",
   data() {
     return {
+      shiftNumberToPrice: shiftNumberToPrice,
       detailVisible: false,
       detailList: [],
       operationType: [],
@@ -179,7 +193,7 @@ export default {
         this.$t("duihuan"),
         this.$t("duihuandrz"),
       ],
-      typeStyle: ["", "success", "danger", "info", "warning"],
+      typeStyle: ["", "success", "danger", "danger", "success"],
       loading: true,
       current: 1,
       size: 10,
@@ -226,9 +240,8 @@ export default {
       this.detailVisible = true;
       this.operationType = type;
       this.detailList = [
-        { label: this.$t("bz"), value: row.coinCode },
-        { label: this.$t("je"), value: row.billValue },
-        { label: this.$t("ye"), value: row.balance || 0},
+        { label: this.$t("je"), value: this.shiftNumberToPrice(row.billValue), unit: row.coinCode},
+        { label: this.$t("ye"), value: this.shiftNumberToPrice(row.balance || 0), unit: row.coinCode},
         { label: this.$t("lx"), value: row.billBack ? this.$t('tuihui') : this.typeOption[row.billType] },
         { label: this.$t("cjsj"), value: row.createTime },
         { label: this.$t("xgsj"), value: row.modifiedTime },
@@ -263,6 +276,17 @@ export default {
       res = await getBillDetails(param);
       this.loading = false;
       if (res.code === 200) {
+        res.data.records.map(item => {
+          if (item.billBack) {
+            item.liuru = item.billValue
+          } else {
+            if (item.billType == 1 || item.billType == 4) {
+              item.liuru = item.billValue
+            } else {
+              item.liuchu = item.billValue
+            }
+          }
+        })
         this.tableData = res.data.records;
         this.total = res.data.total;
       }

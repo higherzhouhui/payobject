@@ -4,7 +4,7 @@
       <div class="balance-item">
         <flagIconVue :code="coinCode" :dashboard="true" />
         <h3>
-          {{ balance }}<span>{{ coinCode }}</span>
+          {{ shiftNumberToPrice(balance) }}<span>{{ coinCode }}</span>
         </h3>
       </div>
     </div>
@@ -57,7 +57,7 @@
                     item.billType == 2 || item.billType == 3 ? 'send' : 'recive'
                   "
                 >
-                  ${{ item.billValue }}
+                  ${{ shiftNumberToPrice(item.billValue) }}
                 </div>
               </div>
             </div>
@@ -69,7 +69,7 @@
             </div>
             <div class="detail-item">
               <div class="left">{{ $t("ye") }}</div>
-              <div class="right">{{ item.balance || 0 }}</div>
+              <div class="right">{{ shiftNumberToPrice(item.balance || 0) }}</div>
             </div>
             <div class="detail-item">
               <div class="left">{{ $t("hblx") }}</div>
@@ -96,11 +96,11 @@
 <script>
 import { balanceList } from "@/api/out";
 import { getBillDetails } from "@/api/manage";
-import { getHashParams } from "@/utils/index";
+import { getHashParams, shiftNumberToPrice } from "@/utils/index";
 import flagIconVue from "@/components/common/flagicon.vue";
 
 export default {
-  name: "DashBoard",
+  name: "DashBoardDetail",
   props: {
     msg: String,
   },
@@ -117,6 +117,7 @@ export default {
         this.$t("duihuandrz"),
         this.$t("tuihui"),
       ],
+      shiftNumberToPrice: shiftNumberToPrice,
       balanceArrapy: [],
       billArray: [],
       current: 1,

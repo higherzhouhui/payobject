@@ -77,7 +77,39 @@
         @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'fabi'"
       >
-        <el-table-column prop="coinCode" :label="$t('bz')" min-width="100" />
+      <el-table-column
+      prop="createTime"
+      :label="$t('cjsj')"
+      min-width="170"
+    />
+    <el-table-column prop="reqValue" :label="$t('ckje')" min-width="150" show-overflow-tooltip>
+      <template slot-scope="scope">
+        {{ shiftNumberToPrice(scope.row.reqValue)
+        }}<span class="unit">{{ scope.row.coinCode }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="commission"
+      :label="$t('sxfei')"
+      min-width="120"
+      show-overflow-tooltip
+      >
+      <template slot-scope="scope" v-if="scope.row.commission">
+        {{ shiftNumberToPrice(scope.row.commission)
+        }}<span class="unit">{{ scope.row.coinCode }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="withdrawValue"
+      :label="$t('dzje')"
+      min-width="120"
+      show-overflow-tooltip
+      >
+      <template slot-scope="scope" v-if="scope.row.withdrawValue">
+        {{ shiftNumberToPrice(scope.row.withdrawValue)
+        }}<span class="unit">{{ scope.row.coinCode }}</span>
+      </template>
+    </el-table-column>
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
@@ -91,29 +123,7 @@
           min-width="180"
           show-overflow-tooltip
         />
-        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" show-overflow-tooltip/>
-        <el-table-column
-          prop="commission"
-          :label="$t('sxfei')"
-          min-width="110"
-          show-overflow-tooltip
-        />
-        <el-table-column
-          prop="withdrawValue"
-          :label="$t('dzje')"
-          min-width="120"
-          show-overflow-tooltip
-        />
-        <el-table-column
-          prop="createTime"
-          :label="$t('cjsj')"
-          min-width="180"
-        />
-        <el-table-column
-          prop="modifiedTime"
-          :label="$t('xgsj')"
-          min-width="180"
-        />
+
         <el-table-column prop="name" :label="$t('cz')" width="95" fixed="right">
           <template slot-scope="scope">
             <div
@@ -161,8 +171,39 @@
         @row-click="(e) => handleShowDetail(e, 'detail')"
         v-if="moneyType == 'usdt'"
       >
-        <!-- <el-table-column prop="tid" :label="$t('tid')" min-width="100" /> -->
-        <el-table-column prop="srcCode" :label="$t('bz')" min-width="100" show-overflow-tooltip/>
+      <el-table-column
+      prop="createTime"
+      :label="$t('cjsj')"
+      min-width="170"
+    />
+    <el-table-column prop="reqValue" :label="$t('ckje')" min-width="150" show-overflow-tooltip>
+      <template slot-scope="scope">
+        {{ shiftNumberToPrice(scope.row.reqValue)
+        }}<span class="unit">{{ scope.row.coinCode }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="commission"
+      :label="$t('sxfei')"
+      min-width="120"
+      show-overflow-tooltip
+      >
+      <template slot-scope="scope" v-if="scope.row.commission">
+        {{ shiftNumberToPrice(scope.row.commission)
+        }}<span class="unit">{{ scope.row.coinCode }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="withdrawValue"
+      :label="$t('dzje')"
+      min-width="120"
+      show-overflow-tooltip
+      >
+      <template slot-scope="scope" v-if="scope.row.withdrawValue">
+        {{ shiftNumberToPrice(scope.row.withdrawValue)
+        }}<span class="unit">{{ scope.row.coinCode }}</span>
+      </template>
+    </el-table-column>
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
           <template slot-scope="scope">
             <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
@@ -177,26 +218,7 @@
           min-width="180"
         />
         <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" show-overflow-tooltip/>
-        <el-table-column prop="reqValue" :label="$t('ckje')" min-width="100" show-overflow-tooltip/>
-        <el-table-column
-        prop="commission"
-        :label="$t('sxfei')"
-        min-width="110"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="withdrawValue"
-        :label="$t('dzje')"
-        show-overflow-tooltip
-        min-width="120"
-      />
         <el-table-column prop="tid" :label="$t('tid')" min-width="120" show-overflow-tooltip/>
-        <el-table-column
-          prop="createTime"
-          :label="$t('cjsj')"
-          min-width="180"
-          show-overflow-tooltip
-        />
         <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
           <template slot-scope="scope">
             <div
@@ -271,7 +293,7 @@
               </a>
             </template>
             <template v-else>
-              {{ item.value }}
+              {{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span>
             </template>
           </div>
         </div>
@@ -314,7 +336,7 @@
               </a>
             </template>
             <template v-else>
-              {{ item.value }}
+              {{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span>
             </template>
           </div>
         </div>
@@ -473,10 +495,13 @@ import { Message } from "element-ui";
 import { getBankList } from "@/api/bank.js";
 import { getHashParams } from "@/utils/index";
 import { pjDownUrl, getCountryName } from "@/utils/common";
+import { shiftNumberToPrice } from "@/utils/index";
+
 export default {
-  name: "widthDrawl",
+  name: "withDrawList",
   data() {
     return {
+      shiftNumberToPrice: shiftNumberToPrice,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -722,10 +747,9 @@ export default {
           };
         }
         this.detailList = [
-          { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
-          { label: this.$t("ckje"), value: this.currentSelectRow.reqValue },
-          { label: this.$t("sxfei"), value: this.currentSelectRow.commission },
-          { label: this.$t("dzje"), value: this.currentSelectRow.withdrawValue },
+          { label: this.$t("ckje"), value: this.shiftNumberToPrice(this.currentSelectRow.reqValue), unit: true },
+          { label: this.$t("sxfei"), value: this.shiftNumberToPrice(this.currentSelectRow.commission), unit: true },
+          { label: this.$t("dzje"), value: this.shiftNumberToPrice(this.currentSelectRow.withdrawValue), unit: true },
           {
             label: this.$t("skzhmc"),
             value: this.currentSelectRow.accountName,
@@ -772,10 +796,9 @@ export default {
       }
       if (this.moneyType == "usdt") {
         this.detailList = [
-          { label: this.$t("bz"), value: this.currentSelectRow.coinCode },
-          { label: this.$t("ckje"), value: this.currentSelectRow.reqValue },
-          { label: this.$t("sxfei"), value: this.currentSelectRow.commission },
-          { label: this.$t("dzje"), value: this.currentSelectRow.withdrawValue },
+          { label: this.$t("ckje"), value: this.shiftNumberToPrice(this.currentSelectRow.reqValue), unit: true },
+          { label: this.$t("sxfei"), value: this.shiftNumberToPrice(this.currentSelectRow.commission), unit: true },
+          { label: this.$t("dzje"), value: this.shiftNumberToPrice(this.currentSelectRow.withdrawValue), unit: true },
           { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
           { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
           { label: this.$t("tid"), value: this.currentSelectRow.tid },

@@ -32,17 +32,17 @@
               </el-select>
             </div>
             <div class="remain" v-if="form.coinCode">
-              {{ $t("ye") }}<span>{{ getReamin() }}</span
+              {{ $t("ye") }}<span>{{ shiftNumberToPrice(getReamin()) }}</span
               >{{ form.coinCode }}
             </div>
           </div>
           <ul class="list">
             <li v-if="rateDetail">{{ rateDetail }}</li>
             <li v-if="limitObj.coinMin">
-              {{ $t("limitduihuanmin") }}&nbsp;&nbsp;{{ limitObj.coinMin }}{{ limitObj.coinCode }}
+              {{ $t("limitduihuanmin") }}&nbsp;&nbsp;{{ shiftNumberToPrice(limitObj.coinMin) }}{{ limitObj.coinCode }}
             </li>
             <li v-if="limitObj.coinMax">
-              {{ $t("limitduihuanmax") }}&nbsp;&nbsp;{{ limitObj.coinMax }}{{ form.coinCode }}
+              {{ $t("limitduihuanmax") }}&nbsp;&nbsp;{{ shiftNumberToPrice(limitObj.coinMax) }}{{ form.coinCode }}
             </li>
             <li v-if="limitObj.noSub">
               {{ $t("zwkf") }}
@@ -80,7 +80,7 @@
               {{ $t("dhje") }}
             </div>
             <div class="column-right">
-              {{ form.reqValue || 0
+              {{ shiftNumberToPrice(form.reqValue || 0)
               }}<span class="unit">{{ form.coinCode }}</span>
             </div>
           </div>
@@ -90,7 +90,7 @@
               {{ $t("yjdzje") }}
             </div>
             <div class="column-right">
-              {{ rate * this.form.reqValue || 0
+              {{ shiftNumberToPrice(rate * this.form.reqValue || 0)
               }}<span class="unit">{{ form.targetCode }}</span>
             </div>
           </div>
@@ -101,7 +101,7 @@
             </div>
             <div class="column-right">
               {{
-                form.coinCode ? limitObj.commission || $t("nosxf") : $t("dqr")
+                form.coinCode ? shiftNumberToPrice(limitObj.commission) || $t("nosxf") : $t("dqr")
               }}<span class="unit" v-if="limitObj.commission">{{ form.coinCode }}</span>
             </div>
           </div>
@@ -142,7 +142,7 @@ import {
   balanceList,
 } from "@/api/out";
 import { Message } from "element-ui";
-import { Local } from "@/utils/index";
+import { Local, shiftNumberToPrice } from "@/utils/index";
 import { cryptocurrencies } from "@/api/login";
 import { changeReq } from "@/api/convert";
 import { getLimit } from "@/api/exchange";
@@ -151,6 +151,7 @@ export default {
   data() {
     return {
       limitObj: {},
+      shiftNumberToPrice: shiftNumberToPrice,
       dialogVisibleSuccess: false,
       form: {
         coinCode: "",

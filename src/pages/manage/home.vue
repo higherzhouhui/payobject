@@ -18,6 +18,12 @@
       v-if="kycTotal"
     >
       <el-table-column
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
+        show-overflow-tooltip
+      />
+      <el-table-column
         prop="companyName"
         :label="$t('qymc')"
         min-width="180"
@@ -33,12 +39,6 @@
         prop="businessScenario"
         :label="$t('ywcjsm')"
         min-width="280"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
         show-overflow-tooltip
       />
       <div slot="empty">
@@ -63,27 +63,27 @@
       v-if="bankTotal"
     >
       <el-table-column
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
+        show-overflow-tooltip
+      />
+      <el-table-column
         prop="accountName"
         :label="$t('zhmc')"
         min-width="180"
         show-overflow-tooltip
       />
       <el-table-column
-        prop="bankAccount"
-        :label="$t('yhzh')"
+        prop="bankName"
+        :label="$t('bankname')"
         min-width="200"
         show-overflow-tooltip
       />
       <el-table-column
-        prop="accountAdd"
-        :label="$t('jzdz')"
-        min-width="300"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
+        prop="bankAccount"
+        :label="$t('yhzh')"
+        min-width="200"
         show-overflow-tooltip
       />
       <div slot="empty">
@@ -108,15 +108,9 @@
       v-if="depositTotal"
     >
       <el-table-column
-        prop="coinCode"
-        :label="$t('bz')"
-        min-width="120"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="accountName"
-        :label="$t('skzhmc')"
-        min-width="180"
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -124,19 +118,26 @@
         :label="$t('czje')"
         min-width="180"
         show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          {{ shiftNumberToPrice(scope.row.reqValue)
+          }}<span class="unit">{{ scope.row.coinCode }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="accountName"
+        :label="$t('skzhmc')"
+        min-width="180"
+        show-overflow-tooltip
       />
+
       <el-table-column
         prop="sendAccount"
         :label="$t('hkzh')"
         min-width="180"
         show-overflow-tooltip
       />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-        show-overflow-tooltip
-      />
+
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -159,15 +160,9 @@
       v-if="cryptdepositTotal"
     >
       <el-table-column
-        prop="coinCode"
-        :label="$t('bz')"
-        min-width="120"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="cryptAdd"
-        :label="$t('skqbdz')"
-        min-width="180"
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -175,19 +170,26 @@
         :label="$t('czje')"
         min-width="180"
         show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          {{ shiftNumberToPrice(scope.row.reqValue)
+          }}<span class="unit">{{ scope.row.coinCode }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="cryptAdd"
+        :label="$t('skqbdz')"
+        min-width="180"
+        show-overflow-tooltip
       />
+
       <el-table-column
         prop="tid"
         :label="$t('hkqbdz')"
         min-width="180"
         show-overflow-tooltip
       />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-        show-overflow-tooltip
-      />
+
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -210,29 +212,29 @@
       v-if="withdrawTotal"
     >
       <el-table-column
-        prop="coinCode"
-        :label="$t('bz')"
-        min-width="100"
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
         show-overflow-tooltip
       />
+      <el-table-column
+        prop="reqValue"
+        :label="$t('ckje')"
+        min-width="180"
+        show-overflow-tooltip
+      >
+        <template slot-scope="scope">
+          {{ shiftNumberToPrice(scope.row.reqValue)
+          }}<span class="unit">{{ scope.row.coinCode }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="accountName"
         :label="$t('skzhmc')"
         min-width="180"
         show-overflow-tooltip
       />
-      <el-table-column
-        prop="reqValue"
-        :label="$t('ckje')"
-        min-width="100"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-        show-overflow-tooltip
-      />
+
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -255,32 +257,26 @@
       v-if="cryptwithdrawTotal"
     >
       <el-table-column
-        prop="srcCode"
-        :label="$t('bz')"
-        min-width="80"
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
         show-overflow-tooltip
       />
-      <el-table-column
-        prop="cryptAdd"
-        :label="$t('skqbdz')"
-        min-width="180"
-        show-overflow-tooltip
-      />
-      <el-table-column
-        prop="coinCode"
-        :label="$t('mbbz')"
-        min-width="100"
-        show-overflow-tooltip
-      />
+
       <el-table-column
         prop="reqValue"
         :label="$t('ckje')"
-        min-width="100"
+        min-width="180"
         show-overflow-tooltip
-      />
+      >
+        <template slot-scope="scope">
+          {{ shiftNumberToPrice(scope.row.reqValue)
+          }}<span class="unit">{{ scope.row.coinCode }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
+        prop="cryptAdd"
+        :label="$t('skqbdz')"
         min-width="180"
         show-overflow-tooltip
       />
@@ -307,9 +303,9 @@
       @row-click="(e) => handleShowDetail(e, 'detail')"
     >
       <el-table-column
-        prop="depCoin"
-        :label="$t('bz')"
-        min-width="80"
+        prop="createTime"
+        :label="$t('cjsj')"
+        min-width="170"
         show-overflow-tooltip
       />
       <el-table-column
@@ -317,26 +313,23 @@
         :label="$t('dhje')"
         min-width="100"
         show-overflow-tooltip
-      />
-      <el-table-column
-        prop="targetCoin"
-        :label="$t('mbbz')"
-        min-width="100"
-        show-overflow-tooltip
-      />
+      >
+        <template slot-scope="scope">
+          {{ shiftNumberToPrice(scope.row.depValue)
+          }}<span class="unit">{{ scope.row.depCoin }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="targetValue"
         :label="$t('yjdzje')"
         min-width="130"
         show-overflow-tooltip
-      />
-
-      <el-table-column
-        prop="createTime"
-        :label="$t('cjsj')"
-        min-width="180"
-        show-overflow-tooltip
-      />
+      >
+        <template slot-scope="scope">
+          {{ shiftNumberToPrice(scope.row.targetValue)
+          }}<span class="unit">{{ scope.row.targetCoin }}</span>
+        </template>
+      </el-table-column>
       <div slot="empty">
         <el-empty :description="$t('nodata')" style="padding: 50px"></el-empty>
       </div>
@@ -348,11 +341,12 @@ import { getBankListPage, kycList } from "@/api/bank";
 import { depositList, cryptDepositList } from "@/api/out.js";
 import { withdrawList, cryptWithdrawList } from "@/api/out.js";
 import { changeDetails } from "@/api/convert.js";
-
+import { shiftNumberToPrice } from "@/utils";
 export default {
-  name: "homeHide",
+  name: "manageHome",
   data() {
     return {
+      shiftNumberToPrice: shiftNumberToPrice,
       kycData: [],
       kycLoading: true,
       kycTotal: 0,

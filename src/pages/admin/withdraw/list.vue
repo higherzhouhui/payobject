@@ -84,8 +84,8 @@
     />
     <el-table-column prop="reqValue" :label="$t('ckje')" min-width="150" show-overflow-tooltip>
       <template slot-scope="scope">
-        {{ shiftNumberToPrice(scope.row.reqValue)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.reqValue)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -106,8 +106,8 @@
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.withdrawValue">
-        {{ shiftNumberToPrice(scope.row.withdrawValue)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.withdrawValue)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
@@ -178,8 +178,8 @@
     />
     <el-table-column prop="reqValue" :label="$t('ckje')" min-width="150" show-overflow-tooltip>
       <template slot-scope="scope">
-        {{ shiftNumberToPrice(scope.row.reqValue)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.reqValue)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -189,8 +189,8 @@
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.commission">
-        {{ shiftNumberToPrice(scope.row.commission)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.commission)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
     <el-table-column
@@ -200,8 +200,8 @@
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.withdrawValue">
-        {{ shiftNumberToPrice(scope.row.withdrawValue)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.withdrawValue)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">

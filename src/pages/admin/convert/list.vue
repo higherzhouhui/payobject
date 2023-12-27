@@ -81,8 +81,8 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{ shiftNumberToPrice(scope.row.depValue)
-            }}<span class="unit">{{ scope.row.depCoin }}</span>
+            <b>{{ shiftNumberToPrice(scope.row.depValue)
+            }}</b><span class="unit">{{ scope.row.depCoin }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -92,8 +92,8 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{ shiftNumberToPrice(scope.row.targetValue)
-            }}<span class="unit">{{ scope.row.targetCoin }}</span>
+            <b>{{ shiftNumberToPrice(scope.row.targetValue)
+            }}</b><span class="unit">{{ scope.row.targetCoin }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="120">

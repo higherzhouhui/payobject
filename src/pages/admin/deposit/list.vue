@@ -84,8 +84,8 @@
     />
     <el-table-column prop="reqValue" :label="$t('czje')" min-width="150">
       <template slot-scope="scope">
-        {{ shiftNumberToPrice(scope.row.reqValue)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.reqValue)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
 
@@ -178,8 +178,8 @@
     />
     <el-table-column prop="reqValue" :label="$t('czje')" min-width="150" show-overflow-tooltip>
       <template slot-scope="scope">
-        {{ shiftNumberToPrice(scope.row.reqValue)
-        }}<span class="unit">{{ scope.row.coinCode }}</span>
+        <b>{{ shiftNumberToPrice(scope.row.reqValue)
+        }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
       </el-table-column>
         <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">

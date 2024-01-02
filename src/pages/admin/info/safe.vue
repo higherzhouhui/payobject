@@ -46,7 +46,7 @@
         </div>
         <div class="normal-btn" @click="routerTo('/admin/paypass')">{{$store.state.userInfo.hasPayPass ? $t('xg') : $t('sz')}}</div>
       </div>
-      <div class="desc">{{$t('passdesc')}}</div>
+      <div class="desc">{{$t('paypassdesc')}}</div>
     </div>
     <!-- <div class="top">
       <img src="@/assets/images/user/user-default.png" class="user-img"/>

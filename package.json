@@ -17,6 +17,7 @@
     "flag-icon-css": "^4.1.7",
     "identify": "^0.1.5",
     "nprogress": "^0.2.0",
+    "qrcode": "^1.5.3",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "shifty": "^3.0.1",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@types/qrcode": "^1.5.5",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",

@@ -248,6 +248,8 @@
         </template>
       </div>
       </div>
+      <QRcode width="100" height="100" :load="false"></QRcode>
+
     </div>
     <el-dialog
       :title="$t('done')"
@@ -290,6 +292,11 @@ export default {
   props: ["type"],
   data() {
     return {
+      content: JSON.stringify({
+          app: 'rpay',
+          userName: '782492184@qq.com',
+          address: '重庆市江北区',
+      },),
       detailList: [],
       dialogVisibleSuccess: false,
       loading: false,

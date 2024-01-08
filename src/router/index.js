@@ -85,7 +85,7 @@ const router = new VueRouter({
                 { path: 'reset', component: () => import('@/pages/admin/info/reset.vue'), meta: {title: i18n.t('resetPwd')} },
                 { path: 'paypass', component: () => import('@/pages/admin/info/paypass.vue'), meta: {title: i18n.t('paypass')} },
                 { path: 'safe', component: () => import('@/pages/admin/info/safe.vue'), meta: {title: i18n.t('safe')} },
-                { path: 'email', component: () => import('@/pages/admin/info/email.vue'), meta: {title: i18n.t('修改已绑定邮箱')} },
+                { path: 'email', component: () => import('@/pages/admin/info/email.vue'), meta: {title: i18n.t('xgybdyx')} },
             ]
         },
         {

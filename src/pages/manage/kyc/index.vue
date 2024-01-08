@@ -1,10 +1,5 @@
 <template>
   <div class="user_transferAccountMangement_contianer">
-    <!-- <LinkPath :linkList="linkList" /> -->
-    <!-- <el-tabs v-model="type">
-      <el-tab-pane :label="$t('bankcard')" name="first"></el-tab-pane>
-      <el-tab-pane :label="$t('kycyz')" name="second"></el-tab-pane>
-    </el-tabs> -->
     <template v-if="type == 'first'">
       <div class="search-container">
         <div class="admin-title">{{ $store.state.title }}</div>
@@ -82,11 +77,11 @@
             </template>
           </el-table-column>
           <el-table-column
-          prop="bankName"
-          :label="$t('bankname')"
-          min-width="150"
-          show-overflow-tooltip
-        />
+            prop="bankName"
+            :label="$t('bankname')"
+            min-width="150"
+            show-overflow-tooltip
+          />
           <el-table-column
             prop="bankAccount"
             :label="$t('yhzh')"
@@ -150,7 +145,7 @@
         </el-pagination>
       </div>
     </template>
-    <template v-else>
+    <template v-if="type == 'second'">
       <div class="search-container">
         <div class="admin-title">{{ $store.state.title }}</div>
         <el-radio-group v-model="type">
@@ -158,15 +153,15 @@
           <el-radio-button label="second">{{ $t("kycyz") }}</el-radio-button>
         </el-radio-group>
         <el-form
-          v-model="searchForm"
+          v-model="kycSearchForm"
           :inline="true"
           label-position="top"
           class="search-form two-column"
         >
           <el-form-item :label="$t('kzt')">
             <el-select
-              v-model="searchForm.kycStatus"
-              :placeholder="$t('zhbdzt')"
+              v-model="kycSearchForm.kycStatus"
+              :placeholder="$t('kzt')"
               clearable
             >
               <el-option
@@ -191,15 +186,13 @@
           </el-form-item>
         </el-form>
       </div>
-
       <div class="content">
         <el-table
           class="tables"
-          :data="tableData2"
+          :data="tableData"
           style="width: 100%"
           v-loading="loading"
           @row-click="(e) => passKycDialog(e, 'detail')"
-
         >
           <el-table-column
             prop="companyName"
@@ -226,51 +219,41 @@
             min-width="280"
             show-overflow-tooltip
           />
-
           <el-table-column
             prop="createTime"
             :label="$t('cjsj')"
             min-width="170"
             show-overflow-tooltip
           />
-
           <el-table-column :label="$t('cz')" width="90" fixed="right">
             <template slot-scope="scope">
-              <div>
-                <!-- <div
-                  class="operation-btn"
-                  @click="passKycDialog(scope.row, 'detail')"
-                >
-                  {{ $t("xq") }}
-                </div> -->
-                <div
-                  v-if="scope.row.kycStatus == 0"
-                  class="operation-btn pass-btn"
-                  @click.stop="passKycDialog(scope.row, 'pass')"
-                >
-                  {{ $t("tg") }}
-                </div>
-                <div
-                  v-if="scope.row.kycStatus == 0"
-                  class="operation-btn reject-btn"
-                  @click.stop="rejectKyc(scope.row)"
-                >
-                  {{ $t("bh") }}
-                </div>
-                <div
-                  class="operation-btn edit-btn"
-                  @click.stop="showUsdtForm(scope.row)"
-                  v-if="scope.row.kycStatus == 1"
-                >
-                  {{ $t("jmhb") }}
-                </div>
-                <div
-                  v-if="scope.row.kycStatus == 1"
-                  class="operation-btn"
-                  @click.stop="showUserBalance(scope.row)"
-                >
-                  {{ $t("qb") }}
-                </div>
+              <div
+                v-if="scope.row.kycStatus == 0"
+                class="operation-btn pass-btn"
+                @click.stop="passKycDialog(scope.row, 'pass')"
+              >
+                {{ $t("tg") }}
+              </div>
+              <div
+                v-if="scope.row.kycStatus == 0"
+                class="operation-btn reject-btn"
+                @click.stop="rejectKyc(scope.row)"
+              >
+                {{ $t("bh") }}
+              </div>
+              <div
+                class="operation-btn edit-btn"
+                @click.stop="showUsdtForm(scope.row)"
+                v-if="scope.row.kycStatus == 1"
+              >
+                {{ $t("jmhb") }}
+              </div>
+              <div
+                v-if="scope.row.kycStatus == 1"
+                class="operation-btn"
+                @click.stop="showUserBalance(scope.row)"
+              >
+                {{ $t("qb") }}
               </div>
             </template>
           </el-table-column>
@@ -295,7 +278,6 @@
         </el-pagination>
       </div>
     </template>
-
     <el-dialog
       :title="operationType == 'detail' ? $t('xq') : $t('sh')"
       :visible.sync="dialogVisible"
@@ -328,100 +310,6 @@
           </div>
         </div>
       </div>
-      <!-- <el-form
-        label-position="top"
-        ref="formss"
-        :model="bankForm"
-        class="formStyle"
-      >
-        <el-form-item :label="$t('zhmc')">
-          <el-input
-            v-model="bankForm.accountName"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('ssgj')">
-          <el-select
-            v-model="bankForm.country"
-            style="width: 100%"
-            :disabled="!!bankForm.id"
-          >
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in areaList"
-              :key="item.id"
-              :label="lang == 'zh' ? item.name : item.enName"
-              :value="item.areaCode"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('jzdz')">
-          <el-input
-            type="textarea"
-            v-model="bankForm.accountAdd"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('bankname')">
-          <el-input
-            v-model="bankForm.bankName"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('swift')">
-          <el-input
-            v-model="bankForm.swiftCode"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('bankcode')">
-          <el-input
-            v-model="bankForm.bankCode"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('bankcount')">
-          <el-input
-            v-model="bankForm.bankAccount"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('khgj')">
-          <el-select
-            v-model="bankForm.bankCountry"
-            style="width: 100%"
-            :disabled="!!bankForm.id"
-          >
-            <el-option
-              style="padding: 0 10px"
-              v-for="item in areaList"
-              :key="item.id"
-              :label="lang == 'zh' ? item.name : item.enName"
-              :value="item.areaCode"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('khdz')">
-          <el-input
-            type="textarea"
-            v-model="bankForm.bankAdd"
-            :disabled="!!bankForm.id"
-          ></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('scwj')">
-          <label style="font-size: 12px">
-            {{ $t("zzd") }}
-          </label>
-          <a
-            :href="'/api/file/downLoad?url=' + bankForm.accountCer"
-            target="_blank"
-            class="down-a"
-            >{{ $t("yulan") }}</a
-          >
-        </el-form-item>
-      </el-form> -->
       <div slot="footer">
         <el-button class="qx" size="small" @click="dialogVisible = false">
           {{ $t("cancel") }}
@@ -705,7 +593,7 @@
         >
           <div class="list">
             <div class="list-left">
-              <flagIconVue :code="userBalanceDetail[index].coinCode"/>
+              <flagIconVue :code="userBalanceDetail[index].coinCode" />
               {{ userBalanceDetail[index].coinCode }}
             </div>
             <div class="list-right">
@@ -754,11 +642,12 @@ import flagIconVue from "@/components/common/flagicon.vue";
 export default {
   name: "KYCPage",
   components: {
-    flagIconVue
+    flagIconVue,
   },
   data() {
     return {
       searchForm: {},
+      kycSearchForm: {},
       agreementList: [
         { label: "TRC20", value: "TRC20" },
         { label: "ERC20", value: "ERC20" },
@@ -772,10 +661,9 @@ export default {
       bankForm2: {},
       addressForm: {},
       options2: ["", this.$t("gth"), this.$t("qy"), this.$t("hwgs")],
-      type: "first",
+      type: "",
       dialogVisible: false,
       tableData: [],
-      tableData2: [],
       loading: false,
       bankloading: false,
       currentSelectRow: false,
@@ -823,8 +711,7 @@ export default {
   watch: {
     type() {
       this.current = 1;
-      this.form = {};
-      this.getInitData();
+      this.getInitData()
     },
   },
   methods: {
@@ -856,6 +743,8 @@ export default {
       }
     },
     getInitData() {
+      this.tableData = []
+      this.loading = true;
       if (this.type == "first") {
         this.getlist();
       } else {
@@ -1004,44 +893,42 @@ export default {
       this.operationType = type;
       try {
         this.detailList = [
-        { label: this.$t("qymc"), value: data.companyName },
-        { label: this.$t("qyjydz"), value: data.businessAdd },
-        { label: this.$t("qylx"), value: this.options2[data.busType] },
-        { label: this.$t("ywcjsm"), value: data.businessScenario },
-        { label: this.$t("ssgj"), value: getCountryName(data.country) },
-        { label: this.$t("kzt"), value: this.status[data.kycStatus] },
-        { label: this.$t("zcrq"), value: data.regDate },
-        { label: this.$t("qyyxq"), value: data.period },
-        { label: this.$t("qygw"), value: data.webSite },
-        { label: this.$t("dbjyed"), value: data.transactionLimit },
-        { label: this.$t("ygyjybs"), value: data.transactionsMonth },
-        { label: this.$t("bhly"), value: data.reason },
-        { label: this.$t("cjsj"), value: data.createTime },
-        { label: this.$t("xgsj"), value: data.modifiedTime },
-        {
-          label: this.$t("qycl"),
-          value: pjDownUrl(data.regCer),
-          type: "link",
-        },
-        {
-          label: this.$t("frcl"),
-          value: pjDownUrl(data.legal),
-          type: "link",
-        },
-        {
-          label: this.$t("gqcl"),
-          value: pjDownUrl(data.shareholder),
-          type: "link",
-        },
-      ];
+          { label: this.$t("qymc"), value: data.companyName },
+          { label: this.$t("qyjydz"), value: data.businessAdd },
+          { label: this.$t("qylx"), value: this.options2[data.busType] },
+          { label: this.$t("ywcjsm"), value: data.businessScenario },
+          { label: this.$t("ssgj"), value: getCountryName(data.country) },
+          { label: this.$t("kzt"), value: this.status[data.kycStatus] },
+          { label: this.$t("zcrq"), value: data.regDate },
+          { label: this.$t("qyyxq"), value: data.period },
+          { label: this.$t("qygw"), value: data.webSite },
+          { label: this.$t("dbjyed"), value: data.transactionLimit },
+          { label: this.$t("ygyjybs"), value: data.transactionsMonth },
+          { label: this.$t("bhly"), value: data.reason },
+          { label: this.$t("cjsj"), value: data.createTime },
+          { label: this.$t("xgsj"), value: data.modifiedTime },
+          {
+            label: this.$t("qycl"),
+            value: pjDownUrl(data.regCer),
+            type: "link",
+          },
+          {
+            label: this.$t("frcl"),
+            value: pjDownUrl(data.legal),
+            type: "link",
+          },
+          {
+            label: this.$t("gqcl"),
+            value: pjDownUrl(data.shareholder),
+            type: "link",
+          },
+        ];
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-   
     },
     async getlist() {
       try {
-        this.loading = true;
         let req = await getBankListPage({
           ...this.searchForm,
           current: this.current,
@@ -1054,15 +941,15 @@ export default {
     },
     async getlist2() {
       try {
-        this.loading = true;
         let req = await kycList({
-          ...this.searchForm,
+          ...this.kycSearchForm,
           current: this.current,
           size: this.size,
         });
-        this.tableData2 = req.data.records;
+        this.tableData = req.data.records;
         this.total = req.data.total;
         this.loading = false;
+        console.log(this.tableData)
       } catch (error) {}
     },
     handleSizeChange(val) {
@@ -1078,18 +965,16 @@ export default {
     const params = getHashParams();
     this.type = params.get("type") || "first";
     if (params.get("type")) {
-      console.log(this.type)
       if (this.type == "first") {
         this.searchForm = {
-          bankStatus: 0
-        }
+          bankStatus: 0,
+        };
       } else {
-        this.searchForm = {
-          kycStatus: 0
-        }
+        this.kycSearchForm = {
+          kycStatus: 0,
+        };
       }
     }
-    this.getlist();
     this.getSzList();
     this.getAreaCode();
   },

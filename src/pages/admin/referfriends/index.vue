@@ -20,7 +20,7 @@
         </div>
         <img :src="`/api/inviteQrCode?backUrl=${shareLink}`" alt="qrcode" class="qrcode" />
         <div class="btn-group">
-          <a class="normal-btn download" :href="`/api/inviteQrCode?backUrl=${shareLink}`" download>{{$t('xzewm')}}</a>
+          <a class="normal-btn download" :href="`/api/inviteQrCode?backUrl=${encodeURIComponent(shareLink)}`" download>{{$t('xzewm')}}</a>
           <div class="normal-btn" @click="copyText2(`${shareLink}${userInfo.providerId}`)">{{$t('fzlj')}}</div>
         </div>
       </div>
@@ -108,8 +108,10 @@ export default {
       this.getInitData();
     },
     getShareLink() {
-      const href = `${location.origin}#/user/register?inviteCode=`;
+      const href = `${location.origin}/user/register?inviteCode=`;
       this.shareLink = href;
+      const a = encodeURIComponent(href)
+      console.log(a)
     },
     copyText2(word) {
       let textArea = document.createElement("textarea");

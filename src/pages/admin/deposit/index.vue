@@ -298,6 +298,7 @@
           <div class="divider" />
           <img :src="`/api/depositWalletQrCode?cryCode=${usdtForm.coinCode}&agreement=${usdtForm.agreement}`" />
           <div class="hint">{{`${$t('gdzkjs')} ${usdtForm.agreement} ${$t('db')}`}}</div>
+          <a class="normal-btn btn" :href="`/api/depositWalletQrCode?cryCode=${usdtForm.coinCode}&agreement=${usdtForm.agreement}`" download>{{$t('xzewm')}}</a>
         </div>
         <div class="divider" v-if="usdtForm.tid" />
         <div class="column" v-if="usdtForm.tid">
@@ -867,16 +868,22 @@ export default {
   }
 }
 .qrcode {
+  text-align: center;
   img {
     width: 80%;
-    max-width: 300px;
+    max-width: 200px;
     margin-bottom: 12px;
   }
   .hint {
     color: #e3d2d2;
     font-size: 12px;
   }
-  text-align: center;
+  .btn {
+    display: block;
+    text-decoration: none;
+    width: fit-content;
+    margin: 12px auto 0 auto;
+  }
 }
 </style>
   

@@ -108,10 +108,8 @@ export default {
       this.getInitData();
     },
     getShareLink() {
-      const href = `${location.origin}/user/register?inviteCode=`;
+      const href = `${location.origin}#/user/register?inviteCode=`;
       this.shareLink = href;
-      const a = encodeURIComponent(href)
-      console.log(a)
     },
     copyText2(word) {
       let textArea = document.createElement("textarea");

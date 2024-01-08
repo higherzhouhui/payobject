@@ -108,7 +108,7 @@ export default {
       this.getInitData();
     },
     getShareLink() {
-      const href = `${location.origin}#/user/register?inviteCode=`;
+      const href = `${location.origin}#/user/register?inviteCode=${this.userInfo.providerId}`;
       this.shareLink = href;
     },
     copyText2(word) {

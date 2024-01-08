@@ -548,10 +548,10 @@ export default {
       if (id == this.$t("add")) {
         this.$router.push("/admin/address/list?type=add");
       } else {
-        const list = this.hkAddressList.filter((item) => {
-          return item.cryAdd == id;
-        });
-        this.usdtForm.agreement = list[0].agreement;
+        // const list = this.hkAddressList.filter((item) => {
+        //   return item.cryAdd == id;
+        // });
+        // this.usdtForm.agreement = list[0].agreement;
       }
     },
     async getSzList() {

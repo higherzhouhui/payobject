@@ -18,9 +18,9 @@
         <div class="yqm-code" @click="copyText2(userInfo.providerId)">
           <span>{{ userInfo.providerId }}</span><i class="el-icon-document-copy"></i>
         </div>
-        <img :src="`/api/inviteQrCode?backUrl=${shareLink}`" alt="qrcode" class="qrcode" />
+        <img :src="encodeShareLink" alt="qrcode" class="qrcode" />
         <div class="btn-group">
-          <a class="normal-btn download" :href="`/api/inviteQrCode?backUrl=${encodeURIComponent(shareLink)}`" download>{{$t('xzewm')}}</a>
+          <a class="normal-btn download" :href="encodeShareLink" download>{{$t('xzewm')}}</a>
           <div class="normal-btn" @click="copyText2(`${shareLink}${userInfo.providerId}`)">{{$t('fzlj')}}</div>
         </div>
       </div>
@@ -83,6 +83,7 @@ export default {
     return {
       userInfo: this.$store.state.userInfo,
       shareLink: "",
+      encodeShareLink: "",
       tableData: [],
       loading: true,
       current: 1,
@@ -108,8 +109,10 @@ export default {
       this.getInitData();
     },
     getShareLink() {
-      const href = `${location.origin}#/user/register?inviteCode=${this.userInfo.providerId}`;
+      const href = `${location.origin}/#/user/register?inviteCode=`;
       this.shareLink = href;
+      this.encodeShareLink = `/api/inviteQrCode?backUrl=${encodeURIComponent(href)}`
+      console.log(this.encodeShareLink)
     },
     copyText2(word) {
       let textArea = document.createElement("textarea");

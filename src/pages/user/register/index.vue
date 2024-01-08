@@ -65,6 +65,7 @@
             class="input"
             :placeholder="type == 1 ? $t('qsrsjhm') : $t('qsryxhm')"
             v-model="form.phone"
+            ref="myName"
           >
           </el-input>
         </div>
@@ -228,6 +229,9 @@ export default {
   beforeDestroy() {
     clearInterval(this.tt);
   },
+  mounted() {  
+    this.$refs.myName.focus();  
+  }, 
   created() {
     this.getAreaCode();
     const hash = location.hash;

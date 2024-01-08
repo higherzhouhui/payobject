@@ -2,7 +2,7 @@
   <div class="refer">
     <div class="refer-container">
       <div class="admin-title">{{ $store.state.title }}</div>
-      <div class="list">
+      <!-- <div class="list">
         <div class="list-left">{{ $t("wdyqm") }}</div>
         <div
           class="list-right"
@@ -11,6 +11,17 @@
         >
           {{ userInfo.providerId }}
           <i class="el-icon-document-copy"></i>
+        </div>
+      </div> -->
+      <div class="yqm-container">
+        <div class="yqm-title">{{$t('wdyqm')}}</div>
+        <div class="yqm-code" @click="copyText2(userInfo.providerId)">
+          <span>{{ userInfo.providerId }}</span><i class="el-icon-document-copy"></i>
+        </div>
+        <img :src="`/api/inviteQrCode?backUrl=${shareLink}`" alt="qrcode" class="qrcode" />
+        <div class="btn-group">
+          <a class="normal-btn download" :href="`/api/inviteQrCode?backUrl=${shareLink}`" download>{{$t('xzewm')}}</a>
+          <div class="normal-btn" @click="copyText2(`${shareLink}${userInfo.providerId}`)">{{$t('fzlj')}}</div>
         </div>
       </div>
     </div>
@@ -97,7 +108,7 @@ export default {
       this.getInitData();
     },
     getShareLink() {
-      const href = `${location.origin}#/user/register?inviteCode=${this.userInfo.providerId}`;
+      const href = `${location.origin}#/user/register?inviteCode=`;
       this.shareLink = href;
     },
     copyText2(word) {
@@ -165,6 +176,36 @@ export default {
     padding: 8px 4px;
     .list-left::after {
       content: ":";
+    }
+  }
+  .yqm-container {
+    text-align: center;
+    color: #fff;
+    .yqm-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+    .yqm-code {
+      font-size: 1.3rem;
+      color: red;
+      margin-bottom: 16px;
+      span {
+        margin-right: 6px;
+      }
+    }
+    .qrcode {
+      width: 80%;
+      object-fit: contain;
+      margin-bottom: 20px;
+      max-width: 300px;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      .download {
+        text-decoration: none;
+        margin-right: 12px;
+      }
     }
   }
 }

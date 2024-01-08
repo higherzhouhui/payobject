@@ -294,6 +294,11 @@
             {{ usdtForm.agreement }}
           </div>
         </div>
+        <div class="qrcode"  v-if="usdtForm.agreement && usdtForm.coinCode">
+          <div class="divider" />
+          <img :src="`/api/depositWalletQrCode?cryCode=${usdtForm.coinCode}&agreement=${usdtForm.agreement}`" />
+          <div class="hint">{{`${$t('gdzkjs')} ${usdtForm.agreement} ${$t('db')}`}}</div>
+        </div>
         <div class="divider" v-if="usdtForm.tid" />
         <div class="column" v-if="usdtForm.tid">
           <div class="column-left">
@@ -561,7 +566,9 @@ export default {
     },
     async getUsdtAddress() {
       const res = await getCryAdd({ cryCode: this.usdtForm.coinCode });
-      this.skqbList = res.data;
+      this.skqbList = res.data.filter(item => {
+        return !item.cryName
+      });
       this.$refs.changeAgreementRef.toggleMenu();
       const limitRes = await getLimit({
         coin: this.usdtForm.coinCode,
@@ -858,6 +865,18 @@ export default {
   .right {
     color: #333;
   }
+}
+.qrcode {
+  img {
+    width: 80%;
+    max-width: 300px;
+    margin-bottom: 12px;
+  }
+  .hint {
+    color: #e3d2d2;
+    font-size: 12px;
+  }
+  text-align: center;
 }
 </style>
   

@@ -392,8 +392,13 @@
               </a>
             </template>
             <template v-else>
-              {{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span>
-            </template>
+              <div v-if="item.qrCode" class="qrCode">
+                <div class="qrAdd">{{ item.value }}</div>
+                <img class="qrImg" :src="item.qrCode" />
+                <div class="qrHint">{{`${$t('gdzkjs')} ${item.agreement} ${$t('db')}`}}</div>
+                <a class="normal-btn btn" :href="item.qrCode" download>{{$t('xzewm')}}</a>
+              </div>
+              <div v-else>{{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span></div>            </template>
           </div>
         </div>
         <!-- <el-form-item :label="$t('bz')">
@@ -580,7 +585,13 @@
               </a>
             </template>
             <template v-else>
-              {{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span>
+              <div v-if="item.qrCode" class="qrCode">
+                <div class="qrAdd">{{ item.value }}</div>
+                <img class="qrImg" :src="item.qrCode" />
+                <div class="qrHint">{{`${$t('gdzkjs')} ${item.agreement} ${$t('db')}`}}</div>
+                <a class="normal-btn btn" :href="item.qrCode" download>{{$t('xzewm')}}</a>
+              </div>
+              <div v-else>{{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span></div>
             </template>
           </div>
         </div>
@@ -943,7 +954,6 @@ export default {
             value: this.status[this.currentSelectRow.memo],
             upHide: true,
           },
-
           { label: this.$t("hkzh"), value: this.currentSelectRow.sendAccount },
           { label: this.$t("hkyh"), value: this.currentSelectRow.outbankName },
           {
@@ -1024,7 +1034,7 @@ export default {
           { label: this.$t("bhly"), value: this.currentSelectRow.memo },
           { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
           { label: this.$t("hkqbdz"), value: this.currentSelectRow.tid },
-          { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
+          { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd, qrCode: `/api/cryWithdrawQrCode?id=${this.currentSelectRow.id}`, agreement: this.currentSelectRow.agreement },
           { label: this.$t("cjsj"), value: this.currentSelectRow.createTime },
           {
             label: this.$t("xgsj"),
@@ -1123,5 +1133,26 @@ export default {
 }
 .upload-demo {
   display: inline-block;
+}
+.qrCode {
+  .qrAdd {
+    text-align: right;
+    margin-bottom: 6px;
+  }
+  .qrHint {
+    text-align: center;
+    color: #e3d2d2;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .qrImg {
+    width: 150px;
+    object-fit: contain;
+    margin-bottom: 6px;
+  }
+  .btn {
+    width: fit-content;
+    margin: 0 auto;
+  }
 }
 </style>

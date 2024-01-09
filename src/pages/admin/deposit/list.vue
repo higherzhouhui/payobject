@@ -1135,12 +1135,12 @@ export default {
   display: inline-block;
 }
 .qrCode {
+  text-align: center;
   .qrAdd {
     text-align: right;
     margin-bottom: 6px;
   }
   .qrHint {
-    text-align: center;
     color: #e3d2d2;
     font-size: 12px;
     margin-bottom: 6px;

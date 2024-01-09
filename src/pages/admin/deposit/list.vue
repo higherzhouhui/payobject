@@ -1135,9 +1135,8 @@ export default {
   display: inline-block;
 }
 .qrCode {
-  text-align: center;
+  text-align: right;
   .qrAdd {
-    text-align: right;
     margin-bottom: 6px;
   }
   .qrHint {
@@ -1152,7 +1151,7 @@ export default {
   }
   .btn {
     width: fit-content;
-    margin: 0 auto;
+    float: right;
   }
 }
 </style>

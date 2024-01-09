@@ -392,13 +392,14 @@
               </a>
             </template>
             <template v-else>
-              <div v-if="item.qrCode" class="qrCode">
+              <!-- <div v-if="item.qrCode" class="qrCode">
                 <div class="qrAdd">{{ item.value }}</div>
                 <img class="qrImg" :src="item.qrCode" />
                 <div class="qrHint">{{`${$t('gdzkjs')} ${item.agreement} ${$t('db')}`}}</div>
                 <a class="normal-btn btn" :href="item.qrCode" download>{{$t('xzewm')}}</a>
-              </div>
-              <div v-else>{{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span></div>            </template>
+              </div> -->
+              <div>{{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span></div>
+            </template>
           </div>
         </div>
         <!-- <el-form-item :label="$t('bz')">
@@ -585,13 +586,13 @@
               </a>
             </template>
             <template v-else>
-              <div v-if="item.qrCode" class="qrCode">
+              <!-- <div v-if="item.qrCode" class="qrCode">
                 <div class="qrAdd">{{ item.value }}</div>
                 <img class="qrImg" :src="item.qrCode" />
                 <div class="qrHint">{{`${$t('gdzkjs')} ${item.agreement} ${$t('db')}`}}</div>
                 <a class="normal-btn btn" :href="item.qrCode" download>{{$t('xzewm')}}</a>
-              </div>
-              <div v-else>{{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span></div>
+              </div> -->
+              <div>{{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span></div>
             </template>
           </div>
         </div>

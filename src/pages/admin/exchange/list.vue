@@ -665,7 +665,6 @@ export default {
     display: flex;
     align-items: center;
   }
-
   .right {
     color: $baseColor;
     font-weight: bold;

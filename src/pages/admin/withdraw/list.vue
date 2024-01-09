@@ -336,7 +336,15 @@
               </a>
             </template>
             <template v-else>
-              {{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span>
+              <div v-if="item.qrCode" class="qrCode">
+                <div class="qrAdd">{{ item.value }}</div>
+                <img class="qrImg" :src="item.qrCode" />
+                <div class="qrHint">{{`${$t('gdzkjs')} ${item.agreement} ${$t('db')}`}}</div>
+                <a class="normal-btn btn" :href="item.qrCode" download>{{$t('xzewm')}}</a>
+              </div>
+              <div v-else>
+                {{ item.value }}<span class="unit" v-if="item.unit">{{ currentSelectRow.coinCode }}</span>
+              </div>
             </template>
           </div>
         </div>
@@ -800,7 +808,7 @@ export default {
           { label: this.$t("sxfei"), value: this.shiftNumberToPrice(this.currentSelectRow.commission), unit: true },
           { label: this.$t("dzje"), value: this.shiftNumberToPrice(this.currentSelectRow.withdrawValue), unit: true },
           { label: this.$t("jmxy"), value: this.currentSelectRow.agreement },
-          { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd },
+          { label: this.$t("skqbdz"), value: this.currentSelectRow.cryptAdd, qrCode: `/api/cryWithdrawQrCode?id=${this.currentSelectRow.id}`, agreement: this.currentSelectRow.agreement },
           { label: this.$t("tid"), value: this.currentSelectRow.tid },
           {
             label: this.$t("kzt"),
@@ -893,6 +901,26 @@ export default {
 .upload-demo {
   display: inline-block;
   margin-right: 12px;
+}
+.qrCode {
+  text-align: right;
+  .qrAdd {
+    margin-bottom: 6px;
+  }
+  .qrHint {
+    color: #e3d2d2;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .qrImg {
+    width: 150px;
+    object-fit: contain;
+    margin-bottom: 6px;
+  }
+  .btn {
+    width: fit-content;
+    float: right;
+  }
 }
 </style>
   

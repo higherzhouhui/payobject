@@ -280,6 +280,7 @@ export default {
         font-size: 16px;
         margin-right: 8px;
         color: #9c9797;
+        min-width: 16px;
     }
     .footer {
         height: 50px;

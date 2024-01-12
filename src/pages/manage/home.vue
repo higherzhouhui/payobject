@@ -32,7 +32,7 @@
       <el-table-column
         prop="businessAdd"
         :label="$t('qyjydz')"
-        min-width="200"
+        min-width="220"
         show-overflow-tooltip
       />
       <el-table-column
@@ -83,7 +83,7 @@
       <el-table-column
         prop="bankAccount"
         :label="$t('yhzh')"
-        min-width="200"
+        min-width="210"
         show-overflow-tooltip
       />
       <div slot="empty">
@@ -179,14 +179,14 @@
       <el-table-column
         prop="cryptAdd"
         :label="$t('skqbdz')"
-        min-width="180"
+        min-width="195"
         show-overflow-tooltip
       />
 
       <el-table-column
         prop="tid"
         :label="$t('hkqbdz')"
-        min-width="180"
+        min-width="220"
         show-overflow-tooltip
       />
 

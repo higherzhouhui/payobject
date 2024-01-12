@@ -4,7 +4,7 @@
     <!-- <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" /> -->
     <div class="money-wrapper">
       <div class="money-left">
-        <div class="admin-title">{{ $store.state.title }}</div>
+        <div class="admin-title">{{$t($store.state.title)}}</div>
         <div class="form-item">
           <div class="label">{{ $t("hblx") }}</div>
           <div class="input-with-select">

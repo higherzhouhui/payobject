@@ -1,7 +1,7 @@
 <template>
   <div class="login_box">
     <div class="form">
-      <div class="admin-title">{{$t("resetPwd")}}</div>
+      <div class="admin-title">{{$t($store.state.title)}}</div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="" />
         <el-input

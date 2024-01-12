@@ -6,7 +6,7 @@
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
     </el-tabs> -->
     <div class="search-container">
-      <div class="admin-title">{{ $store.state.title }}</div>
+      <div class="admin-title">{{$t($store.state.title)}}</div>
       <el-radio-group v-model="moneyType">
         <el-radio-button label="fabi">{{ $t("fdhb") }}</el-radio-button>
         <el-radio-button label="usdt">{{ $t("jmhb") }}</el-radio-button>
@@ -89,7 +89,7 @@
       </template>
     </el-table-column>
 
-        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
+        <el-table-column prop="reqStatus" :label="$t('kzt')" width="160">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
               {{ status[scope.row.reqStatus] }}
@@ -99,16 +99,16 @@
         <el-table-column
           prop="sendAccount"
           :label="$t('hkzh')"
-          min-width="120"
+          min-width="155"
           show-overflow-tooltip
         />
         <el-table-column
           prop="accountName"
           :label="$t('skzhmc')"
-          min-width="100"
+          min-width="145"
           show-overflow-tooltip
         />
-        <el-table-column prop="name" :label="$t('cz')" width="90" fixed="right">
+        <el-table-column prop="name" :label="$t('cz')" :width="lang == 'zh' ? '90' : '155'" fixed="right">
           <template slot-scope="scope">
             <!-- <div @click.stop>
               <el-upload
@@ -182,7 +182,7 @@
         }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
       </el-table-column>
-        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="120">
+        <el-table-column prop="reqStatus" :label="$t('kzt')" width="160">
           <template slot-scope="scope">
             <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
               {{ usdtstatus[scope.row.reqStatus] }}
@@ -193,13 +193,12 @@
           prop="cryptAdd"
           :label="$t('skqbdz')"
           show-overflow-tooltip
-          min-width="180"
+          min-width="200"
         />
 
-        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="180" show-overflow-tooltip/>
-        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" show-overflow-tooltip/>
-
-        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
+        <el-table-column prop="tid" :label="$t('hkqbdz')" min-width="210" show-overflow-tooltip/>
+        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="155" show-overflow-tooltip/>
+        <el-table-column prop="name" :label="$t('cz')" :width="lang == 'zh' ? '70' : '108'" fixed="right">
           <template slot-scope="scope">
             <!-- <div @click.stop>
             <el-upload
@@ -665,6 +664,7 @@ export default {
   name: "depositList",
   data() {
     return {
+      lang: this.$i18n.locale,
       shiftNumberToPrice: shiftNumberToPrice,
       rejectdialogVisible: false,
       tableData: [],

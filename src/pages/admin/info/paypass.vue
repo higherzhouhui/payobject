@@ -2,8 +2,8 @@
   <div class="login_box">
     <div class="form">
       <div class="admin-title">
-        {{$store.state.userInfo.hasPayPass ? $t("xgzfmm") : $t("szzfmm")}}
-         <span>{{$t('定期更改支付密码有利于账户安全')}}</span>
+        <div>{{$store.state.userInfo.hasPayPass ? $t("xgzfmm") : $t("szzfmm")}}</div>
+         <span>{{$t('xgzfmmdes')}}</span>
       </div>
       <div class="line">
         <img class="icon" src="@/assets/images/user/user.png" alt="user" />
@@ -207,6 +207,10 @@ export default {
   width: 700px;
   margin: 0 auto;
   .admin-title {
+    div {
+      min-width: fit-content;
+      padding-right: 10px;
+    }
     span {
       font-size: 12px;
       color: #eee;

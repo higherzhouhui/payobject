@@ -2,7 +2,7 @@
   <div class="user_transferAccountMangement_contianer">
     <div class="search-container">
       <div class="admin-title">
-        <span>{{ $store.state.title }}</span>
+        <span>{{ $t($store.state.title) }}</span>
         <el-button type="primary" @click="showAdd" class="normal-btn"
           ><i class="el-icon-plus"></i>{{ $t("zjzzzh") }}</el-button
         >
@@ -99,7 +99,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="70"
+          :width="lang == 'zh' ? '70' : '98'"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -405,6 +405,7 @@ export default {
   components: {passwordVue, flagIconVue},
   data() {
     return {
+      lang: this.$i18n.locale,
       detailVisible: false,
       detailList: [],
       operationType: "",

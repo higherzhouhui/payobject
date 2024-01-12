@@ -2,7 +2,7 @@
   <div class="user_transferAccountMangement_contianer">
     <div class="search-container">
       <div class="admin-title">
-        <span>{{ $store.state.title }}</span>
+        <span>{{ $t($store.state.title) }}</span>
         <el-button type="primary" @click="showAdd" class="normal-btn"
           ><i class="el-icon-plus"></i>{{ $t("xzdd") }}</el-button
         >
@@ -37,7 +37,7 @@
         <el-table-column
           prop="agreement"
           :label="$t('jmxy')"
-          min-width="80"
+          min-width="200"
           show-overflow-tooltip
         />
         <el-table-column
@@ -55,7 +55,7 @@
         <el-table-column
           prop="name"
           :label="$t('cz')"
-          width="60"
+          :width="lang == 'zh' ? '60' : '90'"
           fixed="right"
         >
           <template slot-scope="scope">
@@ -218,6 +218,7 @@ export default {
   },
   data() {
     return {
+      lang: this.$i18n.locale,
       agreementList: [
         { label: "TRC20", value: "TRC20" },
         { label: "ERC20", value: "ERC20" },

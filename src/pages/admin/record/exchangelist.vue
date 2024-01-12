@@ -1,7 +1,7 @@
 <template>
   <div class="user_transactionInquiry_transactionDetails_contianer">
     <div class="search-container">
-      <div class="admin-title">{{ $store.state.title }}</div>
+      <div class="admin-title">{{ $t($store.state.title) }}</div>
       <el-form
         v-model="searchForm"
         :inline="true"
@@ -87,7 +87,7 @@
             }}</b><span class="unit">{{ scope.row.coinCode }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="balance" :label="$t('ye')" min-width="100" show-overflow-tooltip>
+        <el-table-column prop="balance" :label="$t('ye')" min-width="130" show-overflow-tooltip>
           <template slot-scope="scope" v-if="scope.row.balance">
             <b>{{ shiftNumberToPrice(scope.row.balance)
             }}</b><span class="unit">{{ scope.row.coinCode }}</span>

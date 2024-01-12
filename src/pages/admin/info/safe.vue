@@ -1,6 +1,6 @@
 <template>
   <div class="safe-container">
-    <div class="admin-title">{{$t('safe')}}</div>
+    <div class="admin-title">{{$t($store.state.title)}}</div>
     <!-- <div class="item">
       <div class="item-top">
         <div class="item-title">

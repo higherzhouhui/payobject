@@ -5,7 +5,7 @@
     <div class="user_withdrawmanagement_withdraw_contianer">
       <div class="money-wrapper">
         <div class="money-left">
-          <div class="admin-title">{{ $t("duihuan") }}</div>
+          <div class="admin-title">{{$t($store.state.title)}}</div>
           <div class="form-item">
             <div class="label">{{ $t("dhje") }}</div>
             <div class="input-with-select">

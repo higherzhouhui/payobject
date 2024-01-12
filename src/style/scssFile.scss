@@ -232,7 +232,7 @@ html {
     background: #20304c;
     display: flex;
     align-items: center;
-
+    overflow: hidden;
     &:hover {
         color: #fff;
         background: rgba($color: #20304c, $alpha: 0.8);
@@ -301,7 +301,6 @@ html {
 
 .el-submenu__title {
     color: rgba(255, 255, 255, 0.7);
-
     &:hover {
         .icon-svg {
             color: #fff;

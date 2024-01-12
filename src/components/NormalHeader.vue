@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="btn-group flex controlMenu" v-else>
-            <div class="btn" @click="handleTodashboard">{{ email }}</div>
+            <div class="btn" @click="handleTodashboard">{{ userInfo.username || userInfo.phone || userInfo.email }}</div>
           </div>
           <div class="language flex flex_align_center" @click="open">
             <img
@@ -96,7 +96,7 @@
     </header>
     <el-dialog
       class="lang_box"
-      width="20rem"
+      width="350px"
       :title="$t('choiceLanguage')"
       :visible.sync="dialogTableVisible"
     >
@@ -133,6 +133,7 @@ export default {
       lang: i18n.locale,
       dialogTableVisible: false,
       showMenu: false,
+      userInfo: this.$store.state.userInfo,
       email: this.$store.state.userInfo.email || this.$store.state.userInfo.phone,
       links: [
         { title: this.$t("home"), path: "/index", active: true },

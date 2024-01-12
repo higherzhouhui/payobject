@@ -1,6 +1,6 @@
 <template>
   <div class="container" ref="container">
-    <div class="container-auto">
+    <div class="container-auto" v-if="lang == 'zh'">
       <div class="title">ReliancePay 隐私政策</div>
       <div class="content">
         <ol>
@@ -45,6 +45,51 @@
         </ol>
       </div>
     </div>
+    <div class="container-auto" v-if="lang == 'en'">
+      <div class="title">ReliancePay Privacy Policy</div>
+      <div class="content">
+        <ol>
+          <li>Data Collection
+            <ul>
+              <li>The collected data includes, but is not limited to, user names, contact information, identity verification, transaction records, and digital wallet addresses.</li>
+              <li>The purpose of data collection: to provide exchange services, improve user experience, and comply with legal regulations, including anti-money laundering and anti-terrorism financing provisions.</li>
+            </ul>
+          </li>
+          <li>Data Usage
+            <ul>
+              <li>Methods of Use: For processing exchange transactions, customer service, and legal purposes.</li>
+              <li>Third-Party Sharing: Unless required by law, ReliancePay does not share user data with third parties.</li>
+            </ul>
+          </li>
+          <li>
+            Data Security
+            <ul>
+              <li>Security Measures: ReliancePay implements industry-standard security measures to protect user data.</li>
+              <li>Data Breach Response: In the event of a data breach, ReliancePay will immediately take action and notify affected users.</li>
+            </ul>
+          </li>
+          <li>
+            User Rights
+            <ul>
+              <li>Access and Modification: Users have the right to access and correct their personal information.</li>
+              <li>Revocation of Consent: Users can revoke their consent to ReliancePay processing their personal data at any time.</li>
+            </ul>
+          </li>
+          <li>
+            Policy Update
+            <ul>
+              <li>Update Notification: Any changes to the privacy policy will be notified to users via platform announcements or email.</li>
+            </ul>
+          </li>
+          <li>
+            Contact Information
+            <ul>
+              <li>Contact Information: For any privacy-related inquiries, users can contact ReliancePay at <span>Support@reliancepay.net</span>.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -56,6 +101,11 @@ export default {
     return {
       lang: Local("lang") || "zh",
     };
+  },
+  watch: {
+    "$i18n.locale"() {
+      this.lang = this.$i18n.locale
+    },
   },
   created() {
   },

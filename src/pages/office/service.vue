@@ -1,6 +1,6 @@
 <template>
   <div class="container" ref="container">
-    <div class="container-auto">
+    <div class="container-auto" v-if="lang == 'zh'">
       <div class="title">ReliancePay 换汇服务平台服务协议</div>
       <div class="content">
         <ol>
@@ -60,6 +60,66 @@
         </ol>
       </div>
     </div>
+    <div class="container-auto" v-if="lang == 'en'">
+      <div class="title">ReliancePay Currency Exchange Service Platform Agreement</div>
+      <div class="content">
+        <ol>
+          <li>Introduction
+            <ul>
+              <li>Purpose: This agreement aims to regulate the use of fiat and digital currency exchange services provided by ReliancePay.</li>
+              <li>Definitions: "User" refers to an individual or entity registered to use ReliancePay's services; "Service" refers to the fiat and digital currency exchange services provided by ReliancePay; "Platform" refers to the ReliancePay website and its related applications.</li>
+            </ul>
+          </li>
+          <li>User Registration and Accounts
+            <ul>
+              <li>Registration Requirements: Users must provide valid identification and contact information.</li>
+              <li>Account Security: Users are responsible for maintaining the security and confidentiality of their account information.</li>
+            </ul>
+          </li>
+          <li>
+            Exchange Service
+            <ul>
+              <li>Service Description: Users can exchange fiat currency for various digital currencies through ReliancePay.</li>
+              <li>Fees and Exchange Rates: Transactions are conducted at the real-time exchange rates provided by ReliancePay, and related fees will be clearly stated before the transaction.</li>
+            </ul>
+          </li>
+          <li>
+            User Responsibilities
+            <ul>
+              <li>Legal Use: Users commit to using the service for lawful purposes and to comply with all relevant U.S. and international laws and regulations, including but not limited to anti-money laundering and anti-terrorism financing regulations.</li>
+              <li>Accuracy of Information: Users should ensure that all information provided to ReliancePay is accurate and up-to-date.</li>
+            </ul>
+          </li>
+          <li>
+            Intellectual Property
+            <ul>
+              <li>Copyright Statement: All content on the ReliancePay platform, including texts, images, software, etc., is copyrighted and owned by ReliancePay.</li>
+              <li>User Content: Users are responsible for the content they upload or share on the platform and grant ReliancePay a non-exclusive right to use it.</li>
+            </ul>
+          </li>
+          <li>
+            Liability Limitation
+            <ul>
+              <li>ReliancePay is not responsible for any service interruption or loss caused by network issues, system failures, or other force majeure events.</li>
+            </ul>
+          </li>
+          <li>
+            translates to "Amendment and Termination of Agreement
+            <ul>
+              <li>Amendment Process - ReliancePay reserves the right to modify the service agreement at any time and will notify users through website announcements or email.</li>
+              <li>Termination Conditions - In the event of a breach of the terms of this agreement, ReliancePay reserves the right to terminate the user's service.</li>
+            </ul>
+          </li>
+          <li>
+            Governing Law and Dispute Resolution
+            <ul>
+              <li>Applicable Law: This agreement is governed by the laws of the United States.</li>
+              <li>Dispute Resolution: Any dispute arising from or related to this agreement shall be resolved through amicable negotiation. If negotiation fails, the dispute shall be submitted to the courts of the United States for resolution.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -71,6 +131,11 @@ export default {
     return {
       lang: Local("lang") || "zh",
     };
+  },
+  watch: {
+    "$i18n.locale"() {
+      this.lang = this.$i18n.locale
+    },
   },
   created() {
   },

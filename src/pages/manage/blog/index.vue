@@ -2,7 +2,7 @@
   <div class="user_transactionInquiry_transactionDetails_contianer">
     <div class="search-container">
       <div class="admin-title">
-        {{ $store.state.title }}
+        {{ $t($store.state.title) }}
         <el-button type="primary normal-btn" @click="showDialog()" class="primary"
           ><i class="el-icon-plus"></i>{{ $t("add") }}</el-button
         >
@@ -42,7 +42,7 @@
         <el-table-column
           prop="recommend"
           :label="$t('sftj')"
-          min-width="80"
+          min-width="120"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
@@ -76,7 +76,7 @@
           min-width="180"
           show-overflow-tooltip
         />
-        <el-table-column :label="$t('cz')" width="95" fixed="right">
+        <el-table-column :label="$t('cz')" width="110" fixed="right">
           <template slot-scope="scope">
             <!-- <div
               class="operation-btn"

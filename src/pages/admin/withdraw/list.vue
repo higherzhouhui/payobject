@@ -6,7 +6,7 @@
       <el-tab-pane :label="$t('jmhb')" name="usdt"></el-tab-pane>
     </el-tabs> -->
     <div class="search-container">
-      <div class="admin-title">{{ $store.state.title }}</div>
+      <div class="admin-title">{{ $t($store.state.title) }}</div>
       <el-radio-group v-model="moneyType">
         <el-radio-button label="fabi">{{ $t("fdhb") }}</el-radio-button>
         <el-radio-button label="usdt">{{ $t("jmhb") }}</el-radio-button>
@@ -102,7 +102,7 @@
     <el-table-column
       prop="withdrawValue"
       :label="$t('dzje')"
-      min-width="120"
+      min-width="135"
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.withdrawValue">
@@ -124,7 +124,7 @@
           show-overflow-tooltip
         />
 
-        <el-table-column prop="name" :label="$t('cz')" width="95" fixed="right">
+        <el-table-column prop="name" :label="$t('cz')" :width="lang == 'zh' ? '95' : '135'" fixed="right">
           <template slot-scope="scope">
             <div
               v-if="scope.row.reqStatus == 1 && !$store.state.userInfo.admin"
@@ -196,7 +196,7 @@
     <el-table-column
       prop="withdrawValue"
       :label="$t('dzje')"
-      min-width="120"
+      min-width="135"
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.withdrawValue">
@@ -204,7 +204,7 @@
         }}</b><span class="unit">{{ scope.row.coinCode }}</span>
       </template>
     </el-table-column>
-        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="100">
+        <el-table-column prop="reqStatus" :label="$t('kzt')" min-width="130">
           <template slot-scope="scope">
             <el-tag :type="usdttypeOption[scope.row.reqStatus]" class="elTag">
               {{ usdtstatus[scope.row.reqStatus] }}
@@ -215,11 +215,11 @@
           prop="cryptAdd"
           :label="$t('skqbdz')"
           show-overflow-tooltip
-          min-width="180"
+          min-width="200"
         />
-        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="80" show-overflow-tooltip/>
+        <el-table-column prop="agreement" :label="$t('jmxy')" min-width="180" show-overflow-tooltip/>
         <el-table-column prop="tid" :label="$t('tid')" min-width="120" show-overflow-tooltip/>
-        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
+        <el-table-column prop="name" :label="$t('cz')" :width="lang == 'zh' ? '90' : '105'" fixed="right">
           <template slot-scope="scope">
             <div
             class="operation-btn reject-btn"
@@ -509,6 +509,7 @@ export default {
   name: "withDrawList",
   data() {
     return {
+      lang: this.$i18n.locale,
       shiftNumberToPrice: shiftNumberToPrice,
       pickerOptions: {
         disabledDate(time) {

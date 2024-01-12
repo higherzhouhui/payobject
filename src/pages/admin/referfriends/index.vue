@@ -1,7 +1,7 @@
 <template>
   <div class="refer">
     <div class="refer-container">
-      <div class="admin-title">{{ $store.state.title }}</div>
+      <div class="admin-title">{{ $t($store.state.title) }}</div>
       <!-- <div class="list">
         <div class="list-left">{{ $t("wdyqm") }}</div>
         <div
@@ -205,9 +205,14 @@ export default {
     .btn-group {
       display: flex;
       justify-content: center;
+      flex-direction: column;
+      .normal-btn {
+        width: fit-content;
+        margin: 0 auto;
+      }
       .download {
         text-decoration: none;
-        margin-right: 12px;
+        margin-bottom: 12px;        
       }
     }
   }

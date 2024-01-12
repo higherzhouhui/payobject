@@ -2,7 +2,7 @@
   <div class="user_transferAccountMangement_contianer">
     <template v-if="type == 'first'">
       <div class="search-container">
-        <div class="admin-title">{{ $store.state.title }}</div>
+        <div class="admin-title">{{ $t($store.state.title) }}</div>
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("bankcard") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("kycyz") }}</el-radio-button>
@@ -91,7 +91,7 @@
           <el-table-column
             prop="accountAdd"
             :label="$t('jzdz')"
-            min-width="250"
+            min-width="310"
             show-overflow-tooltip
           />
           <el-table-column
@@ -100,7 +100,7 @@
             min-width="170"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="70" fixed="right">
+          <el-table-column :label="$t('cz')" :width="lang == 'zh' ? '70' : '105'" fixed="right">
             <template slot-scope="scope">
               <!-- <div
                 class="operation-btn"
@@ -147,7 +147,7 @@
     </template>
     <template v-if="type == 'second'">
       <div class="search-container">
-        <div class="admin-title">{{ $store.state.title }}</div>
+        <div class="admin-title">{{ $t($store.state.title) }}</div>
         <el-radio-group v-model="type">
           <el-radio-button label="first">{{ $t("bankcard") }}</el-radio-button>
           <el-radio-button label="second">{{ $t("kycyz") }}</el-radio-button>
@@ -210,7 +210,7 @@
           <el-table-column
             prop="businessAdd"
             :label="$t('qyjydz')"
-            min-width="200"
+            min-width="220"
             show-overflow-tooltip
           />
           <el-table-column
@@ -225,7 +225,7 @@
             min-width="170"
             show-overflow-tooltip
           />
-          <el-table-column :label="$t('cz')" width="90" fixed="right">
+          <el-table-column :label="$t('cz')" :width="lang == 'zh' ? '90' : '150'" fixed="right">
             <template slot-scope="scope">
               <div
                 v-if="scope.row.kycStatus == 0"
@@ -904,7 +904,7 @@ export default {
           { label: this.$t("qygw"), value: data.webSite },
           { label: this.$t("dbjyed"), value: data.transactionLimit },
           { label: this.$t("ygyjybs"), value: data.transactionsMonth },
-          { label: this.$t("bhly"), value: data.reason },
+          { label: this.$t("bhly"), value: data.kycStatus == 1 ? '' : data.reason },
           { label: this.$t("cjsj"), value: data.createTime },
           { label: this.$t("xgsj"), value: data.modifiedTime },
           {

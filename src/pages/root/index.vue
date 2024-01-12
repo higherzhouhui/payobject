@@ -464,32 +464,27 @@ export default {
         {
           avatar: require("@/assets/images/index/huawei.png"),
           name: "Huawei Technologies",
-          content: `“在全球运营中，资金的及时和安全转移至关重要。自从我们开始使用ReliancePay后，不仅汇款过程变得更加高效，而且由于他们出色的货币汇率，我们还节省了大量成本。ReliancePay已成为我们国际金融交易的可靠伙伴。”`,
-          desc: '使用超过2年的用户'
+          content: this.$t("comment1"),
         },
         {
           avatar: require("@/assets/images/index/zte.png"),
           name: "ZTE",
-          content: `ReliancePay的操作简易性和卓越的客户服务让我们的国际支付流程无比顺畅。实时的活动追踪功能让我们能够随时监控资金流向，确保每一笔交易都能快速且安全地完成。”`,
-          desc: '使用超过2年的用户'
+          content: this.$t("comment2"),
         },
         {
           avatar: require("@/assets/images/index/telling.png"),
           name: "Telling",
-          content: `“我们对ReliancePay的安全保障和全天候支持印象深刻。他们不仅保证了交易的安全性，还为我们提供了行业内最优惠的汇率，极大地提高了我们的工作效率。”`,
-          desc: '使用超过2年的用户'
+          content: this.$t("comment3"),
         },
         {
           avatar: require("@/assets/images/index/binance.png"),
           name: "Binance",
-          content: `优秀的产品思维以及高度前瞻性，为安全支付行业树立起了标杆,不亚于市面上的任一国际支付平台，相信不久将会闪闪发光`,
-          desc: '使用超过2年的用户'
+          content: this.$t("comment5"),
         },
         {
           avatar: require("@/assets/images/index/coinbase.png"),
           name: "CoinBase",
-          content: `很好的解决了国际支付行业痛点，为全球化贸易提供了较为便捷且安全的支付平台`,
-          desc: '使用超过2年的用户'
+          content: this.$t("comment5"),
         },
       ],
       animationFlag: {
@@ -677,6 +672,33 @@ export default {
     "$i18n.locale"() {
       this.lang = this.$i18n.locale
       this.getBlogsList();
+      this.comments = [
+        {
+          avatar: require("@/assets/images/index/huawei.png"),
+          name: "Huawei Technologies",
+          content: this.$t("comment1"),
+        },
+        {
+          avatar: require("@/assets/images/index/zte.png"),
+          name: "ZTE",
+          content: this.$t("comment2"),
+        },
+        {
+          avatar: require("@/assets/images/index/telling.png"),
+          name: "Telling",
+          content: this.$t("comment3"),
+        },
+        {
+          avatar: require("@/assets/images/index/binance.png"),
+          name: "Binance",
+          content: this.$t("comment5"),
+        },
+        {
+          avatar: require("@/assets/images/index/coinbase.png"),
+          name: "CoinBase",
+          content: this.$t("comment5"),
+        },
+      ]
     },
   },
   mounted() {
@@ -1880,7 +1902,6 @@ export default {
         font-size: 1rem;
         line-height: 1.7rem;
         color: #6c757d;
-        text-align: justify;
       }
       &:hover {
         box-shadow: 0px 5px 25px #ccc9c9;
@@ -2183,7 +2204,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 280px;
+    height: 290px;
     .user-info {
         display: flex;
         align-items: center;
@@ -2199,9 +2220,7 @@ export default {
       font-family: monospace;
       color: #333;
       line-height: 1.5rem;
-      height: 160px;
       word-break: break-all;
-      overflow: hidden;
     }
     .user-name {
         font-size: 1rem;

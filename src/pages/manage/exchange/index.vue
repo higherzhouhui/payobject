@@ -8,7 +8,7 @@
     <template v-if="type == 'first'">
       <div class="search-container">
         <div class="admin-title">
-          {{ $store.state.title }}
+          {{ $t($store.state.title) }}
           <el-button type="primary normal-btn" @click="showAdd1" class="primary"
             ><i class="el-icon-plus"></i>{{ $t("addskzh") }}</el-button
           >
@@ -105,7 +105,7 @@
           <el-table-column
             prop="name"
             :label="$t('cz')"
-            width="70"
+            :width="lang == 'zh' ? 70 : 100"
             fixed="right"
           >
             <template slot-scope="scope">
@@ -153,7 +153,7 @@
     <template v-if="type == 'second'">
       <div class="search-container">
         <div class="admin-title">
-          {{ $store.state.title }}
+          {{ $t($store.state.title) }}
           <el-button type="primary" @click="showAdd" class="primary normal-btn"
             ><i class="el-icon-plus"></i>{{ $t("zjhld") }}</el-button
           >
@@ -172,7 +172,7 @@
           v-loading="loading"
           @row-click="(e) => handleShowDetail(e, 'detail')"
         >
-          <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="100">
+          <el-table-column prop="exFrom" :label="$t('bdhbz')" min-width="200">
             <template slot-scope="scope">
               <div class="flag-warpper">
                 <flagIconVue :code="scope.row.exFrom" />
@@ -181,7 +181,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="exRate" :label="$t('hl')" min-width="120" show-overflow-tooltip/>
-          <el-table-column prop="exTarget" :label="$t('dhbz')" min-width="100">
+          <el-table-column prop="exTarget" :label="$t('dhbz')" min-width="150">
             <template slot-scope="scope">
               <div class="flag-warpper">
                 <flagIconVue :code="scope.row.exTarget" />
@@ -198,7 +198,7 @@
           <el-table-column
             prop="createTime"
             :label="$t('cz')"
-            width="70"
+            :width="lang == 'zh' ? 70 : 100"
             fixed="right"
           >
             <template slot-scope="scope">
@@ -246,7 +246,7 @@
     <template v-if="type == 'third'">
       <div class="search-container">
         <div class="admin-title">
-          {{ $store.state.title }}
+          {{ $t($store.state.title) }}
           <!-- <el-button type="primary" @click="showAdd" class="primary normal-btn"><i class="el-icon-plus"></i>
             {{ $t("zjhld")}}
         </el-button> -->
@@ -266,19 +266,19 @@
           @row-click="(e) => handleShowDetail(e, 'detail')"
         >
           <el-table-column prop="coinCode" :label="$t('bz')" min-width="80" show-overflow-tooltip/>
-          <el-table-column prop="optType" :label="$t('lx')" min-width="80">
+          <el-table-column prop="optType" :label="$t('lx')" min-width="120">
             <template slot-scope="scope">
               <el-tag :type="limitObj[scope.row.optType].type" class="elTag">
                 {{ limitObj[scope.row.optType].label }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="coinMin" :label="$t('min')" min-width="80">
+          <el-table-column prop="coinMin" :label="$t('min')" min-width="100">
             <template slot-scope="scope">
               {{ scope.row.coinMin || 0 }}
             </template>
           </el-table-column>
-          <el-table-column prop="coinMax" :label="$t('max')" min-width="80">
+          <el-table-column prop="coinMax" :label="$t('max')" min-width="100">
             <template slot-scope="scope">
               {{ scope.row.coinMax || $t("bxz") }}
             </template>
@@ -286,7 +286,7 @@
           <el-table-column
             prop="commission"
             :label="$t('sxfei')"
-            min-width="80"
+            min-width="150"
             show-overflow-tooltip
           >
             <template slot-scope="scope">
@@ -383,7 +383,7 @@
         class="formStyle"
       >
         <el-form-item :label="$t('bz')">
-          <el-select v-model="bankForm.coinCode" class="elSelect" filterable>
+          <el-select :placeholder="$t('qsz')" v-model="bankForm.coinCode" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
@@ -411,7 +411,7 @@
           <!-- <el-input
             v-model="bankForm.country"
           ></el-input> -->
-          <el-select v-model="bankForm.country" class="elSelect" filterable>
+          <el-select :placeholder="$t('qsz')" v-model="bankForm.country" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
@@ -465,7 +465,7 @@
           <!-- <el-input
             v-model="bankForm.bankCountry"
           ></el-input> -->
-          <el-select v-model="bankForm.bankCountry" class="elSelect" filterable>
+          <el-select :placeholder="$t('qsz')" v-model="bankForm.bankCountry" class="elSelect" filterable>
             <el-option
               style="padding: 0 10px"
               v-for="item in areaList"
@@ -650,7 +650,7 @@ export default {
       operationType: "",
       currentSelectRow: {},
       dialogVisible2: false,
-      lang: Local("lang") || "zh",
+      lang: this.$i18n.locale,
       bankloading: false,
       bankForm2: {
         exTarget: "",

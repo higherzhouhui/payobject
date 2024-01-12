@@ -2,7 +2,7 @@
   <div class="user_moneymanagement_transfer_contianer">
     <!-- <LinkPath :linkList="linkList" style="margin-bottom: 1.5rem" v-if="!$store.state.userInfo.admin"/> -->
     <div class="search-container">
-      <div class="admin-title">{{ $store.state.title }}</div>
+      <div class="admin-title">{{$t($store.state.title)}}</div>
       <el-form
         v-model="searchForm"
         :inline="true"
@@ -77,7 +77,7 @@
         <el-table-column
           prop="depValue"
           :label="$t('dhje')"
-          min-width="100"
+          min-width="150"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
@@ -88,7 +88,7 @@
         <el-table-column
           prop="targetValue"
           :label="$t('yjdzje')"
-          min-width="130"
+          min-width="260"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
@@ -96,14 +96,14 @@
             }}</b><span class="unit">{{ scope.row.targetCoin }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="120">
+        <el-table-column prop="changeStatus" :label="$t('kzt')" min-width="140">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.changeStatus]" class="elTag">
               {{ status[scope.row.changeStatus] }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="name" :label="$t('cz')" width="70" fixed="right">
+        <el-table-column prop="name" :label="$t('cz')" :width="lang == 'zh' ? '90' : '105'" fixed="right">
           <template slot-scope="scope">
             <!-- <div
               class="operation-btn"
@@ -321,6 +321,7 @@ export default {
   name: "convertList",
   data() {
     return {
+      lang: this.$i18n.locale,
       operationType: "",
       detailList: [],
       shiftNumberToPrice: shiftNumberToPrice,

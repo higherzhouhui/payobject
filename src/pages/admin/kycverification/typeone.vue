@@ -415,7 +415,7 @@ export default {
           { label: this.$t("ywcjsm"), value: this.form.businessScenario },
           { label: this.$t("qygw"), value: this.form.webSite },
           { label: this.$t("kzt"), value: this.status[this.form.kycStatus] },
-          { label: this.$t("bhly"), value: this.form.reason },
+          { label: this.$t("bhly"), value: this.form.kycStatus == 1 ? "" : this.form.reason },
           { label: this.$t("cjsj"), value: this.form.createTime },
           { label: this.$t("xgsj"), value: this.form.modifiedTime },
           {

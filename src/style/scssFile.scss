@@ -570,11 +570,6 @@ html {
                 font-size: 18px;
             }
         }
-
-        .list-left::after {
-            content: ":";
-        }
-
         .list-link::after {
             content: none;
         }
@@ -584,13 +579,14 @@ html {
         }
 
         .list-right {
-            max-width: 80%;
             padding-left: 10px;
         }
 
         .list-left {
-            max-width: 80%;
             word-break: keep-all;
+            max-width: 11rem;
+            width: 11rem;
+            min-width: 11rem;
         }
     }
 

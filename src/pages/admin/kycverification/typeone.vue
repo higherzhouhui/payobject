@@ -460,44 +460,47 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       a {
-        text-decoration: none;
-        color: #fff;
+          text-decoration: none;
+          color: #fff;
       }
+
       .list-left,
       .list-right {
-        line-height: 1.8em;
-        color: #fff;
-        word-break: break-all;
-        display: flex;
-        align-items: center;
-        span {
-          color: $baseColor;
-        }
-      }
-      .list-left::after {
-        content: ":";
+          line-height: 1.8em;
+          color: #fff;
+          word-break: break-all;
+          display: flex;
+          align-items: center;
+
+          span {
+              color: $baseColor;
+          }
+
+          .el-icon-folder-checked {
+              font-size: 18px;
+          }
       }
       .list-link::after {
-        content: none;
+          content: none;
       }
+
       .list-link {
-        max-width: 100%!important;
-        span {
-          color: $baseColor;
-        }
-        .el-icon-folder-checked {
-          font-size: 18px;
-        }
+          max-width: 100% !important;
       }
+
       .list-right {
-        max-width: 80%;
-        padding-left: 10px;
+          padding-left: 10px;
       }
+
       .list-left {
-        max-width: 80%;
+          word-break: keep-all;
+          max-width: 11rem;
+          width: 11rem;
+          min-width: 11rem;
       }
-    }
+  }
   }
 }
 .verified_type_1_contarner {

@@ -89,7 +89,7 @@
       </template>
     </el-table-column>
 
-        <el-table-column prop="reqStatus" :label="$t('kzt')" width="160">
+        <el-table-column prop="reqStatus" :label="$t('kzt')" width="180">
           <template slot-scope="scope">
             <el-tag :type="typeOption[scope.row.reqStatus]" class="elTag">
               {{ status[scope.row.reqStatus] }}
@@ -99,13 +99,13 @@
         <el-table-column
           prop="sendAccount"
           :label="$t('hkzh')"
-          min-width="155"
+          min-width="165"
           show-overflow-tooltip
         />
         <el-table-column
           prop="accountName"
           :label="$t('skzhmc')"
-          min-width="145"
+          min-width="155"
           show-overflow-tooltip
         />
         <el-table-column prop="name" :label="$t('cz')" :width="lang == 'zh' ? '90' : '155'" fixed="right">

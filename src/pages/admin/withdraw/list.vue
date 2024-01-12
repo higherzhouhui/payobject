@@ -91,7 +91,7 @@
     <el-table-column
       prop="commission"
       :label="$t('sxfei')"
-      min-width="120"
+      width="130"
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.commission">
@@ -102,7 +102,7 @@
     <el-table-column
       prop="withdrawValue"
       :label="$t('dzje')"
-      min-width="135"
+      min-width="145"
       show-overflow-tooltip
       >
       <template slot-scope="scope" v-if="scope.row.withdrawValue">
